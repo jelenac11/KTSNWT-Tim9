@@ -40,6 +40,11 @@ public abstract class Comment {
 	public Comment() {
 		super();
 	}
+	
+	public Comment(Long id) {
+		super();
+		this.id = id;
+	}
 
 	public Comment(boolean approved, long date, RegisteredUser author, CulturalOffer culturalOffer) {
 		super();

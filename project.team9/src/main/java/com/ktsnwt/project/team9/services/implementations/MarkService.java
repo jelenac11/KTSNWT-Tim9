@@ -1,38 +1,40 @@
 package com.ktsnwt.project.team9.services.implementations;
 
-import com.ktsnwt.project.team9.dto.MarkDTO;
+import org.springframework.stereotype.Service;
+
+import com.ktsnwt.project.team9.model.Mark;
 import com.ktsnwt.project.team9.services.interfaces.IMarkService;
 
+@Service
 public class MarkService implements IMarkService {
 
 	@Override
-	public Iterable<MarkDTO> getAll() {
+	public Iterable<Mark> getAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public MarkDTO getById() {
+	public Mark getById(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void add(MarkDTO entity) {
+	public Mark create(Mark entity) throws Exception {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	@Override
-	public boolean delete(Long id) {
+	public boolean delete(Long id) throws Exception {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public void update(Long id, MarkDTO entity) {
+	public Mark update(Long id, Mark entity) throws Exception {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
-
 }

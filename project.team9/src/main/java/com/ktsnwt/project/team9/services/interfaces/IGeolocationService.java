@@ -1,7 +1,7 @@
 package com.ktsnwt.project.team9.services.interfaces;
 
-import com.ktsnwt.project.team9.dto.GeolocationDTO;
+import com.ktsnwt.project.team9.model.Geolocation;
 
-public interface IGeolocationService extends IService<GeolocationDTO, Long>{
+public interface IGeolocationService extends IService<Geolocation, Long>{
 
 }

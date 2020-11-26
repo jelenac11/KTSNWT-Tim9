@@ -1,7 +1,7 @@
 package com.ktsnwt.project.team9.services.interfaces;
 
-import com.ktsnwt.project.team9.dto.ImageDTO;
+import com.ktsnwt.project.team9.model.Image;
 
-public interface IImageService extends IService<ImageDTO, Long> {
+public interface IImageService extends IService<Image, Long> {
 
 }

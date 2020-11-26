@@ -1,7 +1,7 @@
 package com.ktsnwt.project.team9.services.interfaces;
 
-import com.ktsnwt.project.team9.dto.CategoryDTO;
+import com.ktsnwt.project.team9.model.Category;
 
-public interface ICategoryService extends IService<CategoryDTO, Long> {
+public interface ICategoryService extends IService<Category, Long> {
 
 }

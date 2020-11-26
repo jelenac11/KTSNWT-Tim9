@@ -32,6 +32,11 @@ public class Mark {
 		super();
 	}
 	
+	public Mark(Long id) {
+		super();
+		this.id = id;
+	}
+	
 	public Mark(int value, RegisteredUser grader, CulturalOffer culturalOffer) {
 		super();
 		this.value = value;

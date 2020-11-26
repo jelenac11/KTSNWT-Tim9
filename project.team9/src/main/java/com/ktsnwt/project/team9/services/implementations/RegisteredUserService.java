@@ -1,38 +1,40 @@
 package com.ktsnwt.project.team9.services.implementations;
 
-import com.ktsnwt.project.team9.dto.RegisteredUserDTO;
+import org.springframework.stereotype.Service;
+
+import com.ktsnwt.project.team9.model.RegisteredUser;
 import com.ktsnwt.project.team9.services.interfaces.IRegisteredUserService;
 
+@Service
 public class RegisteredUserService implements IRegisteredUserService {
 
 	@Override
-	public Iterable<RegisteredUserDTO> getAll() {
+	public Iterable<RegisteredUser> getAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public RegisteredUserDTO getById() {
+	public RegisteredUser getById(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void add(RegisteredUserDTO entity) {
+	public RegisteredUser create(RegisteredUser entity) throws Exception {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	@Override
-	public boolean delete(Long id) {
+	public boolean delete(Long id) throws Exception {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public void update(Long id, RegisteredUserDTO entity) {
+	public RegisteredUser update(Long id, RegisteredUser entity) throws Exception {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
-
 }

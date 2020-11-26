@@ -1,26 +1,34 @@
 package com.ktsnwt.project.team9.services.implementations;
 
-import com.ktsnwt.project.team9.dto.CategoryDTO;
+import org.springframework.stereotype.Service;
+
+import com.ktsnwt.project.team9.model.Category;
+import com.ktsnwt.project.team9.repositories.ICategoryRepository;
 import com.ktsnwt.project.team9.services.interfaces.ICategoryService;
 
+import lombok.AllArgsConstructor;
+
+@Service
+@AllArgsConstructor
 public class CategoryService implements ICategoryService {
+	
+	private ICategoryRepository categoryRepository;
 
 	@Override
-	public Iterable<CategoryDTO> getAll() {
+	public Iterable<Category> getAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public CategoryDTO getById() {
-		// TODO Auto-generated method stub
-		return null;
+	public Category getById(Long id) {
+		return categoryRepository.findById(id).orElse(null);
 	}
 
 	@Override
-	public void add(CategoryDTO entity) {
+	public Category create(Category entity) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	@Override
@@ -30,9 +38,8 @@ public class CategoryService implements ICategoryService {
 	}
 
 	@Override
-	public void update(Long id, CategoryDTO entity) {
+	public Category update(Long id, Category entity) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
-
 }
