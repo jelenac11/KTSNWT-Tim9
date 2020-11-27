@@ -1,6 +1,8 @@
 package com.ktsnwt.project.team9.dto;
 
 import java.util.Set;
+
+import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -27,6 +29,7 @@ public class CulturalOfferDTO {
 	
 	private boolean active;
 	
+	@Valid
 	@NotNull(message = "Geolocation cannot be null.")
 	private GeolocationDTO geolocation;
 	

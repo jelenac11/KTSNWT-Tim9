@@ -1,6 +1,5 @@
 package com.ktsnwt.project.team9.dto;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -18,10 +17,8 @@ public class GeolocationDTO {
 	private String location;
 	
 	@NotNull(message = "Lat cannot be null.")
-	@Min(value = 0, message = "Lat should not be less than 0")
 	private double lat;
 	
 	@NotNull(message = "Lon cannot be null.")
-	@Min(value = 0, message = "Lon should not be less than 0")
 	private double lon;
 }

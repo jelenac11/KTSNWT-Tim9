@@ -1,6 +1,9 @@
 package com.ktsnwt.project.team9.controllers;
 
 import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +45,7 @@ public class CulturalOfferController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<CulturalOfferDTO> createCulturalOffer(@RequestBody CulturalOfferDTO culturalOfferDTO) {
+	public ResponseEntity<CulturalOfferDTO> createCulturalOffer(@Valid @RequestBody CulturalOfferDTO culturalOfferDTO) {
 
 		try {
 			return new ResponseEntity<CulturalOfferDTO>(
@@ -56,7 +59,7 @@ public class CulturalOfferController {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<CulturalOfferDTO> updateCulturalOffer(@PathVariable Long id,
-			@RequestBody CulturalOfferDTO culturalOfferDTO) {
+			@Valid @RequestBody CulturalOfferDTO culturalOfferDTO) {
 
 		try {
 			return new ResponseEntity<CulturalOfferDTO>(

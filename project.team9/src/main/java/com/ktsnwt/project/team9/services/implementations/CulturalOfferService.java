@@ -35,10 +35,6 @@ public class CulturalOfferService implements ICulturalOfferService {
 
 	@Override
 	public CulturalOffer create(CulturalOffer entity) throws Exception {
-		CulturalOffer existingCulturalOffer = culturalOfferRepository.findByName(entity.getName());
-		if (existingCulturalOffer != null) {
-			throw new Exception("Cultural offer with given name already exists.");
-		}
 		entity.setActive(true);
 		Category category = categoryService.getById(entity.getCategory().getId());
 		if(category==null) {
