@@ -31,7 +31,6 @@ public class News {
 	private boolean active;
 
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "comment_id")
 	private Set<Image> images;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)

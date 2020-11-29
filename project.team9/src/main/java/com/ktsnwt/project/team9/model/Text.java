@@ -12,11 +12,10 @@ import javax.persistence.OneToOne;
 @DiscriminatorValue("TXT")
 public class Text extends Comment {
 	
-	@Column(unique = false, nullable = false)
+	@Column(unique = false, nullable = true)
 	private String content;
 	
 	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER, optional = true)
-	@MapsId
 	private Image image;
 
 	public Text() {

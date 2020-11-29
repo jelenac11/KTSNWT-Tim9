@@ -29,11 +29,11 @@ public abstract class Comment {
 	@Column(unique = false, nullable = false)
 	private long date;
 	
-	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = true)
 	@JoinColumn(name = "user_id")
 	private RegisteredUser author;
 	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "culturalOffer_id")
 	private CulturalOffer culturalOffer;
 
