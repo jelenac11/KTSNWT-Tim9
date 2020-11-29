@@ -11,6 +11,7 @@ import com.ktsnwt.project.team9.services.interfaces.ICulturalOfferService;
 
 import lombok.AllArgsConstructor;
 
+
 @Service
 @AllArgsConstructor
 public class CulturalOfferService implements ICulturalOfferService {
