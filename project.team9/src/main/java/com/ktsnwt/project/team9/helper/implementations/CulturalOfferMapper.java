@@ -17,6 +17,7 @@ import com.ktsnwt.project.team9.model.News;
 
 import lombok.AllArgsConstructor;
 
+
 @Component
 @AllArgsConstructor
 public class CulturalOfferMapper implements IMapper<CulturalOffer, CulturalOfferDTO> {

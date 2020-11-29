@@ -8,4 +8,6 @@ import com.ktsnwt.project.team9.model.Admin;
 @Repository
 public interface IAdminRepository extends JpaRepository<Admin, Long> {
 
+	
+
 }
