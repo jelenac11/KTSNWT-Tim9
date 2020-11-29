@@ -1,22 +1,16 @@
 package com.ktsnwt.project.team9.model;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
-public abstract class Comment {
+public class Comment {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,13 +23,19 @@ public abstract class Comment {
 	@Column(unique = false, nullable = false)
 	private long date;
 	
-	@ManyToOne(fetch = FetchType.EAGER, optional = true)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "user_id")
 	private RegisteredUser author;
 	
-	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "culturalOffer_id")
 	private CulturalOffer culturalOffer;
+	
+	@Column(unique = false, nullable = true)
+	private String text;
+	
+	@Column(unique = false, nullable = true)
+	private String imageUrl;
 
 	public Comment() {
 		super();
@@ -46,12 +46,15 @@ public abstract class Comment {
 		this.id = id;
 	}
 
-	public Comment(boolean approved, long date, RegisteredUser author, CulturalOffer culturalOffer) {
+	public Comment(Long id, boolean approved, long date, RegisteredUser author, CulturalOffer culturalOffer, String text, String imageUrl) {
 		super();
+		this.id = id;
 		this.approved = approved;
 		this.date = date;
 		this.author = author;
 		this.culturalOffer = culturalOffer;
+		this.text = text;
+		this.imageUrl = imageUrl;
 	}
 
 	public boolean isApproved() {
@@ -88,6 +91,26 @@ public abstract class Comment {
 
 	public Long getId() {
 		return id;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 	

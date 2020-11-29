@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.ktsnwt.project.team9.model.CulturalOffer;
 import com.ktsnwt.project.team9.model.News;
 import com.ktsnwt.project.team9.repositories.ICulturalOfferRepository;
+import com.ktsnwt.project.team9.repositories.IImageRepository;
 import com.ktsnwt.project.team9.repositories.INewsRepository;
 import com.ktsnwt.project.team9.services.interfaces.INewsService;
 
@@ -20,6 +21,9 @@ public class NewsService implements INewsService {
 	
 	@Autowired
 	private ICulturalOfferRepository culturalOfferRepository;
+	
+	@Autowired
+	private IImageRepository imageRepository;
 	
 
 	@Override
@@ -41,6 +45,8 @@ public class NewsService implements INewsService {
 		
 		entity.setCulturalOffer(culturalOffer);
 		
+		entity.getImages().forEach(img -> img.setNews(entity));
+		
 		return newsRepository.save(entity);
 	}
 
@@ -60,10 +66,18 @@ public class NewsService implements INewsService {
 		if (existingNews == null) {
 			throw new Exception("News with given id doesn't exist.");
 		}
+		
+		existingNews.getImages().forEach(img -> {
+			img.setNews(null);
+			imageRepository.deleteById(img.getId());
+			});
+		
 		existingNews.setContent(entity.getContent());
 		existingNews.setActive(entity.isActive());
 		existingNews.setDate(entity.getDate());
 		existingNews.setImages(entity.getImages());
+		
+		
 		
 		CulturalOffer culturalOffer = culturalOfferRepository.findById(
 				entity.getCulturalOffer().getId()).orElse(null);
@@ -71,6 +85,9 @@ public class NewsService implements INewsService {
 			throw new Exception("There is no cultural offer with that ID");
 		
 		existingNews.setCulturalOffer(culturalOffer);
+		
+		existingNews.getImages().forEach(img -> img.setNews(existingNews));
+		
 		
 		return newsRepository.save(existingNews);
 	}
