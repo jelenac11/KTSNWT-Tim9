@@ -23,7 +23,7 @@ public class Mark {
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "user_id")
 	private RegisteredUser grader;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "culturalOffer_id")
 	private CulturalOffer culturalOffer;
@@ -44,7 +44,14 @@ public class Mark {
 		this.culturalOffer = culturalOffer;
 	}
 
-
+	public Mark(Long id, int value, RegisteredUser grader, CulturalOffer culturalOffer) {
+		super();
+		this.id = id;
+		this.value = value;
+		this.grader = grader;
+		this.culturalOffer = culturalOffer;
+	}
+	
 	public RegisteredUser getGrader() {
 		return grader;
 	}

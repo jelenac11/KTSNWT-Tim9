@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Image {
@@ -18,7 +20,7 @@ public class Image {
 	
 	@Column(unique = false, nullable = false)
 	private String url;
-	
+  
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	private News news;
 	
@@ -29,15 +31,16 @@ public class Image {
 	public Image(Long id) {
 		this.id = id;
 	}
-	
+
 	public Image(String url) {
 		this.url = url;
 	}
-	
+
 	public Image(String url, News news) {
 		this.url = url;
 		this.news = news;
 	}
+
 
 	public Long getId() {
 		return id;
@@ -62,5 +65,6 @@ public class Image {
 	public void setNews(News news) {
 		this.news = news;
 	}
-
+  
 }
+

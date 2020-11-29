@@ -31,9 +31,13 @@ public class RegisteredUser extends User {
 	public RegisteredUser() {
 		super();
 	}
+	
+	public RegisteredUser(Long id) {
+		super(id);
+	}
 
-	public RegisteredUser(Set<Mark> marks, Set<Comment> comments, Set<CulturalOffer> subscribed, boolean verified) {
-		super();
+	public RegisteredUser(Long id, String username, String email, String password, String firstName, String lastName, Set<Mark> marks, Set<Comment> comments, Set<CulturalOffer> subscribed, boolean verified) {
+		super(id, username, email, password, firstName, lastName);
 		this.marks = marks;
 		this.comments = comments;
 		this.subscribed = subscribed;
@@ -41,11 +45,12 @@ public class RegisteredUser extends User {
 	}
 
 	public RegisteredUser(String username, String email, String password, String firstName, String lastName,
-			Set<Mark> marks, Set<Comment> comments, Set<CulturalOffer> subscribed) {
+			Set<Mark> marks, Set<Comment> comments, Set<CulturalOffer> subscribed, boolean verified) {
 		super(username, email, password, firstName, lastName);
 		this.marks = marks;
 		this.comments = comments;
 		this.subscribed = subscribed;
+		this.verified = verified;
 	}
 
 	public Set<Mark> getMarks() {

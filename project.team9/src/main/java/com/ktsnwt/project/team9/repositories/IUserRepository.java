@@ -8,4 +8,8 @@ import com.ktsnwt.project.team9.model.User;
 @Repository
 public interface IUserRepository extends JpaRepository<User, Long> {
 
+	User findByUsername(String username);
+
+	User findByEmail(String email);
+
 }
