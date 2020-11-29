@@ -1,38 +1,40 @@
 package com.ktsnwt.project.team9.services.implementations;
 
-import com.ktsnwt.project.team9.dto.CommentDTO;
+import org.springframework.stereotype.Service;
+
+import com.ktsnwt.project.team9.model.Comment;
 import com.ktsnwt.project.team9.services.interfaces.ICommentService;
 
+@Service
 public class CommentService implements ICommentService {
 
 	@Override
-	public Iterable<CommentDTO> getAll() {
+	public Iterable<Comment> getAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public CommentDTO getById() {
+	public Comment getById(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void add(CommentDTO entity) {
+	public Comment create(Comment entity) throws Exception {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	@Override
-	public boolean delete(Long id) {
+	public boolean delete(Long id) throws Exception {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public void update(Long id, CommentDTO entity) {
+	public Comment update(Long id, Comment entity) throws Exception {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
-
 }

@@ -1,38 +1,40 @@
 package com.ktsnwt.project.team9.services.implementations;
 
-import com.ktsnwt.project.team9.dto.NewsDTO;
+import org.springframework.stereotype.Service;
+
+import com.ktsnwt.project.team9.model.News;
 import com.ktsnwt.project.team9.services.interfaces.INewsService;
 
+@Service
 public class NewsService implements INewsService {
 
 	@Override
-	public Iterable<NewsDTO> getAll() {
+	public Iterable<News> getAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public NewsDTO getById() {
+	public News getById(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void add(NewsDTO entity) {
+	public News create(News entity) throws Exception {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	@Override
-	public boolean delete(Long id) {
+	public boolean delete(Long id) throws Exception {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public void update(Long id, NewsDTO entity) {
+	public News update(Long id, News entity) throws Exception {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
-
 }

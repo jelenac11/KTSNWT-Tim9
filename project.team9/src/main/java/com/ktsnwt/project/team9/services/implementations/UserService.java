@@ -1,38 +1,40 @@
 package com.ktsnwt.project.team9.services.implementations;
 
-import com.ktsnwt.project.team9.dto.UserDTO;
+import org.springframework.stereotype.Service;
+
+import com.ktsnwt.project.team9.model.User;
 import com.ktsnwt.project.team9.services.interfaces.IUserService;
 
+@Service
 public class UserService implements IUserService {
 
 	@Override
-	public Iterable<UserDTO> getAll() {
+	public Iterable<User> getAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public UserDTO getById() {
+	public User getById(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void add(UserDTO entity) {
+	public User create(User entity) throws Exception {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	@Override
-	public boolean delete(Long id) {
+	public boolean delete(Long id) throws Exception {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public void update(Long id, UserDTO entity) {
+	public User update(Long id, User entity) throws Exception {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
-
 }

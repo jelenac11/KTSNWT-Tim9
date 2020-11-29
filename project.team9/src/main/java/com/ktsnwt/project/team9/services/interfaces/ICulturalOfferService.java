@@ -1,7 +1,7 @@
 package com.ktsnwt.project.team9.services.interfaces;
 
-import com.ktsnwt.project.team9.dto.CulturalOfferDTO;
+import com.ktsnwt.project.team9.model.CulturalOffer;
 
-public interface ICulturalOfferService extends IService<CulturalOfferDTO, Long> {
+public interface ICulturalOfferService extends IService<CulturalOffer, Long> {
 
 }

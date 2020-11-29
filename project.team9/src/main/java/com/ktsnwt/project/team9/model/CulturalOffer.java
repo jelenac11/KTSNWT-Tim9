@@ -14,6 +14,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 public class CulturalOffer {
 	
@@ -28,9 +33,13 @@ public class CulturalOffer {
 	@Column(unique = false, nullable = true)
 	private String description;
 	
+	@Column(unique = false, nullable = true)
+	private String imageURL;
+	
 	@Column
 	private double averageMark;
-	@Column
+	
+	@Column(unique = false, nullable = false)
 	private boolean active;
 	
 	
@@ -45,120 +54,41 @@ public class CulturalOffer {
 	@OneToMany(mappedBy = "culturalOffer", cascade = CascadeType.ALL)
 	private Set<News> news;
 	
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "comment_id")
-	private Set<Image> images;
-	
 	@OneToMany(mappedBy = "culturalOffer" ,cascade = CascadeType.ALL)
 	private Set<Comment> comments;
 	
 	@OneToMany(mappedBy = "culturalOffer", cascade = CascadeType.ALL)
 	private Set<Mark> marks;
+	
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "user_id")
+	private Admin admin;
 
 	public CulturalOffer() {
 		super();
 	}
 
-	public CulturalOffer(String name, String description, Geolocation geolocation, Category category, Set<News> news,
-			Set<Image> images, Set<Comment> comments, Set<Mark> marks, boolean active,
-			double averageMark) {
+	public CulturalOffer(Long id) {
 		super();
+		this.id = id;
+	}
+
+	
+	public CulturalOffer(Long id, String name, String description, String imageURL, double averageMark, boolean active,
+			Geolocation geolocation, Category category, Set<News> news, Set<Comment> comments,
+			Set<Mark> marks, Admin admin) {
+		super();
+		this.id = id;
 		this.name = name;
 		this.description = description;
+		this.imageURL = imageURL;
+		this.averageMark = averageMark;
+		this.active = active;
 		this.geolocation = geolocation;
 		this.category = category;
 		this.news = news;
-		this.images = images;
 		this.comments = comments;
 		this.marks = marks;
-		this.active = active;
-		this.averageMark = averageMark;
+		this.admin = admin;
 	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public Geolocation getGeolocation() {
-		return geolocation;
-	}
-
-	public void setGeolocation(Geolocation geolocation) {
-		this.geolocation = geolocation;
-	}
-
-	public Category getCategory() {
-		return category;
-	}
-
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-
-	public Set<News> getNews() {
-		return news;
-	}
-
-	public void setNews(Set<News> news) {
-		this.news = news;
-	}
-
-	public Set<Image> getImages() {
-		return images;
-	}
-
-	public void setImages(Set<Image> images) {
-		this.images = images;
-	}
-
-	public Set<Comment> getComments() {
-		return comments;
-	}
-
-	public void setComments(Set<Comment> comments) {
-		this.comments = comments;
-	}
-
-	public Set<Mark> getMarks() {
-		return marks;
-	}
-
-	public void setMarks(Set<Mark> marks) {
-		this.marks = marks;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public double getAverageMark() {
-		return averageMark;
-	}
-
-	public void setAverageMark(double averageMark) {
-		this.averageMark = averageMark;
-	}
-
-	public boolean isActive() {
-		return active;
-	}
-
-	public void setActive(boolean active) {
-		this.active = active;
-	}
-	
-	
-	
 }

@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class News {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column
@@ -23,17 +23,17 @@ public class News {
 
 	@Column(unique = false, nullable = false)
 	private String content;
-	
+
 	@Column(unique = false, nullable = false)
 	private long date;
-	
+
 	@Column
 	private boolean active;
-	
+
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name="comment_id")
+	@JoinColumn(name = "comment_id")
 	private Set<Image> images;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "culturalOffer_id")
 	private CulturalOffer culturalOffer;
@@ -42,8 +42,12 @@ public class News {
 		super();
 	}
 
-	public News(String content, long date, Set<Image> images, CulturalOffer culturalOffer,
-			boolean active) {
+	public News(Long id) {
+		super();
+		this.id = id;
+	}
+
+	public News(String content, long date, Set<Image> images, CulturalOffer culturalOffer, boolean active) {
 		super();
 		this.content = content;
 		this.date = date;
@@ -95,7 +99,5 @@ public class News {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-	
-	
-	
+
 }

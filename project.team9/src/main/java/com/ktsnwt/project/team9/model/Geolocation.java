@@ -10,10 +10,9 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 //Ovim se obezbedjuje da kombinacija kolona bude jedinstvena
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = 
-                                        { "lat", "lon" }) })
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "lat", "lon" }) })
 public class Geolocation {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "geolocation_id")
@@ -21,19 +20,20 @@ public class Geolocation {
 
 	@Column(nullable = false)
 	private String location;
-	
+
 	@Column(nullable = false)
-	private long lat;
-	
+	private double lat;
+
 	@Column(nullable = false)
-	private long lon;
+	private double lon;
 
 	public Geolocation() {
 		super();
 	}
 
-	public Geolocation(String location, long lat, long lon) {
+	public Geolocation(Long id, String location, double lat, double lon) {
 		super();
+		this.id = id;
 		this.location = location;
 		this.lat = lat;
 		this.lon = lon;
@@ -47,26 +47,23 @@ public class Geolocation {
 		this.location = location;
 	}
 
-	public long getLat() {
+	public double getLat() {
 		return lat;
 	}
 
-	public void setLat(long lat) {
+	public void setLat(double lat) {
 		this.lat = lat;
 	}
 
-	public long getLon() {
+	public double getLon() {
 		return lon;
 	}
 
-	public void setLon(long lon) {
+	public void setLon(double lon) {
 		this.lon = lon;
 	}
 
 	public Long getId() {
 		return id;
 	}
-	
-	
-	
 }
