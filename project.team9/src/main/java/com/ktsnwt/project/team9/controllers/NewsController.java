@@ -69,7 +69,6 @@ public class NewsController {
 							.toDto(newsService.update(id, newsMapper.toEntity(NewsDTO))),
 					HttpStatus.OK);
 		} catch (Exception e) {
-			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
