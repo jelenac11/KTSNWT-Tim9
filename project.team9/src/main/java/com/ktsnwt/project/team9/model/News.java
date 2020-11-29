@@ -30,7 +30,8 @@ public class News {
 	@Column
 	private boolean active;
 
-	@OneToMany(mappedBy = "news", cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "image_id")
 	private Set<Image> images;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)

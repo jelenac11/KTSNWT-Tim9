@@ -2,11 +2,11 @@ package com.ktsnwt.project.team9.helper.implementations;
 
 import org.springframework.stereotype.Component;
 import com.ktsnwt.project.team9.dto.CategoryDTO;
-import com.ktsnwt.project.team9.helper.interfaces.IMapper;
+import com.ktsnwt.project.team9.helper.interfaces.SetMapper;
 import com.ktsnwt.project.team9.model.Category;
 
 @Component
-public class CategoryMapper implements IMapper<Category, CategoryDTO> {
+public class CategoryMapper extends SetMapper<Category, CategoryDTO> {
 
 	@Override
 	public Category toEntity(CategoryDTO dto) {
