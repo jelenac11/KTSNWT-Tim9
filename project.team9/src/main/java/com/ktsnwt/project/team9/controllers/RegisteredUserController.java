@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ktsnwt.project.team9.dto.RegisteredUserDTO;
 import com.ktsnwt.project.team9.helper.implementations.RegisteredUserMapper;
+import com.ktsnwt.project.team9.model.RegisteredUser;
 import com.ktsnwt.project.team9.services.implementations.RegisteredUserService;
 
 @RestController
@@ -34,6 +35,15 @@ public class RegisteredUserController {
 	public ResponseEntity<Iterable<RegisteredUserDTO>> getAllRegisteredUser() {
 		List<RegisteredUserDTO> registeredUsersDTO = registeredUserMapper.toDTOList(registeredUserService.getAll());
 		return new ResponseEntity<>(registeredUsersDTO, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public ResponseEntity<RegisteredUserDTO> getRegisteredUser(@PathVariable Long id) {
+		RegisteredUser registeredUser = registeredUserService.getById(id);
+		if (registeredUser == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<>(registeredUserMapper.toDto(registeredUser), HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
