@@ -57,6 +57,9 @@ public class NewsService implements INewsService {
 	@Override
 	public News update(Long id, News entity) throws Exception {
 		News existingNews = newsRepository.findById(id).orElse(null);
+		if (existingNews == null) {
+			throw new Exception("News with given id doesn't exist.");
+		}
 		existingNews.setContent(entity.getContent());
 		existingNews.setActive(entity.isActive());
 		existingNews.setDate(entity.getDate());
