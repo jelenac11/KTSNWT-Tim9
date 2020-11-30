@@ -34,7 +34,7 @@ public class CulturalOfferController {
 		return new ResponseEntity<Iterable<CulturalOfferDTO>>(culturalOffersDTO, HttpStatus.OK);
 	}
 	
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value= "/by-page", method = RequestMethod.GET)
 	public ResponseEntity<Page<CulturalOfferDTO>> getAllCulturalOffers(Pageable pageable){
 		Page<CulturalOffer> page = culturalOfferService.findAll(pageable);
         List<CulturalOfferDTO> culturalOfferDTOs = culturalOfferMapper.toDTOList(page.toList());
