@@ -1,5 +1,7 @@
 package com.ktsnwt.project.team9.services.implementations;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ktsnwt.project.team9.model.Admin;
@@ -24,6 +26,10 @@ public class CulturalOfferService implements ICulturalOfferService {
 
 	private AdminService adminService;
 
+	public Page<CulturalOffer> findAll(Pageable pageable) {
+		return culturalOfferRepository.findAll(pageable);
+	}
+	
 	@Override
 	public Iterable<CulturalOffer> getAll() {
 		return culturalOfferRepository.findAll();
