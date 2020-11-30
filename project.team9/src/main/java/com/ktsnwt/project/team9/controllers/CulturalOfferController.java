@@ -1,9 +1,10 @@
 package com.ktsnwt.project.team9.controllers;
 
 import java.util.List;
-
 import javax.validation.Valid;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,6 @@ import com.ktsnwt.project.team9.dto.CulturalOfferDTO;
 import com.ktsnwt.project.team9.helper.implementations.CulturalOfferMapper;
 import com.ktsnwt.project.team9.model.CulturalOffer;
 import com.ktsnwt.project.team9.services.implementations.CulturalOfferService;
-
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -32,6 +32,14 @@ public class CulturalOfferController {
 	public ResponseEntity<Iterable<CulturalOfferDTO>> getAllCulturalOffers() {
 		List<CulturalOfferDTO> culturalOffersDTO = culturalOfferMapper.toDTOList(culturalOfferService.getAll());
 		return new ResponseEntity<Iterable<CulturalOfferDTO>>(culturalOffersDTO, HttpStatus.OK);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<Page<CulturalOfferDTO>> getAllCulturalOffers(Pageable pageable){
+		Page<CulturalOffer> page = culturalOfferService.findAll(pageable);
+        List<CulturalOfferDTO> culturalOfferDTOs = culturalOfferMapper.toDTOList(page.toList());
+        Page<CulturalOfferDTO> pageCulturalOfferDTOs = new PageImpl<>(culturalOfferDTOs,page.getPageable(),page.getTotalElements());
+        return new ResponseEntity<Page<CulturalOfferDTO>>(pageCulturalOfferDTOs, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
