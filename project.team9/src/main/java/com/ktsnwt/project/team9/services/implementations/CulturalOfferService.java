@@ -51,7 +51,7 @@ public class CulturalOfferService implements ICulturalOfferService {
 
 	@Override
 	public boolean delete(Long id) throws Exception {
-		CulturalOffer existingCulturalOffer = culturalOfferRepository.findById(id).orElse(null);
+		CulturalOffer existingCulturalOffer = getById(id);
 		if (existingCulturalOffer == null) {
 			throw new Exception("Cultural offer with given id doesn't exist.");
 		}
@@ -61,7 +61,7 @@ public class CulturalOfferService implements ICulturalOfferService {
 
 	@Override
 	public CulturalOffer update(Long id, CulturalOffer entity) throws Exception {
-		CulturalOffer existingCulturalOffer = culturalOfferRepository.findById(id).orElse(null);
+		CulturalOffer existingCulturalOffer = getById(id);
 		if (existingCulturalOffer == null) {
 			throw new Exception("Cultural offer with given id doesn't exist.");
 		}

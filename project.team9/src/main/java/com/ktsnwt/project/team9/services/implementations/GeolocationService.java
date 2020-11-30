@@ -1,5 +1,7 @@
 package com.ktsnwt.project.team9.services.implementations;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ktsnwt.project.team9.model.Geolocation;
@@ -16,19 +18,25 @@ public class GeolocationService implements IGeolocationService {
 	
 	@Override
 	public Iterable<Geolocation> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return geolocationRepository.findAll();
+	}
+	
+	public Page<Geolocation> getAll(Pageable pageable){
+		return geolocationRepository.findAll(pageable);
 	}
 
 	@Override
 	public Geolocation getById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return geolocationRepository.findById(id).orElse(null);
+	}
+	
+	public Geolocation findByLatAndLon(double lat, double lon) {
+		return geolocationRepository.findByLatAndLon(lat, lon).orElse(null);
 	}
 
 	@Override
 	public Geolocation create(Geolocation entity) throws Exception {
-		Geolocation geolocation = geolocationRepository.findByLatAndLon(entity.getLat(), entity.getLon()).orElse(null);
+		Geolocation geolocation = findByLatAndLon(entity.getLat(), entity.getLon());
 		if(geolocation!=null) {
 			throw new Exception("Geolocation with given lat and lon already exists.");
 		}
@@ -37,17 +45,23 @@ public class GeolocationService implements IGeolocationService {
 
 	@Override
 	public boolean delete(Long id) throws Exception {
-		// TODO Auto-generated method stub
-		return false;
+		Geolocation geolocation = getById(id);
+		if(geolocation==null) {
+			throw new Exception("Geolocation with given id doesn't exist.");
+		}
+		geolocationRepository.deleteById(id);
+		return true;
 	}
 
 	@Override
 	public Geolocation update(Long id, Geolocation entity) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	public Geolocation findByLatAndLon(double lat, double lon) {
-		return geolocationRepository.findByLatAndLon(lat, lon).orElse(null);
+		Geolocation existingGeolocation = getById(id);
+		if(existingGeolocation==null) {
+			throw new Exception("Geolocation doesn't exist.");
+		}
+		existingGeolocation.setLat(entity.getLat());
+		existingGeolocation.setLon(entity.getLon());
+		existingGeolocation.setLocation(entity.getLocation());
+		return geolocationRepository.save(entity);
 	}
 }
