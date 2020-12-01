@@ -3,6 +3,8 @@ package com.ktsnwt.project.team9.services.implementations;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ktsnwt.project.team9.model.Category;
@@ -53,5 +55,9 @@ public class CategoryService implements ICategoryService {
 		category.setDescription(entity.getDescription());
 		category.setName(entity.getName());
 		return categoryRepository.save(category);
+	}
+
+	public Page<Category> findAll(Pageable pageable) {
+		return categoryRepository.findAll(pageable);
 	}
 }

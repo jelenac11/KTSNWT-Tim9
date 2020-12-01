@@ -55,6 +55,26 @@
 			"response": []
 		},
 		{
+			"name": "localhost:8081/api/categories/pageble",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/api/categories",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"categories"
+					]
+				},
+				"description": "All categories"
+			},
+			"response": []
+		},
+		{
 			"name": "localhost:8081/api/categories/1",
 			"request": {
 				"method": "GET",
@@ -119,15 +139,15 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8081/api/news/1",
+					"raw": "localhost:8081/api/categories/2",
 					"host": [
 						"localhost"
 					],
 					"port": "8081",
 					"path": [
 						"api",
-						"news",
-						"1"
+						"categories",
+						"2"
 					]
 				},
 				"description": "Deleting news"
