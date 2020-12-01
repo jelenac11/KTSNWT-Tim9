@@ -1,10 +1,15 @@
 package com.ktsnwt.project.team9.controllers;
 
+
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +40,16 @@ public class NewsController {
 		Set<NewsDTO> newssDTO = newsMapper.toDTOList(newsService.getAll());
 		return new ResponseEntity<Iterable<NewsDTO>>(newssDTO, HttpStatus.OK);
 	}
+	
+	
+	@RequestMapping(value= "/by-page", method = RequestMethod.GET)
+	public ResponseEntity<Page<NewsDTO>> getAllCulturalOffers(Pageable pageable){
+		Page<News> page = newsService.findAll(pageable);
+        Set<NewsDTO> newssDTO = newsMapper.toDTOList(page.toList());
+        Page<NewsDTO> pageNewsDTO = new PageImpl<NewsDTO>(newssDTO.stream().collect(Collectors.toList()),page.getPageable(),page.getTotalElements());
+        return new ResponseEntity<Page<NewsDTO>>(pageNewsDTO, HttpStatus.OK);
+	}
+	
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<NewsDTO> getNews(@PathVariable Long id) {
