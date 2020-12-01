@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -30,7 +31,7 @@ public class CulturalOffer {
 	@Column(unique = false, nullable = false)
 	private String name;
 	
-	@Column(unique = false, nullable = true)
+	@Column(columnDefinition = "text", unique = false, nullable = true)
 	private String description;
 	
 	@Column(unique = false, nullable = true)
@@ -63,7 +64,10 @@ public class CulturalOffer {
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "user_id")
 	private Admin admin;
-
+	
+	@ManyToMany(mappedBy = "subscribed", fetch = FetchType.LAZY)
+	private Set<RegisteredUser> subscribedUsers;
+	
 	public CulturalOffer() {
 		super();
 	}
@@ -91,4 +95,5 @@ public class CulturalOffer {
 		this.marks = marks;
 		this.admin = admin;
 	}
+
 }

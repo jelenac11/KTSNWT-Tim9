@@ -8,6 +8,7 @@ import com.ktsnwt.project.team9.model.Admin;
 import com.ktsnwt.project.team9.model.Category;
 import com.ktsnwt.project.team9.model.CulturalOffer;
 import com.ktsnwt.project.team9.model.Geolocation;
+import com.ktsnwt.project.team9.model.RegisteredUser;
 import com.ktsnwt.project.team9.repositories.ICulturalOfferRepository;
 import com.ktsnwt.project.team9.services.interfaces.ICulturalOfferService;
 
@@ -61,6 +62,10 @@ public class CulturalOfferService implements ICulturalOfferService {
 		if (existingCulturalOffer == null) {
 			throw new Exception("Cultural offer with given id doesn't exist.");
 		}
+		for(RegisteredUser registeredUser : existingCulturalOffer.getSubscribedUsers()) {
+			registeredUser.getSubscribed().remove(existingCulturalOffer);
+		}
+		existingCulturalOffer.getSubscribedUsers().clear();
 		culturalOfferRepository.deleteById(id);
 		return true;
 	}

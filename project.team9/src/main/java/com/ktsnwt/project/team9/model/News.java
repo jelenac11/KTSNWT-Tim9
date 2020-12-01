@@ -21,7 +21,7 @@ public class News {
 	@Column
 	private Long id;
 
-	@Column(unique = false, nullable = false)
+	@Column(columnDefinition = "text", unique = false, nullable = false)
 	private String content;
 
 	@Column(unique = false, nullable = false)

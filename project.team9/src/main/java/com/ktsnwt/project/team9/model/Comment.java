@@ -31,7 +31,7 @@ public class Comment {
 	@JoinColumn(name = "culturalOffer_id")
 	private CulturalOffer culturalOffer;
 	
-	@Column(unique = false, nullable = true)
+	@Column(columnDefinition = "text", unique = false, nullable = true)
 	private String text;
 	
 	@Column(unique = false, nullable = true)
