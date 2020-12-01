@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -31,7 +32,7 @@ public class News {
 	private boolean active;
 
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "image_id")
+	@JoinColumn(name = "news_id")
 	private Set<Image> images;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)

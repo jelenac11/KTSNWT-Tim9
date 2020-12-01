@@ -31,6 +31,7 @@ public class CulturalOffer {
 	@Column(unique = false, nullable = false)
 	private String name;
 	
+
 	@Column(columnDefinition = "text", unique = false, nullable = true)
 	private String description;
 	
