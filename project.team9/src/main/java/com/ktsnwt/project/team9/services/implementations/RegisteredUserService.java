@@ -1,6 +1,8 @@
 package com.ktsnwt.project.team9.services.implementations;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ktsnwt.project.team9.model.RegisteredUser;
@@ -17,6 +19,10 @@ public class RegisteredUserService implements IRegisteredUserService {
 	
 	@Autowired
 	private IUserRepository userRepository;
+	
+	public Page<RegisteredUser> findAll(Pageable pageable) {
+		return registeredUserRepository.findAll(pageable);
+	}
 	
 	@Override
 	public Iterable<RegisteredUser> getAll() {

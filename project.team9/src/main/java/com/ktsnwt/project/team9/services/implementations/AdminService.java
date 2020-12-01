@@ -1,6 +1,8 @@
 package com.ktsnwt.project.team9.services.implementations;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ktsnwt.project.team9.model.Admin;
@@ -18,6 +20,10 @@ public class AdminService implements IAdminService {
 	@Autowired
 	private IUserRepository userRepository;
 
+	public Page<Admin> findAll(Pageable pageable) {
+		return adminRepository.findAll(pageable);
+	}
+	
 	@Override
 	public Iterable<Admin> getAll() {
 		return adminRepository.findAll();
@@ -52,7 +58,7 @@ public class AdminService implements IAdminService {
 		if (!existingAdmin.getCulturalOffers().isEmpty()) {
 			throw new Exception("Admin has cultural offers so he can't be deleted.");
 		}
-		adminRepository.save(existingAdmin);
+		adminRepository.deleteById(id);
 		return true;
 	}
 
