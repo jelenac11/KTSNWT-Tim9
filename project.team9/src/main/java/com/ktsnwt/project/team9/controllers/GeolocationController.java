@@ -34,7 +34,8 @@ public class GeolocationController {
 		return new ResponseEntity<Iterable<GeolocationDTO>>(geolocationDTO, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "by-page",method = RequestMethod.GET)
+
+	@RequestMapping(value= "/by-page", method = RequestMethod.GET)
 	public ResponseEntity<Page<GeolocationDTO>> getAllGeolocations(Pageable pageable){
 		Page<Geolocation> page = geolocationService.getAll(pageable);
 		List<GeolocationDTO> geolocationDTOs = geolocationMapper.toDTOList(page.toList());
