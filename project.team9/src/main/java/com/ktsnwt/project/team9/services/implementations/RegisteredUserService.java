@@ -1,10 +1,13 @@
 package com.ktsnwt.project.team9.services.implementations;
 
+import java.util.NoSuchElementException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.ktsnwt.project.team9.model.Comment;
 import com.ktsnwt.project.team9.model.RegisteredUser;
 import com.ktsnwt.project.team9.model.User;
 import com.ktsnwt.project.team9.repositories.IRegisteredUser;
@@ -61,7 +64,7 @@ public class RegisteredUserService implements IRegisteredUserService {
 	public RegisteredUser update(Long id, RegisteredUser entity) throws Exception {
 		RegisteredUser registeredUser = registeredUserRepository.findById(id).orElse(null);
 		if (registeredUser == null) {
-			throw new Exception("Registered user with given id doesn't exist.");
+			throw new NoSuchElementException("Registered user with given id doesn't exist.");
 		}
 		if (!entity.getEmail().equals(registeredUser.getEmail())) {
 			User emailUser = userRepository.findByEmail(entity.getEmail());

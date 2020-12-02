@@ -1,6 +1,7 @@
 package com.ktsnwt.project.team9.controllers;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import javax.validation.Valid;
 
@@ -70,6 +71,8 @@ public class AdminController {
 	public ResponseEntity<AdminDTO> updateAdmin(@PathVariable Long id, @Valid @RequestBody AdminDTO adminDTO) {
 		try {
 			return new ResponseEntity<>(adminMapper.toDto(adminService.update(id, adminMapper.toEntity(adminDTO))), HttpStatus.OK);
+		} catch (NoSuchElementException e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
@@ -79,8 +82,10 @@ public class AdminController {
 	public ResponseEntity<Boolean> deleteAdmin(@PathVariable Long id) {
 		try {
 			return new ResponseEntity<>(adminService.delete(id), HttpStatus.OK);
-		} catch (Exception e) {
+		} catch (NoSuchElementException e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
 }

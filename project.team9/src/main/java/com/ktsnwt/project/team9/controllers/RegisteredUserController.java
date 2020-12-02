@@ -1,6 +1,7 @@
 package com.ktsnwt.project.team9.controllers;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import javax.validation.Valid;
 
@@ -70,6 +71,8 @@ public class RegisteredUserController {
 	public ResponseEntity<RegisteredUserDTO> updateRegisteredUser(@PathVariable Long id, @Valid @RequestBody RegisteredUserDTO registeredUserDTO) {
 		try {
 			return new ResponseEntity<>(registeredUserMapper.toDto(registeredUserService.update(id, registeredUserMapper.toEntity(registeredUserDTO))), HttpStatus.OK);
+		} catch (NoSuchElementException e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}

@@ -1,5 +1,7 @@
 package com.ktsnwt.project.team9.services.implementations;
 
+import java.util.NoSuchElementException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -52,7 +54,7 @@ public class AdminService implements IAdminService {
 	public boolean delete(Long id) throws Exception {
 		Admin existingAdmin = adminRepository.findById(id).orElse(null);
 		if (existingAdmin == null) {
-			throw new Exception("Admin with given id doesn't exist.");
+			throw new NoSuchElementException("Admin with given id doesn't exist.");
 		}
 		existingAdmin.setActive(false);
 		if (!existingAdmin.getCulturalOffers().isEmpty()) {
@@ -66,7 +68,7 @@ public class AdminService implements IAdminService {
 	public Admin update(Long id, Admin entity) throws Exception {
 		Admin admin = adminRepository.findById(id).orElseGet(null);
 		if (admin == null) {
-			throw new Exception("Admin doesn't exist.");
+			throw new NoSuchElementException("Admin doesn't exist.");
 		}
 		if (!entity.getEmail().equals(admin.getEmail())) {
 			User emailUser = userRepository.findByEmail(entity.getEmail());

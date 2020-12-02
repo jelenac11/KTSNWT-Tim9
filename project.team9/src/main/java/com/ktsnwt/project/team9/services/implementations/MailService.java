@@ -1,3 +1,4 @@
+
 package com.ktsnwt.project.team9.services.implementations;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,3 +30,4 @@ public class MailService {
 		
 	}
 }
+
