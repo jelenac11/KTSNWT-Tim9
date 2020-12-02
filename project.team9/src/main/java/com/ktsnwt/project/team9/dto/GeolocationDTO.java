@@ -23,4 +23,9 @@ public class GeolocationDTO {
 	
 	@NotNull(message = "Lon cannot be null.")
 	private double lon;
+
+	public GeolocationDTO() {
+		super();
+	}
+	
 }

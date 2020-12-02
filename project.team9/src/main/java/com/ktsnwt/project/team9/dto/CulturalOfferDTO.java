@@ -11,7 +11,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -24,7 +23,7 @@ public class CulturalOfferDTO {
 	
 	private String description;
 	
-	private String imageURL;
+	private String image;
 	
 	@Max(value = 5, message = "Average mark should not be greater than 5.")
 	private double averageMark;
@@ -45,4 +44,10 @@ public class CulturalOfferDTO {
 	private Set<Long> marks;
 	
 	private Long admin;
+
+	public CulturalOfferDTO() {
+		super();
+	}
+	
+	
 }
