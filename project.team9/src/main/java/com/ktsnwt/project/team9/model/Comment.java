@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -31,7 +32,7 @@ public class Comment {
 	@JoinColumn(name = "culturalOffer_id")
 	private CulturalOffer culturalOffer;
 	
-	@Column(unique = false, nullable = true)
+	@Column(columnDefinition = "text", unique = false, nullable = true)
 	private String text;
 	
 	@Column(unique = false, nullable = true)

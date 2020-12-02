@@ -5,6 +5,9 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +39,15 @@ public class AdminController {
 		List<AdminDTO> adminsDTO = adminMapper.toDTOList(adminService.getAll());
 		return new ResponseEntity<>(adminsDTO, HttpStatus.OK);
 	}
-
+	
+	@RequestMapping(value= "/by-page", method = RequestMethod.GET)
+	public ResponseEntity<Page<AdminDTO>> getAllAdmins(Pageable pageable){
+		Page<Admin> page = adminService.findAll(pageable);
+        List<AdminDTO> adminDTOs = adminMapper.toDTOList(page.toList());
+        Page<AdminDTO> pageAdminDTOs = new PageImpl<>(adminDTOs,page.getPageable(),page.getTotalElements());
+        return new ResponseEntity<Page<AdminDTO>>(pageAdminDTOs, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<AdminDTO> getAdmin(@PathVariable Long id) {
 		Admin admin = adminService.getById(id);
