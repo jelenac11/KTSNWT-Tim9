@@ -1,10 +1,14 @@
 package com.ktsnwt.project.team9.controllers;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +41,14 @@ public class RegisteredUserController {
 		return new ResponseEntity<>(registeredUsersDTO, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value= "/by-page", method = RequestMethod.GET)
+	public ResponseEntity<Page<RegisteredUserDTO>> getAllRegisteredUsers(Pageable pageable){
+		Page<RegisteredUser> page = registeredUserService.findAll(pageable);
+        List<RegisteredUserDTO> registeredUserDTOs = registeredUserMapper.toDTOList(page.toList());
+        Page<RegisteredUserDTO> pageRUserDTOs = new PageImpl<>(registeredUserDTOs,page.getPageable(),page.getTotalElements());
+        return new ResponseEntity<Page<RegisteredUserDTO>>(pageRUserDTOs, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<RegisteredUserDTO> getRegisteredUser(@PathVariable Long id) {
 		RegisteredUser registeredUser = registeredUserService.getById(id);
@@ -59,6 +71,8 @@ public class RegisteredUserController {
 	public ResponseEntity<RegisteredUserDTO> updateRegisteredUser(@PathVariable Long id, @Valid @RequestBody RegisteredUserDTO registeredUserDTO) {
 		try {
 			return new ResponseEntity<>(registeredUserMapper.toDto(registeredUserService.update(id, registeredUserMapper.toEntity(registeredUserDTO))), HttpStatus.OK);
+		} catch (NoSuchElementException e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}

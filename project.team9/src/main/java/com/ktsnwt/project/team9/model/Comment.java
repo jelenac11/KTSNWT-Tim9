@@ -1,5 +1,6 @@
 package com.ktsnwt.project.team9.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,8 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Comment {
@@ -35,8 +36,9 @@ public class Comment {
 	@Column(columnDefinition = "text", unique = false, nullable = true)
 	private String text;
 	
-	@Column(unique = false, nullable = true)
-	private String imageUrl;
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(name="image_id")
+	private Image imageUrl;
 
 	public Comment() {
 		super();
@@ -47,7 +49,7 @@ public class Comment {
 		this.id = id;
 	}
 
-	public Comment(Long id, boolean approved, long date, RegisteredUser author, CulturalOffer culturalOffer, String text, String imageUrl) {
+	public Comment(Long id, boolean approved, long date, RegisteredUser author, CulturalOffer culturalOffer, String text, Image imageUrl) {
 		super();
 		this.id = id;
 		this.approved = approved;
@@ -102,11 +104,11 @@ public class Comment {
 		this.text = text;
 	}
 
-	public String getImageUrl() {
+	public Image getImageUrl() {
 		return imageUrl;
 	}
 
-	public void setImageUrl(String imageUrl) {
+	public void setImageUrl(Image imageUrl) {
 		this.imageUrl = imageUrl;
 	}
 

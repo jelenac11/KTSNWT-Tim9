@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 
 import com.ktsnwt.project.team9.model.CulturalOffer;
 import com.ktsnwt.project.team9.model.News;
+import com.ktsnwt.project.team9.model.RegisteredUser;
 import com.ktsnwt.project.team9.repositories.INewsRepository;
 import com.ktsnwt.project.team9.services.interfaces.ICulturalOfferService;
 import com.ktsnwt.project.team9.services.interfaces.INewsService;
+import com.ktsnwt.project.team9.services.interfaces.IUserService;
 
 @Service
 public class NewsService implements INewsService {
@@ -23,6 +25,11 @@ public class NewsService implements INewsService {
 	@Autowired
 	private ICulturalOfferService culturalOfferService;
 	
+	@Autowired
+	private IUserService userService;
+	
+	@Autowired
+	private MailService mailService;
 
 	@Override
 	public Collection<News> getAll() {
@@ -44,6 +51,15 @@ public class NewsService implements INewsService {
 		entity.setCulturalOffer(culturalOffer);
 		
 		entity.getImages().forEach(img -> img.setNews(entity));
+		
+		
+		mailService.sendMailNews("debelidusan@gmail.com", entity);
+		
+//		This is how it will be. For presentation make it simple
+//		for(RegisteredUser us : userService.getSubscribed(culturalOffer)) {
+//			
+//			MailService.sendMailNews(us.getEmail(), entity);
+//		}
 		
 		return newsRepository.save(entity);
 	}
