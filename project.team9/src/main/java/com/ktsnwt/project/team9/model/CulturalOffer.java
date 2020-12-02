@@ -15,12 +15,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
 public class CulturalOffer {
 	
 	@Id
@@ -35,8 +37,9 @@ public class CulturalOffer {
 	@Column(columnDefinition = "text", unique = false, nullable = true)
 	private String description;
 	
-	@Column(unique = false, nullable = true)
-	private String imageURL;
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(name="image_id")
+	private Image image;
 	
 	@Column
 	private double averageMark;
@@ -76,25 +79,6 @@ public class CulturalOffer {
 	public CulturalOffer(Long id) {
 		super();
 		this.id = id;
-	}
-
-	
-	public CulturalOffer(Long id, String name, String description, String imageURL, double averageMark, boolean active,
-			Geolocation geolocation, Category category, Set<News> news, Set<Comment> comments,
-			Set<Mark> marks, Admin admin) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.description = description;
-		this.imageURL = imageURL;
-		this.averageMark = averageMark;
-		this.active = active;
-		this.geolocation = geolocation;
-		this.category = category;
-		this.news = news;
-		this.comments = comments;
-		this.marks = marks;
-		this.admin = admin;
 	}
 
 }
