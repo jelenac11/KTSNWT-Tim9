@@ -1,7 +1,10 @@
 package com.ktsnwt.project.team9.services.implementations;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.ktsnwt.project.team9.model.Comment;
 import com.ktsnwt.project.team9.model.CulturalOffer;
@@ -23,6 +26,10 @@ public class CommentService implements ICommentService {
 	@Autowired
 	private ICulturalOfferRepository culturalOfferRepository;
 	
+	public Page<Comment> findAll(Pageable pageable) {
+		return commentRepository.findAll(pageable);
+	}
+	
 	@Override
 	public Iterable<Comment> getAll() {
 		return commentRepository.findAll();
@@ -43,6 +50,9 @@ public class CommentService implements ICommentService {
 		CulturalOffer culturalOffer = culturalOfferRepository.findById(entity.getCulturalOffer().getId()).orElse(null);
 		if (culturalOffer == null) {
 			throw new Exception("Cultural offer doesn't exist.");
+		}
+		if (StringUtils.isEmpty(entity.getText()) && StringUtils.isEmpty(entity.getImageUrl())) {
+			throw new Exception("Both text and image can't be empty.");
 		}
 		return commentRepository.save(entity);
 	}
