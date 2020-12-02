@@ -5,6 +5,9 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +38,14 @@ public class RegisteredUserController {
 	public ResponseEntity<Iterable<RegisteredUserDTO>> getAllRegisteredUser() {
 		List<RegisteredUserDTO> registeredUsersDTO = registeredUserMapper.toDTOList(registeredUserService.getAll());
 		return new ResponseEntity<>(registeredUsersDTO, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value= "/by-page", method = RequestMethod.GET)
+	public ResponseEntity<Page<RegisteredUserDTO>> getAllRegisteredUsers(Pageable pageable){
+		Page<RegisteredUser> page = registeredUserService.findAll(pageable);
+        List<RegisteredUserDTO> registeredUserDTOs = registeredUserMapper.toDTOList(page.toList());
+        Page<RegisteredUserDTO> pageRUserDTOs = new PageImpl<>(registeredUserDTOs,page.getPageable(),page.getTotalElements());
+        return new ResponseEntity<Page<RegisteredUserDTO>>(pageRUserDTOs, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
