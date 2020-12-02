@@ -5,6 +5,9 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +39,14 @@ public class CommentController {
 	public ResponseEntity<Iterable<CommentDTO>> getAllComments() {
 		List<CommentDTO> commentsDTO = commentMapper.toDTOList(commentService.getAll());
 		return new ResponseEntity<>(commentsDTO, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value= "/by-page", method = RequestMethod.GET)
+	public ResponseEntity<Page<CommentDTO>> getAllComments(Pageable pageable){
+		Page<Comment> page = commentService.findAll(pageable);
+        List<CommentDTO> commentDTOs = commentMapper.toDTOList(page.toList());
+        Page<CommentDTO> pageCommentDTOs = new PageImpl<>(commentDTOs,page.getPageable(),page.getTotalElements());
+        return new ResponseEntity<Page<CommentDTO>>(pageCommentDTOs, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
