@@ -10,4 +10,8 @@ public interface IUserService extends IService<User, Long> {
 
 	List<RegisteredUser> getSubscribed(CulturalOffer culturalOffer);
 
+	User findByEmail(String email);
+
+	User findByUsername(String username);
+
 }

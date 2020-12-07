@@ -30,4 +30,8 @@ public class UserDTO {
 	
 	@NotEmpty(message = "Last name cannot be null or empty.")
 	private String lastName;
+	
+	public UserDTO() {
+		
+	}
 }
