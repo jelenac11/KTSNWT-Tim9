@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import com.ktsnwt.project.team9.model.News;
 import com.ktsnwt.project.team9.model.RegisteredUser;
+import com.ktsnwt.project.team9.model.User;
 import com.ktsnwt.project.team9.model.VerificationToken;
 
 @Component
@@ -47,9 +48,9 @@ public class MailService {
 		verificationTokenService.saveToken(vtoken);
 		String confirmationUrl = "/auth/confirm-registration/" + token;
 		SimpleMailMessage email = new SimpleMailMessage();
-		email.setTo("jelenacupac99@gmail.com");
+		email.setTo("aleksa.goljovic4@gmail.com");
 		email.setSubject("Confirm Registration");
-		email.setText("Hi " + user.getFirstName() + ",\nThanks for getting started with CulturalContentTeam9! Click below to confirm your registration:\n" + 
+		email.setText("Hi " + user.getFirstName() + ",\n\nThanks for getting started with CulturalContentTeam9! Click below to confirm your registration:\n" + 
 				"\nhttp://localhost:8081" + confirmationUrl + "\nThanks,\nTeam 9\n");
 		emailSender.send(email);
 	}

@@ -1,8 +1,11 @@
 package com.ktsnwt.project.team9.services.implementations;
 
+import java.security.SecureRandom;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -34,6 +37,9 @@ public class UserService implements IUserService, UserDetailsService {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+    
+    @Autowired
+	private MailService mailService;
 
     // Funkcija koja na osnovu username-a iz baze vraca objekat User-a
     @Override
@@ -41,30 +47,10 @@ public class UserService implements IUserService, UserDetailsService {
         // ako se ne radi nasledjivanje, paziti gde sve treba da se proveri email
         User user = userRepository.findByEmail(email);
         if (user == null) {
-            throw new UsernameNotFoundException(String.format("No user found with username '%s'.", email));
+            throw new UsernameNotFoundException(String.format("No user found with email '%s'.", email));
         } else {
             return user;
         }
-    }
-
-    // Funkcija pomocu koje korisnik menja svoju lozinku
-    public void changePassword(String oldPassword, String newPassword) {
-
-        // Ocitavamo trenutno ulogovanog korisnika
-        Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
-        String username = ((User) currentUser.getPrincipal()).getEmail();
-
-        if (authenticationManager != null) {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, oldPassword));
-        } else {
-            return;
-        }
-        User user = (User) loadUserByUsername(username);
-
-        // pre nego sto u bazu upisemo novu lozinku, potrebno ju je hesirati
-        // ne zelimo da u bazi cuvamo lozinke u plain text formatu
-        user.setPassword(passwordEncoder.encode(newPassword));
-        userRepository.save(user);
     }
 	
 	@Override

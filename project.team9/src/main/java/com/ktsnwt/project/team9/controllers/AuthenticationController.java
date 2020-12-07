@@ -1,6 +1,7 @@
 package com.ktsnwt.project.team9.controllers;
 
-import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -53,6 +54,31 @@ public class AuthenticationController {
 	
 	@Autowired
 	private MailService mailService;
+	
+	@PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody UserLoginDTO authenticationRequest) {
+        Authentication authentication = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(),
+                        authenticationRequest.getPassword()));
+
+        // Kreiraj token za tog korisnika
+        User user = (User) authentication.getPrincipal();
+       
+        RegisteredUser regUser = registeredUserService.findByEmail(user.getEmail());
+        if (regUser != null) {
+        	if (!regUser.isVerified()) {
+        		return new ResponseEntity<>("User is not verified.", HttpStatus.BAD_REQUEST);
+        	}
+        }
+        // Ubaci korisnika u trenutni security kontekst
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        String jwt = tokenUtils.generateToken(user.getEmail()); // prijavljujemo se na sistem sa email adresom
+        int expiresIn = tokenUtils.getExpiredIn();
+
+        // Vrati token kao odgovor na uspesnu autentifikaciju
+        return ResponseEntity.ok(new UserTokenStateDTO(jwt, expiresIn));
+    }
 	
 	@PostMapping(value = "/sign-up", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addUser(@RequestBody RegisteredUserDTO userRequest) throws Exception {
