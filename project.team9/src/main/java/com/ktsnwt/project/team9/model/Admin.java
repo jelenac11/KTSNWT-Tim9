@@ -1,5 +1,6 @@
 package com.ktsnwt.project.team9.model;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
