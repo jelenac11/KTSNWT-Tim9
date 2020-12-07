@@ -55,4 +55,13 @@ public class MailService {
 		emailSender.send(email);
 	}
 	
+	@Async
+	public void sendForgottenPassword(User user, String newPassword) throws MailException, InterruptedException {
+		SimpleMailMessage email = new SimpleMailMessage();
+		email.setTo("aleksa.goljovic4@gmail.com");
+		email.setSubject("Password Reset");
+		email.setText("Hi " + user.getFirstName() + ",\n\nYour new password is: " + newPassword + ".\n\n\nTeam 9");
+		emailSender.send(email);
+	}
+	
 }

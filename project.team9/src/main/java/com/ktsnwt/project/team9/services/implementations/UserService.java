@@ -97,5 +97,27 @@ public class UserService implements IUserService, UserDetailsService {
 	public User findByUsername(String username) {
 		return userRepository.findByUsername(username);
 	}
+
+	public void forgotPassword(String email) throws MailException, InterruptedException {
+		User user = userRepository.findByEmail(email);
+		String newPassword = generateRandomPassword();
+		user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+        mailService.sendForgottenPassword(user, newPassword);
+	}
+	
+	public String generateRandomPassword() {
+		final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		 
+	    SecureRandom random = new SecureRandom();
+	    StringBuilder sb = new StringBuilder();
+
+	    for (int i = 0; i < 8; i++) {
+	        int randomIndex = random.nextInt(chars.length());
+	        sb.append(chars.charAt(randomIndex));
+	    }
+
+	    return sb.toString();
+	}
 	
 }
