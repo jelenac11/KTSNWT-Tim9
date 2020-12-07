@@ -52,6 +52,26 @@ public class UserService implements IUserService, UserDetailsService {
             return user;
         }
     }
+
+    // Funkcija pomocu koje korisnik menja svoju lozinku
+    public void changePassword(String oldPassword, String newPassword) {
+
+        // Ocitavamo trenutno ulogovanog korisnika
+        Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
+        String username = ((User) currentUser.getPrincipal()).getEmail();
+
+        if (authenticationManager != null) {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, oldPassword));
+        } else {
+            return;
+        }
+        User user = (User) loadUserByUsername(username);
+
+        // pre nego sto u bazu upisemo novu lozinku, potrebno ju je hesirati
+        // ne zelimo da u bazi cuvamo lozinke u plain text formatu
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+    }
 	
 	@Override
 	public Iterable<User> getAll() {

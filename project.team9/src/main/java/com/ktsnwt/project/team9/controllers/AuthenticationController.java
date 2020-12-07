@@ -115,6 +115,20 @@ public class AuthenticationController {
         return new ResponseEntity<>("Password reseted", HttpStatus.OK);
     }
 	
+	@PostMapping(value = "/change-password", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> changePassword(@RequestBody PasswordChanger passwordChanger) {
+        userDetailsService.changePassword(passwordChanger.oldPassword, passwordChanger.newPassword);
+
+        Map<String, String> result = new HashMap<>();
+        result.put("result", "success");
+        return ResponseEntity.accepted().body(result);
+    }
+
+    static class PasswordChanger {
+        public String oldPassword;
+        public String newPassword;
+    }
+	
 	@GetMapping(value = "/confirm-registration/{token}")
 	public void potvrdaReg(@PathVariable("token") String url) {
 		authorityService.confirmRegistration(url);
