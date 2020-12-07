@@ -104,6 +104,17 @@ public class AuthenticationController {
         return new ResponseEntity<>(registeredUserMapper.toDto(newUser), HttpStatus.CREATED);
     }
 	
+	@PostMapping(value = "/forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestBody String email) throws Exception {
+
+        User user = this.userDetailsService.findByEmail(email);
+        if (user == null) {
+            return new ResponseEntity<>("User with given email doesn't exist.", HttpStatus.BAD_REQUEST);
+        }
+        userDetailsService.forgotPassword(email);
+        return new ResponseEntity<>("Password reseted", HttpStatus.OK);
+    }
+	
 	@GetMapping(value = "/confirm-registration/{token}")
 	public void potvrdaReg(@PathVariable("token") String url) {
 		authorityService.confirmRegistration(url);
