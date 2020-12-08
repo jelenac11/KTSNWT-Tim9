@@ -1,13 +1,15 @@
 package com.ktsnwt.project.team9.services.implementations;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.ktsnwt.project.team9.model.Comment;
+import com.ktsnwt.project.team9.model.Authority;
 import com.ktsnwt.project.team9.model.RegisteredUser;
 import com.ktsnwt.project.team9.model.User;
 import com.ktsnwt.project.team9.repositories.IRegisteredUser;
@@ -22,6 +24,12 @@ public class RegisteredUserService implements IRegisteredUserService {
 	
 	@Autowired
 	private IUserRepository userRepository;
+	
+	@Autowired
+    private AuthorityService authService;
+	
+	@Autowired
+    private PasswordEncoder passwordEncoder;
 	
 	public Page<RegisteredUser> findAll(Pageable pageable) {
 		return registeredUserRepository.findAll(pageable);
@@ -47,6 +55,9 @@ public class RegisteredUserService implements IRegisteredUserService {
 		if (emailUser != null) {
 			throw new Exception("User with this email already exists.");
 		}
+		List<Authority> auth = authService.findByName("ROLE_REGISTERED_USER");
+        entity.setAuthorities(auth);
+        entity.setPassword(passwordEncoder.encode(entity.getPassword()));
 		return registeredUserRepository.save(entity);
 	}
 
@@ -84,6 +95,14 @@ public class RegisteredUserService implements IRegisteredUserService {
 		registeredUser.setLastName(entity.getLastName());
 		registeredUser.setVerified(entity.isVerified());
 		return registeredUserRepository.save(registeredUser);
-		
 	}
+
+	public RegisteredUser findByEmail(String email) {
+		return registeredUserRepository.findByEmail(email);
+	}
+	
+	public RegisteredUser findByUsername(String username) {
+		return registeredUserRepository.findByUsername(username);
+	}
+	
 }

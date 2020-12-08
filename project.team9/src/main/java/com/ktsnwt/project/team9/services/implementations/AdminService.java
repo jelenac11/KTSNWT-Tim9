@@ -1,5 +1,6 @@
 package com.ktsnwt.project.team9.services.implementations;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ktsnwt.project.team9.model.Admin;
+import com.ktsnwt.project.team9.model.Authority;
 import com.ktsnwt.project.team9.model.User;
 import com.ktsnwt.project.team9.repositories.IAdminRepository;
 import com.ktsnwt.project.team9.repositories.IUserRepository;
@@ -21,6 +23,9 @@ public class AdminService implements IAdminService {
 	
 	@Autowired
 	private IUserRepository userRepository;
+	
+	@Autowired
+    private AuthorityService authService;
 
 	public Page<Admin> findAll(Pageable pageable) {
 		return adminRepository.findAll(pageable);
@@ -47,6 +52,8 @@ public class AdminService implements IAdminService {
 		if (emailUser != null) {
 			throw new Exception("User with this email already exists.");
 		}
+		List<Authority> auth = authService.findByName("ROLE_ADMIN");
+        entity.setAuthorities(auth);
 		return adminRepository.save(entity);
 	}
 

@@ -11,6 +11,10 @@ import com.ktsnwt.project.team9.model.RegisteredUser;
 @Repository
 public interface IRegisteredUser extends JpaRepository<RegisteredUser, Long> {
 	
-	
 	List<RegisteredUser> findBySubscribed(CulturalOffer subscribed);
+	
+	RegisteredUser findByEmail(String email);
+	
+	RegisteredUser findByUsername(String username);
+	
 }

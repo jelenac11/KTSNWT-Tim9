@@ -10,7 +10,9 @@ public class UserMapper implements IMapper<User, UserDTO> {
 
 	@Override
 	public User toEntity(UserDTO dto) {
-		return new User();
+		System.out.println("iz mapera");
+		System.out.println(dto.getId());
+		return new User(dto.getId(), dto.getUsername(), dto.getEmail(), dto.getPassword(), dto.getFirstName(), dto.getLastName());
 	}
 
 	@Override
