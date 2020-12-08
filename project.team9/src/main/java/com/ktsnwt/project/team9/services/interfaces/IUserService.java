@@ -14,4 +14,6 @@ public interface IUserService extends IService<User, Long> {
 
 	User findByUsername(String username);
 
+	User changeProfile(User entity) throws Exception;
+
 }

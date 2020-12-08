@@ -72,6 +72,42 @@ public class UserService implements IUserService, UserDetailsService {
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
     }
+    
+    @Override
+	public User changeProfile(User entity) throws Exception {
+		User user = userRepository.findById(entity.getId()).orElse(null);
+		System.out.println("Iz servisa");
+		System.out.println(user.getId());
+		if (user == null) {
+			throw new NoSuchElementException("User with given id doesn't exist.");
+		}
+		if (!entity.getEmail().equals(user.getEmail())) {
+			User emailUser = userRepository.findByEmail(entity.getEmail());
+			if (emailUser != null) {
+				throw new Exception("User with this email already exists.");
+			}
+		}
+		if (!entity.getUsername().equals(user.getUsername())) {
+			User usernameUser = userRepository.findByUsername(entity.getUsername());
+			if (usernameUser != null) {
+				throw new Exception("User with this username already exists.");
+			}
+		}
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		System.out.println("auth name");
+		System.out.println(auth.getPrincipal().toString());
+		System.out.println(auth.getName());
+        User loggedIn = userRepository.findByUsername(auth.getName());
+        System.out.println("Logged in");
+        System.out.println(loggedIn.getId());
+		if (loggedIn.getId() != user.getId()) {
+			throw new Exception("You can not change someone elses profile.");
+		}
+		user.setUsername(entity.getUsername());
+		user.setFirstName(entity.getFirstName());
+		user.setLastName(entity.getLastName());
+		return userRepository.save(user);
+	}
 	
 	@Override
 	public Iterable<User> getAll() {
