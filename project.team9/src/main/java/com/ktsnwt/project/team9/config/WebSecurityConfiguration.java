@@ -75,7 +75,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 //.antMatchers(HttpMethod.GET, "/api/cultural-content-category").hasRole("ROLE_ADMIN")
 
                 // za svaki drugi zahtev korisnik mora biti autentifikovan
-                .anyRequest().authenticated().and()
+                //.anyRequest().authenticated()
+                .and()
                 // za development svrhe ukljuci konfiguraciju za CORS iz WebConfig klase
                 .cors().and()
 
