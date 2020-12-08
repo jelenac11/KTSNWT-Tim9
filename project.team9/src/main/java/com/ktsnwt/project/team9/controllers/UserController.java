@@ -28,5 +28,18 @@ public class UserController {
 	public UserController() {
 		userMapper = new UserMapper();
 	}
+	
+	@RequestMapping(value= "/change-profile", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> changeProfile(@Valid @RequestBody UserDTO userDTO) {
+		System.out.println("iz kontrolera");
+		System.out.println(userDTO.getId());
+		try {
+			return new ResponseEntity<>(userMapper.toDto(userService.changeProfile(userMapper.toEntity(userDTO))), HttpStatus.OK);
+		} catch (NoSuchElementException e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
 
 }
