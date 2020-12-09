@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,13 +29,14 @@ public class GeolocationController {
 
 	private GeolocationMapper geolocationMapper;
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Iterable<GeolocationDTO>> getAllGeolocations() {
 		List<GeolocationDTO> geolocationDTO = geolocationMapper.toDTOList(geolocationService.getAll());
 		return new ResponseEntity<Iterable<GeolocationDTO>>(geolocationDTO, HttpStatus.OK);
 	}
 	
-
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value= "/by-page", method = RequestMethod.GET)
 	public ResponseEntity<Page<GeolocationDTO>> getAllGeolocations(Pageable pageable){
 		Page<Geolocation> page = geolocationService.getAll(pageable);
@@ -43,6 +45,7 @@ public class GeolocationController {
         return new ResponseEntity<Page<GeolocationDTO>>(pageGeolocationDTOs, HttpStatus.OK);
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<GeolocationDTO> getGeolocation(@PathVariable Long id) {
 		Geolocation geolocation = geolocationService.getById(id);
@@ -51,7 +54,8 @@ public class GeolocationController {
 		}
 		return new ResponseEntity<GeolocationDTO>(geolocationMapper.toDto(geolocation), HttpStatus.OK);
 	}
-
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<GeolocationDTO> createGeolocation(@Valid @RequestBody GeolocationDTO geolocationDTO) {
 		try {
@@ -63,6 +67,7 @@ public class GeolocationController {
 		}
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<GeolocationDTO> updateGeolocation(@PathVariable Long id,
 			@Valid @RequestBody GeolocationDTO geolocationDTO) {
@@ -75,6 +80,7 @@ public class GeolocationController {
 		}
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Boolean> deleteGeolocation(@PathVariable Long id) {
 		try {
