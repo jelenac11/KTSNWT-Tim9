@@ -1,0 +1,69 @@
+<mdb-navbar
+  SideClass="navbar navbar-expand-lg navbar-dark"
+  class="navCss"
+  [containerInside]="false"
+>
+  <mdb-navbar-brand
+    ><a class="navbar-brand" routerLink="" routerLinkActive="active"
+      >Navbar</a
+    ></mdb-navbar-brand
+  >
+  <links>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a
+          class="nav-link waves-light"
+          routerLink=""
+          routerLinkActive="active"
+          mdbWavesEffect
+          >Home</a
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link waves-light" mdbWavesEffect>News</a>
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link waves-light"
+          routerLink="/cultural-offers"
+          routerLinkActive="active"
+          mdbWavesEffect
+          >Cultural offers</a
+        >
+      </li>
+      <li class="nav-item dropdown" dropdown>
+        <a
+          dropdownToggle
+          mdbWavesEffect
+          type="button"
+          class="nav-link dropdown-toggle waves-light"
+          mdbWavesEffect
+        >
+          Categories<span class="caret"></span
+        ></a>
+        <div
+          *dropdownMenu
+          class="dropdown-menu dropdown dropdown-primary"
+          role="menu"
+        >
+          <a class="dropdown-item waves-light" mdbWavesEffect>Galleries</a>
+          <a class="dropdown-item waves-light" mdbWavesEffect>Festivals</a>
+          <a class="dropdown-item waves-light" mdbWavesEffect>Concerts</a>
+        </div>
+      </li>
+    </ul>
+    <ul class="navbar-nav ml-auto nav-flex-icons">
+      <li class="nav-item">
+        <a class="nav-link">
+          <div class="btn-group" mdbDropdown>
+            <mdb-icon fas icon="user" mdbDropdownToggle></mdb-icon>
+            <div class="dropdown-menu dropdown-menu-right dropdown-primary">
+              <a class="dropdown-item">Settings</a>
+              <a class="dropdown-item">Log out</a>
+            </div>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </links>
+</mdb-navbar>

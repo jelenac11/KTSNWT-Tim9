@@ -23,7 +23,7 @@ public class FileService {
 
 	public String uploadImageAsBase64(String image) throws IOException {
 		byte[] array = Files.readAllBytes(Paths.get(image));
-		return Base64Utils.encodeToString(array);
+		return "data:image/jpeg;base64,"+Base64Utils.encodeToString(array);
 	}
 
 	public void deleteImageFromFile(String url) {

@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import com.ktsnwt.project.team9.helper.implementations.FileService;
 import com.ktsnwt.project.team9.model.Admin;
 import com.ktsnwt.project.team9.model.Category;
@@ -110,5 +111,13 @@ public class CulturalOfferService implements ICulturalOfferService {
 		entity.setImage(image);
 		return culturalOfferRepository.save(entity);
 
+	}
+
+	public Page<CulturalOffer> getByCategoryId(Long id, Pageable pageable) {
+		return culturalOfferRepository.getByCategoryId(id, pageable);
+	}
+
+	public Page<CulturalOffer> findByCategoryIdAndNameContains(Long id, String name, Pageable pageable) {
+		return culturalOfferRepository.findByCategoryIdAndNameContainingIgnoreCase(id, name, pageable);
 	}
 }

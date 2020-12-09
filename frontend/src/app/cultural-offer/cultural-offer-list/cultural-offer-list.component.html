@@ -1,0 +1,71 @@
+<div class="content" role="main">
+  <div class="col mt-3 mb-3">
+    <app-create-cultural-offer-button></app-create-cultural-offer-button>
+  </div>
+  <mdb-card
+    *ngFor="
+      let row of rows
+        | paginate
+          : {
+              itemsPerPage: size,
+              currentPage: page,
+              totalItems: totalElements
+            }
+    "
+  >
+    <mdb-card-body>
+      <div class="card-deck">
+        <mdb-card class="containerCard" *ngFor="let culturalOffer of row">
+          <div class="view overlay waves-light" mdbWavesEffect>
+            <mdb-card-img
+              src="{{ culturalOffer.image }}"
+              alt="Card image cap"
+            ></mdb-card-img>
+            <a>
+              <div class="mask rgba-white-slight"></div>
+            </a>
+          </div>
+
+          <mdb-card-body class="d-flex flex-column">
+            <mdb-card-title class="align-self-center">
+              <h4>{{ culturalOffer.name }}</h4>
+              <button
+                mdbBtn
+                type="button"
+                size="sm"
+                color="red"
+                mdbWavesEffect
+                (click)="openDialog(culturalOffer.id)"
+              >
+                Delete
+              </button>
+              <app-update
+                [path]="[
+                  'update/',
+                  culturalOffer.id.toString()
+                ]"
+              ></app-update>
+            </mdb-card-title>
+
+            <mdb-card-text>
+              {{ culturalOffer.description | slice: 0:360
+              }}{{ culturalOffer?.description?.length > 360 ? "..." : "" }}
+            </mdb-card-text>
+
+            <div class="mt-auto align-self-center">
+              <app-more
+                [path]="['/cultural-offers/', culturalOffer.id.toString()]"
+              ></app-more>
+              <app-subscribe size="sm"></app-subscribe>
+            </div>
+          </mdb-card-body>
+        </mdb-card>
+      </div>
+    </mdb-card-body>
+  </mdb-card>
+  <pagination-controls
+    [previousLabel]="previousLabel"
+    [nextLabel]="nextLabel"
+    (pageChange)="handlePageChange($event)"
+  ></pagination-controls>
+</div>
