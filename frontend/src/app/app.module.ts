@@ -10,7 +10,10 @@ import { CategoryModule } from './category/category.module';
 import { NewsModule } from './news/news.module';
 import { AuthModule } from './auth/auth.module';
 import { HomeModule } from './home/home.module';
-
+import { AgmCoreModule } from '@agm/core';
+import { environment } from 'src/environments/environment';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -25,7 +28,15 @@ import { HomeModule } from './home/home.module';
     CulturalOfferModule,
     CategoryModule,
     NewsModule,
-    HomeModule
+    HomeModule,
+    AgmCoreModule.forRoot({
+      apiKey: environment.google_api_key,
+      libraries: ['places'],
+      language: 'en'
+    }),
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

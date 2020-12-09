@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   api_url: 'http://localhost:8081/api/',
-  google_api_key:'AIzaSyBUY39s_EZb_CQk3TqK1WTHLxzDFcmzAhA'
+  google_api_key:'AIzaSyBUY39s_EZb_CQk3TqK1WTHLxzDFcmzAhA',
 };
 
 /*

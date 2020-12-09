@@ -14,12 +14,12 @@ export class ApiService {
     return this.http.get(`${environment.api_url}${path}`, {params});
   }
 
-  post(path: string, body: Object = {}): Observable<any> {
-    return this.http.post(`${environment.api_url}${path}`, JSON.stringify(body));
+  post(path: string, body: any): Observable<any> {
+    return this.http.post(`${environment.api_url}${path}`, body);
   }
 
-  put(path: string, body: Object = {}): Observable<any> {
-    return this.http.put(`${environment.api_url}${path}`, JSON.stringify(body));
+  put(path: string, body: any): Observable<any> {
+    return this.http.put(`${environment.api_url}${path}`, body);
   }
 
   delete(path: string): Observable<any> {

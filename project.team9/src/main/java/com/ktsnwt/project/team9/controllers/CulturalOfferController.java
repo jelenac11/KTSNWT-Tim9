@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import com.ktsnwt.project.team9.dto.CulturalOfferDTO;
+import com.ktsnwt.project.team9.dto.response.CulturalOfferResDTO;
 import com.ktsnwt.project.team9.helper.implementations.CulturalOfferMapper;
 import com.ktsnwt.project.team9.helper.implementations.FileService;
 import com.ktsnwt.project.team9.model.CulturalOffer;
@@ -37,115 +38,115 @@ public class CulturalOfferController {
 	private FileService fileService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<Iterable<CulturalOfferDTO>> getAllCulturalOffers() {
-		List<CulturalOfferDTO> culturalOffersDTO = culturalOfferMapper.toDTOList(culturalOfferService.getAll());
-		culturalOffersDTO.stream().forEach(i -> {
+	public ResponseEntity<Iterable<CulturalOfferResDTO>> getAllCulturalOffers() {
+		List<CulturalOfferResDTO> culturalOffersResDTO = culturalOfferMapper.toDTOResList(culturalOfferService.getAll());
+		culturalOffersResDTO.stream().forEach(i -> {
 			try {
 				i.setImage(fileService.uploadImageAsBase64(i.getImage()));
 			} catch (Exception e) {
 
 			}
 		});
-		return new ResponseEntity<Iterable<CulturalOfferDTO>>(culturalOffersDTO, HttpStatus.OK);
+		return new ResponseEntity<Iterable<CulturalOfferResDTO>>(culturalOffersResDTO, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/by-page", method = RequestMethod.GET)
-	public ResponseEntity<Page<CulturalOfferDTO>> getAllCulturalOffers(Pageable pageable) {
+	public ResponseEntity<Page<CulturalOfferResDTO>> getAllCulturalOffers(Pageable pageable) {
 		Page<CulturalOffer> page = culturalOfferService.findAll(pageable);
-		List<CulturalOfferDTO> culturalOfferDTOs = culturalOfferMapper.toDTOList(page.toList());
-		culturalOfferDTOs.stream().forEach(i -> {
+		List<CulturalOfferResDTO> culturalOffersResDTO = culturalOfferMapper.toDTOResList(page.toList());
+		culturalOffersResDTO.stream().forEach(i -> {
 			try {
 				i.setImage(fileService.uploadImageAsBase64(i.getImage()));
 			} catch (Exception e) {
 
 			}
 		});
-		Page<CulturalOfferDTO> pageCulturalOfferDTOs = new PageImpl<>(culturalOfferDTOs, page.getPageable(),
+		Page<CulturalOfferResDTO> pageCulturalOfferDTOs = new PageImpl<>(culturalOffersResDTO, page.getPageable(),
 				page.getTotalElements());
-		return new ResponseEntity<Page<CulturalOfferDTO>>(pageCulturalOfferDTOs, HttpStatus.OK);
+		return new ResponseEntity<Page<CulturalOfferResDTO>>(pageCulturalOfferDTOs, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/category/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Page<CulturalOfferDTO>> getCulturalOfferById(Pageable pageable, @PathVariable Long id) {
+	public ResponseEntity<Page<CulturalOfferResDTO>> getCulturalOffersById(Pageable pageable, @PathVariable Long id) {
 		Page<CulturalOffer> page = culturalOfferService.getByCategoryId(id, pageable);
-		List<CulturalOfferDTO> culturalOffersDTOs = culturalOfferMapper.toDTOList(page.toList());
-		culturalOffersDTOs.stream().forEach(i -> {
+		List<CulturalOfferResDTO> culturalOffersResDTO = culturalOfferMapper.toDTOResList(page.toList());
+		culturalOffersResDTO.stream().forEach(i -> {
 			try {
 				i.setImage(fileService.uploadImageAsBase64(i.getImage()));
 			} catch (Exception e) {
 
 			}
 		});
-		Page<CulturalOfferDTO> pageCulturalOfferDTOs = new PageImpl<>(culturalOffersDTOs, page.getPageable(),
+		Page<CulturalOfferResDTO> pageCulturalOfferDTOs = new PageImpl<>(culturalOffersResDTO, page.getPageable(),
 				page.getTotalElements());
-		return new ResponseEntity<Page<CulturalOfferDTO>>(pageCulturalOfferDTOs, HttpStatus.OK);
+		return new ResponseEntity<Page<CulturalOfferResDTO>>(pageCulturalOfferDTOs, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/category/{id}/find-by-name/{name}", method = RequestMethod.GET)
-	public ResponseEntity<Page<CulturalOfferDTO>> findCulturalOfferByCategoryIdAndName(Pageable pageable,
+	public ResponseEntity<Page<CulturalOfferResDTO>> findCulturalOfferByCategoryIdAndName(Pageable pageable,
 			@PathVariable Long id, @PathVariable String name) {
 		Page<CulturalOffer> page = culturalOfferService.findByCategoryIdAndNameContains(id, name, pageable);
-		List<CulturalOfferDTO> culturalOffersDTOs = culturalOfferMapper.toDTOList(page.toList());
-		culturalOffersDTOs.stream().forEach(i -> {
+		List<CulturalOfferResDTO> culturalOffersResDTO = culturalOfferMapper.toDTOResList(page.toList());
+		culturalOffersResDTO.stream().forEach(i -> {
 			try {
 				i.setImage(fileService.uploadImageAsBase64(i.getImage()));
 			} catch (Exception e) {
 
 			}
 		});
-		Page<CulturalOfferDTO> pageCulturalOfferDTOs = new PageImpl<>(culturalOffersDTOs, page.getPageable(),
+		Page<CulturalOfferResDTO> pageCulturalOfferDTOs = new PageImpl<>(culturalOffersResDTO, page.getPageable(),
 				page.getTotalElements());
-		return new ResponseEntity<Page<CulturalOfferDTO>>(pageCulturalOfferDTOs, HttpStatus.OK);
+		return new ResponseEntity<Page<CulturalOfferResDTO>>(pageCulturalOfferDTOs, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<CulturalOfferDTO> getCulturalOffer(@PathVariable Long id) {
+	public ResponseEntity<CulturalOfferResDTO> getCulturalOffer(@PathVariable Long id) {
 
 		CulturalOffer culturalOffer = culturalOfferService.getById(id);
 		if (culturalOffer == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		CulturalOfferDTO culturalOfferDTO = culturalOfferMapper.toDto(culturalOffer);
+		CulturalOfferResDTO culturalOfferResDTO = culturalOfferMapper.toDTORes(culturalOffer);
 		try {
-			culturalOfferDTO.setImage(fileService.uploadImageAsBase64(culturalOfferDTO.getImage()));
+			culturalOfferResDTO.setImage(fileService.uploadImageAsBase64(culturalOfferResDTO.getImage()));
 		} catch (IOException e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		return new ResponseEntity<CulturalOfferDTO>(culturalOfferDTO, HttpStatus.OK);
+		return new ResponseEntity<CulturalOfferResDTO>(culturalOfferResDTO, HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public ResponseEntity<CulturalOfferDTO> createCulturalOffer(
+	public ResponseEntity<CulturalOfferResDTO> createCulturalOffer(
 			@RequestPart("culturalOfferDTO") @Valid @NotNull CulturalOfferDTO culturalOfferDTO,
 			@RequestPart("file") MultipartFile file) {
 		try {
 			if (file == null || file.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			}
-			culturalOfferDTO = culturalOfferMapper
-					.toDto(culturalOfferService.create(culturalOfferMapper.toEntity(culturalOfferDTO), file));
+			CulturalOfferResDTO culturalOfferResDTO = culturalOfferMapper
+					.toDTORes(culturalOfferService.create(culturalOfferMapper.toEntity(culturalOfferDTO), file));
 
-			culturalOfferDTO.setImage(fileService.uploadImageAsBase64(culturalOfferDTO.getImage()));
+			culturalOfferResDTO.setImage(fileService.uploadImageAsBase64(culturalOfferResDTO.getImage()));
 
-			return new ResponseEntity<CulturalOfferDTO>(culturalOfferDTO, HttpStatus.CREATED);
+			return new ResponseEntity<CulturalOfferResDTO>(culturalOfferResDTO, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<CulturalOfferDTO> updateCulturalOffer(@PathVariable Long id,
+	public ResponseEntity<CulturalOfferResDTO> updateCulturalOffer(@PathVariable Long id,
 			@RequestPart("culturalOfferDTO") @Valid @NotNull CulturalOfferDTO culturalOfferDTO,
 			@RequestPart("file") MultipartFile file) {
 
 		try {
-			culturalOfferDTO = culturalOfferMapper
-					.toDto(culturalOfferService.update(id, culturalOfferMapper.toEntity(culturalOfferDTO), file));
+			CulturalOfferResDTO culturalOfferResDTO = culturalOfferMapper
+					.toDTORes(culturalOfferService.update(id, culturalOfferMapper.toEntity(culturalOfferDTO), file));
 
-			culturalOfferDTO.setImage(fileService.uploadImageAsBase64(culturalOfferDTO.getImage()));
+			culturalOfferResDTO.setImage(fileService.uploadImageAsBase64(culturalOfferResDTO.getImage()));
 
-			return new ResponseEntity<CulturalOfferDTO>(culturalOfferDTO, HttpStatus.OK);
+			return new ResponseEntity<CulturalOfferResDTO>(culturalOfferResDTO, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}

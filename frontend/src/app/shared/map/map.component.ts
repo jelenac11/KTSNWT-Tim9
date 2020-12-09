@@ -10,14 +10,14 @@ export class MapComponent implements OnInit {
   @Input()
   showInfoWindow!: boolean;
   @Input()
-  latitude: number=0;
+  latitude: number = 0;
   @Input()
-  longitude: number=0;
+  longitude: number = 0;
   @Input()
   zoom: number = 1;
-  
   @Input()
-  data!: any[];
+  data: any[]=[];
+
   constructor() { }
 
   ngOnInit(): void {

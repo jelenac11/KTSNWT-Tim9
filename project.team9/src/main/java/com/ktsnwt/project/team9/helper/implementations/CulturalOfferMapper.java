@@ -10,6 +10,7 @@ import javax.validation.Valid;
 
 import org.springframework.stereotype.Component;
 import com.ktsnwt.project.team9.dto.CulturalOfferDTO;
+import com.ktsnwt.project.team9.dto.response.CulturalOfferResDTO;
 import com.ktsnwt.project.team9.helper.interfaces.IMapper;
 import com.ktsnwt.project.team9.model.Admin;
 import com.ktsnwt.project.team9.model.Category;
@@ -27,6 +28,7 @@ import lombok.AllArgsConstructor;
 public class CulturalOfferMapper implements IMapper<CulturalOffer, CulturalOfferDTO> {
 
 	private GeolocationMapper geolocationMapper;
+	private CategoryMapper categoryMapper;
 	
 	@Override
 	public CulturalOffer toEntity(@Valid CulturalOfferDTO dto) {
@@ -51,6 +53,24 @@ public class CulturalOfferMapper implements IMapper<CulturalOffer, CulturalOffer
 		List<CulturalOfferDTO> dtos = new ArrayList<CulturalOfferDTO>();
 		for(CulturalOffer entity : entities) {
 			dtos.add(toDto(entity));
+		}
+		return dtos;
+	}
+
+	public CulturalOfferResDTO toDTORes(CulturalOffer entity) {
+		return new CulturalOfferResDTO(entity.getId(), entity.getName(), entity.getDescription(), entity.getImage().getUrl(),
+				entity.getAverageMark(), entity.isActive(), geolocationMapper.toDto(entity.getGeolocation()),
+				categoryMapper.toDto(entity.getCategory()),
+				Optional.ofNullable(entity.getNews()).orElse(new HashSet<News>()).stream().map(i -> i.getId()).collect(Collectors.toSet()), 
+				Optional.ofNullable(entity.getComments()).orElse(new HashSet<Comment>()).stream().map(i -> i.getId()).collect(Collectors.toSet()),
+				Optional.ofNullable(entity.getMarks()).orElse(new HashSet<Mark>()).stream().map(i -> i.getId()).collect(Collectors.toSet()), entity.getAdmin().getId());
+	
+	}
+
+	public List<CulturalOfferResDTO> toDTOResList(Iterable<CulturalOffer> entities) {
+		List<CulturalOfferResDTO> dtos = new ArrayList<CulturalOfferResDTO>();
+		for(CulturalOffer entity : entities) {
+			dtos.add(toDTORes(entity));
 		}
 		return dtos;
 	}

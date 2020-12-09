@@ -43,6 +43,7 @@ public class CulturalOfferDTO {
 	
 	private Set<Long> marks;
 	
+	@NotNull(message = "Admin cannot be null.")
 	private Long admin;
 
 	public CulturalOfferDTO() {

@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { Category } from 'src/app/core/models/category.model';
 import { CulturalOffer } from 'src/app/core/models/cultural-offer.model';
 import { CategoryService } from 'src/app/core/services/category.service';
 import { CulturalOfferService } from 'src/app/core/services/cultural-offer.service';
-import { ClickedRow } from '../models/ClickedRow';
 
 @Component({
   selector: 'app-home',
@@ -20,8 +18,6 @@ export class HomeComponent implements OnInit {
   currentCategory: number = 0;
 
   zoom: number = 2;
-
-  pathForIndividualCulturalOffer: string = "/cultural-offers/"
 
   latitude: number = 0;
 
