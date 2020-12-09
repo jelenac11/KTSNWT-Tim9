@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,7 @@ import com.ktsnwt.project.team9.model.News;
 import com.ktsnwt.project.team9.services.implementations.NewsService;
 
 @RestController
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 @RequestMapping(value = "/api/news", produces = MediaType.APPLICATION_JSON_VALUE)
 public class NewsController {
 	
@@ -35,13 +37,16 @@ public class NewsController {
 	@Autowired
 	private NewsMapper newsMapper;
 
+	@PreAuthorize("permitAll()")
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Iterable<NewsDTO>> getAllNewss() {
 		Set<NewsDTO> newssDTO = newsMapper.toDTOList(newsService.getAll());
 		return new ResponseEntity<Iterable<NewsDTO>>(newssDTO, HttpStatus.OK);
 	}
 	
-	
+
+
+	@PreAuthorize("permitAll()")
 	@RequestMapping(value= "/by-page", method = RequestMethod.GET)
 	public ResponseEntity<Page<NewsDTO>> getAllCulturalOffers(Pageable pageable){
 		Page<News> page = newsService.findAll(pageable);

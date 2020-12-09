@@ -8,10 +8,12 @@ import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @AllArgsConstructor
 public class NewsDTO {
 
@@ -20,8 +22,8 @@ public class NewsDTO {
 	@NotBlank(message = "News content cannot be empty.")
 	private String content;
 	
-	@NotNull(message = "News date cannot be empty.")
 	@Min(value = 0L, message = "The value must be positive")
+	@NotNull(message = "News date cannot be empty.")
 	private long date;
 
 	private boolean active;
