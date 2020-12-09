@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +38,7 @@ public class CulturalOfferController {
 
 	private FileService fileService;
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Iterable<CulturalOfferResDTO>> getAllCulturalOffers() {
 		List<CulturalOfferResDTO> culturalOffersResDTO = culturalOfferMapper.toDTOResList(culturalOfferService.getAll());
@@ -49,7 +51,8 @@ public class CulturalOfferController {
 		});
 		return new ResponseEntity<Iterable<CulturalOfferResDTO>>(culturalOffersResDTO, HttpStatus.OK);
 	}
-
+	
+	@PreAuthorize("permitAll()")
 	@RequestMapping(value = "/by-page", method = RequestMethod.GET)
 	public ResponseEntity<Page<CulturalOfferResDTO>> getAllCulturalOffers(Pageable pageable) {
 		Page<CulturalOffer> page = culturalOfferService.findAll(pageable);
@@ -65,7 +68,8 @@ public class CulturalOfferController {
 				page.getTotalElements());
 		return new ResponseEntity<Page<CulturalOfferResDTO>>(pageCulturalOfferDTOs, HttpStatus.OK);
 	}
-
+	
+	@PreAuthorize("permitAll()")
 	@RequestMapping(value = "/category/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Page<CulturalOfferResDTO>> getCulturalOffersById(Pageable pageable, @PathVariable Long id) {
 		Page<CulturalOffer> page = culturalOfferService.getByCategoryId(id, pageable);
@@ -81,7 +85,8 @@ public class CulturalOfferController {
 				page.getTotalElements());
 		return new ResponseEntity<Page<CulturalOfferResDTO>>(pageCulturalOfferDTOs, HttpStatus.OK);
 	}
-
+	
+	@PreAuthorize("permitAll()")
 	@RequestMapping(value = "/category/{id}/find-by-name/{name}", method = RequestMethod.GET)
 	public ResponseEntity<Page<CulturalOfferResDTO>> findCulturalOfferByCategoryIdAndName(Pageable pageable,
 			@PathVariable Long id, @PathVariable String name) {
@@ -99,6 +104,7 @@ public class CulturalOfferController {
 		return new ResponseEntity<Page<CulturalOfferResDTO>>(pageCulturalOfferDTOs, HttpStatus.OK);
 	}
 
+	@PreAuthorize("permitAll()")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<CulturalOfferResDTO> getCulturalOffer(@PathVariable Long id) {
 
@@ -116,6 +122,7 @@ public class CulturalOfferController {
 		return new ResponseEntity<CulturalOfferResDTO>(culturalOfferResDTO, HttpStatus.OK);
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<CulturalOfferResDTO> createCulturalOffer(
 			@RequestPart("culturalOfferDTO") @Valid @NotNull CulturalOfferDTO culturalOfferDTO,
@@ -135,6 +142,7 @@ public class CulturalOfferController {
 		}
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<CulturalOfferResDTO> updateCulturalOffer(@PathVariable Long id,
 			@RequestPart("culturalOfferDTO") @Valid @NotNull CulturalOfferDTO culturalOfferDTO,
@@ -152,6 +160,7 @@ public class CulturalOfferController {
 		}
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Boolean> deleteCulturalOffer(@PathVariable Long id) {
 		try {
