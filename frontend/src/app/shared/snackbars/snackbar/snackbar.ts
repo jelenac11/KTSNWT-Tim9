@@ -4,7 +4,7 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 @Injectable()
 export class Snackbar {
 
-  constructor(public snackBar: MatSnackBar) { }
+  constructor(private snackBar: MatSnackBar) { }
 
   config: MatSnackBarConfig = {
     duration: 3000,

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Category } from 'src/app/core/models/category.model';
+import { Category } from 'src/app/core/models/response/category.model';
 import { CulturalOfferRequest } from 'src/app/core/models/request/cultural-offer-request.model';
 import { CategoryService } from 'src/app/core/services/category.service';
 import { CulturalOfferService } from 'src/app/core/services/cultural-offer.service';
@@ -47,8 +47,8 @@ export class CulturalOfferUpdateComponent implements OnInit {
     this.id = this.route.snapshot.paramMap.get('id');
     this.getCulturalOfferById();
     this.registerForm = this.formBuilder.group({
-      name: { value: '', disabled: true },
-      description: [null],
+      name: [{value: '', disabled: true}, Validators.required],
+      description: null,
       category: ['', Validators.required],
       file: [null],
       longitude: [null],
@@ -110,7 +110,6 @@ export class CulturalOfferUpdateComponent implements OnInit {
         lat: this.registerForm.get('latitude').value,
         lon: this.registerForm.get('longitude').value
       },
-      averageMark: 0,
       admin: 1
     }
     let formData = new FormData();

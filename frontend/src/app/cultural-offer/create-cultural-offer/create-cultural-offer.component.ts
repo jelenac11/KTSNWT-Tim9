@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Category } from 'src/app/core/models/category.model';
+import { Category } from 'src/app/core/models/response/category.model';
 import { CulturalOfferRequest } from 'src/app/core/models/request/cultural-offer-request.model';
 import { CategoryService } from 'src/app/core/services/category.service';
 import { CulturalOfferService } from 'src/app/core/services/cultural-offer.service';
@@ -69,7 +69,6 @@ export class CreateCulturalOfferComponent implements OnInit {
         lat: 0,
         lon: 0
       },
-      averageMark: 0,
       admin: 1
     }
     let formData = new FormData();

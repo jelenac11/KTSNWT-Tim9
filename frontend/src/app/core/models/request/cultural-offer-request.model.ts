@@ -1,4 +1,3 @@
-import { CategoryRequest } from './category-request.model';
 import { GeolocationRequest } from './geolocation-request.model';
 
 export interface CulturalOfferRequest {
@@ -6,6 +5,5 @@ export interface CulturalOfferRequest {
     category: number,
     geolocation: GeolocationRequest,
     description: string,
-    averageMark: number,
     admin: number
 }
