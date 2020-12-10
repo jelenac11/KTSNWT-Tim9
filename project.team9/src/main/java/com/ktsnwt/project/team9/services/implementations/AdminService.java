@@ -1,11 +1,13 @@
 package com.ktsnwt.project.team9.services.implementations;
 
+import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ktsnwt.project.team9.model.Admin;
@@ -23,6 +25,9 @@ public class AdminService implements IAdminService {
 	
 	@Autowired
 	private IUserRepository userRepository;
+	
+	@Autowired
+    private PasswordEncoder passwordEncoder;
 	
 	@Autowired
     private AuthorityService authService;
@@ -54,6 +59,8 @@ public class AdminService implements IAdminService {
 		}
 		List<Authority> auth = authService.findByName("ROLE_ADMIN");
         entity.setAuthorities(auth);
+        entity.setPassword(passwordEncoder.encode(entity.getPassword()));
+        entity.setLastPasswordResetDate(new Date().getTime());
 		return adminRepository.save(entity);
 	}
 

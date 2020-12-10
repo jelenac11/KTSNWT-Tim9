@@ -19,4 +19,8 @@ public class AdminDTO extends UserDTO {
 		this.culturalOffers = culturalOffers;
 		this.active = active;
 	}
+	
+	public AdminDTO() {
+		
+	}
 }

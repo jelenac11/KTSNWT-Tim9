@@ -1,6 +1,7 @@
 package com.ktsnwt.project.team9.services.implementations;
 
 import java.security.SecureRandom;
+import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -54,11 +55,17 @@ public class UserService implements IUserService, UserDetailsService {
     }
 
     // Funkcija pomocu koje korisnik menja svoju lozinku
-    public void changePassword(String oldPassword, String newPassword) {
+    public void changePassword(String oldPassword, String newPassword) throws Exception {
 
         // Ocitavamo trenutno ulogovanog korisnika
         Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
-        String username = ((User) currentUser.getPrincipal()).getEmail();
+        String username = "";
+        try {
+        	username = ((User) currentUser.getPrincipal()).getEmail();
+        } catch (Exception e) {
+        	throw new Exception(String.format("Invalid token."));
+        }
+        
 
         if (authenticationManager != null) {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, oldPassword));
@@ -70,8 +77,38 @@ public class UserService implements IUserService, UserDetailsService {
         // pre nego sto u bazu upisemo novu lozinku, potrebno ju je hesirati
         // ne zelimo da u bazi cuvamo lozinke u plain text formatu
         user.setPassword(passwordEncoder.encode(newPassword));
+        user.setLastPasswordResetDate(new Date().getTime());
         userRepository.save(user);
     }
+    
+    @Override
+	public User changeProfile(User entity) throws Exception {
+		User user = userRepository.findById(entity.getId()).orElse(null);
+		if (user == null) {
+			throw new NoSuchElementException("User with given id doesn't exist.");
+		}
+		if (!entity.getEmail().equals(user.getEmail())) {
+			User emailUser = userRepository.findByEmail(entity.getEmail());
+			if (emailUser != null) {
+				throw new Exception("User with this email already exists.");
+			}
+		}
+		if (!entity.getUsername().equals(user.getUsername())) {
+			User usernameUser = userRepository.findByUsername(entity.getUsername());
+			if (usernameUser != null) {
+				throw new Exception("User with this username already exists.");
+			}
+		}
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User loggedIn = userRepository.findByUsername(auth.getName());
+		if (loggedIn.getId() != user.getId()) {
+			throw new Exception("You can not change someone elses profile.");
+		}
+		user.setUsername(entity.getUsername());
+		user.setFirstName(entity.getFirstName());
+		user.setLastName(entity.getLastName());
+		return userRepository.save(user);
+	}
 	
 	@Override
 	public Iterable<User> getAll() {
@@ -122,6 +159,7 @@ public class UserService implements IUserService, UserDetailsService {
 		User user = userRepository.findByEmail(email);
 		String newPassword = generateRandomPassword();
 		user.setPassword(passwordEncoder.encode(newPassword));
+		user.setLastPasswordResetDate(new Date().getTime());
         userRepository.save(user);
         mailService.sendForgottenPassword(user, newPassword);
 	}

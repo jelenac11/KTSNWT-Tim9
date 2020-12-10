@@ -75,7 +75,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 //.antMatchers(HttpMethod.GET, "/api/cultural-content-category").hasRole("ROLE_ADMIN")
 
                 // za svaki drugi zahtev korisnik mora biti autentifikovan
-                .anyRequest().authenticated().and()
+                //.anyRequest().authenticated()
+                .and()
                 // za development svrhe ukljuci konfiguraciju za CORS iz WebConfig klase
                 .cors().and()
 
@@ -93,7 +94,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     	web.ignoring().antMatchers(HttpMethod.POST, "/auth/sign-up");
 		web.ignoring().antMatchers(HttpMethod.POST, "/auth/login");
 		web.ignoring().antMatchers(HttpMethod.POST, "/auth/forgot-password");
-		web.ignoring().antMatchers(HttpMethod.GET, "/auth/potvrdaRegistracije/**");
+		web.ignoring().antMatchers(HttpMethod.GET, "/auth/confirm-registration/**");
         web.ignoring().antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "/favicon.ico", "/**/*.html",
                 "/**/*.css", "/**/*.js", "/**/*.png", "/**/*.jpg");
     }

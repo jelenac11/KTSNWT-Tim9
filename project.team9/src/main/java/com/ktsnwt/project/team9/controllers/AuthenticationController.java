@@ -3,6 +3,10 @@ package com.ktsnwt.project.team9.controllers;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -56,10 +60,15 @@ public class AuthenticationController {
 	private MailService mailService;
 	
 	@PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody UserLoginDTO authenticationRequest) {
-        Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(),
-                        authenticationRequest.getPassword()));
+    public ResponseEntity<?> createAuthenticationToken(@Valid @RequestBody UserLoginDTO authenticationRequest) {
+		Authentication authentication = null;
+		try {
+			authentication = authenticationManager
+	                .authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(),
+	                        authenticationRequest.getPassword()));
+		} catch (Exception e) {
+			return new ResponseEntity<>("Bad credentials.", HttpStatus.BAD_REQUEST);
+		}
 
         // Kreiraj token za tog korisnika
         User user = (User) authentication.getPrincipal();
@@ -81,7 +90,7 @@ public class AuthenticationController {
     }
 	
 	@PostMapping(value = "/sign-up", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> addUser(@RequestBody RegisteredUserDTO userRequest) throws Exception {
+    public ResponseEntity<?> addUser(@Valid @RequestBody RegisteredUserDTO userRequest) throws Exception {
 
         User existEmail = this.userDetailsService.findByEmail(userRequest.getEmail());
         if (existEmail != null) {
@@ -105,7 +114,7 @@ public class AuthenticationController {
     }
 	
 	@PostMapping(value = "/forgot-password")
-    public ResponseEntity<?> forgotPassword(@RequestBody String email) throws Exception {
+    public ResponseEntity<?> forgotPassword(@Valid @NotNull @Email @RequestBody String email) throws Exception {
 
         User user = this.userDetailsService.findByEmail(email);
         if (user == null) {
@@ -116,8 +125,12 @@ public class AuthenticationController {
     }
 	
 	@PostMapping(value = "/change-password", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> changePassword(@RequestBody PasswordChanger passwordChanger) {
-        userDetailsService.changePassword(passwordChanger.oldPassword, passwordChanger.newPassword);
+    public ResponseEntity<?> changePassword(@Valid @RequestBody PasswordChanger passwordChanger) {
+        try {
+			userDetailsService.changePassword(passwordChanger.oldPassword, passwordChanger.newPassword);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 
         Map<String, String> result = new HashMap<>();
         result.put("result", "success");

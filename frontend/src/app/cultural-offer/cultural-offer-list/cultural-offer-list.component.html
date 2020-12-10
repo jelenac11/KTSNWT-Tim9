@@ -61,7 +61,7 @@
               </button>
             </mdb-card-title>
 
-            <mdb-card-text>
+            <mdb-card-text *ngIf="culturalOffer.description">
               {{ culturalOffer.description | slice: 0:360
               }}{{ culturalOffer.description.length > 360 ? "..." : "" }}
             </mdb-card-text>
