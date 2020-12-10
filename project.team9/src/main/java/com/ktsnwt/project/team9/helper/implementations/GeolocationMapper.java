@@ -22,7 +22,7 @@ public class GeolocationMapper implements IMapper<Geolocation, GeolocationDTO> {
 	}
 	
 	public List<GeolocationDTO> toDTOList(Iterable<Geolocation> entities){
-		List<GeolocationDTO> dtos = new ArrayList<GeolocationDTO>();
+		List<GeolocationDTO> dtos = new ArrayList<>();
 		for(Geolocation geolocation : entities) {
 			dtos.add(toDto(geolocation));
 		}

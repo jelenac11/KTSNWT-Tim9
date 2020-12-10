@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,12 +32,14 @@ public class MarkController {
 		markMapper = new MarkMapper();
 	}
 	
+	@PreAuthorize("permitAll()")
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Iterable<MarkDTO>> getAllMarks() {
 		List<MarkDTO> marksDTO = markMapper.toDTOList(markService.getAll());
 		return new ResponseEntity<>(marksDTO, HttpStatus.OK);
 	}
 	
+	@PreAuthorize("permitAll()")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<MarkDTO> getMark(@PathVariable Long id) {
 		Mark mark = markService.getById(id);
@@ -46,6 +49,7 @@ public class MarkController {
 		return new ResponseEntity<>(markMapper.toDto(mark), HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<MarkDTO> createMark(@Valid @RequestBody MarkDTO markDTO) {
 		try {
@@ -55,6 +59,7 @@ public class MarkController {
 		}
 	}
 	
+	@PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<MarkDTO> updateMark(@PathVariable Long id, @Valid @RequestBody MarkDTO markDTO) {
 		try {
@@ -64,12 +69,4 @@ public class MarkController {
 		}
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Boolean> deleteComment(@PathVariable Long id) {
-		try {
-			return new ResponseEntity<>(markService.delete(id), HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
 }
