@@ -127,4 +127,8 @@ public class CommentService implements ICommentService {
 	public Comment create(Comment entity) throws Exception {
 		return null;
 	}
+
+	public Page<Comment> findAllByCOID(Pageable pageable, Long id) {
+		return commentRepository.findByCulturalOfferId(pageable, id); 
+	}
 }

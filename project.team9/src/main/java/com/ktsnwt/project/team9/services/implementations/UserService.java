@@ -1,6 +1,7 @@
 package com.ktsnwt.project.team9.services.implementations;
 
 import java.security.SecureRandom;
+import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -54,11 +55,17 @@ public class UserService implements IUserService, UserDetailsService {
     }
 
     // Funkcija pomocu koje korisnik menja svoju lozinku
-    public void changePassword(String oldPassword, String newPassword) {
+    public void changePassword(String oldPassword, String newPassword) throws Exception {
 
         // Ocitavamo trenutno ulogovanog korisnika
         Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
-        String username = ((User) currentUser.getPrincipal()).getEmail();
+        String username = "";
+        try {
+        	username = ((User) currentUser.getPrincipal()).getEmail();
+        } catch (Exception e) {
+        	throw new Exception(String.format("Invalid token."));
+        }
+        
 
         if (authenticationManager != null) {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, oldPassword));
@@ -70,14 +77,13 @@ public class UserService implements IUserService, UserDetailsService {
         // pre nego sto u bazu upisemo novu lozinku, potrebno ju je hesirati
         // ne zelimo da u bazi cuvamo lozinke u plain text formatu
         user.setPassword(passwordEncoder.encode(newPassword));
+        user.setLastPasswordResetDate(new Date().getTime());
         userRepository.save(user);
     }
     
     @Override
 	public User changeProfile(User entity) throws Exception {
 		User user = userRepository.findById(entity.getId()).orElse(null);
-		System.out.println("Iz servisa");
-		System.out.println(user.getId());
 		if (user == null) {
 			throw new NoSuchElementException("User with given id doesn't exist.");
 		}
@@ -94,12 +100,7 @@ public class UserService implements IUserService, UserDetailsService {
 			}
 		}
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		System.out.println("auth name");
-		System.out.println(auth.getPrincipal().toString());
-		System.out.println(auth.getName());
         User loggedIn = userRepository.findByUsername(auth.getName());
-        System.out.println("Logged in");
-        System.out.println(loggedIn.getId());
 		if (loggedIn.getId() != user.getId()) {
 			throw new Exception("You can not change someone elses profile.");
 		}
@@ -158,6 +159,7 @@ public class UserService implements IUserService, UserDetailsService {
 		User user = userRepository.findByEmail(email);
 		String newPassword = generateRandomPassword();
 		user.setPassword(passwordEncoder.encode(newPassword));
+		user.setLastPasswordResetDate(new Date().getTime());
         userRepository.save(user);
         mailService.sendForgottenPassword(user, newPassword);
 	}

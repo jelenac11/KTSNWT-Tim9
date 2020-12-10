@@ -1,5 +1,6 @@
 package com.ktsnwt.project.team9.services.implementations;
 
+import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -58,6 +59,7 @@ public class RegisteredUserService implements IRegisteredUserService {
 		List<Authority> auth = authService.findByName("ROLE_REGISTERED_USER");
         entity.setAuthorities(auth);
         entity.setPassword(passwordEncoder.encode(entity.getPassword()));
+        entity.setLastPasswordResetDate(new Date().getTime());
 		return registeredUserRepository.save(entity);
 	}
 
