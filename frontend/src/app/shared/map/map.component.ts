@@ -17,6 +17,8 @@ export class MapComponent implements OnInit {
   zoom: number = 1;
   @Input()
   data: any[]=[];
+  @Input()
+  markerZoom:number=6;
 
   constructor() { }
 
@@ -32,7 +34,7 @@ export class MapComponent implements OnInit {
       this.latitude = culturalOffer.geolocation.lat;
       this.longitude = culturalOffer.geolocation.lon;
     }
-    this.zoom = 6 + Math.random() * 0.1;
+    this.zoom = this.markerZoom + Math.random() * 0.1;
   }
 
 }

@@ -15,6 +15,8 @@ public class GeolocationDTO {
 
 	private Long id;
 	
+	private String placeId;
+	
 	@NotEmpty(message = "Location cannot be null or empty.")
 	private String location;
 	

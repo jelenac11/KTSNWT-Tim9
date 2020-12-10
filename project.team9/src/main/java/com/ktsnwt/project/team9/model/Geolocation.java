@@ -17,6 +17,9 @@ public class Geolocation {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "geolocation_id")
 	private Long id;
+	
+	@Column(nullable = false)
+	private String placeId;
 
 	@Column(nullable = false)
 	private String location;
@@ -31,9 +34,10 @@ public class Geolocation {
 		super();
 	}
 
-	public Geolocation(Long id, String location, double lat, double lon) {
+	public Geolocation(Long id, String placeId, String location, double lat, double lon) {
 		super();
 		this.id = id;
+		this.placeId = placeId;
 		this.location = location;
 		this.lat = lat;
 		this.lon = lon;
@@ -66,4 +70,17 @@ public class Geolocation {
 	public Long getId() {
 		return id;
 	}
+
+	public String getPlaceId() {
+		return placeId;
+	}
+
+	public void setPlaceId(String placeId) {
+		this.placeId = placeId;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
 }

@@ -83,6 +83,7 @@ public class CulturalOfferController {
 		return new ResponseEntity<>(culturalOfferResDTO, HttpStatus.OK);
 	}
 
+
 	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<CulturalOfferResDTO> createCulturalOffer(
 			@RequestPart("culturalOfferDTO") @Valid @NotNull CulturalOfferDTO culturalOfferDTO,
@@ -102,6 +103,7 @@ public class CulturalOfferController {
 		}
 	}
 
+
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<CulturalOfferResDTO> updateCulturalOffer(@PathVariable Long id,
 			@RequestPart("culturalOfferDTO") @Valid @NotNull CulturalOfferDTO culturalOfferDTO,
@@ -118,6 +120,7 @@ public class CulturalOfferController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
+
 
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Boolean> deleteCulturalOffer(@PathVariable Long id) {

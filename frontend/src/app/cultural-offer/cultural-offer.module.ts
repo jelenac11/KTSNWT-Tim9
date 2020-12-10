@@ -14,6 +14,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { CreateCulturalOfferComponent } from './create-cultural-offer/create-cultural-offer.component';
 import { CulturalOfferUpdateComponent } from './cultural-offer-update/cultural-offer-update.component';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
+import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
   declarations: [CulturalOfferReviewComponent, CulturalOfferListComponent, CreateCulturalOfferComponent, CulturalOfferUpdateComponent],
@@ -34,7 +36,10 @@ import { CulturalOfferUpdateComponent } from './cultural-offer-update/cultural-o
     MatGoogleMapsAutocompleteModule,
     ButtonsModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    GooglePlaceModule,
+    BrowserModule,
+    
   ],
   exports: [CulturalOfferReviewComponent, CulturalOfferListComponent, CreateCulturalOfferComponent,CulturalOfferUpdateComponent]
 })

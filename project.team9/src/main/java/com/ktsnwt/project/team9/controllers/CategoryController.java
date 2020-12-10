@@ -37,6 +37,7 @@ public class CategoryController {
 	@Autowired
 	private CategoryMapper categoryMapper;
 
+	@PreAuthorize("permitAll()")
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Iterable<CategoryDTO>> getAllCategorys() {
 		Set<CategoryDTO> categorysDTO = categoryMapper.toDTOList(categoryService.getAll());

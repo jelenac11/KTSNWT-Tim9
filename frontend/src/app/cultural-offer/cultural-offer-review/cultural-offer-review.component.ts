@@ -10,22 +10,7 @@ import { CulturalOfferService } from 'src/app/core/services/cultural-offer.servi
 })
 export class CulturalOfferReviewComponent implements OnInit {
 
-  culturalOffer: CulturalOffer = {
-    id: 0,
-    name: '',
-    category: {
-      id: 0,
-      name: ''
-    },
-    geolocation: {
-      location: '',
-      lat: 0,
-      lon: 0
-    },
-    description: '',
-    image: '',
-    averageMark: 0
-  };
+  culturalOffer: any;
   culturalOfferId: string | null = null;
 
   zoom: number = 8;
