@@ -6,6 +6,7 @@ import { CulturalOfferRequest } from 'src/app/core/models/request/cultural-offer
 import { CategoryService } from 'src/app/core/services/category.service';
 import { CulturalOfferService } from 'src/app/core/services/cultural-offer.service';
 import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
+import PlaceResult = google.maps.places.PlaceResult;
 
 @Component({
   selector: 'app-cultural-offer-update',
@@ -26,7 +27,7 @@ export class CulturalOfferUpdateComponent implements OnInit {
 
   zoom: number = 2;
 
-  loc: String = '';
+  loc: any;
 
   submitted = false;
 
@@ -34,6 +35,9 @@ export class CulturalOfferUpdateComponent implements OnInit {
 
   defaultImage: string = '../assets/noimage.jpg';
 
+  geoCoder: any;
+
+  location: any = { geolocation: { lat: null, lon: null } };
 
   constructor(
     private categoryService: CategoryService,
@@ -46,14 +50,13 @@ export class CulturalOfferUpdateComponent implements OnInit {
     this.getAllCategories();
     this.id = this.route.snapshot.paramMap.get('id');
     this.getCulturalOfferById();
+    this.geoCoder = new google.maps.Geocoder;
     this.registerForm = this.formBuilder.group({
-      name: { value: '', disabled: true },
-      description: [null],
+      name: ['', Validators.required],
+      description: null,
       category: ['', Validators.required],
-      file: [null],
-      longitude: [null],
-      latitude: [null],
-      location: [null]
+      file: null,
+      location: [null, Validators.required]
     });
   }
 
@@ -63,10 +66,8 @@ export class CulturalOfferUpdateComponent implements OnInit {
       description: this.culturalOffer.description,
       category: this.culturalOffer.category.id,
       file: null,
-      longitude: this.culturalOffer.geolocation.lon,
-      latitude: this.culturalOffer.geolocation.lat,
-      location: this.culturalOffer.geolocation.location
     })
+    this.setLocationValue();
     this.uploadedImage = this.culturalOffer.image;
     (fetch(this.culturalOffer.image)
       .then(function (res) { return res.arrayBuffer(); })
@@ -79,7 +80,6 @@ export class CulturalOfferUpdateComponent implements OnInit {
       })
     );
   }
-
 
   getAllCategories() {
     this.categoryService.getAll().subscribe(categories => this.categories = categories);
@@ -106,9 +106,10 @@ export class CulturalOfferUpdateComponent implements OnInit {
       category: this.registerForm.get('category').value,
       description: this.registerForm.get('description').value,
       geolocation: {
-        location: this.registerForm.get('location').value,
-        lat: this.registerForm.get('latitude').value,
-        lon: this.registerForm.get('longitude').value
+        placeId: this.registerForm.get('location').value.place_id,
+        location: this.registerForm.get('location').value.formatted_address,
+        lat: this.registerForm.get('location').value.geometry?.location.lat(),
+        lon: this.registerForm.get('location').value.geometry?.location.lng()
       },
       averageMark: 0,
       admin: 1
@@ -132,23 +133,17 @@ export class CulturalOfferUpdateComponent implements OnInit {
     });
   }
 
-  chooseFile(files: Event) {
-    const element = files.currentTarget as HTMLInputElement;
-    let fileList: FileList | null = element.files;
-    if (!fileList) {
-      return
-    }
-
-    let file: File = fileList[0];
-    if (!file) {
+  chooseFile(event: any) {
+    if (event.target.files.length <= 0) {
       this.registerForm.patchValue({
         file: this.oldImage
-      })
+      });
       this.uploadedImage = '';
       return;
     }
-
+    const file = event.target.files[0];
     const mimeType = file.type;
+
     if (mimeType.match(/image\/*/) == null) {
       this.registerForm.patchValue({
         file: this.oldImage
@@ -156,14 +151,39 @@ export class CulturalOfferUpdateComponent implements OnInit {
       this.uploadedImage = '';
       return;
     }
+
     this.registerForm.patchValue({
       file: file
-    })
+    });
+
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = (_event) => {
       this.uploadedImage = reader.result;
     }
+  }
 
+  setLocationValue() {
+    this.geoCoder.geocode(
+      {
+        placeId: this.culturalOffer.geolocation.placeId,
+      },
+      (results: any, status: any) => {
+        if (status === 'OK') {
+          if (results[0]) {
+            this.location.geolocation.lat= results[0].geometry?.location.lat();
+            this.location.geolocation.lon= results[0].geometry?.location.lng();
+            this.registerForm.patchValue({
+              location:results[0]
+            })
+            this.loc=results[0].formatted_address;
+          }
+        }
+      });
+  }
+
+  onAutocompleteSelected($event: PlaceResult) {
+    this.location.geolocation.lat = $event.geometry?.location.lat();
+    this.location.geolocation.lon = $event.geometry?.location.lng();
   }
 }

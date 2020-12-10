@@ -30,6 +30,7 @@ import lombok.AllArgsConstructor;
 @RequestMapping(value = "/api/cultural-offers", produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class CulturalOfferController {
 
 	private CulturalOfferService culturalOfferService;
@@ -38,7 +39,6 @@ public class CulturalOfferController {
 
 	private FileService fileService;
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Iterable<CulturalOfferResDTO>> getAllCulturalOffers() {
 		List<CulturalOfferResDTO> culturalOffersResDTO = culturalOfferMapper.toDTOResList(culturalOfferService.getAll());
@@ -122,7 +122,6 @@ public class CulturalOfferController {
 		return new ResponseEntity<CulturalOfferResDTO>(culturalOfferResDTO, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<CulturalOfferResDTO> createCulturalOffer(
 			@RequestPart("culturalOfferDTO") @Valid @NotNull CulturalOfferDTO culturalOfferDTO,
@@ -142,7 +141,6 @@ public class CulturalOfferController {
 		}
 	}
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<CulturalOfferResDTO> updateCulturalOffer(@PathVariable Long id,
 			@RequestPart("culturalOfferDTO") @Valid @NotNull CulturalOfferDTO culturalOfferDTO,
@@ -160,7 +158,6 @@ public class CulturalOfferController {
 		}
 	}
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Boolean> deleteCulturalOffer(@PathVariable Long id) {
 		try {

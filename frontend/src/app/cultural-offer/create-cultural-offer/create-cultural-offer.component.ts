@@ -5,7 +5,7 @@ import { CulturalOfferRequest } from 'src/app/core/models/request/cultural-offer
 import { CategoryService } from 'src/app/core/services/category.service';
 import { CulturalOfferService } from 'src/app/core/services/cultural-offer.service';
 import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
-import { isForOfStatement } from 'typescript';
+import PlaceResult = google.maps.places.PlaceResult;
 
 @Component({
   selector: 'app-create-cultural-offer',
@@ -16,9 +16,13 @@ export class CreateCulturalOfferComponent implements OnInit {
 
   categories: Category[] = []
 
+  location: any = { geolocation: { lat: null, lon: null } };
+
   registerForm: any;
 
   zoom: number = 2;
+
+  markerZoom: number = 12;
 
   loc: String = '';
 
@@ -28,6 +32,7 @@ export class CreateCulturalOfferComponent implements OnInit {
 
   defaultImage: string = '../assets/noimage.jpg';
 
+  geoCoder: any;
 
   constructor(
     private categoryService: CategoryService,
@@ -36,14 +41,13 @@ export class CreateCulturalOfferComponent implements OnInit {
     private snackBar: Snackbar) { }
 
   ngOnInit(): void {
+    this.geoCoder = new google.maps.Geocoder;
     this.registerForm = this.formBuilder.group({
       name: ['', Validators.required],
-      description: [null],
+      description: null,
       category: ['', Validators.required],
       file: [null, Validators.required],
-      longitude: [null],
-      latitude: [null],
-      location: [null]
+      location: [null, Validators.required]
     });
     this.getAllCategories();
   }
@@ -52,10 +56,8 @@ export class CreateCulturalOfferComponent implements OnInit {
     this.categoryService.getAll().subscribe(categories => this.categories = categories);
   }
 
-
-  get f() { return this.registerForm.controls; }
-
   onSubmit() {
+    console.log(this.loc);
     this.submitted = true;
     if (this.registerForm.invalid) {
       return;
@@ -65,24 +67,27 @@ export class CreateCulturalOfferComponent implements OnInit {
       category: this.registerForm.get('category').value,
       description: this.registerForm.get('description').value,
       geolocation: {
-        location: 'gfgfdgfdgfd',
-        lat: 0,
-        lon: 0
+        placeId: this.registerForm.get('location').value.place_id,
+        location: this.registerForm.get('location').value.formatted_address,
+        lat: this.registerForm.get('location').value.geometry?.location.lat(),
+        lon: this.registerForm.get('location').value.geometry?.location.lng()
       },
       averageMark: 0,
       admin: 1
     }
+    
     let formData = new FormData();
     let blob = new Blob([JSON.stringify(newCulturalOffer)], {
       type: 'application/json'
     });
     formData.append('culturalOfferDTO', blob);
     formData.append('file', this.registerForm.get('file').value);
+    
     this.culturalOfferService.post(formData).subscribe(res => {
       if (res) {
         this.snackBar.success("You have successfully created cultural offer!");
         this.submitted = false;
-        this.uploadedImage='';
+        this.uploadedImage = '';
         this.registerForm.reset();
       }
       else {
@@ -94,23 +99,19 @@ export class CreateCulturalOfferComponent implements OnInit {
     });
   }
 
-  chooseFile(files: Event) {
-    const element = files.currentTarget as HTMLInputElement;
-    let fileList: FileList | null = element.files;
-    if (!fileList) {
-      return
-    }
+  get f() { return this.registerForm.controls; }
 
-    let file: File = fileList[0];
-    if (!file) {
+  chooseFile(event: any) {
+    if (event.target.files.length <= 0) {
       this.registerForm.patchValue({
         file: null
-      })
+      });
       this.uploadedImage = '';
       return;
     }
-
+    const file = event.target.files[0];
     const mimeType = file.type;
+
     if (mimeType.match(/image\/*/) == null) {
       this.registerForm.patchValue({
         file: null
@@ -118,9 +119,11 @@ export class CreateCulturalOfferComponent implements OnInit {
       this.uploadedImage = '';
       return;
     }
+
     this.registerForm.patchValue({
       file: file
-    })
+    });
+
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = (_event) => {
@@ -128,4 +131,9 @@ export class CreateCulturalOfferComponent implements OnInit {
     }
   }
 
+  onAutocompleteSelected($event: PlaceResult) {
+    this.location.geolocation.lat = $event.geometry?.location.lat();
+    this.location.geolocation.lon = $event.geometry?.location.lng();
+
+  }
 }
