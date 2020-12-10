@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,12 +36,14 @@ public class RegisteredUserController {
 		registeredUserMapper = new RegisteredUserMapper();
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Iterable<RegisteredUserDTO>> getAllRegisteredUser() {
 		List<RegisteredUserDTO> registeredUsersDTO = registeredUserMapper.toDTOList(registeredUserService.getAll());
 		return new ResponseEntity<>(registeredUsersDTO, HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value= "/by-page", method = RequestMethod.GET)
 	public ResponseEntity<Page<RegisteredUserDTO>> getAllRegisteredUsers(Pageable pageable){
 		Page<RegisteredUser> page = registeredUserService.findAll(pageable);
@@ -49,6 +52,7 @@ public class RegisteredUserController {
         return new ResponseEntity<Page<RegisteredUserDTO>>(pageRUserDTOs, HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_REGISTERED_USER')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<RegisteredUserDTO> getRegisteredUser(@PathVariable Long id) {
 		RegisteredUser registeredUser = registeredUserService.getById(id);
@@ -58,6 +62,7 @@ public class RegisteredUserController {
 		return new ResponseEntity<>(registeredUserMapper.toDto(registeredUser), HttpStatus.OK);
 	}
 
+	@PreAuthorize("permitAll()")
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<RegisteredUserDTO> createRegistredUser(@Valid @RequestBody RegisteredUserDTO registeredUserDTO) {
 		try {
@@ -67,6 +72,7 @@ public class RegisteredUserController {
 		}
 	}
 
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_REGISTERED_USER')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<RegisteredUserDTO> updateRegisteredUser(@PathVariable Long id, @Valid @RequestBody RegisteredUserDTO registeredUserDTO) {
 		try {
@@ -78,6 +84,7 @@ public class RegisteredUserController {
 		}
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Boolean> deleteRegisteredUser(@PathVariable Long id) {
 		try {
@@ -87,5 +94,4 @@ public class RegisteredUserController {
 		}
 	}
 	
-
 }

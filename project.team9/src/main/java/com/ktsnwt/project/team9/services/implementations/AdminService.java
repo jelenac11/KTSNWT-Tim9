@@ -1,5 +1,6 @@
 package com.ktsnwt.project.team9.services.implementations;
 
+import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -59,6 +60,7 @@ public class AdminService implements IAdminService {
 		List<Authority> auth = authService.findByName("ROLE_ADMIN");
         entity.setAuthorities(auth);
         entity.setPassword(passwordEncoder.encode(entity.getPassword()));
+        entity.setLastPasswordResetDate(new Date().getTime());
 		return adminRepository.save(entity);
 	}
 
