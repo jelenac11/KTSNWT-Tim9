@@ -1,0 +1,60 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-7 mt-3 mb-3">
+      <mdb-card>
+        <mdb-card-body>
+          <div class="row">
+            <div class="col-4">
+              <div class="view overlay">
+                <app-image-modal
+                  [imageURL]="culturalOffer.image"
+                ></app-image-modal>
+              </div>
+            </div>
+            <div class="col-5 mt-3">
+              <div>
+                <h1>{{ culturalOffer.name }}</h1>
+              </div>
+              <div>
+                <h2>
+                  <mdb-badge color="amber darken-2"
+                    >#{{ culturalOffer.category.name }}</mdb-badge
+                  >
+                </h2>
+              </div>
+            </div>
+            <div class="col-3">
+              <div>
+                <bar-rating
+                  [(rate)]="culturalOffer.averageMark"
+                  [theme]="'stars'"
+                  [max]="5"
+                ></bar-rating>
+              </div>
+              <div>
+                <app-subscribe></app-subscribe>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-3" style="text-align: center">
+            {{ culturalOffer.description }}
+          </div>
+        </mdb-card-body>
+      </mdb-card>
+    </div>
+    <div class="col-5 mt-3">
+      <mdb-card class="map-container">
+        <mdb-card-body>
+          <app-map
+            [latitude]="culturalOffer.geolocation.lat"
+            [longitude]="culturalOffer.geolocation.lon"
+            [zoom]="zoom"
+            [showInfoWindow]="true"
+            [data]="[culturalOffer]"
+          >
+          </app-map>
+        </mdb-card-body>
+      </mdb-card>
+    </div>
+  </div>
+</div>

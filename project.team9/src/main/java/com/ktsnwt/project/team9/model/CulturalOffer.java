@@ -81,4 +81,14 @@ public class CulturalOffer {
 		this.id = id;
 	}
 
+	public CulturalOffer(String name, String description, Geolocation geolocation, Category category, Admin admin) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.geolocation = geolocation;
+		this.category = category;
+		this.admin = admin;
+	}
+	
+
 }

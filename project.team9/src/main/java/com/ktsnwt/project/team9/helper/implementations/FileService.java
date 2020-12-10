@@ -15,7 +15,7 @@ public class FileService {
 
 	private static String path="src/main/resources/uploadedImages";
 	
-	public String saveImage(MultipartFile file, String fileName) throws IllegalStateException, IOException {
+	public String saveImage(MultipartFile file, String fileName) throws IOException {
 		Path filepath = Paths.get(path, fileName + "_" + file.getOriginalFilename());
 		file.transferTo(filepath);
 		return filepath.toString();
@@ -23,15 +23,15 @@ public class FileService {
 
 	public String uploadImageAsBase64(String image) throws IOException {
 		byte[] array = Files.readAllBytes(Paths.get(image));
-		return Base64Utils.encodeToString(array);
+		return "data:image/jpeg;base64,"+Base64Utils.encodeToString(array);
 	}
 
-	public void deleteImageFromFile(String url) {
+	public boolean deleteImageFromFile(String url) {
 		File image = new File(url); 
-		image.delete();
+		return image.delete();
 	}
 
-	public void uploadNewImage(MultipartFile newImage, String url) throws IllegalStateException, IOException {
+	public void uploadNewImage(MultipartFile newImage, String url) throws IOException {
 		Path filepath = Paths.get(url);
 		newImage.transferTo(filepath);
 	}

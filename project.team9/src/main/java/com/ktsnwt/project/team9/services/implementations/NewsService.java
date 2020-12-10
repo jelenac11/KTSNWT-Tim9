@@ -3,14 +3,17 @@ package com.ktsnwt.project.team9.services.implementations;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ktsnwt.project.team9.model.CulturalOffer;
 import com.ktsnwt.project.team9.model.News;
-import com.ktsnwt.project.team9.repositories.ICulturalOfferRepository;
-import com.ktsnwt.project.team9.repositories.IImageRepository;
+import com.ktsnwt.project.team9.model.RegisteredUser;
 import com.ktsnwt.project.team9.repositories.INewsRepository;
+import com.ktsnwt.project.team9.services.interfaces.ICulturalOfferService;
 import com.ktsnwt.project.team9.services.interfaces.INewsService;
+import com.ktsnwt.project.team9.services.interfaces.IUserService;
 
 @Service
 public class NewsService implements INewsService {
@@ -20,11 +23,13 @@ public class NewsService implements INewsService {
 	private INewsRepository newsRepository;
 	
 	@Autowired
-	private ICulturalOfferRepository culturalOfferRepository;
+	private ICulturalOfferService culturalOfferService;
 	
 	@Autowired
-	private IImageRepository imageRepository;
+	private IUserService userService;
 	
+	@Autowired
+	private MailService mailService;
 
 	@Override
 	public Collection<News> getAll() {
@@ -39,13 +44,22 @@ public class NewsService implements INewsService {
 	@Override
 	public News create(News entity) throws Exception {
 		Long id = entity.getCulturalOffer().getId();
-		CulturalOffer culturalOffer = culturalOfferRepository.findById(id).orElse(null);
+		CulturalOffer culturalOffer = culturalOfferService.getById(id);
 		if(culturalOffer == null)
 			throw new Exception("There is no cultural offer with that ID");
 		
 		entity.setCulturalOffer(culturalOffer);
 		
 		entity.getImages().forEach(img -> img.setNews(entity));
+		
+		
+		mailService.sendMailNews("debelidusan@gmail.com", entity);
+		
+//		This is how it will be. For presentation make it simple
+//		for(RegisteredUser us : userService.getSubscribed(culturalOffer)) {
+//			
+//			MailService.sendMailNews(us.getEmail(), entity);
+//		}
 		
 		return newsRepository.save(entity);
 	}
@@ -67,11 +81,6 @@ public class NewsService implements INewsService {
 			throw new Exception("News with given id doesn't exist.");
 		}
 		
-		existingNews.getImages().forEach(img -> {
-			img.setNews(null);
-			imageRepository.deleteById(img.getId());
-			});
-		
 		existingNews.setContent(entity.getContent());
 		existingNews.setActive(entity.isActive());
 		existingNews.setDate(entity.getDate());
@@ -79,8 +88,8 @@ public class NewsService implements INewsService {
 		
 		
 		
-		CulturalOffer culturalOffer = culturalOfferRepository.findById(
-				entity.getCulturalOffer().getId()).orElse(null);
+		CulturalOffer culturalOffer = culturalOfferService.getById(
+				entity.getCulturalOffer().getId());
 		if(culturalOffer == null)
 			throw new Exception("There is no cultural offer with that ID");
 		
@@ -90,5 +99,9 @@ public class NewsService implements INewsService {
 		
 		
 		return newsRepository.save(existingNews);
+	}
+
+	public Page<News> findAll(Pageable pageable) {
+		return newsRepository.findAll(pageable);
 	}
 }

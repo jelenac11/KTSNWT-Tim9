@@ -1,9 +1,17 @@
 package com.ktsnwt.project.team9.services.implementations;
 
+import java.util.Date;
+import java.util.List;
+import java.util.NoSuchElementException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ktsnwt.project.team9.model.Admin;
+import com.ktsnwt.project.team9.model.Authority;
 import com.ktsnwt.project.team9.model.User;
 import com.ktsnwt.project.team9.repositories.IAdminRepository;
 import com.ktsnwt.project.team9.repositories.IUserRepository;
@@ -17,7 +25,17 @@ public class AdminService implements IAdminService {
 	
 	@Autowired
 	private IUserRepository userRepository;
+	
+	@Autowired
+    private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+    private AuthorityService authService;
 
+	public Page<Admin> findAll(Pageable pageable) {
+		return adminRepository.findAll(pageable);
+	}
+	
 	@Override
 	public Iterable<Admin> getAll() {
 		return adminRepository.findAll();
@@ -39,6 +57,10 @@ public class AdminService implements IAdminService {
 		if (emailUser != null) {
 			throw new Exception("User with this email already exists.");
 		}
+		List<Authority> auth = authService.findByName("ROLE_ADMIN");
+        entity.setAuthorities(auth);
+        entity.setPassword(passwordEncoder.encode(entity.getPassword()));
+        entity.setLastPasswordResetDate(new Date().getTime());
 		return adminRepository.save(entity);
 	}
 
@@ -46,13 +68,13 @@ public class AdminService implements IAdminService {
 	public boolean delete(Long id) throws Exception {
 		Admin existingAdmin = adminRepository.findById(id).orElse(null);
 		if (existingAdmin == null) {
-			throw new Exception("Admin with given id doesn't exist.");
+			throw new NoSuchElementException("Admin with given id doesn't exist.");
 		}
 		existingAdmin.setActive(false);
 		if (!existingAdmin.getCulturalOffers().isEmpty()) {
 			throw new Exception("Admin has cultural offers so he can't be deleted.");
 		}
-		adminRepository.save(existingAdmin);
+		adminRepository.deleteById(id);
 		return true;
 	}
 
@@ -60,7 +82,7 @@ public class AdminService implements IAdminService {
 	public Admin update(Long id, Admin entity) throws Exception {
 		Admin admin = adminRepository.findById(id).orElseGet(null);
 		if (admin == null) {
-			throw new Exception("Admin doesn't exist.");
+			throw new NoSuchElementException("Admin doesn't exist.");
 		}
 		if (!entity.getEmail().equals(admin.getEmail())) {
 			User emailUser = userRepository.findByEmail(entity.getEmail());
