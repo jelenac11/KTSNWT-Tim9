@@ -26,20 +26,19 @@ import com.ktsnwt.project.team9.services.implementations.GeolocationService;
 
 @RestController
 @RequestMapping(value = "/api/geolocations", produces = MediaType.APPLICATION_JSON_VALUE)
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class GeolocationController {
 
 	private GeolocationService geolocationService;
 
 	private GeolocationMapper geolocationMapper;
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping
 	public ResponseEntity<Iterable<GeolocationDTO>> getAllGeolocations() {
 		List<GeolocationDTO> geolocationDTO = geolocationMapper.toDTOList(geolocationService.getAll());
 		return new ResponseEntity<>(geolocationDTO, HttpStatus.OK);
 	}
-
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	
 	@GetMapping(value = "/by-page")
 	public ResponseEntity<Page<GeolocationDTO>> getAllGeolocations(Pageable pageable) {
 		Page<Geolocation> page = geolocationService.getAll(pageable);
@@ -49,7 +48,6 @@ public class GeolocationController {
 		return new ResponseEntity<>(pageGeolocationDTOs, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<GeolocationDTO> getGeolocation(@PathVariable Long id) {
 		Geolocation geolocation = geolocationService.getById(id);
@@ -59,7 +57,6 @@ public class GeolocationController {
 		return new ResponseEntity<>(geolocationMapper.toDto(geolocation), HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<GeolocationDTO> createGeolocation(@Valid @RequestBody GeolocationDTO geolocationDTO) {
 		try {
@@ -71,7 +68,6 @@ public class GeolocationController {
 		}
 	}
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<GeolocationDTO> updateGeolocation(@PathVariable Long id,
 			@Valid @RequestBody GeolocationDTO geolocationDTO) {
@@ -84,7 +80,6 @@ public class GeolocationController {
 		}
 	}
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Boolean> deleteGeolocation(@PathVariable Long id) {
 		try {

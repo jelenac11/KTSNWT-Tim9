@@ -34,6 +34,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @PreAuthorize("hasRole('ROLE_ADMIN')")
+//@PreAuthorize("permitAll()")
 public class CulturalOfferController {
 
 	private CulturalOfferService culturalOfferService;
