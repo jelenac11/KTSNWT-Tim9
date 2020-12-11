@@ -12,7 +12,11 @@ import com.ktsnwt.project.team9.dto.response.CulturalOfferResDTO;
 import com.ktsnwt.project.team9.helper.interfaces.IMapper;
 import com.ktsnwt.project.team9.model.Admin;
 import com.ktsnwt.project.team9.model.Category;
+import com.ktsnwt.project.team9.model.Comment;
 import com.ktsnwt.project.team9.model.CulturalOffer;
+import com.ktsnwt.project.team9.model.Mark;
+import com.ktsnwt.project.team9.model.News;
+
 import lombok.AllArgsConstructor;
 
 @Component
@@ -32,9 +36,9 @@ public class CulturalOfferMapper implements IMapper<CulturalOffer, CulturalOffer
 		return new CulturalOfferResDTO(entity.getId(), entity.getName(), entity.getDescription(), entity.getImage().getUrl(),
 				entity.getAverageMark(), entity.isActive(), geolocationMapper.toDto(entity.getGeolocation()),
 				categoryMapper.toDto(entity.getCategory()),
-				Optional.ofNullable(entity.getNews()).orElse(new HashSet<>()).stream().map(i -> i.getId()).collect(Collectors.toSet()), 
-				Optional.ofNullable(entity.getComments()).orElse(new HashSet<>()).stream().map(i -> i.getId()).collect(Collectors.toSet()),
-				Optional.ofNullable(entity.getMarks()).orElse(new HashSet<>()).stream().map(i -> i.getId()).collect(Collectors.toSet()), entity.getAdmin().getId());
+				Optional.ofNullable(entity.getNews()).orElse(new HashSet<>()).stream().map(this::transformNewsToId).collect(Collectors.toSet()), 
+				Optional.ofNullable(entity.getComments()).orElse(new HashSet<>()).stream().map(this::transformCommentToId).collect(Collectors.toSet()),
+				Optional.ofNullable(entity.getMarks()).orElse(new HashSet<>()).stream().map(this::transformMarkToId).collect(Collectors.toSet()), entity.getAdmin().getId());
 	
 	}
 
@@ -49,5 +53,15 @@ public class CulturalOfferMapper implements IMapper<CulturalOffer, CulturalOffer
 	@Override
 	public CulturalOfferDTO toDto(CulturalOffer entity) {
 		return null;
+	}
+	
+	private Long transformNewsToId(News entity) {
+		return entity.getId();
+	}
+	private Long transformCommentToId(Comment entity) {
+		return entity.getId();
+	}
+	private Long transformMarkToId(Mark entity) {
+		return entity.getId();
 	}
 }

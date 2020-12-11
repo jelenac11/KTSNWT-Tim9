@@ -1,5 +1,8 @@
 package com.ktsnwt.project.team9.services.implementations;
 
+import java.io.IOException;
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,6 +18,7 @@ import com.ktsnwt.project.team9.model.RegisteredUser;
 import com.ktsnwt.project.team9.repositories.ICulturalOfferRepository;
 import com.ktsnwt.project.team9.services.interfaces.ICulturalOfferService;
 
+import javassist.NotFoundException;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -44,7 +48,11 @@ public class CulturalOfferService implements ICulturalOfferService {
 
 	@Override
 	public CulturalOffer getById(Long id) {
-		return culturalOfferRepository.findById(id).orElse(null);
+		Optional<CulturalOffer> culturalOffer = culturalOfferRepository.findById(id);
+		if(!culturalOffer.isPresent()) {
+			return null;
+		}
+		return culturalOffer.get();
 	}
 
 	@Override
@@ -56,7 +64,7 @@ public class CulturalOfferService implements ICulturalOfferService {
 	public boolean delete(Long id) throws Exception {
 		CulturalOffer existingCulturalOffer = getById(id);
 		if (existingCulturalOffer == null) {
-			throw new Exception("Cultural offer with given id doesn't exist.");
+			throw new NotFoundException("Cultural offer with given id doesn't exist.");
 		}
 		for (RegisteredUser registeredUser : existingCulturalOffer.getSubscribedUsers()) {
 			registeredUser.getSubscribed().remove(existingCulturalOffer);
@@ -68,18 +76,18 @@ public class CulturalOfferService implements ICulturalOfferService {
 	}
 	
 	@Override
-	public CulturalOffer update(Long id, CulturalOffer entity) throws Exception {
+	public CulturalOffer update(Long id, CulturalOffer entity) throws NotFoundException {
 		return null;
 	}
 
-	public CulturalOffer update(Long id, CulturalOffer entity, MultipartFile newImage) throws Exception {
+	public CulturalOffer update(Long id, CulturalOffer entity, MultipartFile newImage) throws NotFoundException, IOException {
 		CulturalOffer existingCulturalOffer = getById(id);
 		if (existingCulturalOffer == null) {
-			throw new Exception("Cultural offer with given id doesn't exist.");
+			throw new NotFoundException("Cultural offer with given id doesn't exist.");
 		}
 		Category category = categoryService.getById(entity.getCategory().getId());
 		if (category == null) {
-			throw new Exception("Category doesn't exist.");
+			throw new NotFoundException("Category doesn't exist.");
 		}
 		existingCulturalOffer.setCategory(category);
 		existingCulturalOffer.setDescription(entity.getDescription());
@@ -99,7 +107,7 @@ public class CulturalOfferService implements ICulturalOfferService {
 		entity.setActive(true);
 		Category category = categoryService.getById(entity.getCategory().getId());
 		if (category == null) {
-			throw new Exception("Category doesn't exist.");
+			throw new NotFoundException("Category doesn't exist.");
 		}
 		entity.setCategory(category);
 		Geolocation geolocation = geolocationService.create(entity.getGeolocation());
