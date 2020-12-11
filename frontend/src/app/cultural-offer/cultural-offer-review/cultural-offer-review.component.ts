@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CulturalOffer } from 'src/app/core/models/cultural-offer.model';
+import { CulturalOffer } from 'src/app/core/models/response/cultural-offer.model';
 import { CulturalOfferService } from 'src/app/core/services/cultural-offer.service';
 
 @Component({
@@ -10,8 +10,9 @@ import { CulturalOfferService } from 'src/app/core/services/cultural-offer.servi
 })
 export class CulturalOfferReviewComponent implements OnInit {
 
-  culturalOffer: any;
-  culturalOfferId: string | null = null;
+  culturalOffer: CulturalOffer = { category: {}, geolocation: {} };
+  
+  culturalOfferId: string;
 
   zoom: number = 8;
 
@@ -22,7 +23,7 @@ export class CulturalOfferReviewComponent implements OnInit {
     this.getCulturalOfferById();
   }
 
-  getCulturalOfferById() {
+  private getCulturalOfferById() {
     this.culturalOfferService.get(this.culturalOfferId)
       .subscribe(culturalOffer => {
         this.culturalOffer = culturalOffer;

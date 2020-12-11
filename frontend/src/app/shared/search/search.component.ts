@@ -8,7 +8,7 @@ import { FormBuilder, FormControl } from '@angular/forms';
 })
 export class SearchComponent implements OnInit {
 
-  searchField: any;
+  searchField: FormControl;
 
   @Output()
   searchChanged: EventEmitter<string> = new EventEmitter();

@@ -1,6 +1,16 @@
 <div class="content" role="main">
   <div class="col mt-3 mb-3">
-    <app-create-cultural-offer-button></app-create-cultural-offer-button>
+    <button
+      routerLink="/cultural-offers/create"
+      mdbBtn
+      type="button"
+      size="md"
+      color="primary"
+      mdbWavesEffect
+    >
+      <mdb-icon fas icon="plus" class="mr-1"></mdb-icon>Create new cultural
+      offer
+    </button>
   </div>
   <mdb-card
     *ngFor="
@@ -9,7 +19,7 @@
           : {
               itemsPerPage: size,
               currentPage: page,
-              totalItems: totalElements
+              totalItems: culturalOffers.totalElements
             }
     "
   >
@@ -39,27 +49,38 @@
               >
                 Delete
               </button>
-              <app-update
-                [path]="[
-                  'update/',
-                  culturalOffer.id.toString()
-                ]"
-              ></app-update>
+              <button
+                mdbBtn
+                type="button"
+                size="sm"
+                color="default"
+                mdbWavesEffect
+                [routerLink]="['update/', culturalOffer.id.toString()]"
+              >
+                Update
+              </button>
             </mdb-card-title>
 
             <mdb-card-text *ngIf="culturalOffer.description">
               {{ culturalOffer.description | slice: 0:360
               }}{{ culturalOffer.description.length > 360 ? "..." : "" }}
             </mdb-card-text>
-            <mdb-card-text *ngIf="!culturalOffer.description">
-            
-            </mdb-card-text>
+            <mdb-card-text *ngIf="!culturalOffer.description"> </mdb-card-text>
 
             <div class="mt-auto align-self-center">
-              <app-more
-                [path]="['/cultural-offers/', culturalOffer.id.toString()]"
-              ></app-more>
-              <app-subscribe size="sm"></app-subscribe>
+              <button
+                type="button"
+                size="sm"
+                mdbBtn
+                color="info"
+                mdbWavesEffect
+                [routerLink]="['/cultural-offers/', culturalOffer.id]"
+              >
+                More
+              </button>
+              <button mdbBtn color="primary" size="sm" mdbWavesEffect>
+                Subscribe
+              </button>
             </div>
           </mdb-card-body>
         </mdb-card>
@@ -67,8 +88,8 @@
     </mdb-card-body>
   </mdb-card>
   <pagination-controls
-    [previousLabel]="previousLabel"
-    [nextLabel]="nextLabel"
+    previousLabel="Previous"
+    nextLabel="Next"
     (pageChange)="handlePageChange($event)"
   ></pagination-controls>
 </div>

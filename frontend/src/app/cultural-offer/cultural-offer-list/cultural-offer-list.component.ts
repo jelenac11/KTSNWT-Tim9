@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { CulturalOffer } from 'src/app/core/models/cultural-offer.model';
+import { CulturalOfferPage } from 'src/app/core/models/response/cultural-offer-page.model';
+import { CulturalOffer } from 'src/app/core/models/response/cultural-offer.model';
 import { CulturalOfferService } from 'src/app/core/services/cultural-offer.service';
 import { ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
@@ -17,15 +17,9 @@ export class CulturalOfferListComponent implements OnInit {
 
   size: number = 10;
 
-  totalElements: number = 0;
-
-  previousLabel: string = "Previous";
-
-  nextLabel: string = "Next";
-
   rows: [CulturalOffer[]] = [[]];
 
-  culturalOffers: CulturalOffer[] = [];
+  culturalOffers: CulturalOfferPage = { content: [], totalElements: 0 };
 
   constructor(
     private culturalOfferService: CulturalOfferService,
@@ -43,21 +37,20 @@ export class CulturalOfferListComponent implements OnInit {
 
   getCulturalOffers() {
     this.culturalOfferService.getAll(this.size, this.page - 1).subscribe(culturalOffers => {
-      this.culturalOffers = culturalOffers.content;
-      this.separateData(culturalOffers.content);
-      this.totalElements = culturalOffers.totalElements;
+      this.culturalOffers = culturalOffers;
+      this.separateData();
     });
   }
 
-  separateData(culturalOffers: CulturalOffer[]) {
+  separateData() {
     this.rows = [[]];
-    for (let i = 0; i < culturalOffers.length / 5; i++) {
+    for (let i = 0; i < this.culturalOffers.content.length / 5; i++) {
       this.rows.push([]);
       for (let j = 0; j < 5; j++) {
-        if (!culturalOffers[5 * i + j]) {
+        if (!this.culturalOffers.content[5 * i + j]) {
           continue;
         }
-        this.rows[i].push(culturalOffers[5 * i + j]);
+        this.rows[i].push(this.culturalOffers.content[5 * i + j]);
       }
     }
   }
@@ -79,6 +72,7 @@ export class CulturalOfferListComponent implements OnInit {
       }
     });
   }
+
   delete(id: number) {
     this.culturalOfferService.delete(id).subscribe(succ => {
       if (succ) {

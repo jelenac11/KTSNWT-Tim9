@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Category } from 'src/app/core/models/category.model';
+import { Category } from 'src/app/core/models/response/category.model';
 import { CulturalOfferRequest } from 'src/app/core/models/request/cultural-offer-request.model';
 import { CategoryService } from 'src/app/core/services/category.service';
 import { CulturalOfferService } from 'src/app/core/services/cultural-offer.service';
@@ -52,7 +52,7 @@ export class CulturalOfferUpdateComponent implements OnInit {
     this.getCulturalOfferById();
     this.geoCoder = new google.maps.Geocoder;
     this.registerForm = this.formBuilder.group({
-      name: ['', Validators.required],
+      name: [{value: '', disabled: true}, Validators.required],
       description: null,
       category: ['', Validators.required],
       file: null,
@@ -111,7 +111,6 @@ export class CulturalOfferUpdateComponent implements OnInit {
         lat: this.registerForm.get('location').value.geometry?.location.lat(),
         lon: this.registerForm.get('location').value.geometry?.location.lng()
       },
-      averageMark: 0,
       admin: 1
     }
     let formData = new FormData();

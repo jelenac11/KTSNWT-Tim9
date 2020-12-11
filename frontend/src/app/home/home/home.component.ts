@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Category } from 'src/app/core/models/category.model';
-import { CulturalOffer } from 'src/app/core/models/cultural-offer.model';
+import { Category } from 'src/app/core/models/response/category.model';
+import { CulturalOffer } from 'src/app/core/models/response/cultural-offer.model';
+import { CulturalOfferPage } from 'src/app/core/models/response/cultural-offer-page.model';
 import { CategoryService } from 'src/app/core/services/category.service';
 import { CulturalOfferService } from 'src/app/core/services/cultural-offer.service';
 
@@ -11,11 +12,11 @@ import { CulturalOfferService } from 'src/app/core/services/cultural-offer.servi
 })
 export class HomeComponent implements OnInit {
 
-  culturalOffers: CulturalOffer[] = [];
+  private currentCategory: number = 0;
+  
+  culturalOffers: CulturalOfferPage;
 
   categories: Category[] = [];
-
-  currentCategory: number = 0;
 
   zoom: number = 2;
 
@@ -29,15 +30,10 @@ export class HomeComponent implements OnInit {
 
   size: number = 10;
 
-  totalElements: number = 0;
-
-  previousLabel: string = "Previous";
-
-  nextLabel: string = "Next";
-
   constructor(private culturalOfferService: CulturalOfferService, private categoryService: CategoryService) { }
 
   ngOnInit(): void {
+    this.culturalOffers = { content: [], totalElements: 0 };
     this.getAllCategories();
   }
 
@@ -63,14 +59,12 @@ export class HomeComponent implements OnInit {
   getCulturalOffersByCategoryAndName(id: number, value: string) {
     if (!value) {
       this.culturalOfferService.getCulturalOffersByCategory(id, this.size, this.page - 1).subscribe(culturalOffers => {
-        this.culturalOffers = culturalOffers.content;
-        this.totalElements = culturalOffers.totalElements;
+        this.culturalOffers = culturalOffers;
       });
     }
     else {
       this.culturalOfferService.findByCategoryIdAndName(id, value, this.size, this.page - 1).subscribe(culturalOffers => {
-        this.culturalOffers = culturalOffers.content;
-        this.totalElements = culturalOffers.totalElements;
+        this.culturalOffers = culturalOffers;
       });
     }
   }

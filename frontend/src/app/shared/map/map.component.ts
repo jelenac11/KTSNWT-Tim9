@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { CulturalOffer } from 'src/app/core/models/response/cultural-offer.model';
 
 @Component({
   selector: 'app-map',
@@ -16,7 +17,7 @@ export class MapComponent implements OnInit {
   @Input()
   zoom: number = 1;
   @Input()
-  data: any[]=[];
+  data: CulturalOffer[]=[];
   @Input()
   markerZoom:number=6;
 

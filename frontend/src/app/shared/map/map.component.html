@@ -7,18 +7,18 @@
     [zoom]="zoom"
   >
     <agm-marker
-      *ngFor="let co of data; let i = index"
-      [latitude]="co.geolocation.lat"
-      [longitude]="co.geolocation.lon"
-      (markerClick)="setLocation(co)"
+      *ngFor="let item of data; let i = index"
+      [latitude]="item.geolocation.lat"
+      [longitude]="item.geolocation.lon"
+      (markerClick)="setLocation(item)"
     >
       <agm-info-window *ngIf="showInfoWindow">
-        <img [src]="co.image" alt="" width="50" height="50" />
-        <h3>{{ co.name }}</h3>
-        <p>Location: {{ co.geolocation.location }}</p>
+        <img [src]="item.image" alt="" width="50" height="50" />
+        <h3>{{ item.name }}</h3>
+        <p>Location: {{ item.geolocation.location }}</p>
         <p>
           Category:
-          <a routerLink="child-a">{{ co.category.name }}</a>
+          <a routerLink="child-a">{{ item.category.name }}</a>
         </p>
       </agm-info-window>
     </agm-marker>
