@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CulturalOfferUpdateComponent } from './cultural-offer-update.component';
+import { CulturalOfferUpdateComponent } from './cultural-offer-form.component';
 
 describe('CulturalOfferUpdateComponent', () => {
   let component: CulturalOfferUpdateComponent;

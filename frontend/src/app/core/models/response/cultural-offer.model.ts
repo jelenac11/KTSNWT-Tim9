@@ -8,5 +8,6 @@ export interface CulturalOffer {
     geolocation?: Geolocation,
     description?: string,
     image?: string,
-    averageMark?: number
+    averageMark?: number,
+    admin?:number
 }

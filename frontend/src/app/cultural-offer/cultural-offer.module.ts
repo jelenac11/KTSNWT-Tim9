@@ -12,14 +12,13 @@ import { AgmCoreModule } from '@agm/core';
 import { environment } from 'src/environments/environment';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { CreateCulturalOfferComponent } from './create-cultural-offer/create-cultural-offer.component';
-import { CulturalOfferUpdateComponent } from './cultural-offer-update/cultural-offer-update.component';
+import { CulturalOfferFormComponent } from './cultural-offer-form/cultural-offer-form.component';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [CulturalOfferReviewComponent, CulturalOfferListComponent, CreateCulturalOfferComponent, CulturalOfferUpdateComponent],
+  declarations: [CulturalOfferReviewComponent, CulturalOfferListComponent, CulturalOfferFormComponent],
   imports: [
     CommonModule,
     BarRatingModule,
@@ -45,6 +44,6 @@ import { RouterModule } from '@angular/router';
     IconsModule
 
   ],
-  exports: [CulturalOfferReviewComponent, CulturalOfferListComponent, CreateCulturalOfferComponent, CulturalOfferUpdateComponent]
+  exports: [CulturalOfferReviewComponent, CulturalOfferListComponent, CulturalOfferFormComponent]
 })
 export class CulturalOfferModule { }
