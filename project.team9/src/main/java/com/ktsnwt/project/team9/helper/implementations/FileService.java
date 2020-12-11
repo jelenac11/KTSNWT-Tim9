@@ -1,6 +1,5 @@
 package com.ktsnwt.project.team9.helper.implementations;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -26,9 +25,9 @@ public class FileService {
 		return "data:image/jpeg;base64,"+Base64Utils.encodeToString(array);
 	}
 
-	public boolean deleteImageFromFile(String url) {
-		File image = new File(url); 
-		return image.delete();
+	public void deleteImageFromFile(String url) throws IOException {
+		Path filePath = Paths.get(url);
+		Files.delete(filePath);
 	}
 
 	public void uploadNewImage(MultipartFile newImage, String url) throws IOException {
