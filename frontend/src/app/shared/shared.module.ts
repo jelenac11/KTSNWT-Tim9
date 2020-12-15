@@ -13,12 +13,14 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { ImageModalComponent } from './image-modal/image-modal.component';
 import { LightboxModule } from 'ngx-lightbox';
 import { ConfirmationDialogComponent } from './dialogs/confirmation-dialog/confirmation-dialog.component';
-import { MatDialogModule } from '@angular/material/dialog';
 import { Snackbar } from './snackbars/snackbar/snackbar';
 import { ProfileComponent } from './profile/profile.component';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,8 @@ import {MatIconModule} from '@angular/material/icon';
     MatMenuModule,
     MatButtonModule,
     MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
     ButtonsModule,
     NgxPaginationModule,
     LightboxModule,
