@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ktsnwt.project.team9.dto.RegisteredUserDTO;
+import com.ktsnwt.project.team9.dto.response.UserResDTO;
 import com.ktsnwt.project.team9.helper.implementations.RegisteredUserMapper;
 import com.ktsnwt.project.team9.model.RegisteredUser;
 import com.ktsnwt.project.team9.services.implementations.RegisteredUserService;
@@ -38,35 +39,35 @@ public class RegisteredUserController {
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<Iterable<RegisteredUserDTO>> getAllRegisteredUser() {
-		List<RegisteredUserDTO> registeredUsersDTO = registeredUserMapper.toDTOList(registeredUserService.getAll());
+	public ResponseEntity<Iterable<UserResDTO>> getAllRegisteredUser() {
+		List<UserResDTO> registeredUsersDTO = registeredUserMapper.toResDTOList(registeredUserService.getAll());
 		return new ResponseEntity<>(registeredUsersDTO, HttpStatus.OK);
 	}
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value= "/by-page", method = RequestMethod.GET)
-	public ResponseEntity<Page<RegisteredUserDTO>> getAllRegisteredUsers(Pageable pageable){
+	public ResponseEntity<Page<UserResDTO>> getAllRegisteredUsers(Pageable pageable){
 		Page<RegisteredUser> page = registeredUserService.findAll(pageable);
-        List<RegisteredUserDTO> registeredUserDTOs = registeredUserMapper.toDTOList(page.toList());
-        Page<RegisteredUserDTO> pageRUserDTOs = new PageImpl<>(registeredUserDTOs,page.getPageable(),page.getTotalElements());
-        return new ResponseEntity<Page<RegisteredUserDTO>>(pageRUserDTOs, HttpStatus.OK);
+        List<UserResDTO> registeredUserDTOs = registeredUserMapper.toResDTOList(page.toList());
+        Page<UserResDTO> pageRUserDTOs = new PageImpl<>(registeredUserDTOs,page.getPageable(),page.getTotalElements());
+        return new ResponseEntity<Page<UserResDTO>>(pageRUserDTOs, HttpStatus.OK);
 	}
 	
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_REGISTERED_USER')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<RegisteredUserDTO> getRegisteredUser(@PathVariable Long id) {
+	public ResponseEntity<UserResDTO> getRegisteredUser(@PathVariable Long id) {
 		RegisteredUser registeredUser = registeredUserService.getById(id);
 		if (registeredUser == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(registeredUserMapper.toDto(registeredUser), HttpStatus.OK);
+		return new ResponseEntity<>(registeredUserMapper.toResDTO(registeredUser), HttpStatus.OK);
 	}
 
 	@PreAuthorize("permitAll()")
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<RegisteredUserDTO> createRegistredUser(@Valid @RequestBody RegisteredUserDTO registeredUserDTO) {
+	public ResponseEntity<UserResDTO> createRegistredUser(@Valid @RequestBody RegisteredUserDTO registeredUserDTO) {
 		try {
-			return new ResponseEntity<>(registeredUserMapper.toDto(registeredUserService.create(registeredUserMapper.toEntity(registeredUserDTO))), HttpStatus.CREATED);
+			return new ResponseEntity<>(registeredUserMapper.toResDTO(registeredUserService.create(registeredUserMapper.toEntity(registeredUserDTO))), HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
@@ -74,9 +75,9 @@ public class RegisteredUserController {
 
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_REGISTERED_USER')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<RegisteredUserDTO> updateRegisteredUser(@PathVariable Long id, @Valid @RequestBody RegisteredUserDTO registeredUserDTO) {
+	public ResponseEntity<UserResDTO> updateRegisteredUser(@PathVariable Long id, @Valid @RequestBody RegisteredUserDTO registeredUserDTO) {
 		try {
-			return new ResponseEntity<>(registeredUserMapper.toDto(registeredUserService.update(id, registeredUserMapper.toEntity(registeredUserDTO))), HttpStatus.OK);
+			return new ResponseEntity<>(registeredUserMapper.toResDTO(registeredUserService.update(id, registeredUserMapper.toEntity(registeredUserDTO))), HttpStatus.OK);
 		} catch (NoSuchElementException e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} catch (Exception e) {
