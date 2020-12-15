@@ -12,10 +12,6 @@ export class JwtService {
     return JSON.parse(localStorage.getItem('jwtToken'));
   }
 
-  getRole(): String {
-    return localStorage.getItem('role');
-  }
-
   saveToken(userToken: UserTokenState) {
     localStorage.setItem('jwtToken', JSON.stringify(userToken));
   }
