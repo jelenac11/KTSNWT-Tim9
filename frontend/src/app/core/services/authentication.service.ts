@@ -25,6 +25,10 @@ export class AuthenticationService {
     return this.http.post(`${environment.auth_url}login`, user, {headers: this.headers, responseType: 'json'});
   }
 
+  logout(): void {
+    this.jwtService.destroyToken();
+  }
+
   forgot_password(email: string): Observable<string> {
     return this.http.post(`${environment.auth_url}forgot-password`, { email }, {headers: this.headers, responseType: 'text'});
   }
