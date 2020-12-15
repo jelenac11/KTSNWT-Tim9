@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { ChangePasswordComponent } from '../../change-password/change-password.component';
 import { ProfileComponent } from '../../profile/profile.component';
 
 @Component({
@@ -31,6 +32,13 @@ export class HeaderComponent implements OnInit {
     dialogConfig.minHeight = "440px";
     dialogConfig.minWidth = "400px";
     this.dialog.open(ProfileComponent, dialogConfig);
+  }
+
+  changePassword(): void {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.minWidth = "320px";
+    this.dialog.open(ChangePasswordComponent, dialogConfig);
   }
 
 }
