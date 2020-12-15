@@ -143,12 +143,10 @@ public class AuthenticationController {
 		try {
 			userDetailsService.changePassword(passwordChanger.oldPassword, passwordChanger.newPassword);
 		} catch (Exception e) {
-			return new ResponseEntity<>(e.toString(), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Incorrect old password", HttpStatus.BAD_REQUEST);
 		}
 
-		Map<String, String> result = new HashMap<>();
-		result.put("result", "success");
-		return ResponseEntity.accepted().body(result);
+		return new ResponseEntity<>("Password changed successfully", HttpStatus.OK);
 	}
 
 	static class PasswordReset {

@@ -21,6 +21,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { MatInputModule } from '@angular/material/input';
     MapComponent,
     ImageModalComponent,
     ConfirmationDialogComponent,
-    ProfileComponent
+    ProfileComponent,
+    ChangePasswordComponent
   ],
   imports: [
     CommonModule,
@@ -60,7 +62,8 @@ import { MatInputModule } from '@angular/material/input';
     MapComponent,
     ImageModalComponent,
     ConfirmationDialogComponent,
-    ProfileComponent
+    ProfileComponent,
+    ChangePasswordComponent
   ],
   providers: [Snackbar]
 })
