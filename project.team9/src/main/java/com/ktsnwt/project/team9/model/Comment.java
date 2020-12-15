@@ -36,7 +36,7 @@ public class Comment {
 	@Column(columnDefinition = "text", unique = false, nullable = true)
 	private String text;
 	
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = true)
 	@JoinColumn(name="image_id")
 	private Image imageUrl;
 

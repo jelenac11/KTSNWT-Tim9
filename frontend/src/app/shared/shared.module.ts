@@ -15,6 +15,10 @@ import { LightboxModule } from 'ngx-lightbox';
 import { ConfirmationDialogComponent } from './dialogs/confirmation-dialog/confirmation-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { Snackbar } from './snackbars/snackbar/snackbar';
+import { ProfileComponent } from './profile/profile.component';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -23,7 +27,8 @@ import { Snackbar } from './snackbars/snackbar/snackbar';
     SearchComponent,
     MapComponent,
     ImageModalComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    ProfileComponent
   ],
   imports: [
     CommonModule,
@@ -36,6 +41,9 @@ import { Snackbar } from './snackbars/snackbar/snackbar';
       language: 'en'
     }),
     RouterModule,
+    MatMenuModule,
+    MatButtonModule,
+    MatIconModule,
     ButtonsModule,
     NgxPaginationModule,
     LightboxModule,
@@ -48,6 +56,7 @@ import { Snackbar } from './snackbars/snackbar/snackbar';
     MapComponent,
     ImageModalComponent,
     ConfirmationDialogComponent,
+    ProfileComponent
   ],
   providers: [Snackbar]
 })

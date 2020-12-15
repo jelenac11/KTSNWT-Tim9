@@ -46,12 +46,12 @@ public class MailService {
 		vtoken.setToken(token);
 		vtoken.setUser(user);
 		verificationTokenService.saveToken(vtoken);
-		String confirmationUrl = "/auth/confirm-registration/" + token;
+		String confirmationUrl = "/confirm-registration/" + token;
 		SimpleMailMessage email = new SimpleMailMessage();
 		email.setTo("aleksa.goljovic4@gmail.com");
 		email.setSubject("Confirm Registration");
 		email.setText("Hi " + user.getFirstName() + ",\n\nThanks for getting started with CulturalContentTeam9! Click below to confirm your registration:\n" + 
-				"\nhttp://localhost:8081" + confirmationUrl + "\nThanks,\nTeam 9\n");
+				"\nhttp://localhost:4200" + confirmationUrl + "\nThanks,\nTeam 9\n");
 		emailSender.send(email);
 	}
 	

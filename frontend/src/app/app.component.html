@@ -1,7 +1,7 @@
 <div fxLayout="column">
-  <app-header></app-header>
+  <app-header *ngIf="showNavbar"></app-header>
   <div fxFlex>
     <router-outlet></router-outlet>
   </div>
-  <app-footer></app-footer>
+  <app-footer *ngIf="showNavbar"></app-footer>
 </div>
