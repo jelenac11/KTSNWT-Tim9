@@ -54,15 +54,14 @@
     </ul>
     <ul class="navbar-nav ml-auto nav-flex-icons">
       <li class="nav-item">
-        <a class="nav-link">
-          <div class="btn-group" mdbDropdown>
-            <mdb-icon fas icon="user" mdbDropdownToggle></mdb-icon>
-            <div class="dropdown-menu dropdown-menu-right dropdown-primary">
-              <a class="dropdown-item">Settings</a>
-              <a class="dropdown-item">Log out</a>
-            </div>
-          </div>
-        </a>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>account_circle</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button (click)="showProfile()" mat-menu-item><mat-icon>person_outline</mat-icon> Your account</button>
+          <button (click)="changePassword()" mat-menu-item><mat-icon>security</mat-icon> Change password</button>
+          <button (click)="logout()" mat-menu-item><mat-icon>exit_to_app</mat-icon> Log out</button>
+        </mat-menu>
       </li>
     </ul>
   </links>

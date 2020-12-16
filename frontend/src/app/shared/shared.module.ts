@@ -13,8 +13,15 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { ImageModalComponent } from './image-modal/image-modal.component';
 import { LightboxModule } from 'ngx-lightbox';
 import { ConfirmationDialogComponent } from './dialogs/confirmation-dialog/confirmation-dialog.component';
-import { MatDialogModule } from '@angular/material/dialog';
 import { Snackbar } from './snackbars/snackbar/snackbar';
+import { ProfileComponent } from './profile/profile.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +30,9 @@ import { Snackbar } from './snackbars/snackbar/snackbar';
     SearchComponent,
     MapComponent,
     ImageModalComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    ProfileComponent,
+    ChangePasswordComponent
   ],
   imports: [
     CommonModule,
@@ -36,6 +45,11 @@ import { Snackbar } from './snackbars/snackbar/snackbar';
       language: 'en'
     }),
     RouterModule,
+    MatMenuModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
     ButtonsModule,
     NgxPaginationModule,
     LightboxModule,
@@ -48,6 +62,8 @@ import { Snackbar } from './snackbars/snackbar/snackbar';
     MapComponent,
     ImageModalComponent,
     ConfirmationDialogComponent,
+    ProfileComponent,
+    ChangePasswordComponent
   ],
   providers: [Snackbar]
 })
