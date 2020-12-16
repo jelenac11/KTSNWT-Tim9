@@ -21,12 +21,6 @@ import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [SignUpComponent, ConfirmRegistrationComponent, SignInComponent, ForgotPasswordComponent],
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { HttpTokenInterceptor } from '../core/interceptors/http.token.interceptor';
-
-
-@NgModule({
-  declarations: [SignUpComponent, ConfirmRegistrationComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

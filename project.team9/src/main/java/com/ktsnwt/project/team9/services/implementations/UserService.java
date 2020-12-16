@@ -83,16 +83,7 @@ public class UserService implements IUserService, UserDetailsService {
     
     @Override
 	public User changeProfile(User entity) throws Exception {
-		User user = userRepository.findById(entity.getId()).orElse(null);
-		if (user == null) {
-			throw new NoSuchElementException("User with given id doesn't exist.");
-		}
-		if (!entity.getEmail().equals(user.getEmail())) {
-			User emailUser = userRepository.findByEmail(entity.getEmail());
-			if (emailUser != null) {
-				throw new Exception("User with this email already exists.");
-			}
-		}
+    	User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if (!entity.getUsername().equals(user.getUsername())) {
 			User usernameUser = userRepository.findByUsername(entity.getUsername());
 			if (usernameUser != null) {

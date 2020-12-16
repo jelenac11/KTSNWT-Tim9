@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { ChangePasswordComponent } from '../../change-password/change-password.component';
+import { ProfileComponent } from '../../profile/profile.component';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +14,8 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private authenticationService: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -20,6 +24,21 @@ export class HeaderComponent implements OnInit {
   logout(): void {
     this.authenticationService.logout();
     this.router.navigate(['/']);
+  }
+
+  showProfile(): void {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.minHeight = "440px";
+    dialogConfig.minWidth = "400px";
+    this.dialog.open(ProfileComponent, dialogConfig);
+  }
+
+  changePassword(): void {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.minWidth = "320px";
+    this.dialog.open(ChangePasswordComponent, dialogConfig);
   }
 
 }
