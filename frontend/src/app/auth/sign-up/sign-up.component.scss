@@ -1,0 +1,60 @@
+.jumbotron {
+    background-image: url(../../../assets/1.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    height:100vh; 
+}
+
+::ng-deep .mat-card{
+    border-radius: 30px !important;
+    display: flex;
+    justify-content: center;
+    width: 500px;
+}
+
+::ng-deep .mat-card-header{
+    justify-content: center;
+    color: #1A78C2;
+}
+
+.title {
+    font-size: 44px;
+    font-weight: 550;
+    //font-family: 'Montserrat';
+    text-align: center;
+}
+
+.subtitle {
+    font-size: 20px;
+    font-weight: 450;
+    //font-family: 'Montserrat';
+    text-align: center;
+}
+
+.mat-card-content {
+    display: flex;
+    justify-content: center;
+}
+
+.full-row {
+    width: 100% !important;
+}
+
+.same-row {
+    width: 49% !important;
+}
+
+.sign-up {
+    border: 3px solid #1A78C2;
+    color: #1A78C2;
+    border-radius: 30px !important;
+    stroke: none;
+    width: 200px !important;
+}
+
+form {
+    text-align: center;
+}
+

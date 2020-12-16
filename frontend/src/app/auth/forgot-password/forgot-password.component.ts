@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { MyErrorStateMatcher } from 'src/app/shared/ErrorStateMatcher';
 import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 
 @Component({
@@ -12,6 +13,7 @@ export class ForgotPasswordComponent implements OnInit {
 
   forgotForm: FormGroup;
   submitted = false;
+  matcher : MyErrorStateMatcher = new MyErrorStateMatcher();
 
   constructor(
     private formBuilder: FormBuilder,

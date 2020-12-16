@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { UserLogin } from 'src/app/core/models/request/user-login-request.models';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { JwtService } from 'src/app/core/services/jwt.service';
+import { MyErrorStateMatcher } from 'src/app/shared/ErrorStateMatcher';
 import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 
 @Component({
@@ -15,6 +16,8 @@ export class SignInComponent implements OnInit {
 
   loginForm: FormGroup;
   submitted = false;
+  hidePassword : boolean = true;
+  matcher: MyErrorStateMatcher = new MyErrorStateMatcher();
 
   constructor(
     private formBuilder: FormBuilder,
