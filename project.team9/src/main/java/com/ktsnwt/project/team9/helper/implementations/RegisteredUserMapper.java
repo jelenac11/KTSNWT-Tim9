@@ -3,7 +3,6 @@ package com.ktsnwt.project.team9.helper.implementations;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.Valid;
 
 import org.springframework.stereotype.Component;
 
@@ -15,7 +14,7 @@ import com.ktsnwt.project.team9.model.RegisteredUser;
 @Component
 public class RegisteredUserMapper { // implements IMapper<RegisteredUser, RegisteredUserDTO> {
 
-	public RegisteredUser toEntity(@Valid UserDTO user) {
+	public RegisteredUser toEntity(UserDTO user) {
 		return new RegisteredUser(user.getUsername(), user.getEmail(), user.getPassword(), user.getFirstName(), user.getLastName());
 	}
 	
@@ -45,6 +44,14 @@ public class RegisteredUserMapper { // implements IMapper<RegisteredUser, Regist
 
 	public List<UserResDTO> toResDTOList(Iterable<RegisteredUser> entities) {
 		List<UserResDTO> dtos = new ArrayList<UserResDTO>();
+		for(RegisteredUser entity : entities) {
+			dtos.add(toResDTO(entity));
+		}
+		return dtos;
+	}
+
+	public List<UserResDTO> toDTOResList(List<RegisteredUser> entities) {
+		List<UserResDTO> dtos = new ArrayList<>();
 		for(RegisteredUser entity : entities) {
 			dtos.add(toResDTO(entity));
 		}
