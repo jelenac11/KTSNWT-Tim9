@@ -35,6 +35,7 @@ public class MarkService implements IMarkService {
 
 	@Override
 	public Mark create(Mark entity) throws Exception {
+		System.out.println("Uslo 3");
 		RegisteredUser user = rUserRepository.findById(entity.getGrader().getId()).orElse(null);
 		if (user == null) {
 			throw new Exception("Author doesn't exist.");
@@ -43,12 +44,15 @@ public class MarkService implements IMarkService {
 		if (culturalOffer == null) {
 			throw new Exception("Cultural offer doesn't exist.");
 		}
+		System.out.println(entity.getValue());
+		System.out.println(entity.getGrader().getId());
+		System.out.println(entity.getCulturalOffer().getId());
 		return markRepository.save(entity);
 	}
 
 	@Override
 	public Mark update(Long id, Mark entity) throws Exception {
-		Mark mark = markRepository.findById(id).orElse(null);
+		Mark mark = markRepository.findByGraderAndCulturalOfferId(id, entity.getCulturalOffer().getId());
 		if (mark == null) {
 			throw new Exception("Mark doesn't exist.");
 		}
@@ -61,8 +65,6 @@ public class MarkService implements IMarkService {
 			throw new Exception("Cultural offer doesn't exist.");
 		}
 		mark.setValue(entity.getValue());
-		mark.setGrader(entity.getGrader());
-		mark.setCulturalOffer(entity.getCulturalOffer());
 		return markRepository.save(mark);
 	}
 
@@ -70,4 +72,9 @@ public class MarkService implements IMarkService {
 	public boolean delete(Long id) throws Exception {
 		return false;
 	}
+
+	public Mark findByUserIdAndCulturalOfferId(Long userId, Long offerId) {
+		return markRepository.findByGraderAndCulturalOfferId(userId, offerId);
+	}
+	
 }
