@@ -36,6 +36,7 @@ export class UsersReviewComponent implements OnInit {
 
   constructor(private userService: UserService, private jwtService: JwtService, private dialog: MatDialog, private snackBar: Snackbar) { }
 
+
   ngOnInit(): void {
     this.users = {content: [], totalElements: 0};
     this.getUsers();
@@ -91,7 +92,7 @@ export class UsersReviewComponent implements OnInit {
     this.searchValue = value;
     this.getUsers();
   };
-
+  
   openDialog(id: number) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
