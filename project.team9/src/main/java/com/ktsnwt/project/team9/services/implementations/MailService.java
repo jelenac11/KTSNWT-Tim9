@@ -64,4 +64,13 @@ public class MailService {
 		emailSender.send(email);
 	}
 	
+	@Async
+	public void sendMail(String to, String subject, String text) {
+		SimpleMailMessage message = new SimpleMailMessage(); 
+        message.setFrom("noreply.kts.l9@gmail.com");
+        message.setTo("aleksa.goljovic4@gmail.com"); 
+        message.setSubject(subject); 
+        message.setText(text);
+        emailSender.send(message);	
+	}
 }

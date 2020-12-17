@@ -5,6 +5,7 @@ import { User } from '../models/response/user.model';
 import { environment } from 'src/environments/environment';
 import { UserRequest } from '../models/request/user-request.model';
 import { UserPage } from '../models/response/user-page.model';
+import { AdminRequest } from '../models/request/admin-request.model';
 
 @Injectable()
 export class UserService {
@@ -42,6 +43,10 @@ export class UserService {
     params = params.append('size', size.toString());
     params = params.append('page', page.toString());
     return this.http.get(`${environment.api_url}${user}/search/${value}`, {params, responseType: 'json'});
+  }
+
+  addAdmin(admin: AdminRequest) : Observable<User> {
+    return this.http.post(`${environment.api_url}admins`, admin, {headers: this.headers, responseType: 'json'});
   }
 
 }
