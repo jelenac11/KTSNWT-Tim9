@@ -4,7 +4,23 @@
 }
 
 .button-class {
-    padding: 0px 8px 0px 8px;
+    padding: 0px 8px 0px 8px; 
     outline: none;
+}
+
+.button-add {
+    float: right;
+    outline: none;
+}
+
+.button-group {
+    display: block;
+    position: relative;
+    width: 100%;
+}
+
+app-search {
+    width: 80%;
+    display: inline-block;
 }
   

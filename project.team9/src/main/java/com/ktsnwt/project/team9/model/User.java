@@ -78,6 +78,15 @@ public class User implements UserDetails {
 		this.lastPasswordResetDate = System.currentTimeMillis();
 	}
 	
+	public User(String username, String email, String firstName, String lastName) {
+		super();
+		this.username = username;
+		this.email = email;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.lastPasswordResetDate = System.currentTimeMillis();
+	}
+	
 	public User(Long id, String username, String email, String password, String firstName, String lastName) {
 		super();
 		this.id = id;

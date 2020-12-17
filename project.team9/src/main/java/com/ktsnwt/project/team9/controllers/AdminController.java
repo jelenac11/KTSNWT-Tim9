@@ -78,12 +78,12 @@ public class AdminController {
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<AdminDTO> createAdmin(@Valid @RequestBody AdminDTO adminDTO) {
+	public ResponseEntity<?> createAdmin(@Valid @RequestBody AdminDTO adminDTO) {
 		try {
-			return new ResponseEntity<>(adminMapper.toDto(adminService.create(adminMapper.toEntity(adminDTO))),
+			return new ResponseEntity<>(adminMapper.toResDTO(adminService.create(adminMapper.toEntity(adminDTO))),
 					HttpStatus.CREATED);
 		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 

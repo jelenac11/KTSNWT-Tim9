@@ -1,6 +1,11 @@
 <div class="container-fluid">
     <div class="mt-2">
-        <app-search (searchChanged)="searchChanged($event)"></app-search>
+        <div class="button-group">
+            <app-search (searchChanged)="searchChanged($event)"></app-search>
+            <button mat-flat-button color="primary" class="button-add" (click)="addAdmin()">
+                <mat-icon class="mr-2">person_add</mat-icon> Add new admin
+            </button>
+        </div>
         <mat-tab-group mat-align-tabs="center" (selectedTabChange)="changeTab($event)" class="mt-n4">
             <mat-tab
                 *ngFor="let tab of tabs; let i = index"
