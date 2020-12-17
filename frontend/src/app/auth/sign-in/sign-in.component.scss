@@ -7,20 +7,20 @@
     height:100vh;  
 }
 
-::ng-deep .mat-card{
+/*::ng-deep .mat-card{
     border-radius: 30px !important;
     display: flex;
     justify-content: center;
     width: 500px;
-}
+}*/
 
-::ng-deep .mat-card-header{
+.mat-card-header{
     justify-content: center;
-    color: #1A78C2;
+    color: #1768A7;;
 }
 
 .title {
-    font-size: 44px;
+    font-size: 42px;
     font-weight: 550;
     //font-family: 'Montserrat';
     text-align: center;

@@ -1,6 +1,5 @@
 package com.ktsnwt.project.team9.model;
 
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -12,6 +11,11 @@ import javax.persistence.OneToMany;
 @Entity
 @DiscriminatorValue("AD")
 public class Admin extends User {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@OneToMany(mappedBy = "admin", cascade = CascadeType.ALL)
 	private Set<CulturalOffer> culturalOffers;

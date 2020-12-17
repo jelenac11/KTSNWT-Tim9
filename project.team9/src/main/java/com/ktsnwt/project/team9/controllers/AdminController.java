@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ktsnwt.project.team9.dto.AdminDTO;
+import com.ktsnwt.project.team9.dto.response.UserResDTO;
 import com.ktsnwt.project.team9.helper.implementations.AdminMapper;
 import com.ktsnwt.project.team9.model.Admin;
 import com.ktsnwt.project.team9.services.implementations.AdminService;
@@ -43,13 +44,24 @@ public class AdminController {
 		return new ResponseEntity<>(adminsDTO, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	//@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/by-page", method = RequestMethod.GET)
-	public ResponseEntity<Page<AdminDTO>> getAllAdmins(Pageable pageable) {
+	public ResponseEntity<Page<UserResDTO>> getAllAdmins(Pageable pageable) {
 		Page<Admin> page = adminService.findAll(pageable);
-		List<AdminDTO> adminDTOs = adminMapper.toDTOList(page.toList());
-		Page<AdminDTO> pageAdminDTOs = new PageImpl<>(adminDTOs, page.getPageable(), page.getTotalElements());
-		return new ResponseEntity<Page<AdminDTO>>(pageAdminDTOs, HttpStatus.OK);
+		return new ResponseEntity<>(transformListToPage(page), HttpStatus.OK);
+	}
+
+	
+	//@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(value = "/search/{value}", method = RequestMethod.GET)
+	public ResponseEntity<Page<UserResDTO>> searchAdmins(Pageable pageable, @PathVariable String value) {
+		Page<Admin> page = adminService.searchAdmins(pageable, value);
+		return new ResponseEntity<>(transformListToPage(page), HttpStatus.OK);
+	}
+	
+	private Page<UserResDTO> transformListToPage(Page<Admin> page) {
+		List<UserResDTO> adminsResDTO = adminMapper.toDTOResList(page.toList());
+		return new PageImpl<>(adminsResDTO, page.getPageable(), page.getTotalElements());
 	}
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
