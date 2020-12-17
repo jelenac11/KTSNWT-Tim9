@@ -26,9 +26,10 @@
             <div class="col-3">
               <div>
                 <bar-rating
-                  [(rate)]="culturalOffer.averageMark"
+                  [(rate)]="mark"
                   [theme]="'stars'"
                   [max]="5"
+                  (rateChange)="onRate($event)"
                 ></bar-rating>
               </div>
               <div>
