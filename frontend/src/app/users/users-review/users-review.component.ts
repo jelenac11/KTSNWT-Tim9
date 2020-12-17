@@ -1,10 +1,13 @@
 import { getMultipleValuesInSingleSelectionError } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserPage } from 'src/app/core/models/response/user-page.model';
 import { JwtService } from 'src/app/core/services/jwt.service';
 import { UserService } from 'src/app/core/services/user.service';
+import { ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation-dialog/confirmation-dialog.component';
+import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 
 @Component({
   selector: 'app-users-review',
@@ -31,7 +34,8 @@ export class UsersReviewComponent implements OnInit {
 
   loggedIn: string = '';
 
-  constructor(private userService: UserService, private jwtService: JwtService) { }
+  constructor(private userService: UserService, private jwtService: JwtService, private dialog: MatDialog, private snackBar: Snackbar) { }
+
 
   ngOnInit(): void {
     this.users = {content: [], totalElements: 0};
@@ -88,4 +92,32 @@ export class UsersReviewComponent implements OnInit {
     this.searchValue = value;
     this.getUsers();
   };
+  
+  openDialog(id: number) {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        message: 'Are you sure you want to delete this admin?',
+        buttonText: {
+          ok: 'Yes',
+          cancel: 'No'
+        }
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this.delete(id);
+      }
+    });
+  }
+
+  delete(id: number) {
+    this.userService.delete(id).subscribe(succ => {
+      this.getUsers();
+      this.snackBar.success("You have successfully deleted admin!");
+    }, err => {
+      console.log(err);
+      this.snackBar.error(err.error);
+    });
+  }
 }
