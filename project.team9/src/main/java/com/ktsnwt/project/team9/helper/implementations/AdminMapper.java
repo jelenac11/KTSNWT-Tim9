@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 
 import com.ktsnwt.project.team9.dto.AdminDTO;
+import com.ktsnwt.project.team9.dto.response.UserResDTO;
 import com.ktsnwt.project.team9.helper.interfaces.IMapper;
 import com.ktsnwt.project.team9.model.Admin;
 import com.ktsnwt.project.team9.model.CulturalOffer;
@@ -30,10 +31,6 @@ public class AdminMapper implements IMapper<Admin, AdminDTO> {
 
 	@Override
 	public AdminDTO toDto(Admin entity) {
-		/*return new AdminDTO(entity.getId(), entity.getUsername(), entity.getEmail(), entity.getPassword(),
-				entity.getFirstName(), entity.getLastName(), Optional.ofNullable(entity.getCulturalOffers())
-						.orElse(new HashSet<CulturalOffer>()).stream().map(i -> i.getId()).collect(Collectors.toSet()),
-				entity.isActive());*/
 		return null;
 	}
 	
@@ -44,4 +41,17 @@ public class AdminMapper implements IMapper<Admin, AdminDTO> {
 		}
 		return dtos;
 	}
+
+	public UserResDTO toResDTO(Admin entity) {
+		return new UserResDTO(entity.getId(), entity.getUsername(), entity.getEmail(), entity.getPassword(), entity.getFirstName(), entity.getLastName());
+	}
+	
+	public List<UserResDTO> toDTOResList(List<Admin> entities) {
+		List<UserResDTO> dtos = new ArrayList<>();
+		for(Admin entity : entities) {
+			dtos.add(toResDTO(entity));
+		}
+		return dtos;
+	}
+
 }

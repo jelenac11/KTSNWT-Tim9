@@ -27,5 +27,16 @@ snack-bar-container.notification {
   font-weight: bold;
 }
 
+mat-card{
+  border-radius: 30px !important;
+  display: flex;
+  justify-content: center;
+  width: 500px;
+}
+
+.navCss nav
+{
+      background-color: #1A78C2;
+} 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

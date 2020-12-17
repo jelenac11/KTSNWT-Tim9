@@ -10,6 +10,7 @@ import { SignInComponent } from './auth/sign-in/sign-in.component';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { NoAuthGuard } from './auth/guards/no-auth.guard';
 import { RoleGuard } from './auth/guards/role.guard';
+import { UsersReviewComponent } from './users/users-review/users-review.component';
 
 const routes: Routes = [
   {path:'', component: HomeComponent},
@@ -50,6 +51,11 @@ const routes: Routes = [
     path:'forgot-password',
     component: ForgotPasswordComponent,
     canActivate: [NoAuthGuard]
+  },
+  {
+    path:'users',
+    component: UsersReviewComponent,
+   //canActivate: [NoAuthGuard],
   },
 ];
 

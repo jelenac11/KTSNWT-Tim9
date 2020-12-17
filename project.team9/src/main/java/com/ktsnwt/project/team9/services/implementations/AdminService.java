@@ -105,5 +105,9 @@ public class AdminService implements IAdminService {
 
 	}
 
+	public Page<Admin> searchAdmins(Pageable pageable, String value) {
+		return adminRepository.findByUsernameOrEmailOrFirstNameOrLastNameContainingIgnoreCase('%' + value.toLowerCase() + '%', pageable);
+	}
+
 	
 }
