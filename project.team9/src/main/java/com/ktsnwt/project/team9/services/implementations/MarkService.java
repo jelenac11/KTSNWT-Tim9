@@ -35,7 +35,6 @@ public class MarkService implements IMarkService {
 
 	@Override
 	public Mark create(Mark entity) throws Exception {
-		System.out.println("Uslo 3");
 		RegisteredUser user = rUserRepository.findById(entity.getGrader().getId()).orElse(null);
 		if (user == null) {
 			throw new Exception("Author doesn't exist.");
@@ -44,9 +43,6 @@ public class MarkService implements IMarkService {
 		if (culturalOffer == null) {
 			throw new Exception("Cultural offer doesn't exist.");
 		}
-		System.out.println(entity.getValue());
-		System.out.println(entity.getGrader().getId());
-		System.out.println(entity.getCulturalOffer().getId());
 		return markRepository.save(entity);
 	}
 

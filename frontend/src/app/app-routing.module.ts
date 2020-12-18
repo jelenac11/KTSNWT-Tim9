@@ -11,6 +11,7 @@ import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.
 import { NoAuthGuard } from './auth/guards/no-auth.guard';
 import { RoleGuard } from './auth/guards/role.guard';
 import { UsersReviewComponent } from './users/users-review/users-review.component';
+import { CommentsReviewComponent } from './comments/comments-review/comments-review.component';
 
 const routes: Routes = [
   {path:'', component: HomeComponent},
@@ -30,8 +31,20 @@ const routes: Routes = [
       expectedRoles: 'ROLE_ADMIN'
     }
   },
-  {path:'cultural-offers/:id', component: CulturalOfferReviewComponent},
-  {path:'cultural-offers', component: CulturalOfferListComponent},
+  { 
+    path:'cultural-offers/:id', 
+    component: CulturalOfferReviewComponent,
+    children: [
+      {
+        path: 'comments',
+        component: CommentsReviewComponent
+      }
+    ]
+  },
+  {
+    path:'cultural-offers', 
+    component: CulturalOfferListComponent
+  },
   {
     path:'sign-up',
     component: SignUpComponent,

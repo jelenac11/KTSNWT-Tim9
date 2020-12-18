@@ -48,10 +48,8 @@ public class MarkController {
 	@PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
 	@RequestMapping(value = "/rate", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<MarkDTO> createMark(@Valid @RequestBody MarkDTO markDTO) {
-		System.out.println("Uslo 0");
 		User current = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		try {
-			System.out.println("Uslo 1");
 			return new ResponseEntity<>(markMapper.toDto(markService.create(markMapper.dtoToEntity(markDTO, current.getId()))), HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

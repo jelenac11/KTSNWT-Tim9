@@ -10,6 +10,6 @@ import com.ktsnwt.project.team9.model.Comment;
 @Repository
 public interface ICommentRepository extends JpaRepository<Comment, Long> {
 
-	Page<Comment> findByCulturalOfferId(Pageable pageable, Long id);
+	Page<Comment> findByCulturalOfferIdAndApproved(Long id, boolean approved, Pageable pageable);
 
 }
