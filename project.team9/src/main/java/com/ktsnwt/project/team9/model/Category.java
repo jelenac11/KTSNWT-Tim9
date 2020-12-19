@@ -36,5 +36,11 @@ public class Category {
 		super();
 		this.id = id;
 	}
-
+	
+	public Category(String name, String description, boolean active) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.active = active;
+	}
 }

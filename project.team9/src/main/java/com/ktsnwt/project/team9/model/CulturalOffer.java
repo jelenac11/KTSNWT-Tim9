@@ -17,12 +17,14 @@ import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
 @AllArgsConstructor
+@NoArgsConstructor
 public class CulturalOffer {
 	
 	@Id
@@ -47,7 +49,6 @@ public class CulturalOffer {
 	@Column(unique = false, nullable = false)
 	private boolean active;
 	
-	
 	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER, optional = false)
 	@JoinColumn(name="geolocation_id")
 	private Geolocation geolocation;
@@ -71,10 +72,6 @@ public class CulturalOffer {
 	
 	@ManyToMany(mappedBy = "subscribed", fetch = FetchType.LAZY)
 	private Set<RegisteredUser> subscribedUsers;
-	
-	public CulturalOffer() {
-		super();
-	}
 
 	public CulturalOffer(Long id) {
 		super();

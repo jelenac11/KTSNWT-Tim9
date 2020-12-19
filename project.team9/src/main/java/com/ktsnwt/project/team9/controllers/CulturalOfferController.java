@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ktsnwt.project.team9.dto.CulturalOfferDTO;
 import com.ktsnwt.project.team9.dto.response.CulturalOfferResDTO;
 import com.ktsnwt.project.team9.helper.implementations.CulturalOfferMapper;
+import com.ktsnwt.project.team9.helper.implementations.CustomPageImplementation;
 import com.ktsnwt.project.team9.helper.implementations.FileService;
 import com.ktsnwt.project.team9.model.CulturalOffer;
 import com.ktsnwt.project.team9.services.implementations.CulturalOfferService;
@@ -47,14 +48,14 @@ public class CulturalOfferController {
 	@GetMapping(value = "/by-page")
 	public ResponseEntity<Page<CulturalOfferResDTO>> getAllCulturalOffers(Pageable pageable) {
 		Page<CulturalOffer> page = culturalOfferService.findAll(pageable);
-		return new ResponseEntity<>(transformFromListToPage(page), HttpStatus.OK);
+		return new ResponseEntity<>(createCustomPage(transformFromListToPage(page)), HttpStatus.OK);
 	}
 
 	@PreAuthorize("permitAll()")
 	@GetMapping(value = "/category/{id}")
-	public ResponseEntity<Page<CulturalOfferResDTO>> getCulturalOffersById(Pageable pageable, @PathVariable Long id) {
+	public ResponseEntity<Page<CulturalOfferResDTO>> getCulturalOffersByCategoryId(Pageable pageable, @PathVariable Long id) {
 		Page<CulturalOffer> page = culturalOfferService.getByCategoryId(id, pageable);
-		return new ResponseEntity<>(transformFromListToPage(page), HttpStatus.OK);
+		return new ResponseEntity<>(createCustomPage(transformFromListToPage(page)), HttpStatus.OK);
 	}
 
 	@PreAuthorize("permitAll()")
@@ -63,7 +64,7 @@ public class CulturalOfferController {
 			@PathVariable Long id, @PathVariable String name) {
 		Page<CulturalOffer> page = culturalOfferService.findByCategoryIdAndNameContains(id, name, pageable);
 
-		return new ResponseEntity<>(transformFromListToPage(page), HttpStatus.OK);
+		return new ResponseEntity<>(createCustomPage(transformFromListToPage(page)), HttpStatus.OK);
 	}
 
 	@PreAuthorize("permitAll()")
@@ -84,7 +85,6 @@ public class CulturalOfferController {
 		return new ResponseEntity<>(culturalOfferResDTO, HttpStatus.OK);
 	}
 
-
 	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<CulturalOfferResDTO> createCulturalOffer(
 			@RequestPart("culturalOfferDTO") @Valid @NotNull CulturalOfferDTO culturalOfferDTO,
@@ -104,7 +104,6 @@ public class CulturalOfferController {
 		}
 	}
 
-
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<CulturalOfferResDTO> updateCulturalOffer(@PathVariable Long id,
 			@RequestPart("culturalOfferDTO") @Valid @NotNull CulturalOfferDTO culturalOfferDTO,
@@ -122,7 +121,6 @@ public class CulturalOfferController {
 		}
 	}
 
-
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Boolean> deleteCulturalOffer(@PathVariable Long id) {
 		try {
@@ -135,12 +133,18 @@ public class CulturalOfferController {
 	private Page<CulturalOfferResDTO> transformFromListToPage(Page<CulturalOffer> page) {
 		List<CulturalOfferResDTO> culturalOffersResDTO = culturalOfferMapper.toDTOResList(page.toList());
 		culturalOffersResDTO.stream().forEach(i -> {
-				try {
-					i.setImage(fileService.uploadImageAsBase64(i.getImage()));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+			try {
+				i.setImage(fileService.uploadImageAsBase64(i.getImage()));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		});
 		return new PageImpl<>(culturalOffersResDTO, page.getPageable(), page.getTotalElements());
+	}
+
+	private CustomPageImplementation<CulturalOfferResDTO> createCustomPage(Page<CulturalOfferResDTO> page) {
+		return new CustomPageImplementation<>(page.getContent(), page.getNumber(), page.getSize(),
+				page.getTotalElements(), null, page.isLast(), page.getTotalPages(), null, page.isFirst(),
+				page.getNumberOfElements());
 	}
 }

@@ -8,12 +8,16 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor 
+@NoArgsConstructor
 //Ovim se obezbedjuje da kombinacija kolona bude jedinstvena
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "lat", "lon" }) })
 public class Geolocation {
@@ -34,17 +38,13 @@ public class Geolocation {
 
 	@Column(nullable = false)
 	private double lon;
-
-	public Geolocation() {
+	
+	public Geolocation( String placeId, String location, double lat, double lon) {
 		super();
-	}
-
-	public Geolocation(Long id, String placeId, String location, double lat, double lon) {
-		super();
-		this.id = id;
 		this.placeId = placeId;
 		this.location = location;
 		this.lat = lat;
 		this.lon = lon;
 	}
+
 }

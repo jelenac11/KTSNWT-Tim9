@@ -3,6 +3,8 @@ package com.ktsnwt.project.team9.services.implementations;
 import java.io.IOException;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -60,6 +62,7 @@ public class CulturalOfferService implements ICulturalOfferService {
 		return null;
 	}
 
+	@Transactional
 	@Override
 	public boolean delete(Long id) throws Exception {
 		CulturalOffer existingCulturalOffer = getById(id);
@@ -80,6 +83,7 @@ public class CulturalOfferService implements ICulturalOfferService {
 		return null;
 	}
 
+	@Transactional
 	public CulturalOffer update(Long id, CulturalOffer entity, MultipartFile newImage) throws NotFoundException, IOException {
 		CulturalOffer existingCulturalOffer = getById(id);
 		if (existingCulturalOffer == null) {
@@ -103,6 +107,7 @@ public class CulturalOfferService implements ICulturalOfferService {
 		return culturalOfferRepository.save(existingCulturalOffer);
 	}
 
+	@Transactional
 	public CulturalOffer create(CulturalOffer entity, MultipartFile file) throws Exception {
 		entity.setActive(true);
 		Category category = categoryService.getById(entity.getCategory().getId());

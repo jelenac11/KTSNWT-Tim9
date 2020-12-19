@@ -15,18 +15,22 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.ktsnwt.project.team9.dto.GeolocationDTO;
+import com.ktsnwt.project.team9.helper.implementations.CustomPageImplementation;
 import com.ktsnwt.project.team9.helper.implementations.GeolocationMapper;
 import com.ktsnwt.project.team9.model.Geolocation;
 import com.ktsnwt.project.team9.services.implementations.GeolocationService;
 
+import lombok.AllArgsConstructor;
+
 @RestController
 @RequestMapping(value = "/api/geolocations", produces = MediaType.APPLICATION_JSON_VALUE)
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+//@PreAuthorize("hasRole('ROLE_ADMIN')")
+@PreAuthorize("permitAll()")
+@AllArgsConstructor
 public class GeolocationController {
 
 	private GeolocationService geolocationService;
@@ -34,18 +38,23 @@ public class GeolocationController {
 	private GeolocationMapper geolocationMapper;
 
 	@GetMapping
-	public ResponseEntity<Iterable<GeolocationDTO>> getAllGeolocations() {
+	public ResponseEntity<List<GeolocationDTO>> getAllGeolocations() {
 		List<GeolocationDTO> geolocationDTO = geolocationMapper.toDTOList(geolocationService.getAll());
 		return new ResponseEntity<>(geolocationDTO, HttpStatus.OK);
 	}
-	
+
 	@GetMapping(value = "/by-page")
-	public ResponseEntity<Page<GeolocationDTO>> getAllGeolocations(Pageable pageable) {
+	public ResponseEntity<CustomPageImplementation<GeolocationDTO>> getAllGeolocations(Pageable pageable) {
 		Page<Geolocation> page = geolocationService.getAll(pageable);
 		List<GeolocationDTO> geolocationDTOs = geolocationMapper.toDTOList(page.toList());
 		Page<GeolocationDTO> pageGeolocationDTOs = new PageImpl<>(geolocationDTOs, page.getPageable(),
 				page.getTotalElements());
-		return new ResponseEntity<>(pageGeolocationDTOs, HttpStatus.OK);
+		CustomPageImplementation<GeolocationDTO> customPageImplementation = new CustomPageImplementation<>(
+				pageGeolocationDTOs.getContent(), pageGeolocationDTOs.getNumber(), pageGeolocationDTOs.getSize(),
+				pageGeolocationDTOs.getTotalElements(), null, pageGeolocationDTOs.isLast(),
+				pageGeolocationDTOs.getTotalPages(), null, pageGeolocationDTOs.isFirst(),
+				pageGeolocationDTOs.getNumberOfElements());
+		return new ResponseEntity<>(customPageImplementation, HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/{id}")
@@ -63,18 +72,6 @@ public class GeolocationController {
 			return new ResponseEntity<>(
 					geolocationMapper.toDto(geolocationService.create(geolocationMapper.toEntity(geolocationDTO))),
 					HttpStatus.CREATED);
-		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-	}
-
-	@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<GeolocationDTO> updateGeolocation(@PathVariable Long id,
-			@Valid @RequestBody GeolocationDTO geolocationDTO) {
-		try {
-			return new ResponseEntity<>(
-					geolocationMapper.toDto(geolocationService.update(id, geolocationMapper.toEntity(geolocationDTO))),
-					HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}

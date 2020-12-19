@@ -29,5 +29,15 @@ public class GeolocationDTO {
 	public GeolocationDTO() {
 		super();
 	}
+
+	public GeolocationDTO(String placeId, @NotEmpty(message = "Location cannot be null or empty.") String location,
+			@NotNull(message = "Lat cannot be null.") double lat,
+			@NotNull(message = "Lon cannot be null.") double lon) {
+		super();
+		this.placeId = placeId;
+		this.location = location;
+		this.lat = lat;
+		this.lon = lon;
+	}
 	
 }
