@@ -40,6 +40,21 @@ public class Category {
 		this.description = description;
 		this.active = active;
 	}
+	
+	public Category(String name, String description, boolean active) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.active = active;
+	}
+
+	public Long getId() {
+		return id;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getName() {
 		return name;
@@ -64,10 +79,5 @@ public class Category {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-
-	public Long getId() {
-		return id;
-	}
-	
 	
 }

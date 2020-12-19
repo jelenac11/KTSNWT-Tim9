@@ -42,6 +42,14 @@ public class Geolocation {
 		this.lat = lat;
 		this.lon = lon;
 	}
+	
+	public Geolocation( String placeId, String location, double lat, double lon) {
+		super();
+		this.placeId = placeId;
+		this.location = location;
+		this.lat = lat;
+		this.lon = lon;
+	}
 
 	public String getLocation() {
 		return location;
