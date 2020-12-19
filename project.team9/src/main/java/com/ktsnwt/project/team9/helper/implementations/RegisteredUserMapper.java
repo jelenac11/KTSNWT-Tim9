@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 import com.ktsnwt.project.team9.dto.UserDTO;
 import com.ktsnwt.project.team9.dto.response.UserResDTO;
-import com.ktsnwt.project.team9.helper.interfaces.IMapper;
 import com.ktsnwt.project.team9.model.RegisteredUser;
 
 @Component

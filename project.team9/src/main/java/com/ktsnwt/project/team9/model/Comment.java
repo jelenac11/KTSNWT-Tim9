@@ -1,6 +1,5 @@
 package com.ktsnwt.project.team9.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,7 +33,7 @@ public class Comment {
 	@Column(unique = false, nullable = false)
 	private long date;
 	
-	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "user_id")
 	private RegisteredUser author;
 	
@@ -45,7 +44,7 @@ public class Comment {
 	@Column(columnDefinition = "text", unique = false, nullable = true)
 	private String text;
 	
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = true)
+	@OneToOne(fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name="image_id")
 	private Image imageUrl;
 	
