@@ -59,7 +59,7 @@ public class CulturalOffer {
 	@OneToMany(mappedBy = "culturalOffer", cascade = CascadeType.ALL)
 	private Set<News> news;
 	
-	@OneToMany(mappedBy = "culturalOffer" ,cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "culturalOffer")
 	private Set<Comment> comments;
 	
 	@OneToMany(mappedBy = "culturalOffer", cascade = CascadeType.ALL)
@@ -89,6 +89,5 @@ public class CulturalOffer {
 		this.category = category;
 		this.admin = admin;
 	}
-	
 
 }

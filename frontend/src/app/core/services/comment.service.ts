@@ -24,4 +24,18 @@ export class CommentService {
     return this.http.post(`${environment.api_url}comments`, body,  {responseType: 'json'});
   }
 
+  approve(comment: Comment, approve: boolean): Observable<string> {
+    if (approve) {
+      return this.http.get(`${environment.api_url}comments/approve/${comment.id}`, {responseType: 'text'});
+    }
+    return this.http.get(`${environment.api_url}comments/decline/${comment.id}`, {responseType: 'text'});
+  }
+
+  getNotApprovedComments(size: number, page: number): Observable<CommentPage> {
+    let params = new HttpParams();
+    params = params.append('size', size.toString());
+    params = params.append('page', page.toString());
+    return this.http.get(`${environment.api_url}comments/not-approved-comments`, {responseType: 'json'});
+  }
+
 }

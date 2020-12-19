@@ -6,7 +6,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
+@NoArgsConstructor
+@Getter
+@Setter
+@AllArgsConstructor
 public class Category {
 
 	@Id
@@ -23,51 +32,9 @@ public class Category {
 	@Column
 	private boolean active;
 
-	public Category() {
-		super();
-	}
-
 	public Category(Long id) {
 		super();
 		this.id = id;
 	}
 
-	
-	public Category(Long id, String name, String description, boolean active) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.description = description;
-		this.active = active;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public boolean isActive() {
-		return active;
-	}
-
-	public void setActive(boolean active) {
-		this.active = active;
-	}
-
-	public Long getId() {
-		return id;
-	}
-	
-	
 }

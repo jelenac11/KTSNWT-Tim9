@@ -12,7 +12,6 @@ import com.ktsnwt.project.team9.model.News;
 import com.ktsnwt.project.team9.repositories.INewsRepository;
 import com.ktsnwt.project.team9.services.interfaces.ICulturalOfferService;
 import com.ktsnwt.project.team9.services.interfaces.INewsService;
-import com.ktsnwt.project.team9.services.interfaces.IUserService;
 
 @Service
 public class NewsService implements INewsService {

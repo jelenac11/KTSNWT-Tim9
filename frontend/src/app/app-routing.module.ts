@@ -12,6 +12,7 @@ import { NoAuthGuard } from './auth/guards/no-auth.guard';
 import { RoleGuard } from './auth/guards/role.guard';
 import { UsersReviewComponent } from './users/users-review/users-review.component';
 import { CommentsReviewComponent } from './comments/comments-review/comments-review.component';
+import { ApproveCommentComponent } from './comments/approve-comment/approve-comment.component';
 
 const routes: Routes = [
   {path:'', component: HomeComponent},
@@ -66,9 +67,12 @@ const routes: Routes = [
     canActivate: [NoAuthGuard]
   },
   {
-    path:'users',
-    component: UsersReviewComponent,
-   //canActivate: [NoAuthGuard],
+    path:'approving-comments',
+    component: ApproveCommentComponent,
+    canActivate: [RoleGuard],
+    data: { 
+      expectedRoles: 'ROLE_ADMIN'
+    }
   },
   {
     path:'users',
