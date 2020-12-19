@@ -36,15 +36,6 @@ public class Category {
 		super();
 		this.id = id;
 	}
-
-	
-	public Category(Long id, String name, String description, boolean active) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.description = description;
-		this.active = active;
-	}
 	
 	public Category(String name, String description, boolean active) {
 		super();
