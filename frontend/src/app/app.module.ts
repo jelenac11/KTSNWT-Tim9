@@ -16,6 +16,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
 import { UsersModule } from './users/users.module';
+import { CommentsModule } from './comments/comments.module';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { UsersModule } from './users/users.module';
     NewsModule,
     HomeModule,
     UsersModule,
+    CommentsModule,
     AgmCoreModule.forRoot({
       apiKey: environment.google_api_key,
       libraries: ['places'],

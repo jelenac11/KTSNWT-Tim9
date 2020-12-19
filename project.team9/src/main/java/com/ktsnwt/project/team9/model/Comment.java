@@ -11,7 +11,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Comment {
 	
 	@Id
@@ -39,82 +48,17 @@ public class Comment {
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = true)
 	@JoinColumn(name="image_id")
 	private Image imageUrl;
-
-	public Comment() {
-		super();
-	}
 	
 	public Comment(Long id) {
 		super();
 		this.id = id;
 	}
 
-	public Comment(Long id, boolean approved, long date, RegisteredUser author, CulturalOffer culturalOffer, String text, Image imageUrl) {
-		super();
-		this.id = id;
-		this.approved = approved;
-		this.date = date;
-		this.author = author;
+	public Comment(RegisteredUser registeredUser, CulturalOffer culturalOffer, String text, long time) {
+		this.author = registeredUser;
 		this.culturalOffer = culturalOffer;
 		this.text = text;
-		this.imageUrl = imageUrl;
+		this.date = time;
 	}
-
-	public boolean isApproved() {
-		return approved;
-	}
-
-	public void setApproved(boolean approved) {
-		this.approved = approved;
-	}
-
-	public long getDate() {
-		return date;
-	}
-
-	public void setDate(long date) {
-		this.date = date;
-	}
-
-	public RegisteredUser getAuthor() {
-		return author;
-	}
-
-	public void setAuthor(RegisteredUser author) {
-		this.author = author;
-	}
-
-	public CulturalOffer getCulturalOffer() {
-		return culturalOffer;
-	}
-
-	public void setCulturalOffer(CulturalOffer culturalOffer) {
-		this.culturalOffer = culturalOffer;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public String getText() {
-		return text;
-	}
-
-	public void setText(String text) {
-		this.text = text;
-	}
-
-	public Image getImageUrl() {
-		return imageUrl;
-	}
-
-	public void setImageUrl(Image imageUrl) {
-		this.imageUrl = imageUrl;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-	
 	
 }
