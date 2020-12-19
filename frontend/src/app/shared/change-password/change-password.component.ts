@@ -33,7 +33,7 @@ export class ChangePasswordComponent implements OnInit {
       oldPassword: ['', Validators.required],
       newPassword: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required]
-    }, { validator: CustomValidators.confirmedValidator });
+    }, { validators: [CustomValidators.confirmedValidator] });
   }
 
   get f() { return this.form.controls; }

@@ -50,12 +50,12 @@ public class CommentService implements ICommentService {
 	}
 
 	public Comment create(Comment entity, MultipartFile file) throws Exception {
-		entity.setApproved(false);
+		entity.setApproved(true);
 		CulturalOffer culturalOffer = culturalOfferRepository.findById(entity.getCulturalOffer().getId()).orElse(null);
 		if (culturalOffer == null) {
 			throw new Exception("Cultural offer doesn't exist.");
 		}
-		if (!file.isEmpty()) {
+		if (file != null) {
 			String imagePath = fileService.saveImage(file, "comment"+entity.getAuthor().getId() + entity.getDate());
 			Image image = imageService.create(new Image(imagePath));
 			entity.setImageUrl(image);

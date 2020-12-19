@@ -8,11 +8,16 @@ import { RouterModule } from '@angular/router';
 import { CommentComponent } from './comment/comment.component';
 import { CommentsReviewComponent } from './comments-review/comments-review.component';
 import { SharedModule } from '../shared/shared.module';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { AddCommentComponent } from './add-comment/add-comment.component';
 
 
 
 @NgModule({
-  declarations: [CommentComponent, CommentsReviewComponent],
+  declarations: [CommentComponent, CommentsReviewComponent, AddCommentComponent],
   imports: [
     CommonModule,
     MatCardModule,
@@ -20,8 +25,12 @@ import { SharedModule } from '../shared/shared.module';
     MatButtonModule,
     MatIconModule,
     SharedModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
     RouterModule,
   ], 
-  exports: [CommentComponent, CommentsReviewComponent],
+  exports: [CommentComponent, CommentsReviewComponent, AddCommentComponent],
 })
 export class CommentsModule { }

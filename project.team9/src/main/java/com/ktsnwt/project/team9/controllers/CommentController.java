@@ -52,13 +52,15 @@ public class CommentController {
 		Page<Comment> page = commentService.findAllByCOID(pageable, id);
         List<CommentResDTO> commentDTOs = commentMapper.toResDTOList(page.toList());
         commentDTOs.stream().forEach(i->{
-        	if (!i.getImageUrl().equals("")) {
-				try {
-					i.setImageUrl(fileService.uploadImageAsBase64(i.getImageUrl()));
-				}catch (Exception e) {
-					
-				}
-			}
+        	if (i.getImageUrl() != null) {
+        		if (!i.getImageUrl().equals("")) {
+    				try {
+    					i.setImageUrl(fileService.uploadImageAsBase64(i.getImageUrl()));
+    				}catch (Exception e) {
+    					
+    				}
+    			}
+        	}
 		});
         Page<CommentResDTO> pageCommentDTOs = new PageImpl<>(commentDTOs, page.getPageable(), page.getTotalElements());
         return new ResponseEntity<Page<CommentResDTO>>(pageCommentDTOs, HttpStatus.OK);
@@ -76,7 +78,7 @@ public class CommentController {
 			commentDTO = commentMapper.toDto(commentService.create(commentMapper.dtoToEntity(commentDTO, current.getId()), file));
 			return new ResponseEntity<>(commentDTO, HttpStatus.CREATED);
 		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 

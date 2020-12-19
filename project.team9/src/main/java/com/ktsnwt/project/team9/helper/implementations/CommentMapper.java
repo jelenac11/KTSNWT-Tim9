@@ -38,7 +38,10 @@ public class CommentMapper implements IMapper<Comment, CommentDTO> {
 	}
 	
 	public CommentResDTO toResDTO(Comment entity) {
-		return new CommentResDTO(entity.getId(), entity.getDate(), entity.getAuthor().getUsername(), entity.getCulturalOffer().getName(), entity.getText(), entity.getImageUrl().getUrl());
+		if (entity.getImageUrl() != null) {
+			return new CommentResDTO(entity.getId(), entity.getDate(), entity.getAuthor().getUsername(), entity.getCulturalOffer().getName(), entity.getText(), entity.getImageUrl().getUrl());
+		}
+		return new CommentResDTO(entity.getId(), entity.getDate(), entity.getAuthor().getUsername(), entity.getCulturalOffer().getName(), entity.getText(), null);
 	}
 	
 	public List<CommentResDTO> toResDTOList(List<Comment> entities) {

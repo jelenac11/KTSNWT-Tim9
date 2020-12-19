@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { AddCommentComponent } from 'src/app/comments/add-comment/add-comment.component';
 import { MarkRequest } from 'src/app/core/models/request/mark-request.model';
 import { CulturalOffer } from 'src/app/core/models/response/cultural-offer.model';
 import { Mark } from 'src/app/core/models/response/mark.model';
@@ -23,7 +25,7 @@ export class CulturalOfferReviewComponent implements OnInit {
 
   zoom: number = 8;
 
-  constructor(private route: ActivatedRoute, private culturalOfferService: CulturalOfferService, private markService: MarkService) { }
+  constructor(private route: ActivatedRoute, private culturalOfferService: CulturalOfferService, private markService: MarkService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.culturalOfferId = this.route.snapshot.paramMap.get('id');
@@ -70,4 +72,11 @@ export class CulturalOfferReviewComponent implements OnInit {
     }
   }
 
+  openDialog(): void {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.minHeight = "400px";
+    dialogConfig.minWidth = "400px";
+    const dialogRef = this.dialog.open(AddCommentComponent, dialogConfig);
+  }
 }

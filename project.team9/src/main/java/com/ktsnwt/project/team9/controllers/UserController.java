@@ -40,7 +40,7 @@ public class UserController {
 		} catch (NoSuchElementException e) {
 			return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
 		} catch (Exception e) {
-			return new ResponseEntity<>("Username already taken.", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 
