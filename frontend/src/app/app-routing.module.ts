@@ -74,6 +74,11 @@ const routes: Routes = [
       expectedRoles: 'ROLE_ADMIN'
     }
   },
+  {
+    path:'users',
+    component: UsersReviewComponent,
+   //canActivate: [NoAuthGuard],
+  }
 ];
 
 @NgModule({

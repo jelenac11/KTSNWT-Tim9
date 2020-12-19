@@ -88,8 +88,6 @@ public class CommentService implements ICommentService {
 	public Page<Comment> findAllByCOID(Pageable pageable, Long id) {
 		return commentRepository.findByCulturalOfferIdAndApproved(id, true, pageable); 
 	}
-<<<<<<< Updated upstream
-=======
 
 	public Page<Comment> findAllByNotApprovedByAdminId(Pageable pageable, Long id) {
 		return commentRepository.findByApprovedFalseAndCulturalOfferUserId(id, pageable);
@@ -106,5 +104,4 @@ public class CommentService implements ICommentService {
 		c.setApproved(approve);
 		commentRepository.save(c);
 	}
->>>>>>> Stashed changes
 }
