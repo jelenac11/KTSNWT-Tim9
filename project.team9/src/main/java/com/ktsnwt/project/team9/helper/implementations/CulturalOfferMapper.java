@@ -39,7 +39,6 @@ public class CulturalOfferMapper implements IMapper<CulturalOffer, CulturalOffer
 				Optional.ofNullable(entity.getNews()).orElse(new HashSet<>()).stream().map(this::transformNewsToId).collect(Collectors.toSet()), 
 				Optional.ofNullable(entity.getComments()).orElse(new HashSet<>()).stream().map(this::transformCommentToId).collect(Collectors.toSet()),
 				Optional.ofNullable(entity.getMarks()).orElse(new HashSet<>()).stream().map(this::transformMarkToId).collect(Collectors.toSet()), entity.getAdmin().getId());
-	
 	}
 
 	public List<CulturalOfferResDTO> toDTOResList(Iterable<CulturalOffer> entities) {

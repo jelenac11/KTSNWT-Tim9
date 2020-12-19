@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +21,7 @@ import com.ktsnwt.project.team9.services.implementations.UserService;
 
 @RestController
 @RequestMapping(value = "/api/users", produces = MediaType.APPLICATION_JSON_VALUE)
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowedHeaders = "*")
 public class UserController {
 	
 	@Autowired
@@ -33,14 +35,12 @@ public class UserController {
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_REGISTERED_USER')")
 	@RequestMapping(value= "/change-profile", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> changeProfile(@Valid @RequestBody UserDTO userDTO) {
-		System.out.println("iz kontrolera");
-		System.out.println(userDTO.getId());
 		try {
-			return new ResponseEntity<>(userMapper.toDto(userService.changeProfile(userMapper.toEntity(userDTO))), HttpStatus.OK);
+			return new ResponseEntity<>(userMapper.toResDTO(userService.changeProfile(userMapper.toEntity(userDTO))), HttpStatus.OK);
 		} catch (NoSuchElementException e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
 		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 

@@ -16,6 +16,8 @@ import { CulturalOfferFormComponent } from './cultural-offer-form/cultural-offer
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [CulturalOfferReviewComponent, CulturalOfferListComponent, CulturalOfferFormComponent],
@@ -36,6 +38,8 @@ import { RouterModule } from '@angular/router';
     MatGoogleMapsAutocompleteModule,
     ButtonsModule,
     MatDialogModule,
+    MatIconModule,
+    MatButtonModule,
     MatSnackBarModule,
     GooglePlaceModule,
     BrowserModule,

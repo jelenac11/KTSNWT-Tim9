@@ -31,6 +31,12 @@ public class AdminService implements IAdminService {
 	
 	@Autowired
     private AuthorityService authService;
+	
+	@Autowired
+	private GenerateRandomPasswordService grpService;
+	
+	@Autowired
+	private MailService mailService;
 
 	public Page<Admin> findAll(Pageable pageable) {
 		return adminRepository.findAll(pageable);
@@ -59,8 +65,11 @@ public class AdminService implements IAdminService {
 		}
 		List<Authority> auth = authService.findByName("ROLE_ADMIN");
         entity.setAuthorities(auth);
-        entity.setPassword(passwordEncoder.encode(entity.getPassword()));
+        String newPassword = grpService.generateRandomPassword();
+        entity.setPassword(passwordEncoder.encode(newPassword));
         entity.setLastPasswordResetDate(new Date().getTime());
+        mailService.sendMail(entity.getEmail(), "Account activation", "You are now new administrator of Cultural content Team 9. Congratulations!\n Your credentials are: \n\tUsername: " + entity.getUsername() + 
+        		"\n\tPassoword: "  + newPassword);
 		return adminRepository.save(entity);
 	}
 
@@ -105,5 +114,8 @@ public class AdminService implements IAdminService {
 
 	}
 
+	public Page<Admin> searchAdmins(Pageable pageable, String value) {
+		return adminRepository.findByUsernameOrEmailOrFirstNameOrLastNameContainingIgnoreCase('%' + value.toLowerCase() + '%', pageable);
+	}
 	
 }

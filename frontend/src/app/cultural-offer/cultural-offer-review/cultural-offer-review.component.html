@@ -26,9 +26,10 @@
             <div class="col-3">
               <div>
                 <bar-rating
-                  [(rate)]="culturalOffer.averageMark"
+                  [(rate)]="mark"
                   [theme]="'stars'"
                   [max]="5"
+                  (rateChange)="onRate($event)"
                 ></bar-rating>
               </div>
               <div>
@@ -40,6 +41,15 @@
             {{ culturalOffer.description }}
           </div>
         </mdb-card-body>
+        <div class="mb-3">
+          <a mat-flat-button class="mat-but ml-5 mt-3" color="primary" [routerLink]="['comments']"> 
+            <mat-icon class="mr-2">comment</mat-icon> Comments
+          </a>
+          <button mat-flat-button class="mat-but" (click)="openDialog()">
+            <mat-icon class="ml-3">add_comment</mat-icon> Add new comment
+          </button>
+        </div>
+        <router-outlet></router-outlet>
       </mdb-card>
     </div>
     <div class="col-5 mt-3">

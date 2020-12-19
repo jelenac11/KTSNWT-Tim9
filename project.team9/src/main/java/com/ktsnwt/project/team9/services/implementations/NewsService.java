@@ -9,11 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.ktsnwt.project.team9.model.CulturalOffer;
 import com.ktsnwt.project.team9.model.News;
-import com.ktsnwt.project.team9.model.RegisteredUser;
 import com.ktsnwt.project.team9.repositories.INewsRepository;
 import com.ktsnwt.project.team9.services.interfaces.ICulturalOfferService;
 import com.ktsnwt.project.team9.services.interfaces.INewsService;
-import com.ktsnwt.project.team9.services.interfaces.IUserService;
 
 @Service
 public class NewsService implements INewsService {
@@ -24,9 +22,6 @@ public class NewsService implements INewsService {
 	
 	@Autowired
 	private ICulturalOfferService culturalOfferService;
-	
-	@Autowired
-	private IUserService userService;
 	
 	@Autowired
 	private MailService mailService;

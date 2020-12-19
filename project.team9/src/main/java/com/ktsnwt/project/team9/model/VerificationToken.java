@@ -9,7 +9,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "verification_token")
 public class VerificationToken {
 
@@ -22,33 +31,5 @@ public class VerificationToken {
 	@OneToOne(targetEntity = RegisteredUser.class, fetch = FetchType.LAZY)
 	@JoinColumn(nullable = false, name = "user_id")
 	private RegisteredUser user;
-
-	public VerificationToken() {
-		super();
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
-	}
-
-	public RegisteredUser getUser() {
-		return user;
-	}
-
-	public void setUser(RegisteredUser user) {
-		this.user = user;
-	}
 
 }
