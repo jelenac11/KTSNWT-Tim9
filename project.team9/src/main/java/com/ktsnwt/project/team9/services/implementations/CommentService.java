@@ -83,4 +83,8 @@ public class CommentService implements ICommentService {
 	public Page<Comment> findAllByCOID(Pageable pageable, Long id) {
 		return commentRepository.findByCulturalOfferIdAndApproved(id, true, pageable); 
 	}
+
+	public Page<Comment> findAllByNotApprovedByAdminId(Pageable pageable, Long id) {
+		return commentRepository.findByApprovedFalseAndCulturalOfferUserId(id, pageable);
+	}
 }

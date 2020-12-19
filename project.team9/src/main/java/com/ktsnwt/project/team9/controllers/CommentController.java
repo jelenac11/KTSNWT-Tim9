@@ -66,6 +66,26 @@ public class CommentController {
         return new ResponseEntity<Page<CommentResDTO>>(pageCommentDTOs, HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(value= "/not-approved-comments", method = RequestMethod.GET)
+	public ResponseEntity<Page<CommentResDTO>> getAllNotApprovedCommentsForCulturalOffers(Pageable pageable){
+		User current = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Page<Comment> page = commentService.findAllByNotApprovedByAdminId(pageable, current.getId());
+        List<CommentResDTO> commentDTOs = commentMapper.toResDTOList(page.toList());
+        commentDTOs.stream().forEach(i->{
+        	if (i.getImageUrl() != null) {
+        		if (!i.getImageUrl().equals("")) {
+    				try {
+    					i.setImageUrl(fileService.uploadImageAsBase64(i.getImageUrl()));
+    				}catch (Exception e) {
+    					
+    				}
+    			}
+        	}
+		});
+        Page<CommentResDTO> pageCommentDTOs = new PageImpl<>(commentDTOs, page.getPageable(), page.getTotalElements());
+        return new ResponseEntity<Page<CommentResDTO>>(pageCommentDTOs, HttpStatus.OK);
+	}
 	
 	@PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

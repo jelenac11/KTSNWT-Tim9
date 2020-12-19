@@ -70,6 +70,11 @@ const routes: Routes = [
     component: UsersReviewComponent,
    //canActivate: [NoAuthGuard],
   },
+  {
+    path:'users',
+    component: UsersReviewComponent,
+   //canActivate: [NoAuthGuard],
+  }
 ];
 
 @NgModule({
