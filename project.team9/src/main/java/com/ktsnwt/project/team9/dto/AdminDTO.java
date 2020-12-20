@@ -1,22 +1,30 @@
 package com.ktsnwt.project.team9.dto;
 
-import java.util.Set;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
 @Getter
 @Setter
-public class AdminDTO extends UserDTO {
-
-	private Set<Long> culturalOffers;
+@NoArgsConstructor
+@AllArgsConstructor
+public class AdminDTO {
 	
-	private boolean active;
+	@NotEmpty(message = "Username cannot be null or empty.")
+	private String username;
 	
-	public AdminDTO(Long id, String username, String email, String password, String firstName, String lastName, Set<Long> culturalOffers, boolean active) {
-		super(id, username, email, password, firstName, lastName);
-		this.culturalOffers = culturalOffers;
-		this.active = active;
-	}
+	@NotEmpty(message = "Email cannot be null or empty.")
+	@Email(message = "Email format is not valid.")
+	private String email;
+	
+	@NotEmpty(message = "First name cannot be null or empty.")
+	private String firstName;
+	
+	@NotEmpty(message = "Last name cannot be null or empty.")
+	private String lastName;
 }

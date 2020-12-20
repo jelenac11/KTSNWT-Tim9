@@ -1,6 +1,4 @@
 package com.ktsnwt.project.team9.dto;
-
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

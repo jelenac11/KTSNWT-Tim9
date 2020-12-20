@@ -16,12 +16,16 @@ public class MarkMapper implements IMapper<Mark, MarkDTO> {
 
 	@Override
 	public Mark toEntity(MarkDTO dto) {
-		return new Mark(dto.getId(), dto.getValue(), new RegisteredUser(dto.getGrader()), new CulturalOffer(dto.getCulturalOffer()));
+		return new Mark(dto.getId(), dto.getValue(), new RegisteredUser((long) 0), new CulturalOffer(dto.getCulturalOffer()));
+	}
+	
+	public Mark dtoToEntity(MarkDTO dto, Long id) {
+		return new Mark(dto.getId(), dto.getValue(), new RegisteredUser(id), new CulturalOffer(dto.getCulturalOffer()));
 	}
 
 	@Override
 	public MarkDTO toDto(Mark entity) {
-		return new MarkDTO(entity.getId(), entity.getValue(), entity.getGrader().getId(), entity.getCulturalOffer().getId());
+		return new MarkDTO(entity.getId(), entity.getValue(), entity.getCulturalOffer().getId());
 	}
 	
 	public List<MarkDTO> toDTOList(Iterable<Mark> entities){

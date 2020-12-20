@@ -47,18 +47,8 @@ public class MarkService implements IMarkService {
 	}
 
 	@Override
-	public boolean delete(Long id) throws Exception {
-		Mark mark = markRepository.findById(id).orElse(null);
-		if (mark == null) {
-			throw new Exception("Mark doesn't exist.");
-		}
-		markRepository.deleteById(id);
-		return true;
-	}
-
-	@Override
 	public Mark update(Long id, Mark entity) throws Exception {
-		Mark mark = markRepository.findById(id).orElse(null);
+		Mark mark = markRepository.findByGraderAndCulturalOfferId(id, entity.getCulturalOffer().getId());
 		if (mark == null) {
 			throw new Exception("Mark doesn't exist.");
 		}
@@ -71,8 +61,16 @@ public class MarkService implements IMarkService {
 			throw new Exception("Cultural offer doesn't exist.");
 		}
 		mark.setValue(entity.getValue());
-		mark.setGrader(entity.getGrader());
-		mark.setCulturalOffer(entity.getCulturalOffer());
 		return markRepository.save(mark);
 	}
+
+	@Override
+	public boolean delete(Long id) throws Exception {
+		return false;
+	}
+
+	public Mark findByUserIdAndCulturalOfferId(Long userId, Long offerId) {
+		return markRepository.findByGraderAndCulturalOfferId(userId, offerId);
+	}
+	
 }

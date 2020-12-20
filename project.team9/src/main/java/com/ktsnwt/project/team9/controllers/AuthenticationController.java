@@ -2,7 +2,6 @@ package com.ktsnwt.project.team9.controllers;
 
 import java.util.List;
 import java.util.UUID;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +36,6 @@ import com.ktsnwt.project.team9.services.implementations.MailService;
 import com.ktsnwt.project.team9.services.implementations.RegisteredUserService;
 import com.ktsnwt.project.team9.services.implementations.UserService;
 import com.ktsnwt.project.team9.services.implementations.VerificationTokenService;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -1,7 +1,6 @@
 package com.ktsnwt.project.team9.model;
 
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,7 +20,7 @@ public class News {
 	@Column
 	private Long id;
 
-	@Column(unique = false, nullable = false)
+	@Column(columnDefinition = "text", unique = false, nullable = false)
 	private String content;
 
 	@Column(unique = false, nullable = false)
@@ -30,7 +29,8 @@ public class News {
 	@Column
 	private boolean active;
 
-	@OneToMany(mappedBy = "news", cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "news_id")
 	private Set<Image> images;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)

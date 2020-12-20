@@ -1,8 +1,16 @@
 package com.ktsnwt.project.team9.services.implementations;
 
+import java.util.Date;
+import java.util.List;
+import java.util.NoSuchElementException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.ktsnwt.project.team9.model.Authority;
 import com.ktsnwt.project.team9.model.RegisteredUser;
 import com.ktsnwt.project.team9.model.User;
 import com.ktsnwt.project.team9.repositories.IRegisteredUser;
@@ -17,6 +25,16 @@ public class RegisteredUserService implements IRegisteredUserService {
 	
 	@Autowired
 	private IUserRepository userRepository;
+	
+	@Autowired
+    private AuthorityService authService;
+	
+	@Autowired
+    private PasswordEncoder passwordEncoder;
+	
+	public Page<RegisteredUser> findAll(Pageable pageable) {
+		return registeredUserRepository.findAll(pageable);
+	}
 	
 	@Override
 	public Iterable<RegisteredUser> getAll() {
@@ -38,6 +56,10 @@ public class RegisteredUserService implements IRegisteredUserService {
 		if (emailUser != null) {
 			throw new IllegalArgumentException("User with this email already exists.");
 		}
+		List<Authority> auth = authService.findByName("ROLE_REGISTERED_USER");
+        entity.setAuthorities(auth);
+        entity.setPassword(passwordEncoder.encode(entity.getPassword()));
+        entity.setLastPasswordResetDate(new Date().getTime());
 		return registeredUserRepository.save(entity);
 	}
 
@@ -53,32 +75,19 @@ public class RegisteredUserService implements IRegisteredUserService {
 
 	@Override
 	public RegisteredUser update(Long id, RegisteredUser entity) throws Exception {
-<<<<<<< Updated upstream
-		RegisteredUser registeredUser = registeredUserRepository.findById(id).orElse(null);
-		if (registeredUser == null) {
-			throw new Exception("Registered user with given id doesn't exist.");
-		}
-		if (!entity.getEmail().equals(registeredUser.getEmail())) {
-			User emailUser = userRepository.findByEmail(entity.getEmail());
-			if (emailUser != null) {
-				throw new Exception("User with this email already exists.");
-			}
-		}
-		if (!entity.getUsername().equals(registeredUser.getUsername())) {
-			User usernameUser = userRepository.findByUsername(entity.getUsername());
-			if (usernameUser != null) {
-				throw new Exception("User with this username already exists.");
-			}
-		}
-		registeredUser.setUsername(entity.getUsername());
-		registeredUser.setEmail(entity.getEmail());
-		registeredUser.setFirstName(entity.getFirstName());
-		registeredUser.setLastName(entity.getLastName());
-		registeredUser.setVerified(entity.isVerified());
-		return registeredUserRepository.save(registeredUser);
-		
-=======
 		return null;
->>>>>>> Stashed changes
 	}
+
+	public RegisteredUser findByEmail(String email) {
+		return registeredUserRepository.findByEmail(email);
+	}
+	
+	public RegisteredUser findByUsername(String username) {
+		return registeredUserRepository.findByUsername(username);
+	}
+
+	public Page<RegisteredUser> searchRegUsers(Pageable pageable, String value) {
+		return registeredUserRepository.findByUsernameOrEmailOrFirstNameOrLastNameContainingIgnoreCase('%' + value.toLowerCase() + '%', pageable);
+	}
+	
 }

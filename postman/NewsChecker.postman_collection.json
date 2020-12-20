@@ -1,0 +1,201 @@
+{
+	"info": {
+		"_postman_id": "2d71a38f-533f-4e37-a754-c342d1acc33c",
+		"name": "NewsChecker",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:8081/api/news/",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"content\" : \"Something\",\r\n    \"date\" : 1606676143818,\r\n    \"active\" : false,\r\n    \"images\" : [\r\n            \"./public/1\",\"./public/5\",\"./public/4\",\"./public/3\"\r\n    ],\r\n    \"culturalOfferID\" : 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/api/news/",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"news",
+						""
+					]
+				},
+				"description": "Creating News"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8081/api/news/inavlidBody",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"content\" : \"\",\r\n    \"date\" : -1234,\r\n    \"active\" : false,\r\n    \"images\" : [\r\n            \"./public/1\",\"./public/5\",\"./public/4\",\"./public/3\"\r\n    ],\r\n    \"culturalOfferID\" : 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/api/news/",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"news",
+						""
+					]
+				},
+				"description": "Creating News"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8081/api/news",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/api/news",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"news"
+					]
+				},
+				"description": "All news"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8081/api/news/pageble",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/api/news/by-page?page=0&size=1",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"news",
+						"by-page"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "1"
+						}
+					]
+				},
+				"description": "All news by page"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8081/api/news/1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/api/news/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"news",
+						"1"
+					]
+				},
+				"description": "News with ID 1"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8081/api/news/1",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"content\" : \"Something\",\r\n    \"date\" : 1606676143820,\r\n    \"active\" : false,\r\n    \"images\" : [\r\n            \"./public/1200\"\r\n    ],\r\n    \"culturalOfferID\" : 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/api/news/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"news",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8081/api/news/1",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/api/news/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"news",
+						"1"
+					]
+				},
+				"description": "Deleting news"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

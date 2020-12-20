@@ -52,7 +52,7 @@ public class TokenUtils {
             .claim("role", role) //moguce je postavljanje proizvoljnih podataka u telo JWT tokena
             .signWith(SIGNATURE_ALGORITHM, SECRET).compact();
     }
-
+  
     private String generateAudience() {
         return AUDIENCE_WEB;
     }

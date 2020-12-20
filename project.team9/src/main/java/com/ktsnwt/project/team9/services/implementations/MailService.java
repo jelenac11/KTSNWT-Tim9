@@ -1,7 +1,6 @@
 
 package com.ktsnwt.project.team9.services.implementations;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
@@ -17,7 +16,7 @@ public class MailService {
 
 	@Autowired
     private JavaMailSender emailSender;
-	
+    
 	@Async
 	public void sendMailNews(String to, News news) {
 		SimpleMailMessage message = new SimpleMailMessage(); 
@@ -28,10 +27,9 @@ public class MailService {
         		news.getCulturalOffer().getName() + "\n\n"
         				+ "Checkout in your application!!!");
         emailSender.send(message);	
-	}
 	
 	@Async
-	public void sendForgottenPassword(User user, String newPassword) throws MailException {
+	public void sendForgottenPassword(User user, String newPassword) throws MailException, InterruptedException {
 		SimpleMailMessage email = new SimpleMailMessage();
 		email.setTo("jelenacupac99@gmail.com");
 		email.setSubject("Password Reset");

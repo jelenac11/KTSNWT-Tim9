@@ -1,0 +1,26 @@
+<div class="map-container">
+  <agm-map
+    class="float-right"
+    [latitude]="latitude"
+    [longitude]="longitude"
+    [scrollwheel]="true"
+    [zoom]="zoom"
+  >
+    <agm-marker
+      *ngFor="let item of data; let i = index"
+      [latitude]="item.geolocation.lat"
+      [longitude]="item.geolocation.lon"
+      (markerClick)="setLocation(item)"
+    >
+      <agm-info-window *ngIf="showInfoWindow">
+        <img [src]="item.image" alt="" width="50" height="50" />
+        <h3>{{ item.name }}</h3>
+        <p>Location: {{ item.geolocation.location }}</p>
+        <p>
+          Category:
+          <a routerLink="child-a">{{ item.category.name }}</a>
+        </p>
+      </agm-info-window>
+    </agm-marker>
+  </agm-map>
+</div>

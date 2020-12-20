@@ -1,5 +1,10 @@
 package com.ktsnwt.project.team9.services.implementations;
 
+import java.util.Collection;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ktsnwt.project.team9.model.Category;
@@ -13,12 +18,12 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class CategoryService implements ICategoryService {
 	
+	@Autowired
 	private ICategoryRepository categoryRepository;
 
 	@Override
-	public Iterable<Category> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public Collection<Category> getAll() {
+		return categoryRepository.findAll();
 	}
 
 	@Override
@@ -28,19 +33,31 @@ public class CategoryService implements ICategoryService {
 
 	@Override
 	public Category create(Category entity) {
-		// TODO Auto-generated method stub
-		return null;
+		return categoryRepository.save(entity);
 	}
 
 	@Override
-	public boolean delete(Long id) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean delete(Long id) throws Exception {
+		Category category = categoryRepository.findById(id).orElse(null);
+		if(category == null)
+			throw new Exception("Category with this ID doesn't exist.");
+		
+		categoryRepository.deleteById(id);
+		return true;
 	}
 
 	@Override
-	public Category update(Long id, Category entity) {
-		// TODO Auto-generated method stub
-		return null;
+	public Category update(Long id, Category entity) throws Exception {
+		Category category = categoryRepository.findById(id).orElse(null);
+		if(category == null)
+			throw new Exception("Category with this ID doesn't exist.");
+		category.setActive(entity.isActive());
+		category.setDescription(entity.getDescription());
+		category.setName(entity.getName());
+		return categoryRepository.save(category);
+	}
+
+	public Page<Category> findAll(Pageable pageable) {
+		return categoryRepository.findAll(pageable);
 	}
 }

@@ -3,17 +3,15 @@ package com.ktsnwt.project.team9.controllers;
 import java.util.List;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-<<<<<<< Updated upstream
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-=======
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,46 +20,32 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
->>>>>>> Stashed changes
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ktsnwt.project.team9.dto.CommentDTO;
+import com.ktsnwt.project.team9.dto.response.CommentResDTO;
 import com.ktsnwt.project.team9.helper.implementations.CommentMapper;
+import com.ktsnwt.project.team9.helper.implementations.FileService;
 import com.ktsnwt.project.team9.model.Comment;
+import com.ktsnwt.project.team9.model.User;
 import com.ktsnwt.project.team9.services.implementations.CommentService;
 
 
 @RestController
 @RequestMapping(value = "/api/comments", produces = MediaType.APPLICATION_JSON_VALUE)
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowedHeaders = "*")
 public class CommentController {
 	
 	@Autowired
 	private CommentService commentService;
 	private CommentMapper commentMapper;
+	private FileService fileService;
 	
 	public CommentController() {
 		commentMapper = new CommentMapper();
+		fileService = new FileService();
 	}
-<<<<<<< Updated upstream
-	
-	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<Iterable<CommentDTO>> getAllComments() {
-		List<CommentDTO> commentsDTO = commentMapper.toDTOList(commentService.getAll());
-		return new ResponseEntity<>(commentsDTO, HttpStatus.OK);
-	}
-	
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<CommentDTO> getAdmin(@PathVariable Long id) {
-		Comment comment = commentService.getById(id);
-		if (comment == null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		return new ResponseEntity<>(commentMapper.toDto(comment), HttpStatus.OK);
-	}
-	
-	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<CommentDTO> createComment(@Valid @RequestBody CommentDTO commentDTO) {
-=======
 
 	@PreAuthorize("permitAll()")
 	@GetMapping(value= "/cultural-offer/{id}")
@@ -83,50 +67,43 @@ public class CommentController {
         Page<CommentResDTO> pageCommentDTOs = new PageImpl<>(commentDTOs, page.getPageable(), page.getTotalElements());
         return new ResponseEntity<>(pageCommentDTOs, HttpStatus.OK);
 	}
-	
+
 	@PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
-	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<?> createComment(@RequestPart("commentDTO") @Valid @NotNull CommentDTO commentDTO, @RequestPart(value = "file", required = false) MultipartFile file) {
->>>>>>> Stashed changes
 		try {
-			return new ResponseEntity<>(commentMapper.toDto(commentService.create(commentMapper.toEntity(commentDTO))), HttpStatus.CREATED);
+			if ((file == null || file.isEmpty()) && commentDTO.getText().equals("")) {
+				return new ResponseEntity<>("Comment must have image or text", HttpStatus.BAD_REQUEST);
+			}
+			User current = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			commentDTO = commentMapper.toDto(commentService.create(commentMapper.dtoToEntity(commentDTO, current.getId()), file));
+			return new ResponseEntity<>(commentDTO, HttpStatus.CREATED);
 		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 	
-<<<<<<< Updated upstream
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<CommentDTO> updateComment(@PathVariable Long id, @Valid @RequestBody CommentDTO commentDTO) {
-=======
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping(value= "/approve/{id}")
 	public ResponseEntity<String> approveComment(@PathVariable Long id) {
->>>>>>> Stashed changes
 		try {
-			return new ResponseEntity<>(commentMapper.toDto(commentService.update(id, commentMapper.toEntity(commentDTO))), HttpStatus.OK);
+			commentService.approveComment(id, true);
+			return new ResponseEntity<>("Comment successfully approved", HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Comment doesn't exist", HttpStatus.BAD_REQUEST);
 		}
 	}
-<<<<<<< Updated upstream
-	
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Boolean> deleteComment(@PathVariable Long id) {
-=======
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping(value= "/decline/{id}")
 	public ResponseEntity<String> declineComment(@PathVariable Long id) {
->>>>>>> Stashed changes
 		try {
-			return new ResponseEntity<>(commentService.delete(id), HttpStatus.OK);
+			commentService.approveComment(id, false);
+			return new ResponseEntity<>("Comment successfully declined", HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>("Comment doesn't exist", HttpStatus.BAD_REQUEST);
 		}
 	}
-<<<<<<< Updated upstream
-=======
 	
 	private List<CommentResDTO> addImage(List<CommentResDTO> commentDTOs) {
 		commentDTOs.stream().forEach(i->{
@@ -141,5 +118,4 @@ public class CommentController {
 		return commentDTOs;
 	}
 
->>>>>>> Stashed changes
 }

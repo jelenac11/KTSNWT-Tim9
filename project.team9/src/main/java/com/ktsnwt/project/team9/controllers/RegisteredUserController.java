@@ -1,18 +1,19 @@
 package com.ktsnwt.project.team9.controllers;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-<<<<<<< Updated upstream
-=======
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
->>>>>>> Stashed changes
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ktsnwt.project.team9.dto.RegisteredUserDTO;
+import com.ktsnwt.project.team9.dto.response.UserResDTO;
 import com.ktsnwt.project.team9.helper.implementations.RegisteredUserMapper;
 import com.ktsnwt.project.team9.model.RegisteredUser;
 import com.ktsnwt.project.team9.services.implementations.RegisteredUserService;
@@ -34,18 +36,8 @@ public class RegisteredUserController {
 	
 	public RegisteredUserController() {
 		registeredUserMapper = new RegisteredUserMapper();
-	}
+  }
 
-<<<<<<< Updated upstream
-	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<Iterable<RegisteredUserDTO>> getAllRegisteredUser() {
-		List<RegisteredUserDTO> registeredUsersDTO = registeredUserMapper.toDTOList(registeredUserService.getAll());
-		return new ResponseEntity<>(registeredUsersDTO, HttpStatus.OK);
-	}
-	
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<RegisteredUserDTO> getRegisteredUser(@PathVariable Long id) {
-=======
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping
 	public ResponseEntity<Iterable<UserResDTO>> getAllRegisteredUser() {
@@ -70,52 +62,21 @@ public class RegisteredUserController {
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_REGISTERED_USER')")
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<UserResDTO> getRegisteredUser(@PathVariable Long id) {
->>>>>>> Stashed changes
 		RegisteredUser registeredUser = registeredUserService.getById(id);
 		if (registeredUser == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(registeredUserMapper.toDto(registeredUser), HttpStatus.OK);
+		return new ResponseEntity<>(registeredUserMapper.toResDTO(registeredUser), HttpStatus.OK);
 	}
 
-<<<<<<< Updated upstream
-	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<RegisteredUserDTO> createRegistredUser(@Valid @RequestBody RegisteredUserDTO registeredUserDTO) {
-=======
 	@PreAuthorize("permitAll()")
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserResDTO> createRegistredUser(@Valid @RequestBody RegisteredUserDTO registeredUserDTO) {
->>>>>>> Stashed changes
 		try {
-			return new ResponseEntity<>(registeredUserMapper.toDto(registeredUserService.create(registeredUserMapper.toEntity(registeredUserDTO))), HttpStatus.CREATED);
-		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-	}
-
-<<<<<<< Updated upstream
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<RegisteredUserDTO> updateRegisteredUser(@PathVariable Long id, @Valid @RequestBody RegisteredUserDTO registeredUserDTO) {
-		try {
-			return new ResponseEntity<>(registeredUserMapper.toDto(registeredUserService.update(id, registeredUserMapper.toEntity(registeredUserDTO))), HttpStatus.OK);
+			return new ResponseEntity<>(registeredUserMapper.toResDTO(registeredUserService.create(registeredUserMapper.toEntity(registeredUserDTO))), HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Boolean> deleteRegisteredUser(@PathVariable Long id) {
-		try {
-			return new ResponseEntity<>(registeredUserService.delete(id), HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-=======
-	private Page<UserResDTO> transformListToPage(Page<RegisteredUser> page) {
-		List<UserResDTO> regUserResDTO = registeredUserMapper.toDTOResList(page.toList());
-		return new PageImpl<>(regUserResDTO, page.getPageable(), page.getTotalElements());
->>>>>>> Stashed changes
-	}
-	
-
 }

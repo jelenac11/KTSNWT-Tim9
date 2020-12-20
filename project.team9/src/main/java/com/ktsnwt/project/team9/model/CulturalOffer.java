@@ -11,22 +11,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
-<<<<<<< Updated upstream
-public class CulturalOffer {
-=======
 @AllArgsConstructor
+@NoArgsConstructor
 public class CulturalOffer implements Serializable {
->>>>>>> Stashed changes
 	
 	private static final long serialVersionUID = 1L;
 
@@ -38,18 +38,19 @@ public class CulturalOffer implements Serializable {
 	@Column(unique = false, nullable = false)
 	private String name;
 	
-	@Column(unique = false, nullable = true)
+
+	@Column(columnDefinition = "text", unique = false, nullable = true)
 	private String description;
 	
-	@Column(unique = false, nullable = true)
-	private String imageURL;
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(name="image_id")
+	private Image image;
 	
 	@Column
 	private double averageMark;
 	
 	@Column(unique = false, nullable = false)
 	private boolean active;
-	
 	
 	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER, optional = false)
 	@JoinColumn(name="geolocation_id")
@@ -62,7 +63,7 @@ public class CulturalOffer implements Serializable {
 	@OneToMany(mappedBy = "culturalOffer", cascade = CascadeType.ALL)
 	private Set<News> news;
 	
-	@OneToMany(mappedBy = "culturalOffer" ,cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "culturalOffer")
 	private Set<Comment> comments;
 	
 	@OneToMany(mappedBy = "culturalOffer", cascade = CascadeType.ALL)
@@ -71,32 +72,22 @@ public class CulturalOffer implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "user_id")
 	private Admin admin;
-
-	public CulturalOffer() {
-		super();
-	}
+	
+	@ManyToMany(mappedBy = "subscribed", fetch = FetchType.LAZY)
+	private Set<RegisteredUser> subscribedUsers;
 
 	public CulturalOffer(Long id) {
 		super();
 		this.id = id;
 	}
 
-	
-	public CulturalOffer(Long id, String name, String description, String imageURL, double averageMark, boolean active,
-			Geolocation geolocation, Category category, Set<News> news, Set<Comment> comments,
-			Set<Mark> marks, Admin admin) {
+	public CulturalOffer(String name, String description, Geolocation geolocation, Category category, Admin admin) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.description = description;
-		this.imageURL = imageURL;
-		this.averageMark = averageMark;
-		this.active = active;
 		this.geolocation = geolocation;
 		this.category = category;
-		this.news = news;
-		this.comments = comments;
-		this.marks = marks;
 		this.admin = admin;
 	}
+
 }

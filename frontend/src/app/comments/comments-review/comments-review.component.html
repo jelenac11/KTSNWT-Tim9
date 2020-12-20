@@ -1,0 +1,16 @@
+<div>
+    <app-comment *ngFor="let comment of comments.content
+    | paginate : {
+        itemsPerPage: size,
+        currentPage: page,
+        totalItems: comments.totalElements
+        }; let i = index"
+     [comment]="comment"></app-comment>
+    <div class="mt-3 div-centered">
+        <pagination-controls
+        previousLabel="Previous"
+        nextLabel="Next"
+        (pageChange)="handlePageChange($event)"
+        ></pagination-controls>
+    </div>
+</div>

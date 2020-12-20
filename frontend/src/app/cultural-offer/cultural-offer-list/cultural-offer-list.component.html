@@ -1,0 +1,98 @@
+<div class="content" role="main">
+  <div class="col mt-3 mb-3">
+    <button
+      *ngIf="role === 'ROLE_ADMIN'"
+      routerLink="/cultural-offers/create"
+      mdbBtn
+      type="button"
+      size="md"
+      color="primary"
+      mdbWavesEffect
+    >
+      <mdb-icon fas icon="plus" class="mr-1"></mdb-icon>Create new cultural
+      offer
+    </button>
+  </div>
+  <mdb-card
+    *ngFor="
+      let row of rows
+        | paginate
+          : {
+              itemsPerPage: size,
+              currentPage: page,
+              totalItems: culturalOffers.totalElements
+            }
+    "
+  >
+    <mdb-card-body>
+      <div class="card-deck">
+        <mdb-card class="containerCard" *ngFor="let culturalOffer of row">
+          <div class="view overlay waves-light" mdbWavesEffect>
+            <mdb-card-img
+              src="{{ culturalOffer.image }}"
+              alt="Card image cap"
+            ></mdb-card-img>
+            <a>
+              <div class="mask rgba-white-slight"></div>
+            </a>
+          </div>
+
+          <mdb-card-body class="d-flex flex-column">
+            <mdb-card-title class="align-self-center">
+              <h4>{{ culturalOffer.name }}</h4>
+              <button
+                *ngIf="role === 'ROLE_ADMIN'"
+                mdbBtn
+                type="button"
+                size="sm"
+                color="red"
+                mdbWavesEffect
+                (click)="openDialog(culturalOffer.id)"
+              >
+                Delete
+              </button>
+              <button
+                *ngIf="role === 'ROLE_ADMIN'"
+                mdbBtn
+                type="button"
+                size="sm"
+                color="default"
+                mdbWavesEffect
+                [routerLink]="['update/', culturalOffer.id.toString()]"
+              >
+                Update
+              </button>
+            </mdb-card-title>
+
+            <mdb-card-text *ngIf="culturalOffer.description">
+              {{ culturalOffer.description | slice: 0:360
+              }}{{ culturalOffer.description.length > 360 ? "..." : "" }}
+            </mdb-card-text>
+            <mdb-card-text *ngIf="!culturalOffer.description"> </mdb-card-text>
+
+            <div class="mt-auto align-self-center">
+              <button
+                type="button"
+                size="sm"
+                mdbBtn
+                color="info"
+                mdbWavesEffect
+                [routerLink]="['/cultural-offers/', culturalOffer.id]"
+              >
+                More
+              </button>
+              <button *ngIf="role === 'ROLE_REGISTERED_USER'" mdbBtn color="primary" size="sm" mdbWavesEffect>
+                Subscribe
+              </button>
+            </div>
+          </mdb-card-body>
+        </mdb-card>
+      </div>
+    </mdb-card-body>
+  </mdb-card>
+  <pagination-controls
+    previousLabel="Previous"
+    nextLabel="Next"
+    (pageChange)="handlePageChange($event)"
+  ></pagination-controls>
+</div>

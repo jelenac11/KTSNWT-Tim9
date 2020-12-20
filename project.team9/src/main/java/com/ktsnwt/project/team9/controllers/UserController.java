@@ -1,23 +1,30 @@
 package com.ktsnwt.project.team9.controllers;
 
+import java.util.NoSuchElementException;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-<<<<<<< Updated upstream
-=======
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
->>>>>>> Stashed changes
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.ktsnwt.project.team9.dto.UserDTO;
+import com.ktsnwt.project.team9.helper.implementations.UserMapper;
+import com.ktsnwt.project.team9.services.implementations.UserService;
 
 @RestController
 @RequestMapping(value = "/api/users", produces = MediaType.APPLICATION_JSON_VALUE)
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowedHeaders = "*")
 public class UserController {
 	
-<<<<<<< Updated upstream
-=======
 	@Autowired
 	private UserService userService;
 	private UserMapper userMapper;
@@ -37,6 +44,5 @@ public class UserController {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
->>>>>>> Stashed changes
 
 }

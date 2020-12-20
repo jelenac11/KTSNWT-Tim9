@@ -1,0 +1,34 @@
+#add-image {
+    visibility: hidden;
+}
+
+#image {
+    max-width: 200px;
+    height: auto;
+    float: left;
+}
+
+.mat-dialog-actions {
+    justify-content: flex-end;
+}
+
+.label-image {
+    cursor: pointer;
+    padding: 6px 12px;
+    background-color: #1A78C2;
+    color: white;
+    border-radius: 5px;
+}
+
+.file-name {
+    visibility: hidden;
+}
+
+button.mat-raised-button.mat-primary { outline:none; background-color: #1A78C2; vertical-align: bottom; } 
+button.mat-raised-button{ outline:none; } 
+.mat-dialog-title { background-color: #1A78C2; color: white; text-align: center; padding-top: 3px; padding-bottom: 3px; }
+.mat-dialog-content { text-align: center; }
+
+.textarea-comment {
+    width: 100%;
+}

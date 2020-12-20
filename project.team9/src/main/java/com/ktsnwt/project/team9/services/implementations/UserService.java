@@ -1,15 +1,29 @@
 package com.ktsnwt.project.team9.services.implementations;
 
+import java.security.SecureRandom;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.ktsnwt.project.team9.model.CulturalOffer;
+import com.ktsnwt.project.team9.model.RegisteredUser;
 import com.ktsnwt.project.team9.model.User;
+import com.ktsnwt.project.team9.repositories.IRegisteredUser;
+import com.ktsnwt.project.team9.repositories.IUserRepository;
 import com.ktsnwt.project.team9.services.interfaces.IUserService;
 
 @Service
-<<<<<<< Updated upstream
-public class UserService implements IUserService {
-
-=======
 public class UserService implements IUserService, UserDetailsService {
 	
 	@Autowired
@@ -36,7 +50,7 @@ public class UserService implements IUserService, UserDetailsService {
             return user;
         }
     }
-
+  
     public void changePassword(String oldPassword, String newPassword) throws Exception {
         Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
         String username = "";
@@ -45,20 +59,20 @@ public class UserService implements IUserService, UserDetailsService {
         } catch (Exception e) {
         	throw new IllegalAccessException("Invalid token.");
         }
+      
         if (authenticationManager != null) {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, oldPassword));
         } else {
             return;
         }
         User user = (User) loadUserByUsername(username);
-
         user.setPassword(passwordEncoder.encode(newPassword));
         user.setLastPasswordResetDate(new Date().getTime());
         userRepository.save(user);
     }
     
     @Override
-	public User changeProfile(User entity) {
+	public User changeProfile(User entity) throws Exception {
     	User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if (!entity.getUsername().equals(user.getUsername())) {
 			User usernameUser = userRepository.findByUsername(entity.getUsername());
@@ -72,7 +86,6 @@ public class UserService implements IUserService, UserDetailsService {
 		return userRepository.save(user);
 	}
 	
->>>>>>> Stashed changes
 	@Override
 	public Iterable<User> getAll() {
 		return null;
@@ -97,4 +110,43 @@ public class UserService implements IUserService, UserDetailsService {
 	public User update(Long id, User entity) throws Exception {
 		return null;
 	}
+
+	@Override
+	public List<RegisteredUser> getSubscribed(CulturalOffer co) {
+		return userRepo.findBySubscribed(co);
+	}
+	
+	@Override
+	public User findByEmail(String email) {
+		return userRepository.findByEmail(email);
+	}
+	
+	@Override
+	public User findByUsername(String username) {
+		return userRepository.findByUsername(username);
+	}
+
+	public void forgotPassword(String email) throws MailException, InterruptedException {
+		User user = userRepository.findByEmail(email);
+		String newPassword = generateRandomPassword();
+		user.setPassword(passwordEncoder.encode(newPassword));
+		user.setLastPasswordResetDate(new Date().getTime());
+        userRepository.save(user);
+        mailService.sendForgottenPassword(user, newPassword);
+	}
+	
+	public String generateRandomPassword() {
+		final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		 
+	    SecureRandom random = new SecureRandom();
+	    StringBuilder sb = new StringBuilder();
+
+	    for (int i = 0; i < 8; i++) {
+	        int randomIndex = random.nextInt(chars.length());
+	        sb.append(chars.charAt(randomIndex));
+	    }
+
+	    return sb.toString();
+	}
+	
 }
