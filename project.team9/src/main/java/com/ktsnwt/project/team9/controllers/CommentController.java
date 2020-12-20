@@ -69,7 +69,7 @@ public class CommentController {
 	}
 
 	@PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
-	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<?> createComment(@RequestPart("commentDTO") @Valid @NotNull CommentDTO commentDTO, @RequestPart(value = "file", required = false) MultipartFile file) {
 		try {
 			if ((file == null || file.isEmpty()) && commentDTO.getText().equals("")) {
