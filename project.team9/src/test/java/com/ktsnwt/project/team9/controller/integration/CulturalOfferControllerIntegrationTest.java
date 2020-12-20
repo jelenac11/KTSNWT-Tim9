@@ -26,6 +26,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.MethodMode;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.LinkedMultiValueMap;
@@ -201,6 +203,7 @@ public class CulturalOfferControllerIntegrationTest {
 	}
 
 	@Test
+	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
 	public void testCreateCulturalOffer_WithValidParameters_ShouldReturnCreatedCulturalOffer() throws Exception {
 		int length = ((List<CulturalOffer>) culturalOfferService.getAll()).size();
 		int lengthGeolocation = ((List<Geolocation>) geolocationService.getAll()).size();
@@ -226,8 +229,6 @@ public class CulturalOfferControllerIntegrationTest {
 		assertEquals(length + 1, ((List<CulturalOffer>) culturalOfferService.getAll()).size());
 		assertEquals(lengthGeolocation + 1, ((List<Geolocation>) geolocationService.getAll()).size());
 		assertTrue(fileExist.exists());
-
-		culturalOfferService.delete(22L);
 	}
 
 	@Test
@@ -291,6 +292,7 @@ public class CulturalOfferControllerIntegrationTest {
 	}
 
 	@Test
+	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
 	public void testUpdateCulturalOffer_WithValidParameters_ShouldReturnUpdatedCulturalOffer() throws IOException, NotFoundException {
 		CulturalOffer culturalOffer = culturalOfferService.getById(1L);
 		
@@ -355,6 +357,7 @@ public class CulturalOfferControllerIntegrationTest {
 	}
 
 	@Test
+	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
 	public void testDeleteCulturalOffer_WithExistingId_ShouldReturnTrue() throws Exception {
 		int length = ((List<CulturalOffer>) culturalOfferService.getAll()).size();
 		CulturalOffer culturalOffer = culturalOfferService.getById(20L);
