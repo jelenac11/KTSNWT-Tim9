@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.List;
 
 import javax.persistence.EntityExistsException;
-import javax.transaction.Transactional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,7 +14,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.test.annotation.Rollback;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.MethodMode;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -107,8 +107,7 @@ public class GeolocationServiceIntegrationTest {
 	}
 
 	@Test
-	@Transactional
-	@Rollback
+	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
 	public void testCreate_WithNonExistingLAtAndLon_ShouldCreateNewGeolocation() {
 		int length = ((List<Geolocation>) geolocationService.getAll()).size();
 
@@ -129,8 +128,7 @@ public class GeolocationServiceIntegrationTest {
 	}
 
 	@Test
-	@Transactional
-	@Rollback
+	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
 	public void testDelete_WithExistingId_ShouldReturnTrue() throws NotFoundException {
 		int length = ((List<Geolocation>) geolocationService.getAll()).size();
 

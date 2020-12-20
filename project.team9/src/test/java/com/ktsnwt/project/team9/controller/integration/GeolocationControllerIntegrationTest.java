@@ -16,6 +16,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.MethodMode;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import com.ktsnwt.project.team9.constants.GeolocationConstants;
@@ -110,6 +112,7 @@ public class GeolocationControllerIntegrationTest {
 	}
 
 	@Test
+	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
 	public void testCreateGeolocation_WithValidParameters_ShouldReturnCreatedGeolocation() throws NotFoundException {
 		int length = ((List<Geolocation>) geolocationService.getAll()).size();
 		HttpEntity<Object> httpEntity = new HttpEntity<Object>(GeolocationConstants.GEOLOCATIONNEW);
@@ -120,8 +123,6 @@ public class GeolocationControllerIntegrationTest {
 		assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
 		assertEquals(GeolocationConstants.GEOLOCATIONNEW.getLocation(), responseEntity.getBody().getLocation());
 		assertEquals(length + 1, ((List<Geolocation>) geolocationService.getAll()).size());
-		
-		geolocationService.delete(22L);
 	}
 
 	@Test
@@ -155,9 +156,9 @@ public class GeolocationControllerIntegrationTest {
 	}
 
 	@Test
+	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
 	public void testDeleteGeolocation_WithExistingId_ShouldReturnTrue() throws NotFoundException {
 		int length = ((List<Geolocation>) geolocationService.getAll()).size();
-		Geolocation geolocation = geolocationService.getById(GeolocationConstants.IDFORDELETE);
 
 		ResponseEntity<Boolean> responseEntity = restTemplate.exchange(
 				"/api/geolocations/" + GeolocationConstants.IDFORDELETE, HttpMethod.DELETE,
@@ -166,8 +167,6 @@ public class GeolocationControllerIntegrationTest {
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 		assertTrue(responseEntity.getBody());
 		assertEquals(length - 1, ((List<Geolocation>) geolocationService.getAll()).size());
-
-		geolocationService.create(geolocation);
 	}
 
 	@Test

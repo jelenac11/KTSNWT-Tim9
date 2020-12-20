@@ -16,7 +16,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.EntityExistsException;
-import javax.transaction.Transactional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,7 +27,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.test.annotation.Rollback;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.MethodMode;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -149,8 +149,7 @@ public class CulturalOfferServiceIntegrationTest {
 	}
 
 	@Test
-	@Transactional
-	@Rollback
+	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
 	public void testCreate_WithValidParameters_ShouldReturnCreatedCulturalOffer() throws Exception {
 		int length = ((List<CulturalOffer>) culturalOfferService.getAll()).size();
 		int lengthGeolocation = ((List<Geolocation>) geolocationService.getAll()).size();
@@ -199,12 +198,15 @@ public class CulturalOfferServiceIntegrationTest {
 	}
 
 	@Test
-	@Transactional
-	@Rollback
+	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
 	public void testDelete_WithExistingId_ShouldReturnTrue() throws Exception {
 		int length = ((List<CulturalOffer>) culturalOfferService.getAll()).size();
 		int lengthGeolocation = ((List<Geolocation>) geolocationService.getAll()).size();
-		Path path = Paths.get("src/main/resources/uploadedImages/slika1.jpg");
+		CulturalOffer culturalOffer = culturalOfferService.getById(1L);
+		Path pathComment = Paths.get("src/main/resources/uploadedImages/slika6.jpg");
+		byte[] contentCommentImage = Files.readAllBytes(pathComment);
+		File fileExistCommentImage = new File(pathComment.toString());
+		Path path = Paths.get(culturalOffer.getImage().getUrl());
 		byte[] content = Files.readAllBytes(path);
 		File fileExist = new File(path.toString());
 
@@ -218,6 +220,10 @@ public class CulturalOfferServiceIntegrationTest {
 		OutputStream outputStream = new FileOutputStream(fileExist);
 		outputStream.write(content);
 		outputStream.close();
+
+		OutputStream outputStreamComment = new FileOutputStream(fileExistCommentImage);
+		outputStreamComment.write(contentCommentImage);
+		outputStreamComment.close();
 	}
 
 	@Test(expected = NotFoundException.class)
@@ -226,8 +232,7 @@ public class CulturalOfferServiceIntegrationTest {
 	}
 
 	@Test
-	@Transactional
-	@Rollback
+	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
 	public void testUpdate_WithNewValidParameters_ShouldReturnUpdatedCulturalOffer() throws Exception {
 		byte[] newImage = Files.readAllBytes(Paths.get(FileServiceConstants.NEW_IMAGE_UPLOAD));
 		MockMultipartFile file = new MockMultipartFile("file", "image.jpg", MediaType.IMAGE_JPEG_VALUE, newImage);
@@ -241,12 +246,11 @@ public class CulturalOfferServiceIntegrationTest {
 		assertEquals(CulturalOfferConstants.NEW_OFFER_GEOLOCATION.getLocation(),
 				culturalOffer.getGeolocation().getLocation());
 		assertTrue(Arrays.equals(newImage, oldImageUpdated));
-		
+
 	}
 
 	@Test
-	@Transactional
-	@Rollback
+	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
 	public void testUpdate_WithOutImage_ShouldReturnCulturalOfferWithSameImage() throws IOException, NotFoundException {
 		byte[] oldImage = Files.readAllBytes(Paths.get("src/main/resources/uploadedImages/slika1.jpg"));
 		MockMultipartFile file = new MockMultipartFile("file", "image.jpg", MediaType.IMAGE_JPEG_VALUE, new byte[0]);
@@ -261,26 +265,28 @@ public class CulturalOfferServiceIntegrationTest {
 	public void testUpdate_WithExistingGeolocation_ShouldThrowDataIntegrityViolationException()
 			throws IOException, NotFoundException {
 		MockMultipartFile file = new MockMultipartFile("file", "image.jpg", MediaType.IMAGE_JPEG_VALUE, new byte[0]);
-		CulturalOffer culturalOffer = new CulturalOffer("Manastir 1", CulturalOfferConstants.NEW_OFFER_DESCRIPTION, CulturalOfferConstants.GEOLOCATION1, CulturalOfferConstants.NEW_OFFER_CATEGORY, new Admin(1L));
-		
+		CulturalOffer culturalOffer = new CulturalOffer("Manastir 1", CulturalOfferConstants.NEW_OFFER_DESCRIPTION,
+				CulturalOfferConstants.GEOLOCATION1, CulturalOfferConstants.NEW_OFFER_CATEGORY, new Admin(1L));
+
 		culturalOfferService.update(1L, culturalOffer, file);
 	}
-	
+
 	@Test(expected = NotFoundException.class)
-	public void testUpdate_WithNonExistingId_ShouldThrowNotFoundException()
-			throws IOException, NotFoundException {
+	public void testUpdate_WithNonExistingId_ShouldThrowNotFoundException() throws IOException, NotFoundException {
 		MockMultipartFile file = new MockMultipartFile("file", "image.jpg", MediaType.IMAGE_JPEG_VALUE, new byte[0]);
-		CulturalOffer culturalOffer = new CulturalOffer("Manastir 1",  CulturalOfferConstants.NEW_OFFER_DESCRIPTION, CulturalOfferConstants.NEW_OFFER_GEOLOCATION, CulturalOfferConstants.NEW_OFFER_CATEGORY, new Admin(1L));
-		
+		CulturalOffer culturalOffer = new CulturalOffer("Manastir 1", CulturalOfferConstants.NEW_OFFER_DESCRIPTION,
+				CulturalOfferConstants.NEW_OFFER_GEOLOCATION, CulturalOfferConstants.NEW_OFFER_CATEGORY, new Admin(1L));
+
 		culturalOfferService.update(55L, culturalOffer, file);
 	}
-	
+
 	@Test(expected = NotFoundException.class)
 	public void testUpdate_WithNonExistingCategoryId_ShouldThrowNotFoundException()
 			throws IOException, NotFoundException {
 		MockMultipartFile file = new MockMultipartFile("file", "image.jpg", MediaType.IMAGE_JPEG_VALUE, new byte[0]);
-		CulturalOffer culturalOffer = new CulturalOffer("Manastir 1", CulturalOfferConstants.NEW_OFFER_DESCRIPTION, CulturalOfferConstants.NEW_OFFER_GEOLOCATION, new Category(55L), new Admin(1L));
-		
+		CulturalOffer culturalOffer = new CulturalOffer("Manastir 1", CulturalOfferConstants.NEW_OFFER_DESCRIPTION,
+				CulturalOfferConstants.NEW_OFFER_GEOLOCATION, new Category(55L), new Admin(1L));
+
 		culturalOfferService.update(1L, culturalOffer, file);
 	}
 

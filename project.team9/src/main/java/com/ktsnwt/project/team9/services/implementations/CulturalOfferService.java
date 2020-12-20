@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ktsnwt.project.team9.helper.implementations.FileService;
 import com.ktsnwt.project.team9.model.Admin;
 import com.ktsnwt.project.team9.model.Category;
+import com.ktsnwt.project.team9.model.Comment;
 import com.ktsnwt.project.team9.model.CulturalOffer;
 import com.ktsnwt.project.team9.model.Geolocation;
 import com.ktsnwt.project.team9.model.Image;
@@ -38,12 +39,15 @@ public class CulturalOfferService implements ICulturalOfferService {
 	private ImageService imageService;
 
 	private FileService fileService;
+	
+	private CommentService commentService;
 
 	public Page<CulturalOffer> findAll(Pageable pageable) {
 		return culturalOfferRepository.findAll(pageable);
 	}
 
 	@Override
+	@Transactional
 	public Iterable<CulturalOffer> getAll() {
 		return culturalOfferRepository.findAll();
 	}
@@ -74,6 +78,9 @@ public class CulturalOfferService implements ICulturalOfferService {
 		}
 		existingCulturalOffer.getSubscribedUsers().clear();
 		fileService.deleteImageFromFile(existingCulturalOffer.getImage().getUrl());
+		for(Comment comment: existingCulturalOffer.getComments()) {
+			commentService.delete(comment.getId());
+		}
 		culturalOfferRepository.deleteById(id);
 		return true;
 	}
