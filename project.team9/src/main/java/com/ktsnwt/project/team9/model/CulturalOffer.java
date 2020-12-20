@@ -1,5 +1,6 @@
 package com.ktsnwt.project.team9.model;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -20,8 +21,15 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+<<<<<<< Updated upstream
 public class CulturalOffer {
+=======
+@AllArgsConstructor
+public class CulturalOffer implements Serializable {
+>>>>>>> Stashed changes
 	
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "culturalOffer_id")

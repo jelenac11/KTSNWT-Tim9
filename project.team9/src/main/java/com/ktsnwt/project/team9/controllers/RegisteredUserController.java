@@ -8,10 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+<<<<<<< Updated upstream
+=======
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
+>>>>>>> Stashed changes
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ktsnwt.project.team9.dto.RegisteredUserDTO;
@@ -31,6 +36,7 @@ public class RegisteredUserController {
 		registeredUserMapper = new RegisteredUserMapper();
 	}
 
+<<<<<<< Updated upstream
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Iterable<RegisteredUserDTO>> getAllRegisteredUser() {
 		List<RegisteredUserDTO> registeredUsersDTO = registeredUserMapper.toDTOList(registeredUserService.getAll());
@@ -39,6 +45,32 @@ public class RegisteredUserController {
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<RegisteredUserDTO> getRegisteredUser(@PathVariable Long id) {
+=======
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@GetMapping
+	public ResponseEntity<Iterable<UserResDTO>> getAllRegisteredUser() {
+		List<UserResDTO> registeredUsersDTO = registeredUserMapper.toResDTOList(registeredUserService.getAll());
+		return new ResponseEntity<>(registeredUsersDTO, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@GetMapping(value= "/by-page")
+	public ResponseEntity<Page<UserResDTO>> getAllRegisteredUsers(Pageable pageable){
+		Page<RegisteredUser> page = registeredUserService.findAll(pageable);
+		return new ResponseEntity<>(transformListToPage(page), HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@GetMapping(value = "/search/{value}")
+	public ResponseEntity<Page<UserResDTO>> searchRegUsers(Pageable pageable, @PathVariable String value) {
+		Page<RegisteredUser> page = registeredUserService.searchRegUsers(pageable, value);
+		return new ResponseEntity<>(transformListToPage(page), HttpStatus.OK);
+	}
+
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_REGISTERED_USER')")
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<UserResDTO> getRegisteredUser(@PathVariable Long id) {
+>>>>>>> Stashed changes
 		RegisteredUser registeredUser = registeredUserService.getById(id);
 		if (registeredUser == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -46,8 +78,14 @@ public class RegisteredUserController {
 		return new ResponseEntity<>(registeredUserMapper.toDto(registeredUser), HttpStatus.OK);
 	}
 
+<<<<<<< Updated upstream
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<RegisteredUserDTO> createRegistredUser(@Valid @RequestBody RegisteredUserDTO registeredUserDTO) {
+=======
+	@PreAuthorize("permitAll()")
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<UserResDTO> createRegistredUser(@Valid @RequestBody RegisteredUserDTO registeredUserDTO) {
+>>>>>>> Stashed changes
 		try {
 			return new ResponseEntity<>(registeredUserMapper.toDto(registeredUserService.create(registeredUserMapper.toEntity(registeredUserDTO))), HttpStatus.CREATED);
 		} catch (Exception e) {
@@ -55,6 +93,7 @@ public class RegisteredUserController {
 		}
 	}
 
+<<<<<<< Updated upstream
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<RegisteredUserDTO> updateRegisteredUser(@PathVariable Long id, @Valid @RequestBody RegisteredUserDTO registeredUserDTO) {
 		try {
@@ -71,6 +110,11 @@ public class RegisteredUserController {
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+=======
+	private Page<UserResDTO> transformListToPage(Page<RegisteredUser> page) {
+		List<UserResDTO> regUserResDTO = registeredUserMapper.toDTOResList(page.toList());
+		return new PageImpl<>(regUserResDTO, page.getPageable(), page.getTotalElements());
+>>>>>>> Stashed changes
 	}
 	
 

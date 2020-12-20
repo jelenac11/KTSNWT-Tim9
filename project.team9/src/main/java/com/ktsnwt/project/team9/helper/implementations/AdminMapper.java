@@ -37,7 +37,7 @@ public class AdminMapper implements IMapper<Admin, AdminDTO> {
 	}
 	
 	public List<AdminDTO> toDTOList(Iterable<Admin> entities) {
-		List<AdminDTO> dtos = new ArrayList<AdminDTO>();
+		List<AdminDTO> dtos = new ArrayList<>();
 		for(Admin entity : entities) {
 			dtos.add(toDto(entity));
 		}

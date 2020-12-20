@@ -1,5 +1,7 @@
 package com.ktsnwt.project.team9.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -14,10 +16,20 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
+<<<<<<< Updated upstream
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
 public class Comment {
+=======
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class Comment implements Serializable {
+>>>>>>> Stashed changes
 	
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "comment_id")

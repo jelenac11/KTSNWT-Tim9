@@ -42,7 +42,7 @@ public class CommentService implements ICommentService {
 		}
 		CulturalOffer culturalOffer = culturalOfferRepository.findById(entity.getCulturalOffer().getId()).orElse(null);
 		if (culturalOffer == null) {
-			throw new Exception("Cultural offer doesn't exist.");
+			throw new NoSuchElementException("Cultural offer doesn't exist.");
 		}
 		return commentRepository.save(entity);
 	}

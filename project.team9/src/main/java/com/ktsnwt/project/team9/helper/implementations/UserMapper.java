@@ -15,6 +15,14 @@ public class UserMapper implements IMapper<User, UserDTO> {
 
 	@Override
 	public UserDTO toDto(User entity) {
+<<<<<<< Updated upstream
 		return new UserDTO(entity.getId(), entity.getUsername(), entity.getEmail(), entity.getPassword(), entity.getFirstName(), entity.getLastName());
+=======
+		return new UserDTO(entity.getUsername(), entity.getEmail(), entity.getPassword(), entity.getFirstName(), entity.getLastName());
+	}
+	
+	public UserResDTO toResDTO(User entity) {
+		return new UserResDTO(entity.getId(), entity.getUsername(), entity.getEmail(), entity.getPassword(), entity.getFirstName(), entity.getLastName());
+>>>>>>> Stashed changes
 	}
 }

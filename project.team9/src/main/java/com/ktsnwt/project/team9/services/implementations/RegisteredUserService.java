@@ -32,11 +32,11 @@ public class RegisteredUserService implements IRegisteredUserService {
 	public RegisteredUser create(RegisteredUser entity) throws Exception {
 		User usernameUser = userRepository.findByUsername(entity.getUsername());
 		if (usernameUser != null) {
-			throw new Exception("User with this username already exists.");
+			throw new IllegalArgumentException("User with this username already exists.");
 		}
 		User emailUser = userRepository.findByEmail(entity.getEmail());
 		if (emailUser != null) {
-			throw new Exception("User with this email already exists.");
+			throw new IllegalArgumentException("User with this email already exists.");
 		}
 		return registeredUserRepository.save(entity);
 	}
@@ -45,7 +45,7 @@ public class RegisteredUserService implements IRegisteredUserService {
 	public boolean delete(Long id) throws Exception {
 		RegisteredUser registeredUser = registeredUserRepository.findById(id).orElse(null);
 		if (registeredUser == null) {
-			throw new Exception("Registered user with given id doesn't exist.");
+			throw new NoSuchElementException("Registered user with given id doesn't exist.");
 		}
 		registeredUserRepository.deleteById(id);
 		return true;
@@ -53,6 +53,7 @@ public class RegisteredUserService implements IRegisteredUserService {
 
 	@Override
 	public RegisteredUser update(Long id, RegisteredUser entity) throws Exception {
+<<<<<<< Updated upstream
 		RegisteredUser registeredUser = registeredUserRepository.findById(id).orElse(null);
 		if (registeredUser == null) {
 			throw new Exception("Registered user with given id doesn't exist.");
@@ -76,5 +77,8 @@ public class RegisteredUserService implements IRegisteredUserService {
 		registeredUser.setVerified(entity.isVerified());
 		return registeredUserRepository.save(registeredUser);
 		
+=======
+		return null;
+>>>>>>> Stashed changes
 	}
 }

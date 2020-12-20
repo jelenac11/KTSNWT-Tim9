@@ -17,8 +17,12 @@ public class CommentMapper implements IMapper<Comment, CommentDTO> {
 
 	@Override
 	public Comment toEntity(CommentDTO dto) {
+<<<<<<< Updated upstream
 		return new Comment(dto.getId(), dto.isApproved(), dto.getDateTime(), new RegisteredUser(dto.getAuthor()), new CulturalOffer(dto.getCulturalOffer()),
 				dto.getText(), dto.getImageUrl());
+=======
+		return null;
+>>>>>>> Stashed changes
 	}
 
 	@Override
@@ -28,7 +32,7 @@ public class CommentMapper implements IMapper<Comment, CommentDTO> {
 	}
 	
 	public List<CommentDTO> toDTOList(Iterable<Comment> entities) {
-		List<CommentDTO> dtos = new ArrayList<CommentDTO>();
+		List<CommentDTO> dtos = new ArrayList<>();
 		for(Comment entity : entities) {
 			dtos.add(toDto(entity));
 		}
