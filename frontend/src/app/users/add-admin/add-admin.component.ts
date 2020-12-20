@@ -13,7 +13,6 @@ import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
   styleUrls: ['./add-admin.component.scss']
 })
 export class AddAdminComponent implements OnInit {
-
   form: FormGroup;
   matcher: MyErrorStateMatcher = new MyErrorStateMatcher();
   
@@ -22,7 +21,8 @@ export class AddAdminComponent implements OnInit {
     private dialogRef: MatDialogRef<AddAdminComponent>,
     private snackBar: Snackbar,
     private userService: UserService,
-    @Inject(MAT_DIALOG_DATA) data) { }
+    @Inject(MAT_DIALOG_DATA) data
+  ) { }
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -35,11 +35,10 @@ export class AddAdminComponent implements OnInit {
 
   get f() { return this.form.controls; }
 
-  add() {
+  add(): void {
     if (this.form.invalid) {
       return;
     }
-   
     let admin: AdminRequest = { email: '', username: '', lastName: '', firstName: ''};
     admin.email = this.form.value['email'];
     admin.firstName = this.form.value['firstName'];
@@ -56,7 +55,7 @@ export class AddAdminComponent implements OnInit {
     });
   }
 
-  close() {
+  close(): void {
     this.dialogRef.close(false);
   }
 

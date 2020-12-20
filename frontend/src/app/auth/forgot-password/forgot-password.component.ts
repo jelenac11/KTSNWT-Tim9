@@ -10,9 +10,8 @@ import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
   styleUrls: ['./forgot-password.component.scss'],
 })
 export class ForgotPasswordComponent implements OnInit {
-
   forgotForm: FormGroup;
-  submitted = false;
+  submitted: boolean = false;
   matcher : MyErrorStateMatcher = new MyErrorStateMatcher();
 
   constructor(
@@ -29,14 +28,13 @@ export class ForgotPasswordComponent implements OnInit {
 
   get f() { return this.forgotForm.controls; }
 
-  onSubmit() {
+  onSubmit(): void {
     this.submitted = true;
-
     if (this.forgotForm.invalid) {
       return;
     }
     let email: string = this.forgotForm.value['email'];
-    this.authenticationService.forgot_password(email).subscribe(data => {
+    this.authenticationService.forgotPassword(email).subscribe((data: string) => {
       this.snackBar.success("New password sent. Check your email.");
       this.forgotForm.reset();
       this.submitted = false;

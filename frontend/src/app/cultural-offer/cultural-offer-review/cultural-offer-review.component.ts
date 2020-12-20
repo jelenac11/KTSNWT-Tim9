@@ -6,6 +6,7 @@ import { MarkRequest } from 'src/app/core/models/request/mark-request.model';
 import { CulturalOffer } from 'src/app/core/models/response/cultural-offer.model';
 import { Mark } from 'src/app/core/models/response/mark.model';
 import { CulturalOfferService } from 'src/app/core/services/cultural-offer.service';
+import { JwtService } from 'src/app/core/services/jwt.service';
 import { MarkService } from 'src/app/core/services/mark.service';
 
 @Component({
@@ -14,6 +15,8 @@ import { MarkService } from 'src/app/core/services/mark.service';
   styleUrls: ['./cultural-offer-review.component.scss']
 })
 export class CulturalOfferReviewComponent implements OnInit {
+
+  role: string = '';
 
   culturalOffer: CulturalOffer = { category: {}, geolocation: {} };
   
@@ -25,14 +28,21 @@ export class CulturalOfferReviewComponent implements OnInit {
 
   zoom: number = 8;
 
-  constructor(private route: ActivatedRoute, private culturalOfferService: CulturalOfferService, private markService: MarkService, private dialog: MatDialog) { }
+  constructor(
+    private route: ActivatedRoute, 
+    private culturalOfferService: CulturalOfferService, 
+    private markService: MarkService, 
+    private dialog: MatDialog,
+    private jwtService: JwtService
+  ) { }
 
   ngOnInit(): void {
     this.culturalOfferId = this.route.snapshot.paramMap.get('id');
     this.getCulturalOfferById();
   }
 
-  private getCulturalOfferById() {
+  private getCulturalOfferById(): void {
+    this.role = this.jwtService.getRole();
     this.culturalOfferService.get(this.culturalOfferId)
       .subscribe(culturalOffer => {
         this.culturalOffer = culturalOffer;
@@ -40,7 +50,7 @@ export class CulturalOfferReviewComponent implements OnInit {
       });
   }
 
-  private getCurrentMark() {
+  private getCurrentMark(): void {
     this.markService.get(this.culturalOffer.id).subscribe(data => {
       this.mark = data.value;
       this.isRated = true;
@@ -52,7 +62,7 @@ export class CulturalOfferReviewComponent implements OnInit {
     };
   }
 
-  onRate($event: number) {
+  onRate($event: number): void {
     let newMark: MarkRequest = {value: $event, culturalOffer: this.culturalOffer.id}
     if (!this.isRated) {
       this.markService.create(newMark).subscribe(data => {
@@ -79,4 +89,5 @@ export class CulturalOfferReviewComponent implements OnInit {
     dialogConfig.minWidth = "400px";
     const dialogRef = this.dialog.open(AddCommentComponent, dialogConfig);
   }
+
 }

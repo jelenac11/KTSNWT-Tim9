@@ -5,7 +5,9 @@ import { JwtService } from '../services/jwt.service'
 
 @Injectable()
 export class HttpTokenInterceptor implements HttpInterceptor {
-  constructor(private jwtService: JwtService) {}
+  constructor(
+    private jwtService: JwtService
+  ) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = this.jwtService.getToken();

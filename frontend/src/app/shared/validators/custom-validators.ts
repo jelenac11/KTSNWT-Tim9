@@ -1,6 +1,7 @@
-import { AbstractControl, FormGroup, ValidationErrors } from "@angular/forms";
+import { AbstractControl, ValidationErrors } from "@angular/forms";
 
 export class CustomValidators {
+
     static confirmedValidator(control: AbstractControl): ValidationErrors | null {
         const password: string = control.get('newPassword').value;
         const confirmPassword: string = control.get('confirmPassword').value;

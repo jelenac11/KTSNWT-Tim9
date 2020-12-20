@@ -15,7 +15,10 @@ import { CommentsReviewComponent } from './comments/comments-review/comments-rev
 import { ApproveCommentComponent } from './comments/approve-comment/approve-comment.component';
 
 const routes: Routes = [
-  {path:'', component: HomeComponent},
+  {
+    path:'', 
+    component: HomeComponent
+  },
   {
     path:'cultural-offers/create', 
     component: CulturalOfferFormComponent,
@@ -77,7 +80,10 @@ const routes: Routes = [
   {
     path:'users',
     component: UsersReviewComponent,
-   //canActivate: [NoAuthGuard],
+    canActivate: [RoleGuard],
+    data: { 
+      expectedRoles: 'ROLE_ADMIN'
+    }
   }
 ];
 

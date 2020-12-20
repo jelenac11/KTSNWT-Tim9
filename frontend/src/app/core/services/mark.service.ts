@@ -11,7 +11,9 @@ import { Mark } from '../models/response/mark.model';
 export class MarkService {
   private headers = new HttpHeaders({'Content-Type': 'application/json'});
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
   get(value: number): Observable<Mark> {
     return this.http.get(`${environment.api_url}marks/${value}`, {responseType: 'json'});

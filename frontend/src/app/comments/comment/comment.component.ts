@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Comment } from 'src/app/core/models/response/comment.model';
 
-
 @Component({
   selector: 'app-comment',
   templateUrl: './comment.component.html',
@@ -15,7 +14,6 @@ export class CommentComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    
   }
 
 }

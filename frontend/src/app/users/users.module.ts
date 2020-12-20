@@ -16,7 +16,6 @@ import { MatInputModule } from '@angular/material/input';
 import { AddAdminComponent } from './add-admin/add-admin.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
-
 @NgModule({
   declarations: [UsersReviewComponent, AddAdminComponent],
   imports: [

@@ -23,8 +23,8 @@ export class UserService {
     return this.http.get(`${environment.auth_url}current-user`, {responseType: 'json'});
   }
 
-  delete(id: number): Observable<any> {
-    return this.http.delete(`${environment.api_url}admins/${id}`,  {responseType: 'json'});
+  delete(id: number): Observable<string> {
+    return this.http.delete(`${environment.api_url}admins/${id}`,  {responseType: 'text'});
   }
 
   changeProfile(body: UserRequest): Observable<User> {

@@ -1,4 +1,3 @@
-import { getMultipleValuesInSingleSelectionError } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatTabChangeEvent } from '@angular/material/tabs';
@@ -16,33 +15,28 @@ import { AddAdminComponent } from '../add-admin/add-admin.component';
   styleUrls: ['./users-review.component.scss']
 })
 export class UsersReviewComponent implements OnInit {
-
   clicked: string = 'a';
-
-  tabs: string[] = ['Admins', 'Registered users'];
-
+  tabs: string[] = ['Administrators', 'Registered users'];
   users: UserPage;
-
   page: number = 1;
-
   size: number = 10;
-
   searchValue: string = '';
-
   currentTab: number = 0;
-
   isAdmin: boolean = true;
-
   loggedIn: string = '';
 
-  constructor(private userService: UserService, private jwtService: JwtService, private dialog: MatDialog, private snackBar: Snackbar) { }
+  constructor(
+    private userService: UserService, 
+    private jwtService: JwtService, 
+    private dialog: MatDialog, 
+    private snackBar: Snackbar
+  ) { }
 
   ngOnInit(): void {
-    this.users = {content: [], totalElements: 0};
+    this.users = { content: [], totalElements: 0 };
     this.getUsers();
     const jwt: JwtHelperService = new JwtHelperService();
     this.loggedIn = jwt.decodeToken(this.jwtService.getToken().accessToken)['sub'];
-    console.log(this.loggedIn);
   }
 
   getUsers(): void {
@@ -50,7 +44,7 @@ export class UsersReviewComponent implements OnInit {
       if (this.currentTab === 0) {
         this.userService.getUsers(this.size, this.page - 1, 'admins').subscribe(data => {
           let without = data.content.filter(admin => admin.email !== this.loggedIn);
-          this.users = {content:without, totalElements: data.totalElements}
+          this.users = { content: without, totalElements: data.totalElements }
         });
       } else {
         this.userService.getUsers(this.size, this.page - 1, 'registered-users').subscribe(data => {
@@ -79,8 +73,7 @@ export class UsersReviewComponent implements OnInit {
     } else {
       this.isAdmin = true;
     }
-    this.getUsers();
-    
+    this.getUsers();    
   }
 
   handlePageChange($event: number): void {
@@ -112,26 +105,25 @@ export class UsersReviewComponent implements OnInit {
   }
 
   delete(id: number): void {
-    this.userService.delete(id).subscribe(succ => {
+    this.userService.delete(id).subscribe((succ: string) => {
       this.getUsers();
       this.snackBar.success("You have successfully deleted admin!");
     }, err => {
-      console.log(err);
       this.snackBar.error(err.error);
     });
   }
 
-  addAdmin() {
-    const dialogConfig = new MatDialogConfig();
+  addAdmin(): void {
+    const dialogConfig: MatDialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.minHeight = "440px";
     dialogConfig.minWidth = "400px";
     const dialogRef = this.dialog.open(AddAdminComponent, dialogConfig);
-
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
         this.getUsers();
       }
     });
   }
+
 }

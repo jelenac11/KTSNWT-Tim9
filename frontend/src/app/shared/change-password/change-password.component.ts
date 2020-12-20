@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { PasswordChangeRequest } from 'src/app/core/models/request/password-change-request.model';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { MyErrorStateMatcher } from '../ErrorStateMatcher';
@@ -13,7 +14,6 @@ import { CustomValidators } from '../validators/custom-validators';
   styleUrls: ['./change-password.component.scss']
 })
 export class ChangePasswordComponent implements OnInit {
-
   form: FormGroup;
   submited: boolean = false;
   matcher: MyErrorStateMatcher = new MyErrorStateMatcher();
@@ -22,11 +22,13 @@ export class ChangePasswordComponent implements OnInit {
   hideConfirm: boolean = true;
 
   constructor(
-      private fb: FormBuilder,
-      private dialogRef: MatDialogRef<ChangePasswordComponent>,
-      private snackBar: Snackbar,
-      private authenticationService: AuthenticationService,
-      @Inject(MAT_DIALOG_DATA) data) { }
+    private fb: FormBuilder,
+    private dialogRef: MatDialogRef<ChangePasswordComponent>,
+    private snackBar: Snackbar,
+    private authenticationService: AuthenticationService,
+    private router: Router,
+    @Inject(MAT_DIALOG_DATA) data
+  ) { }
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -38,7 +40,7 @@ export class ChangePasswordComponent implements OnInit {
 
   get f() { return this.form.controls; }
 
-  onSubmit() {
+  onSubmit(): void {
     this.submited = true;
     if (this.form.invalid) {
       return;
@@ -49,7 +51,9 @@ export class ChangePasswordComponent implements OnInit {
     this.authenticationService.changePassword(passwordChange).subscribe(data => {
       this.snackBar.success("You changed password successfully.");
       this.submited = false;
-      console.log(data);
+      this.authenticationService.logout();
+      this.router.navigate(['/sign-in']);
+      this.dialogRef.close();
     },
     error => {
       if (error.status !== 200) {
@@ -58,7 +62,7 @@ export class ChangePasswordComponent implements OnInit {
     });
   }
 
-  close() {
+  close(): void {
     this.dialogRef.close();
   }
 

@@ -20,11 +20,12 @@ export class ProfileComponent implements OnInit {
   matcher: MyErrorStateMatcher = new MyErrorStateMatcher();
 
   constructor(
-      private fb: FormBuilder,
-      private dialogRef: MatDialogRef<ProfileComponent>,
-      private snackBar: Snackbar,
-      private userService: UserService,
-      @Inject(MAT_DIALOG_DATA) data) { }
+    private fb: FormBuilder,
+    private dialogRef: MatDialogRef<ProfileComponent>,
+    private snackBar: Snackbar,
+    private userService: UserService,
+    @Inject(MAT_DIALOG_DATA) data
+  ) { }
 
   ngOnInit(): void {
     this.userService.getCurrentUser()
@@ -35,7 +36,7 @@ export class ProfileComponent implements OnInit {
 
   get f() { return this.form.controls; }
 
-  startEdit() {
+  startEdit(): void {
     this.edit = true;
     this.form = this.fb.group({
       firstName: [this.user.firstName, Validators.required],
@@ -46,7 +47,7 @@ export class ProfileComponent implements OnInit {
     this.f['email'].disable();
   }
 
-  save() {
+  save(): void {
     if (this.form.invalid) {
       return;
     }
@@ -67,7 +68,7 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  close() {
+  close(): void {
     this.edit = false;
     this.dialogRef.close();
   }

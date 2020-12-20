@@ -25,4 +25,5 @@ export class ApiService {
   delete(path: string): Observable<any> {
     return this.http.delete(`${environment.api_url}${path}`);
   }
+  
 }

@@ -11,7 +11,9 @@ import { Comment } from '../models/response/comment.model';
 export class CommentService {
   private headers = new HttpHeaders({'Content-Type': 'application/json'});
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
   getCommentsByCulturalOfferId(size: number, page: number, id: number): Observable<CommentPage> {
     let params = new HttpParams();

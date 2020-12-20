@@ -11,14 +11,14 @@ import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 })
 
 export class ApproveCommentComponent implements OnInit {
-
   comments: CommentPage = { content: [], totalElements: 0 };
-
   page: number = 1;
-
   size: number = 5;
   
-  constructor(private commentService: CommentService, private snackBar: Snackbar) { }
+  constructor(
+    private commentService: CommentService, 
+    private snackBar: Snackbar
+  ) { }
 
   ngOnInit(): void {
     this.getNotApprovedComments();
@@ -41,4 +41,5 @@ export class ApproveCommentComponent implements OnInit {
       this.getNotApprovedComments();
     });
   }
+  
 }

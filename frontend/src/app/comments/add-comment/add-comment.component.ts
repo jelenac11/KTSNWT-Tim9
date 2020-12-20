@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { CommentRequest } from 'src/app/core/models/request/comment-request.model';
@@ -14,7 +14,6 @@ import { CustomValidators } from 'src/app/shared/validators/custom-validators';
   styleUrls: ['./add-comment.component.scss']
 })
 export class AddCommentComponent implements OnInit {
-
   form: FormGroup;
   matcher: MyErrorStateMatcher = new MyErrorStateMatcher();
   uploadedImage: string | ArrayBuffer = '';
@@ -44,23 +43,18 @@ export class AddCommentComponent implements OnInit {
       this.setValueForImageInvalidInput();
       return;
     }
-    
     const file = event.target.files[0];
     const mimeType = file.type;
-   
     if (mimeType.match(/image\/*/) == null) {
       this.setValueForImageInvalidInput();
       return;
     }
-   
     this.form.patchValue({
       file: file
     });
-   
     this.form.patchValue({
       fileName: file.name
     });
-
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = (_event) => {
@@ -68,7 +62,7 @@ export class AddCommentComponent implements OnInit {
     }
   }
 
-  setValueForImageInvalidInput() {
+  setValueForImageInvalidInput(): void {
     this.form.patchValue({
       file: null
     });
@@ -85,7 +79,6 @@ export class AddCommentComponent implements OnInit {
     let blob = new Blob([JSON.stringify(comment)], {
       type: 'application/json'
     });
-
     formData.append('commentDTO', blob);
     formData.append('file', this.form.get('file').value);
     this.commentService.post(formData).subscribe(res => {

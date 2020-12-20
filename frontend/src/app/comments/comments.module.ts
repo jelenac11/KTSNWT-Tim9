@@ -15,8 +15,6 @@ import { AddCommentComponent } from './add-comment/add-comment.component';
 import { ApproveCommentComponent } from './approve-comment/approve-comment.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 
-
-
 @NgModule({
   declarations: [CommentComponent, CommentsReviewComponent, AddCommentComponent, ApproveCommentComponent],
   imports: [

@@ -7,16 +7,14 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./confirmation-dialog.component.scss']
 })
 export class ConfirmationDialogComponent {
-  
   message: string = "Are you sure you want to delete?"
-  
   confirmButtonText: string = "Yes"
-  
   cancelButtonText: string = "Cancel"
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
-    private dialogRef: MatDialogRef<ConfirmationDialogComponent>) {
+    private dialogRef: MatDialogRef<ConfirmationDialogComponent>
+  ) {
     if (data) {
       this.message = data.message || this.message;
       if (data.buttonText) {
@@ -25,6 +23,7 @@ export class ConfirmationDialogComponent {
       }
     }
   }
+
   onConfirmClick(): void {
     this.dialogRef.close(true);
   }
