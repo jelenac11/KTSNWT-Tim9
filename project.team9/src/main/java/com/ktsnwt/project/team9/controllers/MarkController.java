@@ -9,10 +9,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ktsnwt.project.team9.dto.MarkDTO;
@@ -35,7 +37,7 @@ public class MarkController {
 	}
 	
 	@PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@GetMapping(value = "/{id}")
 	public ResponseEntity<MarkDTO> getMarkForCulturalOffer(@PathVariable Long id) {
 		User current = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Mark mark = markService.findByUserIdAndCulturalOfferId(current.getId(), id);
@@ -46,7 +48,7 @@ public class MarkController {
 	}
 	
 	@PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
-	@RequestMapping(value = "/rate", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/rate", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<MarkDTO> createMark(@Valid @RequestBody MarkDTO markDTO) {
 		User current = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		try {
@@ -57,7 +59,7 @@ public class MarkController {
 	}
 	
 	@PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
-	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<MarkDTO> updateMark(@Valid @RequestBody MarkDTO markDTO) {
 		User current = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		try {

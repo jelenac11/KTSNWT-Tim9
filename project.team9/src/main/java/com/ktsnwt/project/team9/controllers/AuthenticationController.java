@@ -133,7 +133,7 @@ public class AuthenticationController {
 	}
 
 	@PostMapping(value = "/forgot-password", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> forgotPassword(@RequestBody PasswordReset passwordReset) throws Exception {
+	public ResponseEntity<String> forgotPassword(@RequestBody PasswordReset passwordReset) {
 		User user = this.userDetailsService.findByEmail(passwordReset.getEmail());
 		if (user == null) {
 			return new ResponseEntity<>("User with given email doesn't exist.", HttpStatus.BAD_REQUEST);
