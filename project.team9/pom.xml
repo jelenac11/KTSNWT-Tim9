@@ -17,6 +17,7 @@
 
 	<!-- ovdje navoditi sve verzije za dependency-je -->
 	<properties>
+		<jjwt.version>0.4</jjwt.version>
 	</properties>
 
 	<dependencies>

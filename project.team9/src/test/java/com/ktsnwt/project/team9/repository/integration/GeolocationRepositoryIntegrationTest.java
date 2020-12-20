@@ -37,6 +37,6 @@ public class GeolocationRepositoryIntegrationTest {
 		Optional<Geolocation> optional = geolocationRepository.findByLatAndLon(GeolocationConstants.NON_EXISTING_LAT,
 				GeolocationConstants.NON_EXISTING_LON);
 
-		assertTrue(optional.isEmpty());
+		assertTrue(!optional.isPresent());
 	}
 }

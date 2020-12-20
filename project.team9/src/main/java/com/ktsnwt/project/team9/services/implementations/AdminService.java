@@ -89,33 +89,7 @@ public class AdminService implements IAdminService {
 
 	@Override
 	public Admin update(Long id, Admin entity) throws Exception {
-<<<<<<< Updated upstream
-		Admin admin = adminRepository.findById(id).orElseGet(null);
-		if (admin == null) {
-			throw new NoSuchElementException("Admin doesn't exist.");
-		}
-		if (!entity.getEmail().equals(admin.getEmail())) {
-			User emailUser = userRepository.findByEmail(entity.getEmail());
-			if (emailUser != null) {
-				throw new Exception("User with this email already exists.");
-			}
-		}
-		if (!entity.getUsername().equals(admin.getUsername())) {
-			User usernameUser = userRepository.findByUsername(entity.getUsername());
-			if (usernameUser != null) {
-				throw new Exception("User with this username already exists.");
-			}
-		}
-		admin.setUsername(entity.getUsername());
-		admin.setEmail(entity.getEmail());
-		admin.setFirstName(entity.getFirstName());
-		admin.setLastName(entity.getLastName());
-		admin.setActive(entity.isActive());
-		return adminRepository.save(admin);
-
-=======
 		return null;
->>>>>>> Stashed changes
 	}
 
 	public Page<Admin> searchAdmins(Pageable pageable, String value) {

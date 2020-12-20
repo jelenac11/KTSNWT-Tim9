@@ -1,8 +1,10 @@
 package com.ktsnwt.project.team9.helper.implementations;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
@@ -19,10 +21,14 @@ import com.ktsnwt.project.team9.model.RegisteredUser;
 public class RegisteredUserMapper implements IMapper<RegisteredUser, RegisteredUserDTO> {
 
 	@Override
-	public RegisteredUser toEntity(UserDTO user) {
+	public RegisteredUser toEntity(RegisteredUserDTO user) {
 		return new RegisteredUser(user.getUsername(), user.getEmail(), user.getPassword(), user.getFirstName(), user.getLastName());
 	}
   
+	public RegisteredUser toEntity(UserDTO user) {
+		return new RegisteredUser(user.getUsername(), user.getEmail(), user.getPassword(), user.getFirstName(), user.getLastName());
+	}
+	
 	@Override
 	public RegisteredUserDTO toDto(RegisteredUser entity) {
 		return new RegisteredUserDTO(entity.getUsername(), entity.getEmail(), entity.getPassword(),

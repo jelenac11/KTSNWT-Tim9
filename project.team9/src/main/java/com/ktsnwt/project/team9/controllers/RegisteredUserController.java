@@ -1,7 +1,6 @@
 package com.ktsnwt.project.team9.controllers;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import javax.validation.Valid;
 
@@ -78,5 +77,11 @@ public class RegisteredUserController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	private Page<UserResDTO> transformListToPage(Page<RegisteredUser> page) {
+		List<UserResDTO> adminsResDTO = registeredUserMapper.toDTOResList(page.toList());
+		return new PageImpl<>(adminsResDTO, page.getPageable(), page.getTotalElements());
+	}
+
 	
 }

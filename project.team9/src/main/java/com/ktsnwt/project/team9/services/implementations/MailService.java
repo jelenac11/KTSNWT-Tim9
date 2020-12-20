@@ -27,6 +27,7 @@ public class MailService {
         		news.getCulturalOffer().getName() + "\n\n"
         				+ "Checkout in your application!!!");
         emailSender.send(message);	
+	}
 	
 	@Async
 	public void sendForgottenPassword(User user, String newPassword) throws MailException, InterruptedException {
