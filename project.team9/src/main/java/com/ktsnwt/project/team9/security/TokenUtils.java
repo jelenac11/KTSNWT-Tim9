@@ -44,26 +44,16 @@ public class TokenUtils {
     // Funkcija za generisanje JWT token
     public String generateToken(String username, String role) {
         return Jwts.builder()
-                .setIssuer(APP_NAME)
-                .setSubject(username)
-                .setAudience(generateAudience())
-                .setIssuedAt(new Date())
-                .setExpiration(generateExpirationDate())
-                .claim("role", role) //moguce je postavljanje proizvoljnih podataka u telo JWT tokena
-                .signWith(SIGNATURE_ALGORITHM, SECRET).compact();
+            .setIssuer(APP_NAME)
+            .setSubject(username)
+            .setAudience(generateAudience())
+            .setIssuedAt(new Date())
+            .setExpiration(generateExpirationDate())
+            .claim("role", role) //moguce je postavljanje proizvoljnih podataka u telo JWT tokena
+            .signWith(SIGNATURE_ALGORITHM, SECRET).compact();
     }
-
+  
     private String generateAudience() {
-//		Moze se iskoristiti org.springframework.mobile.device.Device objekat za odredjivanje tipa uredjaja sa kojeg je zahtev stigao.
-
-//		String audience = AUDIENCE_UNKNOWN;
-//		if (device.isNormal()) {
-//			audience = AUDIENCE_WEB;
-//		} else if (device.isTablet()) {
-//			audience = AUDIENCE_TABLET;
-//		} else if (device.isMobile()) {
-//			audience = AUDIENCE_MOBILE;
-//		}
         return AUDIENCE_WEB;
     }
 
@@ -94,7 +84,7 @@ public class TokenUtils {
     }
 
     // Funkcija za validaciju JWT tokena
-    public Boolean validateToken(String token, UserDetails userDetails) {
+    public boolean validateToken(String token, UserDetails userDetails) {
         User user = (User) userDetails;
         final String username = getUsernameFromToken(token);
         final Date created = getIssuedAtDateFromToken(token);

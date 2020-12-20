@@ -15,9 +15,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -47,46 +48,26 @@ public class CommentController {
 	}
 
 	@PreAuthorize("permitAll()")
-	@RequestMapping(value= "/cultural-offer/{id}", method = RequestMethod.GET)
+	@GetMapping(value= "/cultural-offer/{id}")
 	public ResponseEntity<Page<CommentResDTO>> getAllCommentsForCulturalOffer(@PathVariable Long id, Pageable pageable){
 		Page<Comment> page = commentService.findAllByCOID(pageable, id);
         List<CommentResDTO> commentDTOs = commentMapper.toResDTOList(page.toList());
-        commentDTOs.stream().forEach(i->{
-        	if (i.getImageUrl() != null) {
-        		if (!i.getImageUrl().equals("")) {
-    				try {
-    					i.setImageUrl(fileService.uploadImageAsBase64(i.getImageUrl()));
-    				}catch (Exception e) {
-    					
-    				}
-    			}
-        	}
-		});
+        commentDTOs = addImage(commentDTOs);
         Page<CommentResDTO> pageCommentDTOs = new PageImpl<>(commentDTOs, page.getPageable(), page.getTotalElements());
-        return new ResponseEntity<Page<CommentResDTO>>(pageCommentDTOs, HttpStatus.OK);
+        return new ResponseEntity<>(pageCommentDTOs, HttpStatus.OK);
 	}
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value= "/not-approved-comments", method = RequestMethod.GET)
+	@GetMapping(value= "/not-approved-comments")
 	public ResponseEntity<Page<CommentResDTO>> getAllNotApprovedCommentsForCulturalOffers(Pageable pageable){
 		User current = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Page<Comment> page = commentService.findAllByNotApprovedByAdminId(pageable, current.getId());
         List<CommentResDTO> commentDTOs = commentMapper.toResDTOList(page.toList());
-        commentDTOs.stream().forEach(i->{
-        	if (i.getImageUrl() != null) {
-        		if (!i.getImageUrl().equals("")) {
-    				try {
-    					i.setImageUrl(fileService.uploadImageAsBase64(i.getImageUrl()));
-    				}catch (Exception e) {
-    					
-    				}
-    			}
-        	}
-		});
+        commentDTOs = addImage(commentDTOs);
         Page<CommentResDTO> pageCommentDTOs = new PageImpl<>(commentDTOs, page.getPageable(), page.getTotalElements());
-        return new ResponseEntity<Page<CommentResDTO>>(pageCommentDTOs, HttpStatus.OK);
+        return new ResponseEntity<>(pageCommentDTOs, HttpStatus.OK);
 	}
-	
+
 	@PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<?> createComment(@RequestPart("commentDTO") @Valid @NotNull CommentDTO commentDTO, @RequestPart(value = "file", required = false) MultipartFile file) {
@@ -103,8 +84,8 @@ public class CommentController {
 	}
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value= "/approve/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> approveComment(@PathVariable Long id) {
+	@GetMapping(value= "/approve/{id}")
+	public ResponseEntity<String> approveComment(@PathVariable Long id) {
 		try {
 			commentService.approveComment(id, true);
 			return new ResponseEntity<>("Comment successfully approved", HttpStatus.OK);
@@ -114,14 +95,27 @@ public class CommentController {
 	}
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value= "/decline/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> declineComment(@PathVariable Long id) {
+	@GetMapping(value= "/decline/{id}")
+	public ResponseEntity<String> declineComment(@PathVariable Long id) {
 		try {
 			commentService.approveComment(id, false);
 			return new ResponseEntity<>("Comment successfully declined", HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>("Comment doesn't exist", HttpStatus.BAD_REQUEST);
 		}
+	}
+	
+	private List<CommentResDTO> addImage(List<CommentResDTO> commentDTOs) {
+		commentDTOs.stream().forEach(i->{
+        	if (i.getImageUrl() != null && !i.getImageUrl().equals("")) {
+				try {
+					i.setImageUrl(fileService.uploadImageAsBase64(i.getImageUrl()));
+				}catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+    		}
+		});
+		return commentDTOs;
 	}
 
 }

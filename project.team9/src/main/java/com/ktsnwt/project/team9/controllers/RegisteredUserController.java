@@ -13,10 +13,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ktsnwt.project.team9.dto.RegisteredUserDTO;
@@ -35,36 +36,31 @@ public class RegisteredUserController {
 	
 	public RegisteredUserController() {
 		registeredUserMapper = new RegisteredUserMapper();
-	}
+  }
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(method = RequestMethod.GET)
+	@GetMapping
 	public ResponseEntity<Iterable<UserResDTO>> getAllRegisteredUser() {
 		List<UserResDTO> registeredUsersDTO = registeredUserMapper.toResDTOList(registeredUserService.getAll());
 		return new ResponseEntity<>(registeredUsersDTO, HttpStatus.OK);
 	}
 	
-	//@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value= "/by-page", method = RequestMethod.GET)
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@GetMapping(value= "/by-page")
 	public ResponseEntity<Page<UserResDTO>> getAllRegisteredUsers(Pageable pageable){
 		Page<RegisteredUser> page = registeredUserService.findAll(pageable);
 		return new ResponseEntity<>(transformListToPage(page), HttpStatus.OK);
 	}
 	
-	//@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value = "/search/{value}", method = RequestMethod.GET)
-	public ResponseEntity<Page<UserResDTO>> searchAdmins(Pageable pageable, @PathVariable String value) {
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@GetMapping(value = "/search/{value}")
+	public ResponseEntity<Page<UserResDTO>> searchRegUsers(Pageable pageable, @PathVariable String value) {
 		Page<RegisteredUser> page = registeredUserService.searchRegUsers(pageable, value);
 		return new ResponseEntity<>(transformListToPage(page), HttpStatus.OK);
 	}
-	
-	private Page<UserResDTO> transformListToPage(Page<RegisteredUser> page) {
-		List<UserResDTO> regUserResDTO = registeredUserMapper.toDTOResList(page.toList());
-		return new PageImpl<>(regUserResDTO, page.getPageable(), page.getTotalElements());
-	}
 
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_REGISTERED_USER')")
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@GetMapping(value = "/{id}")
 	public ResponseEntity<UserResDTO> getRegisteredUser(@PathVariable Long id) {
 		RegisteredUser registeredUser = registeredUserService.getById(id);
 		if (registeredUser == null) {
@@ -74,34 +70,12 @@ public class RegisteredUserController {
 	}
 
 	@PreAuthorize("permitAll()")
-	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserResDTO> createRegistredUser(@Valid @RequestBody RegisteredUserDTO registeredUserDTO) {
 		try {
 			return new ResponseEntity<>(registeredUserMapper.toResDTO(registeredUserService.create(registeredUserMapper.toEntity(registeredUserDTO))), HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-	}
-
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_REGISTERED_USER')")
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<UserResDTO> updateRegisteredUser(@PathVariable Long id, @Valid @RequestBody RegisteredUserDTO registeredUserDTO) {
-		try {
-			return new ResponseEntity<>(registeredUserMapper.toResDTO(registeredUserService.update(id, registeredUserMapper.toEntity(registeredUserDTO))), HttpStatus.OK);
-		} catch (NoSuchElementException e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-	}
-	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Boolean> deleteRegisteredUser(@PathVariable Long id) {
-		try {
-			return new ResponseEntity<>(registeredUserService.delete(id), HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 	

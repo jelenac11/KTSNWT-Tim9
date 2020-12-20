@@ -16,8 +16,7 @@ public class UserMapper implements IMapper<User, UserDTO> {
 
 	@Override
 	public UserDTO toDto(User entity) {
-		//return new UserDTO(entity.getId(), entity.getUsername(), entity.getEmail(), entity.getPassword(), entity.getFirstName(), entity.getLastName());
-		return null;
+		return new UserDTO(entity.getUsername(), entity.getEmail(), entity.getPassword(), entity.getFirstName(), entity.getLastName());
 	}
 	
 	public UserResDTO toResDTO(User entity) {

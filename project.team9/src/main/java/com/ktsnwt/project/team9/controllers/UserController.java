@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,7 +34,7 @@ public class UserController {
 	}
 	
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_REGISTERED_USER')")
-	@RequestMapping(value= "/change-profile", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(value= "/change-profile", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> changeProfile(@Valid @RequestBody UserDTO userDTO) {
 		try {
 			return new ResponseEntity<>(userMapper.toResDTO(userService.changeProfile(userMapper.toEntity(userDTO))), HttpStatus.OK);

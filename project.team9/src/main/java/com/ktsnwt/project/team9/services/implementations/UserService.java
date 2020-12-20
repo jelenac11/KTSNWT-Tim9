@@ -41,10 +41,8 @@ public class UserService implements IUserService, UserDetailsService {
     @Autowired
 	private MailService mailService;
 
-    // Funkcija koja na osnovu username-a iz baze vraca objekat User-a
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        // ako se ne radi nasledjivanje, paziti gde sve treba da se proveri email
         User user = userRepository.findByEmail(email);
         if (user == null) {
             throw new UsernameNotFoundException(String.format("No user found with email '%s'.", email));
@@ -52,29 +50,22 @@ public class UserService implements IUserService, UserDetailsService {
             return user;
         }
     }
-
-    // Funkcija pomocu koje korisnik menja svoju lozinku
+  
     public void changePassword(String oldPassword, String newPassword) throws Exception {
-
-        // Ocitavamo trenutno ulogovanog korisnika
         Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
         String username = "";
         try {
         	username = ((User) currentUser.getPrincipal()).getEmail();
         } catch (Exception e) {
-        	throw new Exception(String.format("Invalid token."));
+        	throw new IllegalAccessException("Invalid token.");
         }
-        
-
+      
         if (authenticationManager != null) {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, oldPassword));
         } else {
             return;
         }
         User user = (User) loadUserByUsername(username);
-
-        // pre nego sto u bazu upisemo novu lozinku, potrebno ju je hesirati
-        // ne zelimo da u bazi cuvamo lozinke u plain text formatu
         user.setPassword(passwordEncoder.encode(newPassword));
         user.setLastPasswordResetDate(new Date().getTime());
         userRepository.save(user);
@@ -86,7 +77,7 @@ public class UserService implements IUserService, UserDetailsService {
 		if (!entity.getUsername().equals(user.getUsername())) {
 			User usernameUser = userRepository.findByUsername(entity.getUsername());
 			if (usernameUser != null) {
-				throw new Exception("Username already taken");
+				throw new IllegalArgumentException("Username already taken");
 			}
 		}
 		user.setUsername(entity.getUsername());
@@ -97,31 +88,26 @@ public class UserService implements IUserService, UserDetailsService {
 	
 	@Override
 	public Iterable<User> getAll() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public User getById(Long id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public User create(User entity) throws Exception {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public boolean delete(Long id) throws Exception {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public User update(Long id, User entity) throws Exception {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

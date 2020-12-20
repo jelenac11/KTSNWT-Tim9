@@ -11,6 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,13 +42,13 @@ public class ImageController {
 	@Autowired
 	private ImageMapper imageMapper;
 
-	@RequestMapping(method = RequestMethod.GET)
+	@GetMapping
 	public ResponseEntity<Iterable<ImageDTO>> getAllImages() {
 		Set<ImageDTO> imagesDTO = imageMapper.toDTOList(imageService.getAll());
 		return new ResponseEntity<Iterable<ImageDTO>>(imagesDTO, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@GetMapping(value = "/{id}")
 	public ResponseEntity<ImageDTO> getImage(@PathVariable Long id) {
 
 		Image image = imageService.getById(id);
@@ -49,7 +58,7 @@ public class ImageController {
 		return new ResponseEntity<ImageDTO>(imageMapper.toDto(image), HttpStatus.OK);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ImageDTO> createImage(@Valid @RequestBody ImageDTO ImageDTO) {
 
 		try {
@@ -62,7 +71,7 @@ public class ImageController {
 		}
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ImageDTO> updateImage(@PathVariable Long id,
 			@Valid @RequestBody ImageDTO ImageDTO) {
 
@@ -76,7 +85,7 @@ public class ImageController {
 		}
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Boolean> deleteImage(@PathVariable Long id) {
 		try {
 			return new ResponseEntity<Boolean>(imageService.delete(id), HttpStatus.OK);
@@ -85,20 +94,13 @@ public class ImageController {
 		}
 	}
 	
-	
-	@RequestMapping(value = "/upload",method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public String handleFileUpload(@RequestParam("file") MultipartFile file) throws IllegalStateException, IOException {
-
-		
 		String uniqueID = UUID.randomUUID().toString();
 		String path = new File(".").getCanonicalPath();
-		System.out.println(path + uniqueID);
 		File fileSave = new File(path + "\\src\\main\\resources\\static\\" + 
 				uniqueID + "_" +file.getOriginalFilename());
 		file.transferTo(fileSave);
-		
-		
-		
 		return fileSave.getName();
 	}
 

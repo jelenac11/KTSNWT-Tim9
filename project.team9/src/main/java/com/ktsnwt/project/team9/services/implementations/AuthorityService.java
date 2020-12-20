@@ -39,7 +39,6 @@ public class AuthorityService {
 
 	public void confirmRegistration(String token) {
 		VerificationToken vt = verificationTokenService.findByToken(token);
-
 		if (vt != null) {
 			vt.getUser().setVerified(true);
 			registeredUserRepository.save(vt.getUser());

@@ -50,7 +50,7 @@ public class CommentService implements ICommentService {
 		entity.setApproved(false);
 		CulturalOffer culturalOffer = culturalOfferRepository.findById(entity.getCulturalOffer().getId()).orElse(null);
 		if (culturalOffer == null) {
-			throw new Exception("Cultural offer doesn't exist.");
+			throw new NoSuchElementException("Cultural offer doesn't exist.");
 		}
 		if (file != null) {
 			String imagePath = fileService.saveImage(file, "comment"+entity.getAuthor().getId() + entity.getDate());

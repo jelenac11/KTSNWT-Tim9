@@ -57,11 +57,11 @@ public class AdminService implements IAdminService {
 		entity.setActive(true);
 		User usernameUser = userRepository.findByUsername(entity.getUsername());
 		if (usernameUser != null) {
-			throw new Exception("User with this username already exists.");
+			throw new IllegalArgumentException("User with this username already exists.");
 		}
 		User emailUser = userRepository.findByEmail(entity.getEmail());
 		if (emailUser != null) {
-			throw new Exception("User with this email already exists.");
+			throw new IllegalArgumentException("User with this email already exists.");
 		}
 		List<Authority> auth = authService.findByName("ROLE_ADMIN");
         entity.setAuthorities(auth);
@@ -89,6 +89,7 @@ public class AdminService implements IAdminService {
 
 	@Override
 	public Admin update(Long id, Admin entity) throws Exception {
+<<<<<<< Updated upstream
 		Admin admin = adminRepository.findById(id).orElseGet(null);
 		if (admin == null) {
 			throw new NoSuchElementException("Admin doesn't exist.");
@@ -112,6 +113,9 @@ public class AdminService implements IAdminService {
 		admin.setActive(entity.isActive());
 		return adminRepository.save(admin);
 
+=======
+		return null;
+>>>>>>> Stashed changes
 	}
 
 	public Page<Admin> searchAdmins(Pageable pageable, String value) {

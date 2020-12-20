@@ -50,11 +50,11 @@ public class RegisteredUserService implements IRegisteredUserService {
 	public RegisteredUser create(RegisteredUser entity) throws Exception {
 		User usernameUser = userRepository.findByUsername(entity.getUsername());
 		if (usernameUser != null) {
-			throw new Exception("User with this username already exists.");
+			throw new IllegalArgumentException("User with this username already exists.");
 		}
 		User emailUser = userRepository.findByEmail(entity.getEmail());
 		if (emailUser != null) {
-			throw new Exception("User with this email already exists.");
+			throw new IllegalArgumentException("User with this email already exists.");
 		}
 		List<Authority> auth = authService.findByName("ROLE_REGISTERED_USER");
         entity.setAuthorities(auth);
@@ -67,7 +67,7 @@ public class RegisteredUserService implements IRegisteredUserService {
 	public boolean delete(Long id) throws Exception {
 		RegisteredUser registeredUser = registeredUserRepository.findById(id).orElse(null);
 		if (registeredUser == null) {
-			throw new Exception("Registered user with given id doesn't exist.");
+			throw new NoSuchElementException("Registered user with given id doesn't exist.");
 		}
 		registeredUserRepository.deleteById(id);
 		return true;
@@ -75,28 +75,7 @@ public class RegisteredUserService implements IRegisteredUserService {
 
 	@Override
 	public RegisteredUser update(Long id, RegisteredUser entity) throws Exception {
-		RegisteredUser registeredUser = registeredUserRepository.findById(id).orElse(null);
-		if (registeredUser == null) {
-			throw new NoSuchElementException("Registered user with given id doesn't exist.");
-		}
-		if (!entity.getEmail().equals(registeredUser.getEmail())) {
-			User emailUser = userRepository.findByEmail(entity.getEmail());
-			if (emailUser != null) {
-				throw new Exception("User with this email already exists.");
-			}
-		}
-		if (!entity.getUsername().equals(registeredUser.getUsername())) {
-			User usernameUser = userRepository.findByUsername(entity.getUsername());
-			if (usernameUser != null) {
-				throw new Exception("User with this username already exists.");
-			}
-		}
-		registeredUser.setUsername(entity.getUsername());
-		registeredUser.setEmail(entity.getEmail());
-		registeredUser.setFirstName(entity.getFirstName());
-		registeredUser.setLastName(entity.getLastName());
-		registeredUser.setVerified(entity.isVerified());
-		return registeredUserRepository.save(registeredUser);
+		return null;
 	}
 
 	public RegisteredUser findByEmail(String email) {
