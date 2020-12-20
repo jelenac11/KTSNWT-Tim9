@@ -1,5 +1,5 @@
 export interface GeolocationRequest {
-    placeId:string,
+    placeId: string,
     location: string,
     lon: number,
     lat: number

@@ -21,6 +21,13 @@ export class UserService {
     return this.http.get(`${environment.auth_url}current-user`, {responseType: 'json'});
   }
 
+<<<<<<< Updated upstream
+=======
+  delete(id: number): Observable<string> {
+    return this.http.delete(`${environment.api_url}admins/${id}`,  {responseType: 'text'});
+  }
+
+>>>>>>> Stashed changes
   changeProfile(body: UserRequest): Observable<User> {
     return this.http.put(`${environment.api_url}users/change-profile`, body, {headers: this.headers, responseType: 'json'});
   }

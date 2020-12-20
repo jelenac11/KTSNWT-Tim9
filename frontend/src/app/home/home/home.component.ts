@@ -4,6 +4,7 @@ import { CulturalOffer } from 'src/app/core/models/response/cultural-offer.model
 import { CulturalOfferPage } from 'src/app/core/models/response/cultural-offer-page.model';
 import { CategoryService } from 'src/app/core/services/category.service';
 import { CulturalOfferService } from 'src/app/core/services/cultural-offer.service';
+import { JwtService } from 'src/app/core/services/jwt.service';
 
 @Component({
   selector: 'app-home',
@@ -30,14 +31,18 @@ export class HomeComponent implements OnInit {
 
   size: number = 10;
 
-  constructor(private culturalOfferService: CulturalOfferService, private categoryService: CategoryService) { }
+  constructor(
+    private culturalOfferService: CulturalOfferService, 
+    private categoryService: CategoryService,
+    private jwtService: JwtService
+  ) { }
 
   ngOnInit(): void {
     this.culturalOffers = { content: [], totalElements: 0 };
     this.getAllCategories();
   }
 
-  clickRow(row: CulturalOffer) {
+  clickRow(row: CulturalOffer): void {
     if (this.latitude == row.geolocation.lat && this.longitude == row.geolocation.lon) {
       this.latitude = row.geolocation.lat + 0.00001;
       this.longitude = row.geolocation.lon + 0.00001;
@@ -49,14 +54,14 @@ export class HomeComponent implements OnInit {
     this.zoom = 6 + Math.random() * 0.1;
   }
 
-  getAllCategories() {
+  getAllCategories(): void {
     this.categoryService.getAll().subscribe(categories => {
       this.categories = categories;
       this.getCulturalOffersByCategoryAndName(this.categories[0].id, this.searchValue);
     })
   }
 
-  getCulturalOffersByCategoryAndName(id: number, value: string) {
+  getCulturalOffersByCategoryAndName(id: number, value: string): void {
     if (!value) {
       this.culturalOfferService.getCulturalOffersByCategory(id, this.size, this.page - 1).subscribe(culturalOffers => {
         this.culturalOffers = culturalOffers;
@@ -69,25 +74,25 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  changeTab($event: any) {
+  changeTab($event: any): void {
     this.resetRequiredParameters();
     this.currentCategory = $event.index;
     this.getCulturalOffersByCategoryAndName(this.categories[this.currentCategory].id, this.searchValue);
   }
 
-  searchChanged(value: string) {
+  searchChanged(value: string): void {
     this.searchValue = value;
     this.getCulturalOffersByCategoryAndName(this.categories[this.currentCategory].id, value);
     this.resetRequiredParameters();
   };
 
-  handlePageChange($event: any) {
+  handlePageChange($event: any): void {
     this.resetRequiredParameters();
     this.page = $event;
     this.getCulturalOffersByCategoryAndName(this.categories[this.currentCategory].id, this.searchValue);
   }
 
-  resetRequiredParameters() {
+  resetRequiredParameters(): void {
     this.page = 1;
     if (!this.latitude && !this.longitude) {
       this.latitude = this.latitude + 0.00001;

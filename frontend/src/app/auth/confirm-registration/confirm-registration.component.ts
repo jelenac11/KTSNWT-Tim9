@@ -8,7 +8,6 @@ import { AuthenticationService } from 'src/app/core/services/authentication.serv
   styleUrls: ['./confirm-registration.component.scss']
 })
 export class ConfirmRegistrationComponent implements OnInit {
-
   token: string;
 
   constructor(
@@ -18,7 +17,7 @@ export class ConfirmRegistrationComponent implements OnInit {
 
   ngOnInit(): void {
     this.token = this.route.snapshot.paramMap.get('token');
-    this.authentificationService.confirm_registration(this.token).subscribe();
+    this.authentificationService.confirmRegistration(this.token).subscribe();
   }
 
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { UserTokenState } from 'src/app/core/models/response/user-token-state.model';
 import { JwtService } from 'src/app/core/services/jwt.service';
 
 @Injectable({
@@ -15,7 +16,7 @@ export class RoleGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot): boolean {
     const expectedRoles: string = route.data.expectedRoles;
-    const token = this.jwtService.getToken();
+    const token: UserTokenState = this.jwtService.getToken();
     const jwt: JwtHelperService = new JwtHelperService();
     if (!token) {
       this.router.navigate(['/sign-in']);

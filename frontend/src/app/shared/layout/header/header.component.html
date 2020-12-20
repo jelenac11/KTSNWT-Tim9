@@ -51,10 +51,57 @@
           <a class="dropdown-item waves-light" mdbWavesEffect>Concerts</a>
         </div>
       </li>
+      <li class="nav-item">
+        <a
+          *ngIf="role === 'ROLE_ADMIN'"
+          class="nav-link waves-light font-weight-bolder ml-2 mt-2 h6"
+          routerLink="/users"
+          routerLinkActive="active"
+          mdbWavesEffect
+          >Users</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          *ngIf="role === 'ROLE_ADMIN'"
+          class="nav-link waves-light font-weight-bolder ml-2 mt-2 h6"
+          routerLink="/approving-comments"
+          routerLinkActive="active"
+          mdbWavesEffect
+          >Comment requests</a
+        >
+      </li>
     </ul>
     <ul class="navbar-nav ml-auto nav-flex-icons">
       <li class="nav-item">
-        <button mat-icon-button [matMenuTriggerFor]="menu">
+        <a
+          *ngIf="!role"
+          class="nav-link waves-light font-weight-bolder ml-2 mt-2 h6"
+          routerLink="/sign-in"
+          mdbWavesEffect
+          >Sign in</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          *ngIf="!role"
+          class="nav-link waves-light font-weight-bolder ml-2 mt-2 h6"
+          routerLink="/sign-up"
+          mdbWavesEffect
+          >Sign up</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          *ngIf="role"
+          class="nav-link waves-light font-weight-bolder ml-2 mt-2 h6"
+          (click)="showProfile()"
+          mdbWavesEffect
+          >{{ user.firstName.charAt(0).toUpperCase() + user.firstName.slice(1) }} {{ user.lastName.charAt(0).toUpperCase() + user.lastName.slice(1) }}</a
+        >
+      </li>
+      <li class="nav-item">
+        <button *ngIf="role" mat-icon-button [matMenuTriggerFor]="menu">
           <mat-icon>account_circle</mat-icon>
         </button>
         <mat-menu #menu="matMenu">

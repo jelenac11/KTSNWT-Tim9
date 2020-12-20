@@ -11,7 +11,9 @@ export class ImageModalComponent implements OnInit {
   @Input()
   imageURL!: string;
 
-  constructor(private lightbox: Lightbox) { }
+  constructor(
+    private lightbox: Lightbox
+  ) { }
 
   ngOnInit(): void {
   }

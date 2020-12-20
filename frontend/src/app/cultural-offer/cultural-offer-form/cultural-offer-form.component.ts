@@ -41,7 +41,8 @@ export class CulturalOfferFormComponent implements OnInit {
     private culturalOfferService: CulturalOfferService,
     private formBuilder: FormBuilder,
     private snackBar: Snackbar,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
     this.getAllCategories();
@@ -58,7 +59,7 @@ export class CulturalOfferFormComponent implements OnInit {
     }
   }
 
-  setValues() {
+  setValues(): void {
     this.registerForm.patchValue({
       name: this.culturalOffer.name,
       description: this.culturalOffer.description,
@@ -81,11 +82,11 @@ export class CulturalOfferFormComponent implements OnInit {
     );
   }
 
-  getAllCategories() {
+  getAllCategories(): void {
     this.categoryService.getAll().subscribe(categories => this.categories = categories);
   }
 
-  getCulturalOfferById() {
+  getCulturalOfferById(): void {
     this.culturalOfferService.get(this.id)
       .subscribe(culturalOffer => {
         this.culturalOffer = culturalOffer;
@@ -95,7 +96,7 @@ export class CulturalOfferFormComponent implements OnInit {
 
   get f() { return this.registerForm.controls; }
 
-  onSubmit() {
+  onSubmit(): void {
     this.submitted = true;
     if (this.registerForm.invalid) {
       return;
@@ -129,7 +130,7 @@ export class CulturalOfferFormComponent implements OnInit {
     }
   }
 
-  update(formData: FormData) {
+  update(formData: FormData): void {
     this.culturalOfferService.put(this.id, formData).subscribe(res => {
       if (res) {
         this.succesMessage("You have successfully updated cultural offer!");
@@ -143,7 +144,7 @@ export class CulturalOfferFormComponent implements OnInit {
     });
   }
 
-  create(formData: FormData) {
+  create(formData: FormData): void {
     this.culturalOfferService.post(formData).subscribe(res => {
       if (res) {
         this.succesMessage("You have successfully created cultural offer!");
@@ -157,15 +158,15 @@ export class CulturalOfferFormComponent implements OnInit {
     });
   }
 
-  succesMessage(message: string) {
+  succesMessage(message: string): void {
     this.snackBar.success(message);
   }
 
-  errorMessage(message: string) {
+  errorMessage(message: string): void {
     this.snackBar.error(message);
   }
 
-  chooseFile(event: any) {
+  chooseFile(event: any): void {
     if (event.target.files.length <= 0) {
       this.setValueForImagInvalidInput();
       return;
@@ -189,7 +190,7 @@ export class CulturalOfferFormComponent implements OnInit {
     }
   }
 
-  setValueForImagInvalidInput() {
+  setValueForImagInvalidInput(): void {
     if (this.id) {
       this.registerForm.patchValue({
         file: this.oldImage
@@ -204,7 +205,7 @@ export class CulturalOfferFormComponent implements OnInit {
     }
   }
 
-  setLocationValue() {
+  setLocationValue(): void {
     this.geoCoder.geocode(
       {
         placeId: this.culturalOffer.geolocation.placeId,
@@ -223,7 +224,7 @@ export class CulturalOfferFormComponent implements OnInit {
       });
   }
 
-  onAutocompleteSelected($event) {
+  onAutocompleteSelected($event): void {
     this.markerCoordinates.geolocation.lat = $event.geometry.location.lat();
     this.markerCoordinates.geolocation.lon = $event.geometry.location.lng();
   }

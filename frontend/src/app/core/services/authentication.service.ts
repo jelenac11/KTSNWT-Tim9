@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -18,7 +18,7 @@ export class AuthenticationService {
     private jwtService: JwtService
   ) { }
 
-  confirm_registration(token: string): Observable<string> {
+  confirmRegistration(token: string): Observable<string> {
     return this.http.get(`${environment.auth_url}confirm-registration/${token}`, {responseType: 'text'});
   }
 
@@ -30,19 +30,23 @@ export class AuthenticationService {
     this.jwtService.destroyToken();
   }
 
-  forgot_password(email: string): Observable<string> {
+  forgotPassword(email: string): Observable<string> {
     return this.http.post(`${environment.auth_url}forgot-password`, { email }, {headers: this.headers, responseType: 'text'});
   }
 
-  changePassword(password: PasswordChangeRequest): Observable<any> {
-    return this.http.post(`${environment.auth_url}change-password`, password, {headers: this.headers, responseType: 'json'});
+  changePassword(password: PasswordChangeRequest): Observable<string> {
+    return this.http.post(`${environment.auth_url}change-password`, password, {headers: this.headers, responseType: 'text'});
   }
 
-  is_authenticated(): boolean {
+  isAuthenticated(): boolean {
     if (!this.jwtService.getToken()) {
       return false;
     }
     return true;
+  }
+
+  getRole(): string {
+    return this.jwtService.getRole();
   }
 
 }

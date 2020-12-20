@@ -48,4 +48,5 @@ export class CulturalOfferService {
   delete(slug: any): Observable<boolean> {
     return this.apiService.delete(`cultural-offers/${slug}`);
   }
+  
 }

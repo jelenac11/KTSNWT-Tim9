@@ -13,9 +13,8 @@ import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
   styleUrls: ['./sign-in.component.scss']
 })
 export class SignInComponent implements OnInit {
-
   loginForm: FormGroup;
-  submitted = false;
+  submitted: boolean = false;
   hidePassword : boolean = true;
   matcher: MyErrorStateMatcher = new MyErrorStateMatcher();
 
@@ -36,9 +35,8 @@ export class SignInComponent implements OnInit {
 
   get f() { return this.loginForm.controls; }
 
-  onSubmit() {
+  onSubmit(): void {
     this.submitted = true;
-
     if (this.loginForm.invalid) {
       return;
     }

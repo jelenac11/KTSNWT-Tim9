@@ -7,8 +7,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserService } from './services/user.service';
 import { AuthenticationService } from './services/authentication.service';
 
-
-
 @NgModule({
   declarations: [],
   imports: [

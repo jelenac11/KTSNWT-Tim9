@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CulturalOfferPage } from 'src/app/core/models/response/cultural-offer-page.model';
 import { CulturalOffer } from 'src/app/core/models/response/cultural-offer.model';
 import { CulturalOfferService } from 'src/app/core/services/cultural-offer.service';
+import { JwtService } from 'src/app/core/services/jwt.service';
 import { ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 
@@ -12,6 +13,8 @@ import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
   styleUrls: ['./cultural-offer-list.component.scss']
 })
 export class CulturalOfferListComponent implements OnInit {
+  
+  role: string = '';
 
   page: number = 1;
 
@@ -24,25 +27,28 @@ export class CulturalOfferListComponent implements OnInit {
   constructor(
     private culturalOfferService: CulturalOfferService,
     private dialog: MatDialog,
-    private snackBar: Snackbar) { }
+    private snackBar: Snackbar,
+    private jwtService: JwtService
+  ) { }
 
   ngOnInit(): void {
     this.getCulturalOffers();
+    this.role = this.jwtService.getRole();
   }
 
-  handlePageChange(event: any) {
+  handlePageChange(event: any): void {
     this.page = event;
     this.getCulturalOffers();
   }
 
-  getCulturalOffers() {
+  getCulturalOffers(): void {
     this.culturalOfferService.getAll(this.size, this.page - 1).subscribe(culturalOffers => {
       this.culturalOffers = culturalOffers;
       this.separateData();
     });
   }
 
-  separateData() {
+  separateData(): void {
     this.rows = [[]];
     for (let i = 0; i < this.culturalOffers.content.length / 5; i++) {
       this.rows.push([]);
@@ -55,7 +61,7 @@ export class CulturalOfferListComponent implements OnInit {
     }
   }
 
-  openDialog(id: number) {
+  openDialog(id: number): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
         message: 'Delete this cultural offer?',
@@ -73,7 +79,7 @@ export class CulturalOfferListComponent implements OnInit {
     });
   }
 
-  delete(id: number) {
+  delete(id: number): void {
     this.culturalOfferService.delete(id).subscribe(succ => {
       if (succ) {
         this.getCulturalOffers();

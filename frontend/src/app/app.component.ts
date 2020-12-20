@@ -9,7 +9,9 @@ import { Router } from '@angular/router';
 export class AppComponent {
   showNavbar: boolean = true;
 
-  constructor(private router: Router ) {
+  constructor(
+    private router: Router
+  ) {
     this.router.events.subscribe((url: any) => {
       if (this.router.url === '/sign-up' || this.router.url === '/sign-in' || this.router.url.startsWith('/confirm-registration/') || this.router.url === '/forgot-password') {
         this.showNavbar = false;

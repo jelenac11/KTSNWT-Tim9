@@ -11,9 +11,8 @@ import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
   styleUrls: ['./sign-up.component.scss']
 })
 export class SignUpComponent implements OnInit {
-
   registerForm: FormGroup;
-  submitted = false;
+  submitted: boolean = false;
   hidePassword: boolean = true;
   matcher: MyErrorStateMatcher = new MyErrorStateMatcher();
 
@@ -23,7 +22,7 @@ export class SignUpComponent implements OnInit {
     private userService: UserService
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -35,7 +34,7 @@ export class SignUpComponent implements OnInit {
 
   get f() { return this.registerForm.controls; }
 
-  onSubmit() {
+  onSubmit(): void {
     this.submitted = true;
     if (this.registerForm.invalid) {
       return;

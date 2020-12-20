@@ -12,7 +12,10 @@ import { NoAuthGuard } from './auth/guards/no-auth.guard';
 import { RoleGuard } from './auth/guards/role.guard';
 
 const routes: Routes = [
-  {path:'', component: HomeComponent},
+  {
+    path:'', 
+    component: HomeComponent
+  },
   {
     path:'cultural-offers/create', 
     component: CulturalOfferFormComponent,
@@ -51,6 +54,25 @@ const routes: Routes = [
     component: ForgotPasswordComponent,
     canActivate: [NoAuthGuard]
   },
+<<<<<<< Updated upstream
+=======
+  {
+    path:'approving-comments',
+    component: ApproveCommentComponent,
+    canActivate: [RoleGuard],
+    data: { 
+      expectedRoles: 'ROLE_ADMIN'
+    }
+  },
+  {
+    path:'users',
+    component: UsersReviewComponent,
+    canActivate: [RoleGuard],
+    data: { 
+      expectedRoles: 'ROLE_ADMIN'
+    }
+  }
+>>>>>>> Stashed changes
 ];
 
 @NgModule({
