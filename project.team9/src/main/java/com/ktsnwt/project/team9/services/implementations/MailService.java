@@ -48,7 +48,7 @@ public class MailService {
 		verificationTokenService.saveToken(vtoken);
 		String confirmationUrl = "/confirm-registration/" + token;
 		SimpleMailMessage email = new SimpleMailMessage();
-		email.setTo("aleksa.goljovic4@gmail.com");
+		email.setTo("jelenacupac99@gmail.com");
 		email.setSubject("Confirm Registration");
 		email.setText("Hi " + user.getFirstName() + ",\n\nThanks for getting started with CulturalContentTeam9! Click below to confirm your registration:\n" + 
 				"\nhttp://localhost:4200" + confirmationUrl + "\nThanks,\nTeam 9\n");
@@ -58,10 +58,19 @@ public class MailService {
 	@Async
 	public void sendForgottenPassword(User user, String newPassword) throws MailException, InterruptedException {
 		SimpleMailMessage email = new SimpleMailMessage();
-		email.setTo("aleksa.goljovic4@gmail.com");
+		email.setTo("jelenacupac99@gmail.com");
 		email.setSubject("Password Reset");
 		email.setText("Hi " + user.getFirstName() + ",\n\nYour new password is: " + newPassword + ".\n\n\nTeam 9");
 		emailSender.send(email);
 	}
 	
+	@Async
+	public void sendMail(String to, String subject, String text) {
+		SimpleMailMessage message = new SimpleMailMessage(); 
+        message.setFrom("noreply.kts.l9@gmail.com");
+        message.setTo("aleksa.goljovic4@gmail.com"); 
+        message.setSubject(subject); 
+        message.setText(text);
+        emailSender.send(message);	
+	}
 }

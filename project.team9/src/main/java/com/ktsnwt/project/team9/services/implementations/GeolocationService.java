@@ -3,6 +3,7 @@ package com.ktsnwt.project.team9.services.implementations;
 import java.util.Optional;
 
 import javax.persistence.EntityExistsException;
+import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -48,6 +49,7 @@ public class GeolocationService implements IGeolocationService {
 	}
 
 	@Override
+	@Transactional
 	public Geolocation create(Geolocation entity) {
 		Geolocation geolocation = findByLatAndLon(entity.getLat(), entity.getLon());
 		if (geolocation != null) {
@@ -57,6 +59,7 @@ public class GeolocationService implements IGeolocationService {
 	}
 
 	@Override
+	@Transactional
 	public boolean delete(Long id) throws NotFoundException {
 		Geolocation geolocation = getById(id);
 		if (geolocation == null) {
@@ -67,14 +70,7 @@ public class GeolocationService implements IGeolocationService {
 	}
 
 	@Override
-	public Geolocation update(Long id, Geolocation entity) throws NotFoundException {
-		Geolocation existingGeolocation = getById(id);
-		if (existingGeolocation == null) {
-			throw new NotFoundException("Geolocation doesn't exist.");
-		}
-		existingGeolocation.setLat(entity.getLat());
-		existingGeolocation.setLon(entity.getLon());
-		existingGeolocation.setLocation(entity.getLocation());
-		return geolocationRepository.save(entity);
+	public Geolocation update(Long id, Geolocation entity) throws Exception {
+		return null;
 	}
 }

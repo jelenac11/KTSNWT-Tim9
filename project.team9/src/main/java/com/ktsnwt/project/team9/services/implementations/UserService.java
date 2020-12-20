@@ -3,7 +3,6 @@ package com.ktsnwt.project.team9.services.implementations;
 import java.security.SecureRandom;
 import java.util.Date;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
@@ -87,13 +86,8 @@ public class UserService implements IUserService, UserDetailsService {
 		if (!entity.getUsername().equals(user.getUsername())) {
 			User usernameUser = userRepository.findByUsername(entity.getUsername());
 			if (usernameUser != null) {
-				throw new Exception("User with this username already exists.");
+				throw new Exception("Username already taken");
 			}
-		}
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User loggedIn = userRepository.findByUsername(auth.getName());
-		if (loggedIn.getId() != user.getId()) {
-			throw new Exception("You can not change someone elses profile.");
 		}
 		user.setUsername(entity.getUsername());
 		user.setFirstName(entity.getFirstName());

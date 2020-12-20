@@ -49,6 +49,9 @@ export class SignUpComponent implements OnInit {
       this.snackBar.success("Activation link sent. Check your email.");
       this.submitted = false;
       this.registerForm.reset();
+      for (let control in this.registerForm.controls) {
+        this.registerForm.controls[control].setErrors(null);
+      }
     },
     error => {
       if (error.status !== 200) {

@@ -56,7 +56,7 @@ export class HomeComponent implements OnInit {
 
   getAllCategories(): void {
     this.categoryService.getAll().subscribe(categories => {
-      this.categories = categories;
+      this.categories = categories.sort((a, b)=> a.id - b.id);
       this.getCulturalOffersByCategoryAndName(this.categories[0].id, this.searchValue);
     })
   }

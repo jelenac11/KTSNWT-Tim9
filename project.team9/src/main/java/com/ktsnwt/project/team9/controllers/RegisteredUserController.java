@@ -44,15 +44,25 @@ public class RegisteredUserController {
 		return new ResponseEntity<>(registeredUsersDTO, HttpStatus.OK);
 	}
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	//@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value= "/by-page", method = RequestMethod.GET)
 	public ResponseEntity<Page<UserResDTO>> getAllRegisteredUsers(Pageable pageable){
 		Page<RegisteredUser> page = registeredUserService.findAll(pageable);
-        List<UserResDTO> registeredUserDTOs = registeredUserMapper.toResDTOList(page.toList());
-        Page<UserResDTO> pageRUserDTOs = new PageImpl<>(registeredUserDTOs,page.getPageable(),page.getTotalElements());
-        return new ResponseEntity<Page<UserResDTO>>(pageRUserDTOs, HttpStatus.OK);
+		return new ResponseEntity<>(transformListToPage(page), HttpStatus.OK);
 	}
 	
+	//@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(value = "/search/{value}", method = RequestMethod.GET)
+	public ResponseEntity<Page<UserResDTO>> searchAdmins(Pageable pageable, @PathVariable String value) {
+		Page<RegisteredUser> page = registeredUserService.searchRegUsers(pageable, value);
+		return new ResponseEntity<>(transformListToPage(page), HttpStatus.OK);
+	}
+	
+	private Page<UserResDTO> transformListToPage(Page<RegisteredUser> page) {
+		List<UserResDTO> regUserResDTO = registeredUserMapper.toDTOResList(page.toList());
+		return new PageImpl<>(regUserResDTO, page.getPageable(), page.getTotalElements());
+	}
+
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_REGISTERED_USER')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<UserResDTO> getRegisteredUser(@PathVariable Long id) {

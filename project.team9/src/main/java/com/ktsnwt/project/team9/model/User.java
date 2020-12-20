@@ -20,6 +20,7 @@ import javax.persistence.ManyToMany;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,6 +28,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "users_table")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
@@ -73,6 +75,15 @@ public class User implements UserDetails {
 		this.username = username;
 		this.email = email;
 		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.lastPasswordResetDate = System.currentTimeMillis();
+	}
+	
+	public User(String username, String email, String firstName, String lastName) {
+		super();
+		this.username = username;
+		this.email = email;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.lastPasswordResetDate = System.currentTimeMillis();

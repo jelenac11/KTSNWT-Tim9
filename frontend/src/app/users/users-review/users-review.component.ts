@@ -96,6 +96,7 @@ export class UsersReviewComponent implements OnInit {
         }
       }
     });
+
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
         this.delete(id);

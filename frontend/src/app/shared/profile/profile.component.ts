@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UserRequest } from 'src/app/core/models/request/user-request.model';
 import { User } from 'src/app/core/models/response/user.model';
 import { UserService } from 'src/app/core/services/user.service';
+import { MyErrorStateMatcher } from '../ErrorStateMatcher';
 import { Snackbar } from '../snackbars/snackbar/snackbar';
 
 @Component({
@@ -16,6 +17,7 @@ export class ProfileComponent implements OnInit {
   form: FormGroup;
   user: User = {email: '', username: '', firstName: '', lastName: ''};
   edit: boolean = false;
+  matcher: MyErrorStateMatcher = new MyErrorStateMatcher();
 
   constructor(
     private fb: FormBuilder,

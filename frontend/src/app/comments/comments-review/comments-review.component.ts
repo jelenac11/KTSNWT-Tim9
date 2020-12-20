@@ -34,4 +34,5 @@ export class CommentsReviewComponent implements OnInit {
     this.page = $event;
     this.getCommentsByCulturalOfferId();
   }
+  
 }

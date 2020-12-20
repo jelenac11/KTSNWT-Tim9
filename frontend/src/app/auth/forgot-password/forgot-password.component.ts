@@ -7,7 +7,7 @@ import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
-  styleUrls: ['./forgot-password.component.scss']
+  styleUrls: ['./forgot-password.component.scss'],
 })
 export class ForgotPasswordComponent implements OnInit {
   forgotForm: FormGroup;
@@ -38,6 +38,9 @@ export class ForgotPasswordComponent implements OnInit {
       this.snackBar.success("New password sent. Check your email.");
       this.forgotForm.reset();
       this.submitted = false;
+      for (let control in this.forgotForm.controls) {
+        this.forgotForm.controls[control].setErrors(null);
+      }
     },
     error => {
       if (error.status !== 200) {

@@ -106,5 +106,9 @@ public class RegisteredUserService implements IRegisteredUserService {
 	public RegisteredUser findByUsername(String username) {
 		return registeredUserRepository.findByUsername(username);
 	}
+
+	public Page<RegisteredUser> searchRegUsers(Pageable pageable, String value) {
+		return registeredUserRepository.findByUsernameOrEmailOrFirstNameOrLastNameContainingIgnoreCase('%' + value.toLowerCase() + '%', pageable);
+	}
 	
 }

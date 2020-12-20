@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { AddCommentComponent } from 'src/app/comments/add-comment/add-comment.component';
+import { MarkRequest } from 'src/app/core/models/request/mark-request.model';
 import { CulturalOffer } from 'src/app/core/models/response/cultural-offer.model';
+import { Mark } from 'src/app/core/models/response/mark.model';
 import { CulturalOfferService } from 'src/app/core/services/cultural-offer.service';
-<<<<<<< Updated upstream
-=======
 import { JwtService } from 'src/app/core/services/jwt.service';
 import { MarkService } from 'src/app/core/services/mark.service';
->>>>>>> Stashed changes
 
 @Component({
   selector: 'app-cultural-offer-review',
@@ -21,11 +22,12 @@ export class CulturalOfferReviewComponent implements OnInit {
   
   culturalOfferId: string;
 
+  mark: number = 0;
+
+  isRated: boolean = false;
+
   zoom: number = 8;
 
-<<<<<<< Updated upstream
-  constructor(private route: ActivatedRoute, private culturalOfferService: CulturalOfferService) { }
-=======
   constructor(
     private route: ActivatedRoute, 
     private culturalOfferService: CulturalOfferService, 
@@ -33,7 +35,6 @@ export class CulturalOfferReviewComponent implements OnInit {
     private dialog: MatDialog,
     private jwtService: JwtService
   ) { }
->>>>>>> Stashed changes
 
   ngOnInit(): void {
     this.culturalOfferId = this.route.snapshot.paramMap.get('id');
@@ -45,11 +46,10 @@ export class CulturalOfferReviewComponent implements OnInit {
     this.culturalOfferService.get(this.culturalOfferId)
       .subscribe(culturalOffer => {
         this.culturalOffer = culturalOffer;
+        this.getCurrentMark();
       });
   }
 
-<<<<<<< Updated upstream
-=======
   private getCurrentMark(): void {
     this.markService.get(this.culturalOffer.id).subscribe(data => {
       this.mark = data.value;
@@ -89,5 +89,5 @@ export class CulturalOfferReviewComponent implements OnInit {
     dialogConfig.minWidth = "400px";
     const dialogRef = this.dialog.open(AddCommentComponent, dialogConfig);
   }
->>>>>>> Stashed changes
+
 }

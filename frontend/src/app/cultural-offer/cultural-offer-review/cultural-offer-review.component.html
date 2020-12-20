@@ -26,9 +26,10 @@
             <div *ngIf="role === 'ROLE_REGISTERED_USER'" class="col-3">
               <div>
                 <bar-rating
-                  [(rate)]="culturalOffer.averageMark"
+                  [(rate)]="mark"
                   [theme]="'stars'"
                   [max]="5"
+                  (rateChange)="onRate($event)"
                 ></bar-rating>
               </div>
               <div>
@@ -40,8 +41,6 @@
             {{ culturalOffer.description }}
           </div>
         </mdb-card-body>
-<<<<<<< Updated upstream
-=======
         <div class="mb-3">
           <a mat-flat-button class="mat-but ml-5 mt-3" color="primary" [routerLink]="['comments']"> 
             <mat-icon class="mr-2">comment</mat-icon> Comments
@@ -51,7 +50,6 @@
           </button>
         </div>
         <router-outlet></router-outlet>
->>>>>>> Stashed changes
       </mdb-card>
     </div>
     <div class="col-5 mt-3">
