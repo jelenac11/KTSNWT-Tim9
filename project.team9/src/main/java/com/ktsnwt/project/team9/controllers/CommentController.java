@@ -51,8 +51,7 @@ public class CommentController {
 	@GetMapping(value= "/cultural-offer/{id}")
 	public ResponseEntity<Page<CommentResDTO>> getAllCommentsForCulturalOffer(@PathVariable Long id, Pageable pageable){
 		Page<Comment> page = commentService.findAllByCOID(pageable, id);
-        List<CommentResDTO> commentDTOs = commentMapper.toResDTOList(page.toList());
-        commentDTOs = addImage(commentDTOs);
+        List<CommentResDTO> commentDTOs = addImage(commentMapper.toResDTOList(page.toList()));
         Page<CommentResDTO> pageCommentDTOs = new PageImpl<>(commentDTOs, page.getPageable(), page.getTotalElements());
         return new ResponseEntity<>(pageCommentDTOs, HttpStatus.OK);
 	}
@@ -62,8 +61,7 @@ public class CommentController {
 	public ResponseEntity<Page<CommentResDTO>> getAllNotApprovedCommentsForCulturalOffers(Pageable pageable){
 		User current = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Page<Comment> page = commentService.findAllByNotApprovedByAdminId(pageable, current.getId());
-        List<CommentResDTO> commentDTOs = commentMapper.toResDTOList(page.toList());
-        commentDTOs = addImage(commentDTOs);
+        List<CommentResDTO> commentDTOs = addImage(commentMapper.toResDTOList(page.toList()));
         Page<CommentResDTO> pageCommentDTOs = new PageImpl<>(commentDTOs, page.getPageable(), page.getTotalElements());
         return new ResponseEntity<>(pageCommentDTOs, HttpStatus.OK);
 	}
@@ -111,7 +109,7 @@ public class CommentController {
 				try {
 					i.setImageUrl(fileService.uploadImageAsBase64(i.getImageUrl()));
 				}catch (Exception e) {
-					System.out.println(e.getMessage());
+					System.err.println(e.getMessage());
 				}
     		}
 		});

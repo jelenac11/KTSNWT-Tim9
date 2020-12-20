@@ -1,15 +1,12 @@
-
 package com.ktsnwt.project.team9.services.implementations;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import com.ktsnwt.project.team9.model.News;
-import com.ktsnwt.project.team9.model.User;
 
 @Component
 public class MailService {
@@ -27,15 +24,6 @@ public class MailService {
         		news.getCulturalOffer().getName() + "\n\n"
         				+ "Checkout in your application!!!");
         emailSender.send(message);	
-	}
-	
-	@Async
-	public void sendForgottenPassword(User user, String newPassword) throws MailException, InterruptedException {
-		SimpleMailMessage email = new SimpleMailMessage();
-		email.setTo("jelenacupac99@gmail.com");
-		email.setSubject("Password Reset");
-		email.setText("Hi " + user.getFirstName() + ",\n\nYour new password is: " + newPassword + ".\n\n\nTeam 9");
-		emailSender.send(email);
 	}
 	
 	@Async

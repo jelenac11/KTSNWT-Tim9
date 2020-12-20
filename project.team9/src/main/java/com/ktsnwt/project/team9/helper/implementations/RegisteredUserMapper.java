@@ -33,9 +33,9 @@ public class RegisteredUserMapper implements IMapper<RegisteredUser, RegisteredU
 	public RegisteredUserDTO toDto(RegisteredUser entity) {
 		return new RegisteredUserDTO(entity.getUsername(), entity.getEmail(), entity.getPassword(),
 				entity.getFirstName(), entity.getLastName(),  Optional.ofNullable(entity.getMarks())
-				.orElse(new HashSet<Mark>()).stream().map(i -> i.getId()).collect(Collectors.toSet()), Optional.ofNullable(entity.getComments())
-				.orElse(new HashSet<Comment>()).stream().map(i -> i.getId()).collect(Collectors.toSet()),  Optional.ofNullable(entity.getSubscribed())
-				.orElse(new HashSet<CulturalOffer>()).stream().map(i -> i.getId()).collect(Collectors.toSet()), entity.isVerified());
+				.orElse(new HashSet<>()).stream().map(this::transformMarkToId).collect(Collectors.toSet()), Optional.ofNullable(entity.getComments())
+				.orElse(new HashSet<>()).stream().map(this::transformCommentToId).collect(Collectors.toSet()),  Optional.ofNullable(entity.getSubscribed())
+				.orElse(new HashSet<>()).stream().map(this::transformCOtoId).collect(Collectors.toSet()), entity.isVerified());
 	}
 	
 	public UserResDTO toResDTO(RegisteredUser entity) {
@@ -56,6 +56,18 @@ public class RegisteredUserMapper implements IMapper<RegisteredUser, RegisteredU
 			dtos.add(toResDTO(entity));
 		}
 		return dtos;
+	}
+	
+	private Long transformCommentToId(Comment entity) {
+		return entity.getId();
+	}
+	
+	private Long transformMarkToId(Mark entity) {
+		return entity.getId();
+	}
+	
+	private Long transformCOtoId(CulturalOffer entity) {
+		return entity.getId();
 	}
 	
 }

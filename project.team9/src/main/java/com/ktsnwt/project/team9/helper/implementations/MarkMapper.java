@@ -29,7 +29,7 @@ public class MarkMapper implements IMapper<Mark, MarkDTO> {
 	}
 	
 	public List<MarkDTO> toDTOList(Iterable<Mark> entities){
-		List<MarkDTO> dtos = new ArrayList<MarkDTO>();
+		List<MarkDTO> dtos = new ArrayList<>();
 		for(Mark entity : entities) {
 			dtos.add(toDto(entity));
 		}
