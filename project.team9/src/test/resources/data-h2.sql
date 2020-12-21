@@ -132,7 +132,7 @@ INSERT INTO mark (value, cultural_offer_id, user_id) VALUES(3, 9, 9);
 INSERT INTO mark (value, cultural_offer_id, user_id) VALUES(3, 10, 10);
 INSERT INTO mark (value, cultural_offer_id, user_id) VALUES(2, 11, 11);
 INSERT INTO mark (value, cultural_offer_id, user_id) VALUES(1, 12, 12);
-INSERT INTO mark (value, cultural_offer_id, user_id) VALUES(2, 1, 7);
+INSERT INTO mark (value, cultural_offer_id, user_id) VALUES(2, 2, 7);
 
 /*INSERT INTO subscribed (user_id, cultural_offer_id) VALUES(7, 1);
 INSERT INTO subscribed (user_id, cultural_offer_id) VALUES(8, 2);
