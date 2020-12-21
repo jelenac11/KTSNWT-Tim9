@@ -184,11 +184,11 @@ INSERT INTO comment (approved, date, image_id, text, user_id, cultural_offer_id)
 INSERT INTO image (url) VALUES('src/main/resources/uploadedImages/slika6.jpg');
 INSERT INTO comment (approved, date, image_id, text, user_id, cultural_offer_id) VALUES(true, 1606943324590, 37, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tempus.', 10, 4);
 INSERT INTO image (url) VALUES('src/main/resources/uploadedImages/slika6.jpg');
-INSERT INTO comment (approved, date, image_id, text, user_id, cultural_offer_id) VALUES(true, 1606943324590, 38, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tempus.', 11, 5);
+INSERT INTO comment (approved, date, image_id, text, user_id, cultural_offer_id) VALUES(false, 1606943324590, 38, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tempus.', 11, 5);
 INSERT INTO image (url) VALUES('src/main/resources/uploadedImages/slika6.jpg');
-INSERT INTO comment (approved, date, image_id, text, user_id, cultural_offer_id) VALUES(true, 1606943324590, 39, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tempus.', 12, 6);
+INSERT INTO comment (approved, date, image_id, text, user_id, cultural_offer_id) VALUES(false, 1606943324590, 39, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tempus.', 12, 6);
 INSERT INTO image (url) VALUES('src/main/resources/uploadedImages/slika6.jpg');
-INSERT INTO comment (approved, date, image_id, text, user_id, cultural_offer_id) VALUES(true, 1606943324590, 40, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tempus.', 7, 7);
+INSERT INTO comment (approved, date, image_id, text, user_id, cultural_offer_id) VALUES(false, 1606943324590, 40, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tempus.', 7, 7);
 
 UPDATE public.cultural_offer SET  average_mark=(SELECT  COALESCE(avg(m.value),0)::NUMERIC(10,2) FROM public.mark m where m.cultural_offer_id = 1) WHERE cultural_offer_id=1;
 UPDATE public.cultural_offer SET  average_mark=(SELECT  COALESCE(avg(m.value),0)::NUMERIC(10,2) FROM public.mark m where m.cultural_offer_id = 2) WHERE cultural_offer_id=2;
