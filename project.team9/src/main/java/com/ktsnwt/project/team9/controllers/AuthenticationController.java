@@ -95,7 +95,7 @@ public class AuthenticationController {
 		}
 		// Ubaci korisnika u trenutni security kontekst
 		SecurityContextHolder.getContext().setAuthentication(authentication);
-
+ 
 		String jwt = tokenUtils.generateToken(user.getEmail(), auth.get(0).getName()); // prijavljujemo se na sistem sa
 																						// email adresom
 		int expiresIn = tokenUtils.getExpiredIn();
