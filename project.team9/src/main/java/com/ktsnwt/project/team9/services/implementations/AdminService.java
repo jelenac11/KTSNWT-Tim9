@@ -3,6 +3,7 @@ package com.ktsnwt.project.team9.services.implementations;
 import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -49,7 +50,11 @@ public class AdminService implements IAdminService {
 
 	@Override
 	public Admin getById(Long id) {
-		return adminRepository.findById(id).orElse(null);
+		Optional<Admin> a = adminRepository.findById(id);
+		if  (!a.isPresent()) {
+			return null;
+		}
+		return a.get();
 	}
 
 	@Override
@@ -75,12 +80,12 @@ public class AdminService implements IAdminService {
 
 	@Override
 	public boolean delete(Long id) throws Exception {
-		Admin existingAdmin = adminRepository.findById(id).orElse(null);
+		Admin existingAdmin = getById(id);
 		if (existingAdmin == null) {
 			throw new NoSuchElementException("Admin with given id doesn't exist.");
 		}
 		existingAdmin.setActive(false);
-		if (!existingAdmin.getCulturalOffers().isEmpty()) {
+		if (existingAdmin.getCulturalOffers() != null && !existingAdmin.getCulturalOffers().isEmpty()) {
 			throw new Exception("Admin has cultural offers so he can't be deleted.");
 		}
 		adminRepository.deleteById(id);
