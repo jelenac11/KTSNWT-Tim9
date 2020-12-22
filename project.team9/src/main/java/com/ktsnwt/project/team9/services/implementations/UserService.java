@@ -129,11 +129,15 @@ public class UserService implements IUserService, UserDetailsService {
 
 	public void forgotPassword(String email) {
 		User user = userRepository.findByEmail(email);
-		String newPassword = grpService.generateRandomPassword();
-		user.setPassword(passwordEncoder.encode(newPassword));
-		user.setLastPasswordResetDate(new Date().getTime());
-        userRepository.save(user);
-        mailService.sendMail(user.getEmail(), "Password reset", "Hi " + user.getFirstName() + ",\n\nYour new password is: " + newPassword + ".\n\n\nTeam 9");
+		if (user == null) {
+            throw new UsernameNotFoundException(String.format("No user found with email '%s'.", email));
+        } else { 
+			String newPassword = grpService.generateRandomPassword();
+			user.setPassword(passwordEncoder.encode(newPassword));
+			user.setLastPasswordResetDate(new Date().getTime());
+	        userRepository.save(user);
+	        mailService.sendMail(user.getEmail(), "Password reset", "Hi " + user.getFirstName() + ",\n\nYour new password is: " + newPassword + ".\n\n\nTeam 9");
+        }
 	}
 	
 }
