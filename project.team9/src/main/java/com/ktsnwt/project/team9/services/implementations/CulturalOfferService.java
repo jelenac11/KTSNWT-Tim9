@@ -140,4 +140,8 @@ public class CulturalOfferService implements ICulturalOfferService {
 	public Page<CulturalOffer> findByCategoryIdAndNameContains(Long id, String name, Pageable pageable) {
 		return culturalOfferRepository.findByCategoryIdAndNameContainingIgnoreCase(id, name, pageable);
 	}
+
+	public Page<CulturalOffer> findByNameContains(String name, Pageable pageable) {
+		return culturalOfferRepository.findByNameContainingIgnoreCase(name, pageable);
+	}
 }

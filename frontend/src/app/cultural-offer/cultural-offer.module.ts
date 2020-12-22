@@ -7,7 +7,6 @@ import { CulturalOfferReviewComponent } from './cultural-offer-review/cultural-o
 import { CulturalOfferListComponent } from './cultural-offer-list/cultural-offer-list.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
 import { AgmCoreModule } from '@agm/core';
 import { environment } from 'src/environments/environment';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -18,6 +17,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [CulturalOfferReviewComponent, CulturalOfferListComponent, CulturalOfferFormComponent],
@@ -45,7 +47,10 @@ import { MatButtonModule } from '@angular/material/button';
     BrowserModule,
     RouterModule,
     ButtonsModule,
-    IconsModule
+    IconsModule,
+    SharedModule,
+    MatFormFieldModule,
+    MatSelectModule
 
   ],
   exports: [CulturalOfferReviewComponent, CulturalOfferListComponent, CulturalOfferFormComponent]

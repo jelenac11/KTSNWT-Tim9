@@ -35,7 +35,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 //@PreAuthorize("hasRole('ROLE_ADMIN')")
-@PreAuthorize("permitAll()") //comment previous line instead of this to enable CRUD operations for frontend
+@PreAuthorize("permitAll()") // comment previous line instead of this to enable CRUD operations for frontend
 public class CulturalOfferController {
 
 	private CulturalOfferService culturalOfferService;
@@ -53,7 +53,8 @@ public class CulturalOfferController {
 
 	@PreAuthorize("permitAll()")
 	@GetMapping(value = "/category/{id}")
-	public ResponseEntity<Page<CulturalOfferResDTO>> getCulturalOffersByCategoryId(Pageable pageable, @PathVariable Long id) {
+	public ResponseEntity<Page<CulturalOfferResDTO>> getCulturalOffersByCategoryId(Pageable pageable,
+			@PathVariable Long id) {
 		Page<CulturalOffer> page = culturalOfferService.getByCategoryId(id, pageable);
 		return new ResponseEntity<>(createCustomPage(transformFromListToPage(page)), HttpStatus.OK);
 	}
@@ -63,6 +64,15 @@ public class CulturalOfferController {
 	public ResponseEntity<Page<CulturalOfferResDTO>> findCulturalOfferByCategoryIdAndName(Pageable pageable,
 			@PathVariable Long id, @PathVariable String name) {
 		Page<CulturalOffer> page = culturalOfferService.findByCategoryIdAndNameContains(id, name, pageable);
+
+		return new ResponseEntity<>(createCustomPage(transformFromListToPage(page)), HttpStatus.OK);
+	}
+
+	@PreAuthorize("permitAll()")
+	@GetMapping(value = "/find-by-name/{name}")
+	public ResponseEntity<Page<CulturalOfferResDTO>> findCulturalOfferByName(Pageable pageable,
+			@PathVariable String name) {
+		Page<CulturalOffer> page = culturalOfferService.findByNameContains(name, pageable);
 
 		return new ResponseEntity<>(createCustomPage(transformFromListToPage(page)), HttpStatus.OK);
 	}

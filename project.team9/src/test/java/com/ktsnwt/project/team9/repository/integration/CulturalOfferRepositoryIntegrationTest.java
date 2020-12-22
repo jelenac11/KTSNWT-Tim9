@@ -63,9 +63,33 @@ public class CulturalOfferRepositoryIntegrationTest {
 	}
 
 	@Test
-	public void testFindByCategoryIdAndNameContainingIgnoreCase_WithNonExistingCategoryId_ShouldReturnCulturalOfferPage() {
+	public void testFindByCategoryIdAndNameContainingIgnoreCase_WithNonExistingName_ShouldReturnCulturalOfferPageWithEmptyContent() {
+		Pageable pageable = PageRequest.of(CulturalOfferConstants.PAGE, CulturalOfferConstants.PAGE_SIZE);
+		Page<CulturalOffer> culturalOfferPage = culturalOfferRepository.findByCategoryIdAndNameContainingIgnoreCase(CulturalOfferConstants.ID1, CulturalOfferConstants.NAME2, pageable);
+
+		assertEquals(0, culturalOfferPage.getTotalElements());
+	}
+	
+	@Test
+	public void testFindByCategoryIdAndNameContainingIgnoreCase_WithNonExistingCategoryId_ShouldReturnCulturalOfferPageWithEmptyContent() {
 		Pageable pageable = PageRequest.of(CulturalOfferConstants.PAGE, CulturalOfferConstants.PAGE_SIZE);
 		Page<CulturalOffer> culturalOfferPage = culturalOfferRepository.findByCategoryIdAndNameContainingIgnoreCase(CulturalOfferConstants.NON_EXISTING_ID, CulturalOfferConstants.SUBSTRING_NAME, pageable);
+
+		assertEquals(0, culturalOfferPage.getTotalElements());
+	}
+	
+	@Test
+	public void testFindByNameContainingIgnoreCase_WithExistingName_ShouldReturnCulturalOfferPage() {
+		Pageable pageable = PageRequest.of(CulturalOfferConstants.PAGE, CulturalOfferConstants.PAGE_SIZE);
+		Page<CulturalOffer> culturalOfferPage = culturalOfferRepository.findByNameContainingIgnoreCase(CulturalOfferConstants.SUBSTRING_NAME, pageable);
+
+		assertEquals(2, culturalOfferPage.getTotalElements());
+	}
+	
+	@Test
+	public void testFindByNameContainingIgnoreCase_WithNonExistingName_ShouldReturnCulturalOfferPageWithEmptyContent() {
+		Pageable pageable = PageRequest.of(CulturalOfferConstants.PAGE, CulturalOfferConstants.PAGE_SIZE);
+		Page<CulturalOffer> culturalOfferPage = culturalOfferRepository.findByNameContainingIgnoreCase(CulturalOfferConstants.NAME2, pageable);
 
 		assertEquals(0, culturalOfferPage.getTotalElements());
 	}
