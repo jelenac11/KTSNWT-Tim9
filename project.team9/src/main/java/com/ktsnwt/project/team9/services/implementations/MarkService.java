@@ -8,9 +8,7 @@ import org.springframework.stereotype.Service;
 import com.ktsnwt.project.team9.model.CulturalOffer;
 import com.ktsnwt.project.team9.model.Mark;
 import com.ktsnwt.project.team9.model.RegisteredUser;
-import com.ktsnwt.project.team9.repositories.ICulturalOfferRepository;
 import com.ktsnwt.project.team9.repositories.IMarkRepository;
-import com.ktsnwt.project.team9.repositories.IRegisteredUser;
 import com.ktsnwt.project.team9.services.interfaces.IMarkService;
 
 @Service
@@ -20,10 +18,10 @@ public class MarkService implements IMarkService {
 	private IMarkRepository markRepository;
 	
 	@Autowired
-	private ICulturalOfferRepository culturalOfferRepository;
+	private CulturalOfferService culturalOfferService;
 	
 	@Autowired
-	private IRegisteredUser rUserRepository;
+	private RegisteredUserService rUserService;
 	
 	@Override
 	public Iterable<Mark> getAll() {
@@ -37,11 +35,11 @@ public class MarkService implements IMarkService {
 
 	@Override
 	public Mark create(Mark entity) throws Exception {
-		RegisteredUser user = rUserRepository.findById(entity.getGrader().getId()).orElse(null);
+		RegisteredUser user = rUserService.getById(entity.getGrader().getId());
 		if (user == null) {
-			throw new NoSuchElementException("Author doesn't exist.");
+			throw new NoSuchElementException("Grader doesn't exist.");
 		}
-		CulturalOffer culturalOffer = culturalOfferRepository.findById(entity.getCulturalOffer().getId()).orElse(null);
+		CulturalOffer culturalOffer = culturalOfferService.getById(entity.getCulturalOffer().getId());
 		if (culturalOffer == null) {
 			throw new NoSuchElementException("Cultural offer doesn't exist.");
 		}
@@ -54,11 +52,11 @@ public class MarkService implements IMarkService {
 		if (mark == null) {
 			throw new NoSuchElementException("Mark doesn't exist.");
 		}
-		RegisteredUser user = rUserRepository.findById(entity.getGrader().getId()).orElse(null);
+		RegisteredUser user = rUserService.getById(entity.getGrader().getId());
 		if (user == null) {
-			throw new NoSuchElementException("Author doesn't exist.");
+			throw new NoSuchElementException("Grader doesn't exist.");
 		}
-		CulturalOffer culturalOffer = culturalOfferRepository.findById(entity.getCulturalOffer().getId()).orElse(null);
+		CulturalOffer culturalOffer = culturalOfferService.getById(entity.getCulturalOffer().getId());
 		if (culturalOffer == null) {
 			throw new NoSuchElementException("Cultural offer doesn't exist.");
 		}
