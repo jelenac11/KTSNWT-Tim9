@@ -54,4 +54,44 @@ public class RegisteredUser extends User {
 		super(username, email, password, firstName, lastName);
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((comments == null) ? 0 : comments.hashCode());
+		result = prime * result + ((marks == null) ? 0 : marks.hashCode());
+		result = prime * result + ((subscribed == null) ? 0 : subscribed.hashCode());
+		result = prime * result + (verified ? 1231 : 1237);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RegisteredUser other = (RegisteredUser) obj;
+		if (comments == null) {
+			if (other.comments != null)
+				return false;
+		} else if (!comments.equals(other.comments))
+			return false;
+		if (marks == null) {
+			if (other.marks != null)
+				return false;
+		} else if (!marks.equals(other.marks))
+			return false;
+		if (subscribed == null) {
+			if (other.subscribed != null)
+				return false;
+		} else if (!subscribed.equals(other.subscribed))
+			return false;
+		if (verified != other.verified)
+			return false;
+		return true;
+	}
+
 }

@@ -63,5 +63,54 @@ public class Comment implements Serializable {
 		this.text = text;
 		this.date = time;
 	}
-	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (approved ? 1231 : 1237);
+		result = prime * result + ((author == null) ? 0 : author.hashCode());
+		result = prime * result + ((culturalOffer == null) ? 0 : culturalOffer.hashCode());
+		result = prime * result + (int) (date ^ (date >>> 32));
+		result = prime * result + ((imageUrl == null) ? 0 : imageUrl.hashCode());
+		result = prime * result + ((text == null) ? 0 : text.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Comment other = (Comment) obj;
+		if (approved != other.approved)
+			return false;
+		if (author == null) {
+			if (other.author != null)
+				return false;
+		} else if (!author.equals(other.author))
+			return false;
+		if (culturalOffer == null) {
+			if (other.culturalOffer != null)
+				return false;
+		} else if (!culturalOffer.equals(other.culturalOffer))
+			return false;
+		if (date != other.date)
+			return false;
+		if (imageUrl == null) {
+			if (other.imageUrl != null)
+				return false;
+		} else if (!imageUrl.equals(other.imageUrl))
+			return false;
+		if (text == null) {
+			if (other.text != null)
+				return false;
+		} else if (!text.equals(other.text))
+			return false;
+		return true;
+	}
+
 }

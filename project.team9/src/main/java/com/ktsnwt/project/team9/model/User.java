@@ -124,9 +124,7 @@ public class User implements UserDetails {
 	public boolean isEnabled() {
 		return true;
 	}
-<<<<<<< Updated upstream
-=======
-
+  
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -153,10 +151,8 @@ public class User implements UserDetails {
 		if (authorities == null) {
 			if (other.authorities != null)
 				return false;
-		} else if (!authorities.equals(other.authorities)) {
-			System.out.println("Uslo govno");
+		} else if (!authorities.equals(other.authorities))
 			return false;
-		}
 		if (email == null) {
 			if (other.email != null)
 				return false;
@@ -184,6 +180,5 @@ public class User implements UserDetails {
 			return false;
 		return true;
 	}
->>>>>>> Stashed changes
 	
 }
