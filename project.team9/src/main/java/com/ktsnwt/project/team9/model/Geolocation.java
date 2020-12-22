@@ -48,20 +48,6 @@ public class Geolocation {
 	}
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		long temp;
-		temp = Double.doubleToLongBits(lat);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + ((location == null) ? 0 : location.hashCode());
-		temp = Double.doubleToLongBits(lon);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + ((placeId == null) ? 0 : placeId.hashCode());
-		return result;
-	}
-
-	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;

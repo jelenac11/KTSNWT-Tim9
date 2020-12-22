@@ -122,8 +122,20 @@ public class RegisteredUserServiceUnitTest {
 		verify(passwordEncoder, times(0)).encode(RegisteredUserConstants.PASSWORD);
 	}
 	
+	@Test(expected = IllegalArgumentException.class)
+	public void testCreate_WithExistingUsernameAndEmail_ShouldThrowIllegalArgumentException() throws Exception {
+		RegisteredUser sameUsernameAndMail = new RegisteredUser(RegisteredUserConstants.EXISTING_USERNAME, RegisteredUserConstants.EXISTING_EMAIL, RegisteredUserConstants.PASSWORD, RegisteredUserConstants.FIRSTNAME, RegisteredUserConstants.LASTNAME);
+		regService.create(sameUsernameAndMail);
+		
+		verify(userRepository, times(1)).findByUsername(RegisteredUserConstants.EXISTING_USERNAME);
+		verify(userRepository, times(0)).findByEmail(AdminConstants.EXISTING_EMAIL);
+		verify(userRepository, times(0)).findByUsername(AdminConstants.EXISTING_USERNAME);
+		verify(authService, times(0)).findByName(RegisteredUserConstants.ROLE);
+		verify(passwordEncoder, times(0)).encode(RegisteredUserConstants.PASSWORD);
+	}
+	
 	@Test
-	public void testCreate_WithAllValues_ShouldCreateAdmin() throws Exception {
+	public void testCreate_WithAllCorrectValues_ShouldCreateAdmin() throws Exception {
 		RegisteredUser newuser = new RegisteredUser(RegisteredUserConstants.NEW_USERNAME, RegisteredUserConstants.NEW_EMAIL, RegisteredUserConstants.PASSWORD, RegisteredUserConstants.FIRSTNAME, RegisteredUserConstants.LASTNAME); 
 		RegisteredUser saved = regService.create(newuser);
 		
