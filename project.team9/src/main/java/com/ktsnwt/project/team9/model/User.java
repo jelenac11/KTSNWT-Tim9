@@ -124,7 +124,7 @@ public class User implements UserDetails {
 	public boolean isEnabled() {
 		return true;
 	}
-
+  
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -167,11 +167,6 @@ public class User implements UserDetails {
 			if (other.lastName != null)
 				return false;
 		} else if (!lastName.equals(other.lastName))
-			return false;
-		if (lastPasswordResetDate == null) {
-			if (other.lastPasswordResetDate != null)
-				return false;
-		} else if (!lastPasswordResetDate.equals(other.lastPasswordResetDate))
 			return false;
 		if (password == null) {
 			if (other.password != null)
