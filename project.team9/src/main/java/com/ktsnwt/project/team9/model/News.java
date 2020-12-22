@@ -61,18 +61,6 @@ public class News {
 	}
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (active ? 1231 : 1237);
-		result = prime * result + ((content == null) ? 0 : content.hashCode());
-		result = prime * result + ((culturalOffer == null) ? 0 : culturalOffer.hashCode());
-		result = prime * result + (int) (date ^ (date >>> 32));
-		result = prime * result + ((images == null) ? 0 : images.hashCode());
-		return result;
-	}
-
-	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;

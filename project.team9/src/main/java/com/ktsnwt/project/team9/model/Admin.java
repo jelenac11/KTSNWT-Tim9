@@ -56,15 +56,6 @@ public class Admin extends User {
 	}
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + (active ? 1231 : 1237);
-		result = prime * result + ((culturalOffers == null) ? 0 : culturalOffers.hashCode());
-		return result;
-	}
-
-	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
