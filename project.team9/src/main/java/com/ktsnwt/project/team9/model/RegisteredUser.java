@@ -28,7 +28,7 @@ public class RegisteredUser extends User {
 	@OneToMany(mappedBy = "grader", cascade = CascadeType.ALL)
 	private Set<Mark> marks;
 	
-	@OneToMany(mappedBy = "author")
+	@OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
 	private Set<Comment> comments;
 	
 	@ManyToMany(cascade=CascadeType.ALL)  
@@ -52,17 +52,6 @@ public class RegisteredUser extends User {
 
 	public RegisteredUser(String username, String email, String password, String firstName, String lastName) {
 		super(username, email, password, firstName, lastName);
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + ((comments == null) ? 0 : comments.hashCode());
-		result = prime * result + ((marks == null) ? 0 : marks.hashCode());
-		result = prime * result + ((subscribed == null) ? 0 : subscribed.hashCode());
-		result = prime * result + (verified ? 1231 : 1237);
-		return result;
 	}
 
 	@Override

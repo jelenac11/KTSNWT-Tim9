@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -58,6 +60,7 @@ public class AdminService implements IAdminService {
 	}
 
 	@Override
+	@Transactional
 	public Admin create(Admin entity) throws Exception {
 		entity.setActive(true);
 		User usernameUser = userRepository.findByUsername(entity.getUsername());
@@ -79,6 +82,7 @@ public class AdminService implements IAdminService {
 	}
 
 	@Override
+	@Transactional
 	public boolean delete(Long id) throws Exception {
 		Admin existingAdmin = getById(id);
 		if (existingAdmin == null) {

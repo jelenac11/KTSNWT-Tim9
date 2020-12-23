@@ -5,10 +5,11 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.ktsnwt.project.team9.model.News;
 
-@Component
+@Service
 public class MailService {
 
 	@Autowired
