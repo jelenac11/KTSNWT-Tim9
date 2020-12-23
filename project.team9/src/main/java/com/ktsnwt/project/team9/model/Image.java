@@ -67,8 +67,6 @@ public class Image implements Serializable {
 	public void setNews(News news) {
 		this.news = news;
 	}
-<<<<<<< Updated upstream
-=======
 
 	@Override
 	public boolean equals(Object obj) {
@@ -92,7 +90,5 @@ public class Image implements Serializable {
 		return true;
 	}
 
->>>>>>> Stashed changes
-  
 }
 

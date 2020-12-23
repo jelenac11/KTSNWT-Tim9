@@ -55,7 +55,6 @@ public class News {
 		this.active = active;
 	}
 
-<<<<<<< Updated upstream
 	public String getContent() {
 		return content;
 	}
@@ -98,7 +97,8 @@ public class News {
 
 	public void setActive(boolean active) {
 		this.active = active;
-=======
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -128,7 +128,6 @@ public class News {
 		} else if (!images.equals(other.images))
 			return false;
 		return true;
->>>>>>> Stashed changes
 	}
 
 }

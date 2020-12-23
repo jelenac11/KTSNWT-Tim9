@@ -90,8 +90,6 @@ public class CulturalOffer implements Serializable {
 		this.admin = admin;
 	}
 
-<<<<<<< Updated upstream
-=======
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -158,5 +156,4 @@ public class CulturalOffer implements Serializable {
 		return true;
 	}
 
->>>>>>> Stashed changes
 }

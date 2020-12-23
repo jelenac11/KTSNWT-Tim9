@@ -54,8 +54,6 @@ public class RegisteredUser extends User {
 		super(username, email, password, firstName, lastName);
 	}
 
-<<<<<<< Updated upstream
-=======
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -85,5 +83,4 @@ public class RegisteredUser extends User {
 		return true;
 	}
 
->>>>>>> Stashed changes
 }

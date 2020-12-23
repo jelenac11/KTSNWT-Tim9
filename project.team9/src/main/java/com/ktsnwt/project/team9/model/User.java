@@ -124,8 +124,6 @@ public class User implements UserDetails {
 	public boolean isEnabled() {
 		return true;
 	}
-<<<<<<< Updated upstream
-=======
 
 	@Override
 	public boolean equals(Object obj) {
@@ -168,6 +166,5 @@ public class User implements UserDetails {
 			return false;
 		return true;
 	}
->>>>>>> Stashed changes
 	
 }

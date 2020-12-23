@@ -47,8 +47,6 @@ public class Geolocation {
 		this.lon = lon;
 	}
 
-<<<<<<< Updated upstream
-=======
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -75,5 +73,4 @@ public class Geolocation {
 		return true;
 	}
 
->>>>>>> Stashed changes
 }

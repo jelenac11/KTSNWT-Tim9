@@ -63,9 +63,6 @@ public class Comment implements Serializable {
 		this.text = text;
 		this.date = time;
 	}
-<<<<<<< Updated upstream
-	
-=======
 
 	@Override
 	public boolean equals(Object obj) {
@@ -103,5 +100,4 @@ public class Comment implements Serializable {
 		return true;
 	}
 
->>>>>>> Stashed changes
 }

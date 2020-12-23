@@ -55,8 +55,6 @@ public class Admin extends User {
 		this.active = active;
 	}
 
-<<<<<<< Updated upstream
-=======
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -68,5 +66,4 @@ public class Admin extends User {
 		return true;
 	}
 
->>>>>>> Stashed changes
 }

@@ -43,8 +43,6 @@ public class Category {
 		this.description = description;
 		this.active = active;
 	}
-<<<<<<< Updated upstream
-=======
 
 	@Override
 	public boolean equals(Object obj) {
@@ -69,5 +67,5 @@ public class Category {
 			return false;
 		return true;
 	}
->>>>>>> Stashed changes
+
 }
