@@ -1,4 +1,4 @@
 export interface CommentRequest {
-    culturalOffer: number,
-    text: string
+    culturalOffer: number;
+    text: string;
 }

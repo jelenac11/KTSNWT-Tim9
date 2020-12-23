@@ -1,4 +1,4 @@
 export interface MarkRequest {
-    value: number,
-    culturalOffer: number
+    value: number;
+    culturalOffer: number;
 }

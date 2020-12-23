@@ -20,15 +20,15 @@ export class JwtService {
   destroyToken(): void {
     localStorage.removeItem('jwtToken');
   }
-  
+
   getRole(): string {
     const jwt: JwtHelperService = new JwtHelperService();
     const token: UserTokenState = JSON.parse(localStorage.getItem('jwtToken'));
     if (token) {
-      const info= jwt.decodeToken(token.accessToken);
-      return info['role'];
+      const info = jwt.decodeToken(token.accessToken);
+      return info.role;
     }
-    return "";
+    return '';
   }
 
 }
