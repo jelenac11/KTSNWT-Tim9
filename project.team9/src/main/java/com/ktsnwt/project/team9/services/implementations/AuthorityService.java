@@ -2,6 +2,8 @@ package com.ktsnwt.project.team9.services.implementations;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,24 +26,30 @@ public class AuthorityService {
     private IRegisteredUser registeredUserRepository;
 
     public List<Authority> findById(Long id) {
-        Authority auth = this.authorityRepository.getOne(id);
+        Optional<Authority> auth = this.authorityRepository.findById(id);
         List<Authority> auths = new ArrayList<>();
-        auths.add(auth);
+        if (auth.isPresent()) {
+        	auths.add(auth.get());
+        }
         return auths;
     }
 
     public List<Authority> findByName(String name) {
         Authority auth = this.authorityRepository.findByName(name);
         List<Authority> auths = new ArrayList<>();
-        auths.add(auth);
+        if (auth != null) {
+        	 auths.add(auth);
+        }
         return auths;
     }
 
-	public void confirmRegistration(String token) {
+	public void confirmRegistration(String token) throws Exception {
 		VerificationToken vt = verificationTokenService.findByToken(token);
 		if (vt != null) {
 			vt.getUser().setVerified(true);
 			registeredUserRepository.save(vt.getUser());
+		} else {
+			throw new NoSuchElementException("Token doesn't exist.");
 		}
 	}
 	

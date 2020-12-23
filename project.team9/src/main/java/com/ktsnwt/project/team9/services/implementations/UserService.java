@@ -1,11 +1,9 @@
 package com.ktsnwt.project.team9.services.implementations;
 
-import java.security.SecureRandom;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -40,6 +38,9 @@ public class UserService implements IUserService, UserDetailsService {
     
     @Autowired
 	private MailService mailService;
+    
+    @Autowired
+    private GenerateRandomPasswordService grpService;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -51,7 +52,7 @@ public class UserService implements IUserService, UserDetailsService {
         }
     }
   
-    public void changePassword(String oldPassword, String newPassword) throws Exception {
+    public void changePassword(String oldPassword, String newPassword) throws IllegalAccessException {
         Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
         String username = "";
         try {
@@ -126,27 +127,17 @@ public class UserService implements IUserService, UserDetailsService {
 		return userRepository.findByUsername(username);
 	}
 
-	public void forgotPassword(String email) throws MailException, InterruptedException {
+	public void forgotPassword(String email) {
 		User user = userRepository.findByEmail(email);
-		String newPassword = generateRandomPassword();
-		user.setPassword(passwordEncoder.encode(newPassword));
-		user.setLastPasswordResetDate(new Date().getTime());
-        userRepository.save(user);
-        mailService.sendForgottenPassword(user, newPassword);
-	}
-	
-	public String generateRandomPassword() {
-		final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-		 
-	    SecureRandom random = new SecureRandom();
-	    StringBuilder sb = new StringBuilder();
-
-	    for (int i = 0; i < 8; i++) {
-	        int randomIndex = random.nextInt(chars.length());
-	        sb.append(chars.charAt(randomIndex));
-	    }
-
-	    return sb.toString();
+		if (user == null) {
+            throw new UsernameNotFoundException(String.format("No user found with email '%s'.", email));
+        } else { 
+			String newPassword = grpService.generateRandomPassword();
+			user.setPassword(passwordEncoder.encode(newPassword));
+			user.setLastPasswordResetDate(new Date().getTime());
+	        userRepository.save(user);
+	        mailService.sendMail(user.getEmail(), "Password reset", "Hi " + user.getFirstName() + ",\n\nYour new password is: " + newPassword + ".\n\n\nTeam 9");
+        }
 	}
 	
 }

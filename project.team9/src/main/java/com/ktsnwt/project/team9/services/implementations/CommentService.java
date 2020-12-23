@@ -4,6 +4,8 @@ package com.ktsnwt.project.team9.services.implementations;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -47,6 +49,7 @@ public class CommentService implements ICommentService {
 		return c.get();
 	}
 
+	@Transactional
 	public Comment create(Comment entity, MultipartFile file) throws Exception {
 		entity.setApproved(false);
 		CulturalOffer culturalOffer = culturalOfferService.getById(entity.getCulturalOffer().getId());
@@ -65,6 +68,7 @@ public class CommentService implements ICommentService {
 	}
 
 	@Override
+	@Transactional
 	public boolean delete(Long id) throws Exception {
 		Comment c = getById(id);
 		if (c == null) {
@@ -95,6 +99,7 @@ public class CommentService implements ICommentService {
 		return commentRepository.findByApprovedFalseAndCulturalOfferUserId(id, pageable);
 	}
 
+	@Transactional
 	public Comment approveComment(Long id, boolean approve) throws Exception {
 		Comment c = getById(id);
 		if (c == null) {

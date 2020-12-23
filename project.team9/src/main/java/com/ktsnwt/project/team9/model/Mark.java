@@ -83,6 +83,29 @@ public class Mark implements Serializable {
 	public Long getId() {
 		return id;
 	}
-	
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Mark other = (Mark) obj;
+		if (culturalOffer == null) {
+			if (other.culturalOffer != null)
+				return false;
+		} else if (!culturalOffer.equals(other.culturalOffer))
+			return false;
+		if (grader == null) {
+			if (other.grader != null)
+				return false;
+		} else if (!grader.equals(other.grader))
+			return false;
+		if (value != other.value)
+			return false;
+		return true;
+	}
 	
 }

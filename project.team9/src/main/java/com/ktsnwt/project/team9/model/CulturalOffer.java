@@ -91,27 +91,6 @@ public class CulturalOffer implements Serializable {
 	}
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (active ? 1231 : 1237);
-		result = prime * result + ((admin == null) ? 0 : admin.hashCode());
-		long temp;
-		temp = Double.doubleToLongBits(averageMark);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + ((category == null) ? 0 : category.hashCode());
-		result = prime * result + ((comments == null) ? 0 : comments.hashCode());
-		result = prime * result + ((description == null) ? 0 : description.hashCode());
-		result = prime * result + ((geolocation == null) ? 0 : geolocation.hashCode());
-		result = prime * result + ((image == null) ? 0 : image.hashCode());
-		result = prime * result + ((marks == null) ? 0 : marks.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((news == null) ? 0 : news.hashCode());
-		result = prime * result + ((subscribedUsers == null) ? 0 : subscribedUsers.hashCode());
-		return result;
-	}
-
-	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;

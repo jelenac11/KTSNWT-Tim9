@@ -1,5 +1,7 @@
 package com.ktsnwt.project.team9.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,8 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Image {
+public class Image implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column
@@ -62,15 +66,6 @@ public class Image {
 
 	public void setNews(News news) {
 		this.news = news;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((news == null) ? 0 : news.hashCode());
-		result = prime * result + ((url == null) ? 0 : url.hashCode());
-		return result;
 	}
 
 	@Override
