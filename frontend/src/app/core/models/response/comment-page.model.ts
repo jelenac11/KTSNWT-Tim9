@@ -1,6 +1,6 @@
-import { Comment } from "./comment.model";
+import { Comment } from './comment.model';
 
 export interface CommentPage {
-    content?: Comment[],
-    totalElements?: number,
+    content?: Comment[];
+    totalElements?: number;
 }

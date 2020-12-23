@@ -1,6 +1,6 @@
-import { User } from "./user.model";
+import { User } from './user.model';
 
 export interface UserPage {
-    content?: User[],
-    totalElements?: number,
+    content?: User[];
+    totalElements?: number;
 }
