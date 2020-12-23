@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,7 +83,6 @@ public class AuthorityServiceUnitTest {
 	@Test
 	public void testFindById_WithNonExistingId_ShouldReturnEmptyList() {
 		List<Authority> authorities = authorityService.findById(AuthorityConstants.NON_EXISTING_ID);
-		
 		verify(authorityRepository, times(1)).findById(AuthorityConstants.NON_EXISTING_ID);
 		assertEquals(0, authorities.size());
 	}
@@ -90,7 +90,7 @@ public class AuthorityServiceUnitTest {
 	@Test
 	public void testFindById_WithExistingId_ShouldReturnList() {
 		List<Authority> authorities = authorityService.findById(AuthorityConstants.ID);
-		
+    
 		verify(authorityRepository, times(1)).findById(AuthorityConstants.ID);
 		assertEquals(1, authorities.size());
 		assertEquals(AuthorityConstants.ID, authorities.get(0).getId());
@@ -115,6 +115,7 @@ public class AuthorityServiceUnitTest {
 		assertEquals(AuthorityConstants.AUTHORITY_NAME, authorities.get(0).getName());
 	}
 	
+
 	@Test(expected = NoSuchElementException.class)
 	public void testConfirmRegistration_WithNonExistingToken_ShouldThrowException() throws Exception {
 		authorityService.confirmRegistration(VerificationTokenConstants.NON_EXISTING_TOKEN);
