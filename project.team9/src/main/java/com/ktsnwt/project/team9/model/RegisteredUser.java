@@ -28,7 +28,7 @@ public class RegisteredUser extends User {
 	@OneToMany(mappedBy = "grader", cascade = CascadeType.ALL)
 	private Set<Mark> marks;
 	
-	@OneToMany(mappedBy = "author")
+	@OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
 	private Set<Comment> comments;
 	
 	@ManyToMany(cascade=CascadeType.ALL)  
@@ -52,6 +52,35 @@ public class RegisteredUser extends User {
 
 	public RegisteredUser(String username, String email, String password, String firstName, String lastName) {
 		super(username, email, password, firstName, lastName);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RegisteredUser other = (RegisteredUser) obj;
+		if (comments == null) {
+			if (other.comments != null)
+				return false;
+		} else if (!comments.equals(other.comments))
+			return false;
+		if (marks == null) {
+			if (other.marks != null)
+				return false;
+		} else if (!marks.equals(other.marks))
+			return false;
+		if (subscribed == null) {
+			if (other.subscribed != null)
+				return false;
+		} else if (!subscribed.equals(other.subscribed))
+			return false;
+		if (verified != other.verified)
+			return false;
+		return true;
 	}
 
 }

@@ -1,16 +1,23 @@
 package com.ktsnwt.project.team9.constants;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import com.ktsnwt.project.team9.model.Authority;
+import com.ktsnwt.project.team9.model.CulturalOffer;
+
 public class AdminConstants {
 
 	public static final int PAGE = 0;
+	public static final int NON_EXISTING_PAGE = 10;
 	public static final int PAGE_SIZE = 5;
 	
 	public static final int NUMBER_OF_ITEMS = 6;
 	
 	public static final String PART = "%email%";
 	public static final String NON_EXISTING_PART = "%jelena%";
-<<<<<<< Updated upstream
-=======
 	
 	public static final Long ADMIN_ID = 1L;
 	public static final Long NEW_ADMIN_ID = 8L;
@@ -31,7 +38,6 @@ public class AdminConstants {
 	
 	public static final List<Authority> AUTHORITIES = new ArrayList<Authority>(){
 		private static final long serialVersionUID = 1L;
-
 		{add(new Authority(1L,"ROLE_ADMIN"));}
 	};
 	public static final String ROLE = "ROLE_ADMIN";
@@ -39,11 +45,8 @@ public class AdminConstants {
 	public static final String EPASSWORD = "asdghjkafvsbgdnhf,bgghjukilofgthyjuik";
 	public static final Set<CulturalOffer> CO = new HashSet<CulturalOffer>() {
 		private static final long serialVersionUID = 1L;
-
 		{
 			add(new CulturalOffer(1L));
 		}
 	};
-	
->>>>>>> Stashed changes
 }

@@ -12,7 +12,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
+@Getter
+@Setter
 public class News {
 
 	@Id
@@ -55,48 +60,35 @@ public class News {
 		this.active = active;
 	}
 
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-
-	public long getDate() {
-		return date;
-	}
-
-	public void setDate(long date) {
-		this.date = date;
-	}
-
-	public Set<Image> getImages() {
-		return images;
-	}
-
-	public void setImages(Set<Image> images) {
-		this.images = images;
-	}
-
-	public CulturalOffer getCulturalOffer() {
-		return culturalOffer;
-	}
-
-	public void setCulturalOffer(CulturalOffer culturalOffer) {
-		this.culturalOffer = culturalOffer;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public boolean isActive() {
-		return active;
-	}
-
-	public void setActive(boolean active) {
-		this.active = active;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		News other = (News) obj;
+		if (active != other.active)
+			return false;
+		if (content == null) {
+			if (other.content != null)
+				return false;
+		} else if (!content.equals(other.content))
+			return false;
+		if (culturalOffer == null) {
+			if (other.culturalOffer != null)
+				return false;
+		} else if (!culturalOffer.equals(other.culturalOffer))
+			return false;
+		if (date != other.date)
+			return false;
+		if (images == null) {
+			if (other.images != null)
+				return false;
+		} else if (!images.equals(other.images))
+			return false;
+		return true;
 	}
 
 }

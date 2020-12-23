@@ -67,6 +67,29 @@ public class Image implements Serializable {
 	public void setNews(News news) {
 		this.news = news;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Image other = (Image) obj;
+		if (news == null) {
+			if (other.news != null)
+				return false;
+		} else if (!news.equals(other.news))
+			return false;
+		if (url == null) {
+			if (other.url != null)
+				return false;
+		} else if (!url.equals(other.url))
+			return false;
+		return true;
+	}
+
   
 }
 
