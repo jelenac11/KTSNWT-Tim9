@@ -32,10 +32,6 @@ public class MarkService implements IMarkService {
 	public Mark getById(Long id) {
 		return markRepository.findById(id).orElse(null);
 	}
-	
-	public Mark findByUserIdAndCulturalOfferId(Long userId, Long offerId) {
-		return markRepository.findByGraderAndCulturalOfferId(userId, offerId);
-	}
 
 	@Override
 	public Mark create(Mark entity) throws Exception {

@@ -1,5 +1,12 @@
 package com.ktsnwt.project.team9.constants;
 
+import java.util.HashSet;
+
+import com.ktsnwt.project.team9.model.Comment;
+import com.ktsnwt.project.team9.model.CulturalOffer;
+import com.ktsnwt.project.team9.model.Mark;
+import com.ktsnwt.project.team9.model.RegisteredUser;
+
 public class VerificationTokenConstants {
 	
 	public static final String TOKEN = "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJzcHJpbmctc2VjdXJpdHktZXhhbXBsZSIsInN1YiI6ImVtYWlsQGdtYWlsLmNvbSIsImF1ZCI6IndlYiIsImlhdCI6MTYwNzU2MTQzMywiZXhwIjoxNjA3NTYzMjMzfQ.hnAdWpJFNsBprJwlRKFqVYf4sn3Te5ry7lllLVBp1fq3jzjWOLwXDpgQV5MDVErJM9MGsj4fBK5a-XZARrnHsg";
