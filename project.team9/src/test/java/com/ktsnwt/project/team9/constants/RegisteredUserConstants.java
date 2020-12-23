@@ -21,7 +21,7 @@ public class RegisteredUserConstants {
 
 	public static final String PART = "%email%";
 	public static final String NON_EXISTING_PART = "%jelena%";
-	
+
 	public static final Long USER_ID = 7L;
 	public static final Long NEW_USER_ID = 21L;
 	public static final Long NON_EXISTING_USER_ID = 50L;
@@ -37,9 +37,10 @@ public class RegisteredUserConstants {
 	public static final String NEW_EMAIL = "jelenacupac99@gmail.com";
 	
 	public static final List<Authority> AUTHORITIES = new ArrayList<Authority>() {
+		private static final long serialVersionUID = 1L;
 		{add(new Authority(1L,"ROLE_REGISTERED_USER"));}
 	};
 	public static final String ROLE = "ROLE_REGISTERED_USER";
 	public static final String EPASSWORD = "asdghjkafvsbgdnhf,bgghjukilofgthyjuik";
-	
+
 }

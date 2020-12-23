@@ -133,6 +133,8 @@ public class CommentServiceUnitTest {
 		
 		commentService.create(c, file);
 		verify(culturalOfferService, times(1)).getById(CommentConstants.NON_EXISTING_CULTURAL_OFFER_ID);
+		verify(imageService, times(0)).create(Mockito.any(Image.class));
+		verify(fileService, times(0)).saveImage(file, "slika2");
 	}
 	
 	@Test
@@ -180,6 +182,7 @@ public class CommentServiceUnitTest {
 		commentService.delete(CommentConstants.NON_EXISTING_COMMENT_ID);
 		
 		verify(commentRepository, times(1)).findById(CommentConstants.NON_EXISTING_COMMENT_ID);
+		verify(commentRepository, times(0)).delete(CommentConstants.NON_EXISTING_COMMENT_ID);
 	}
 	
 	@Test
@@ -205,6 +208,10 @@ public class CommentServiceUnitTest {
 	@Test(expected = NoSuchElementException.class)
 	public void testApproveComment_WithNonExistingId_ShouldThrowNoSuchElementException() throws Exception {
 		commentService.approveComment(CommentConstants.NON_EXISTING_COMMENT_ID, CommentConstants.DECLINED);
+		
+		
+		verify(commentRepository, times(1)).findById(CommentConstants.NON_EXISTING_COMMENT_ID);
+		verify(commentRepository, times(0)).delete(CommentConstants.NON_EXISTING_COMMENT_ID);
 	}
 	
 	@Test
