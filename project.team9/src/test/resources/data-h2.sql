@@ -128,7 +128,7 @@ INSERT INTO mark (value, cultural_offer_id, user_id) VALUES(2, 11, 11);
 INSERT INTO mark (value, cultural_offer_id, user_id) VALUES(1, 12, 12);
 INSERT INTO mark (value, cultural_offer_id, user_id) VALUES(2, 2, 7);
 
-INSERT INTO verification_token (id, token, user_id) VALUES (1,  'eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJzcHJpbmctc2VjdXJpdHktZXhhbXBsZSIsInN1YiI6ImVtYWlsQGdtYWlsLmNvbSIsImF1ZCI6IndlYiIsImlhdCI6MTYwNzU2MTQzMywiZXhwIjoxNjA3NTYzMjMzfQ.hnAdWpJFNsBprJwlRKFqVYf4sn3Te5ry7lllLVBp1fq3jzjWOLwXDpgQV5MDVErJM9MGsj4fBK5a-XZARrnHsg', 8);
+INSERT INTO verification_token (token, user_id) VALUES ('eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJzcHJpbmctc2VjdXJpdHktZXhhbXBsZSIsInN1YiI6ImVtYWlsQGdtYWlsLmNvbSIsImF1ZCI6IndlYiIsImlhdCI6MTYwNzU2MTQzMywiZXhwIjoxNjA3NTYzMjMzfQ.hnAdWpJFNsBprJwlRKFqVYf4sn3Te5ry7lllLVBp1fq3jzjWOLwXDpgQV5MDVErJM9MGsj4fBK5a-XZARrnHsg', 8);
 /*INSERT INTO subscribed (user_id, cultural_offer_id) VALUES(7, 1);
 INSERT INTO subscribed (user_id, cultural_offer_id) VALUES(8, 2);
 INSERT INTO subscribed (user_id, cultural_offer_id) VALUES(9, 3);
