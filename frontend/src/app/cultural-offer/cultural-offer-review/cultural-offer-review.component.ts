@@ -16,22 +16,22 @@ import { MarkService } from 'src/app/core/services/mark.service';
 })
 export class CulturalOfferReviewComponent implements OnInit {
 
-  role: string = '';
+  role = '';
 
   culturalOffer: CulturalOffer = { category: {}, geolocation: {} };
-  
-  culturalOfferId: string;
 
-  mark: number = 0;
+  culturalOfferId;
 
-  isRated: boolean = false;
+  mark = 0;
 
-  zoom: number = 8;
+  isRated = false;
+
+  zoom = 8;
 
   constructor(
-    private route: ActivatedRoute, 
-    private culturalOfferService: CulturalOfferService, 
-    private markService: MarkService, 
+    private route: ActivatedRoute,
+    private culturalOfferService: CulturalOfferService,
+    private markService: MarkService,
     private dialog: MatDialog,
     private jwtService: JwtService
   ) { }
@@ -54,39 +54,39 @@ export class CulturalOfferReviewComponent implements OnInit {
     this.markService.get(this.culturalOffer.id).subscribe(data => {
       this.mark = data.value;
       this.isRated = true;
-    }),
-    error => {
-      console.log(error);
-      this.mark = 0;
-      this.isRated = false;
-    };
+    },
+      error => {
+        console.log(error);
+        this.mark = 0;
+        this.isRated = false;
+      });
   }
 
   onRate($event: number): void {
-    let newMark: MarkRequest = {value: $event, culturalOffer: this.culturalOffer.id}
+    const newMark: MarkRequest = { value: $event, culturalOffer: this.culturalOffer.id };
     if (!this.isRated) {
       this.markService.create(newMark).subscribe(data => {
         this.mark = data.value;
         this.isRated = true;
-      }),
-      error => {
-        console.log(error);
-      };
+      },
+        error => {
+          console.log(error);
+        });
     } else {
       this.markService.update(newMark).subscribe(data => {
         this.mark = data.value;
-      }),
-      error => {
-        console.log(error);
-      };
+      },
+        error => {
+          console.log(error);
+        });
     }
   }
 
   openDialog(): void {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
-    dialogConfig.minHeight = "400px";
-    dialogConfig.minWidth = "400px";
+    dialogConfig.minHeight = '400px';
+    dialogConfig.minWidth = '400px';
     const dialogRef = this.dialog.open(AddCommentComponent, dialogConfig);
   }
 

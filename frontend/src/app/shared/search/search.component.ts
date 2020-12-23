@@ -21,7 +21,7 @@ export class SearchComponent implements OnInit {
       (userInput: string) => {
         this.searchChanged.emit(userInput);
       }
-    )
+    );
   }
 
 }

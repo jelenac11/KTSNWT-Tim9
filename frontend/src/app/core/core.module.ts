@@ -20,6 +20,6 @@ import { AuthenticationService } from './services/authentication.service';
     UserService,
     AuthenticationService,
   ],
-  exports:[]
+  exports: []
 })
 export class CoreModule { }
