@@ -20,12 +20,12 @@ INSERT INTO users_table(type, email, first_name, last_name, password, username, 
 INSERT INTO users_table(type, email, first_name, last_name, password, username, active, verified) VALUES('AD', 'email_adresa5@gmail.com', 'admin5', 'admin5', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'admin 5', true, true);
 INSERT INTO users_table(type, email, first_name, last_name, password, username, active, verified) VALUES('AD', 'email_adresa6@gmail.com', 'admin6', 'admin6', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'admin 6', true, true);
 
-INSERT INTO users_table(type, email, first_name, last_name, password, username, active, verified) VALUES('RU', 'email_adresa20@gmail.com', 'user20', 'user20', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'user 20', true, true);
-INSERT INTO users_table(type, email, first_name, last_name, password, username, active, verified) VALUES('RU', 'email_adresa21@gmail.com', 'user21', 'user21', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'user 21', true, true);
-INSERT INTO users_table(type, email, first_name, last_name, password, username, active, verified) VALUES('RU', 'email_adresa22@gmail.com', 'user22', 'user22', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'user 22', true, true);
-INSERT INTO users_table(type, email, first_name, last_name, password, username, active, verified) VALUES('RU', 'email_adresa23@gmail.com', 'user23', 'user23', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'user 23', true, true);
-INSERT INTO users_table(type, email, first_name, last_name, password, username, active, verified) VALUES('RU', 'email_adresa24@gmail.com', 'user24', 'user24', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'user 24', true, true);
-INSERT INTO users_table(type, email, first_name, last_name, password, username, active, verified) VALUES('RU', 'email_adresa25@gmail.com', 'user25', 'user25', '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb', 'user 25', true, true);
+INSERT INTO users_table(type, email, first_name, last_name, password, username, active, verified) VALUES('RU', 'email_adresa20@gmail.com', 'user20', 'user20', '$2a$10$JoPJLPaZg0nH43ezACmlU.R1SHTzoYyrGQWWyG6SPqeRSUUrtWpMy', 'user 20', true, true);
+INSERT INTO users_table(type, email, first_name, last_name, password, username, active, verified) VALUES('RU', 'email_adresa21@gmail.com', 'user21', 'user21', '$2a$10$JoPJLPaZg0nH43ezACmlU.R1SHTzoYyrGQWWyG6SPqeRSUUrtWpMy', 'user 21', true, true);
+INSERT INTO users_table(type, email, first_name, last_name, password, username, active, verified) VALUES('RU', 'email_adresa22@gmail.com', 'user22', 'user22', '$2a$10$JoPJLPaZg0nH43ezACmlU.R1SHTzoYyrGQWWyG6SPqeRSUUrtWpMy', 'user 22', true, true);
+INSERT INTO users_table(type, email, first_name, last_name, password, username, active, verified) VALUES('RU', 'email_adresa23@gmail.com', 'user23', 'user23', '$2a$10$JoPJLPaZg0nH43ezACmlU.R1SHTzoYyrGQWWyG6SPqeRSUUrtWpMy', 'user 23', true, true);
+INSERT INTO users_table(type, email, first_name, last_name, password, username, active, verified) VALUES('RU', 'email_adresa24@gmail.com', 'user24', 'user24', '$2a$10$JoPJLPaZg0nH43ezACmlU.R1SHTzoYyrGQWWyG6SPqeRSUUrtWpMy', 'user 24', true, true);
+INSERT INTO users_table(type, email, first_name, last_name, password, username, active, verified) VALUES('RU', 'email_adresa25@gmail.com', 'user25', 'user25', '$2a$10$JoPJLPaZg0nH43ezACmlU.R1SHTzoYyrGQWWyG6SPqeRSUUrtWpMy', 'user 25', true, true);
 
 
 insert into user_authority(user_id, authority_id) values(1,2);
@@ -128,7 +128,7 @@ INSERT INTO mark (value, cultural_offer_id, user_id) VALUES(2, 11, 11);
 INSERT INTO mark (value, cultural_offer_id, user_id) VALUES(1, 12, 12);
 INSERT INTO mark (value, cultural_offer_id, user_id) VALUES(2, 2, 7);
 
-INSERT INTO verification_token (id, token, user_id) VALUES (1,  'eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJzcHJpbmctc2VjdXJpdHktZXhhbXBsZSIsInN1YiI6ImVtYWlsQGdtYWlsLmNvbSIsImF1ZCI6IndlYiIsImlhdCI6MTYwNzU2MTQzMywiZXhwIjoxNjA3NTYzMjMzfQ.hnAdWpJFNsBprJwlRKFqVYf4sn3Te5ry7lllLVBp1fq3jzjWOLwXDpgQV5MDVErJM9MGsj4fBK5a-XZARrnHsg', 8);
+INSERT INTO verification_token (token, user_id) VALUES ('eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJzcHJpbmctc2VjdXJpdHktZXhhbXBsZSIsInN1YiI6ImVtYWlsQGdtYWlsLmNvbSIsImF1ZCI6IndlYiIsImlhdCI6MTYwNzU2MTQzMywiZXhwIjoxNjA3NTYzMjMzfQ.hnAdWpJFNsBprJwlRKFqVYf4sn3Te5ry7lllLVBp1fq3jzjWOLwXDpgQV5MDVErJM9MGsj4fBK5a-XZARrnHsg', 8);
 /*INSERT INTO subscribed (user_id, cultural_offer_id) VALUES(7, 1);
 INSERT INTO subscribed (user_id, cultural_offer_id) VALUES(8, 2);
 INSERT INTO subscribed (user_id, cultural_offer_id) VALUES(9, 3);
