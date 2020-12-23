@@ -37,15 +37,16 @@ public class AdminConstants {
 	public static final String NEW_EMAIL = "jelenacupac99@gmail.com";
 	
 	public static final List<Authority> AUTHORITIES = new ArrayList<Authority>(){
+		private static final long serialVersionUID = 1L;
 		{add(new Authority(1L,"ROLE_ADMIN"));}
 	};
 	public static final String ROLE = "ROLE_ADMIN";
 	public static final String GPASSWORD = "asdghjk";
 	public static final String EPASSWORD = "asdghjkafvsbgdnhf,bgghjukilofgthyjuik";
 	public static final Set<CulturalOffer> CO = new HashSet<CulturalOffer>() {
+		private static final long serialVersionUID = 1L;
 		{
 			add(new CulturalOffer(1L));
 		}
 	};
-	
 }

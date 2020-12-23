@@ -138,19 +138,19 @@ public class AdminServiceIntegrationTest {
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void testCreated_WithExistingUsername_ShouldThrowIllegalArgumentException() throws Exception {
+	public void testCreate_WithExistingUsername_ShouldThrowIllegalArgumentException() throws Exception {
 		Admin a = new Admin(AdminConstants.EXISTING_USERNAME, AdminConstants.NEW_EMAIL, AdminConstants.FIRSTNAME, AdminConstants.LASTNAME);
 		adminService.create(a);
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void testCreated_WithExistingEmail_ShouldThrowIllegalArgumentException() throws Exception {
+	public void testCreate_WithExistingEmail_ShouldThrowIllegalArgumentException() throws Exception {
 		Admin a = new Admin(AdminConstants.NEW_USERNAME, AdminConstants.EXISTING_EMAIL, AdminConstants.FIRSTNAME, AdminConstants.LASTNAME);
 		adminService.create(a);
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void testCreated_WithExistingEmailAndExistingUsername_ShouldThrowIllegalArgumentException() throws Exception {
+	public void testCreate_WithExistingEmailAndExistingUsername_ShouldThrowIllegalArgumentException() throws Exception {
 		Admin a = new Admin(AdminConstants.EXISTING_USERNAME, AdminConstants.EXISTING_EMAIL, AdminConstants.FIRSTNAME, AdminConstants.LASTNAME);
 		adminService.create(a);
 	}

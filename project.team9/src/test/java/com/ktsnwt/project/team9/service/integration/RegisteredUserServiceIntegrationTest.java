@@ -164,19 +164,19 @@ public class RegisteredUserServiceIntegrationTest {
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void testCreated_WithExistingUsername_ShouldThrowIllegalArgumentException() throws Exception {
+	public void testCreate_WithExistingUsername_ShouldThrowIllegalArgumentException() throws Exception {
 		RegisteredUser user = new RegisteredUser(RegisteredUserConstants.EXISTING_USERNAME, RegisteredUserConstants.NEW_EMAIL, RegisteredUserConstants.PASSWORD, RegisteredUserConstants.FIRSTNAME, RegisteredUserConstants.LASTNAME);
 		regUserService.create(user);
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void testCreated_WithExistingEmail_ShouldThrowIllegalArgumentException() throws Exception {
+	public void testCreate_WithExistingEmail_ShouldThrowIllegalArgumentException() throws Exception {
 		RegisteredUser user = new RegisteredUser(RegisteredUserConstants.NEW_USERNAME, RegisteredUserConstants.EXISTING_EMAIL, RegisteredUserConstants.PASSWORD, RegisteredUserConstants.FIRSTNAME, RegisteredUserConstants.LASTNAME);
 		regUserService.create(user);
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void testCreated_WithExistingEmailAndExistingUsername_ShouldThrowIllegalArgumentException() throws Exception {
+	public void testCreate_WithExistingEmailAndExistingUsername_ShouldThrowIllegalArgumentException() throws Exception {
 		RegisteredUser user = new RegisteredUser(RegisteredUserConstants.EXISTING_USERNAME, RegisteredUserConstants.EXISTING_EMAIL, RegisteredUserConstants.PASSWORD, RegisteredUserConstants.FIRSTNAME, RegisteredUserConstants.LASTNAME);
 		regUserService.create(user);
 	}
