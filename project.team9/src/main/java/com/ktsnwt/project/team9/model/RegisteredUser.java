@@ -54,4 +54,36 @@ public class RegisteredUser extends User {
 		super(username, email, password, firstName, lastName);
 	}
 
+<<<<<<< Updated upstream
+=======
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RegisteredUser other = (RegisteredUser) obj;
+		if (comments == null) {
+			if (other.comments != null)
+				return false;
+		} else if (!comments.equals(other.comments))
+			return false;
+		if (marks == null) {
+			if (other.marks != null)
+				return false;
+		} else if (!marks.equals(other.marks))
+			return false;
+		if (subscribed == null) {
+			if (other.subscribed != null)
+				return false;
+		} else if (!subscribed.equals(other.subscribed))
+			return false;
+		if (verified != other.verified)
+			return false;
+		return true;
+	}
+
+>>>>>>> Stashed changes
 }

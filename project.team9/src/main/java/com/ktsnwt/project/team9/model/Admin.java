@@ -55,4 +55,18 @@ public class Admin extends User {
 		this.active = active;
 	}
 
+<<<<<<< Updated upstream
+=======
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		return true;
+	}
+
+>>>>>>> Stashed changes
 }

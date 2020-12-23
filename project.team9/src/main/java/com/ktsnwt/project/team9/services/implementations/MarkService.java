@@ -21,12 +21,16 @@ public class MarkService implements IMarkService {
 	private CulturalOfferService culturalOfferService;
 	
 	@Autowired
+<<<<<<< Updated upstream
 	private RegisteredUserService rUserService;
 	
 	@Override
 	public Iterable<Mark> getAll() {
 		return markRepository.findAll();
 	}
+=======
+	private IRegisteredUser rUserRepository;
+>>>>>>> Stashed changes
 
 	@Override
 	public Mark getById(Long id) {
@@ -64,13 +68,18 @@ public class MarkService implements IMarkService {
 		return markRepository.save(mark);
 	}
 
+	public Mark findByUserIdAndCulturalOfferId(Long userId, Long offerId) {
+		return markRepository.findByGraderAndCulturalOfferId(userId, offerId);
+	}
+
+	@Override
+	public Iterable<Mark> getAll() {
+		return null;
+	}
+	
 	@Override
 	public boolean delete(Long id) throws Exception {
 		return false;
-	}
-
-	public Mark findByUserIdAndCulturalOfferId(Long userId, Long offerId) {
-		return markRepository.findByGraderAndCulturalOfferId(userId, offerId);
 	}
 	
 }

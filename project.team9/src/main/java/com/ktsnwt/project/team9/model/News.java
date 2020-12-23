@@ -55,6 +55,7 @@ public class News {
 		this.active = active;
 	}
 
+<<<<<<< Updated upstream
 	public String getContent() {
 		return content;
 	}
@@ -97,6 +98,37 @@ public class News {
 
 	public void setActive(boolean active) {
 		this.active = active;
+=======
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		News other = (News) obj;
+		if (active != other.active)
+			return false;
+		if (content == null) {
+			if (other.content != null)
+				return false;
+		} else if (!content.equals(other.content))
+			return false;
+		if (culturalOffer == null) {
+			if (other.culturalOffer != null)
+				return false;
+		} else if (!culturalOffer.equals(other.culturalOffer))
+			return false;
+		if (date != other.date)
+			return false;
+		if (images == null) {
+			if (other.images != null)
+				return false;
+		} else if (!images.equals(other.images))
+			return false;
+		return true;
+>>>>>>> Stashed changes
 	}
 
 }

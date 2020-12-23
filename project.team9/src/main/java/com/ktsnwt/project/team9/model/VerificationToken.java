@@ -23,7 +23,7 @@ import lombok.Setter;
 public class VerificationToken {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private String token;
@@ -31,5 +31,10 @@ public class VerificationToken {
 	@OneToOne(targetEntity = RegisteredUser.class, fetch = FetchType.LAZY)
 	@JoinColumn(nullable = false, name = "user_id")
 	private RegisteredUser user;
+	
+	public VerificationToken(String token, RegisteredUser user) {
+		this.token = token;
+		this.user = user;
+	}
 
 }

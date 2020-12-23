@@ -90,4 +90,73 @@ public class CulturalOffer implements Serializable {
 		this.admin = admin;
 	}
 
+<<<<<<< Updated upstream
+=======
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CulturalOffer other = (CulturalOffer) obj;
+		if (active != other.active)
+			return false;
+		if (admin == null) {
+			if (other.admin != null)
+				return false;
+		} else if (!admin.equals(other.admin))
+			return false;
+		if (Double.doubleToLongBits(averageMark) != Double.doubleToLongBits(other.averageMark))
+			return false;
+		if (category == null) {
+			if (other.category != null)
+				return false;
+		} else if (!category.equals(other.category))
+			return false;
+		if (comments == null) {
+			if (other.comments != null)
+				return false;
+		} else if (!comments.equals(other.comments))
+			return false;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
+		if (geolocation == null) {
+			if (other.geolocation != null)
+				return false;
+		} else if (!geolocation.equals(other.geolocation))
+			return false;
+		if (image == null) {
+			if (other.image != null)
+				return false;
+		} else if (!image.equals(other.image))
+			return false;
+		if (marks == null) {
+			if (other.marks != null)
+				return false;
+		} else if (!marks.equals(other.marks))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (news == null) {
+			if (other.news != null)
+				return false;
+		} else if (!news.equals(other.news))
+			return false;
+		if (subscribedUsers == null) {
+			if (other.subscribedUsers != null)
+				return false;
+		} else if (!subscribedUsers.equals(other.subscribedUsers))
+			return false;
+		return true;
+	}
+
+>>>>>>> Stashed changes
 }
