@@ -37,4 +37,8 @@ public class VerificationToken {
 		this.user = user;
 	}
 
+	public VerificationToken(String token, RegisteredUser user) {
+		this.token = token;
+		this.user = user;
+	}
 }
