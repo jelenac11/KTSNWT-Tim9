@@ -28,10 +28,8 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ktsnwt.project.team9.constants.AdminConstants;
 import com.ktsnwt.project.team9.constants.CommentConstants;
 import com.ktsnwt.project.team9.helper.implementations.FileService;
-import com.ktsnwt.project.team9.model.Admin;
 import com.ktsnwt.project.team9.model.Comment;
 import com.ktsnwt.project.team9.model.CulturalOffer;
 import com.ktsnwt.project.team9.model.Image;

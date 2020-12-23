@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ktsnwt.project.team9.dto.AdminDTO;
 import com.ktsnwt.project.team9.dto.response.UserResDTO;
 import com.ktsnwt.project.team9.helper.implementations.AdminMapper;
+import com.ktsnwt.project.team9.helper.implementations.CustomPageImplementation;
 import com.ktsnwt.project.team9.model.Admin;
 import com.ktsnwt.project.team9.services.implementations.AdminService;
 
@@ -52,7 +53,7 @@ public class AdminController {
 	@GetMapping(value = "/by-page")
 	public ResponseEntity<Page<UserResDTO>> getAllAdmins(Pageable pageable) {
 		Page<Admin> page = adminService.findAll(pageable);
-		return new ResponseEntity<>(transformListToPage(page), HttpStatus.OK);
+		return new ResponseEntity<>(createCustomPage(transformListToPage(page)), HttpStatus.OK);
 	}
 
 	
@@ -60,17 +61,17 @@ public class AdminController {
 	@GetMapping(value = "/search/{value}")
 	public ResponseEntity<Page<UserResDTO>> searchAdmins(Pageable pageable, @PathVariable String value) {
 		Page<Admin> page = adminService.searchAdmins(pageable, value);
-		return new ResponseEntity<>(transformListToPage(page), HttpStatus.OK);
+		return new ResponseEntity<>(createCustomPage(transformListToPage(page)), HttpStatus.OK);
 	}
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<AdminDTO> getAdmin(@PathVariable Long id) {
+	public ResponseEntity<UserResDTO> getAdmin(@PathVariable Long id) {
 		Admin admin = adminService.getById(id);
 		if (admin == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(adminMapper.toDto(admin), HttpStatus.OK);
+		return new ResponseEntity<>(adminMapper.toResDTO(admin), HttpStatus.OK);
 	}
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -99,6 +100,12 @@ public class AdminController {
 	private Page<UserResDTO> transformListToPage(Page<Admin> page) {
 		List<UserResDTO> adminsResDTO = adminMapper.toDTOResList(page.toList());
 		return new PageImpl<>(adminsResDTO, page.getPageable(), page.getTotalElements());
+	}
+	
+	private CustomPageImplementation<UserResDTO> createCustomPage(Page<UserResDTO> page) {
+		return new CustomPageImplementation<>(page.getContent(), page.getNumber(), page.getSize(),
+				page.getTotalElements(), null, page.isLast(), page.getTotalPages(), null, page.isFirst(),
+				page.getNumberOfElements());
 	}
 
 }

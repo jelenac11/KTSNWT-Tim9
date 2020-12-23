@@ -49,4 +49,8 @@ public class AdminConstants {
 			add(new CulturalOffer(1L));
 		}
 	};
+	
+	public static final String PASSWORD = "sifra123";
+	public static final String SEARCH_VALUE = "email";
+	public static final String NON_EXISTING_SEARCH_VALUE = "jelena";
 }
