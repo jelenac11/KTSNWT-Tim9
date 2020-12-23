@@ -24,6 +24,9 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
 
 import org.junit.Before;
 import org.junit.Test;
@@ -65,8 +68,8 @@ public class AuthorityServiceUnitTest {
 		vt.setToken(VerificationTokenConstants.TOKEN);
 		vt.setUser(user);
 		
-		given(authorityRepository.getOne(AuthorityConstants.NON_EXISTING_ID)).willReturn(null);
-		given(authorityRepository.getOne(AuthorityConstants.ID)).willReturn(admin);
+		given(authorityRepository.findById(AuthorityConstants.NON_EXISTING_ID)).willReturn(Optional.empty());
+		given(authorityRepository.findById(AuthorityConstants.ID)).willReturn(Optional.of(admin));
 		
 		given(authorityRepository.findByName(AuthorityConstants.NON_EXISTING_AUTHORITY_NAME)).willReturn(null);
 		given(authorityRepository.findByName(AuthorityConstants.AUTHORITY_NAME)).willReturn(admin);
@@ -80,16 +83,15 @@ public class AuthorityServiceUnitTest {
 	@Test
 	public void testFindById_WithNonExistingId_ShouldReturnEmptyList() {
 		List<Authority> authorities = authorityService.findById(AuthorityConstants.NON_EXISTING_ID);
-		
-		verify(authorityRepository, times(1)).getOne(AuthorityConstants.NON_EXISTING_ID);
+		verify(authorityRepository, times(1)).findById(AuthorityConstants.NON_EXISTING_ID);
 		assertEquals(0, authorities.size());
 	}
 	
 	@Test
 	public void testFindById_WithExistingId_ShouldReturnList() {
 		List<Authority> authorities = authorityService.findById(AuthorityConstants.ID);
-		
-		verify(authorityRepository, times(1)).getOne(AuthorityConstants.ID);
+    
+		verify(authorityRepository, times(1)).findById(AuthorityConstants.ID);
 		assertEquals(1, authorities.size());
 		assertEquals(AuthorityConstants.ID, authorities.get(0).getId());
 		assertEquals(AuthorityConstants.AUTHORITY_NAME, authorities.get(0).getName());
@@ -113,8 +115,9 @@ public class AuthorityServiceUnitTest {
 		assertEquals(AuthorityConstants.AUTHORITY_NAME, authorities.get(0).getName());
 	}
 	
-	@Test 
-	public void testConfirmRegistration_WithNonExistingToken_ShouldNotVerifyUser() {
+
+	@Test(expected = NoSuchElementException.class)
+	public void testConfirmRegistration_WithNonExistingToken_ShouldThrowException() throws Exception {
 		authorityService.confirmRegistration(VerificationTokenConstants.NON_EXISTING_TOKEN);
 		
 		verify(verificationTokenService, times(1)).findByToken(VerificationTokenConstants.NON_EXISTING_TOKEN);
@@ -122,7 +125,7 @@ public class AuthorityServiceUnitTest {
 	}
 	
 	@Test 
-	public void testConfirmRegistration_WithExistingToken_ShouldVerifyUser() {
+	public void testConfirmRegistration_WithExistingToken_ShouldVerifyUser() throws Exception {
 		RegisteredUser user = new RegisteredUser(RegisteredUserConstants.USERNAME, RegisteredUserConstants.EMAIL, RegisteredUserConstants.PASSWORD, RegisteredUserConstants.FIRSTNAME, RegisteredUserConstants.LASTNAME);
 		user.setId(RegisteredUserConstants.USER_ID);
 		user.setVerified(true);
