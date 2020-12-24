@@ -2,7 +2,6 @@ package com.ktsnwt.project.team9.dto;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

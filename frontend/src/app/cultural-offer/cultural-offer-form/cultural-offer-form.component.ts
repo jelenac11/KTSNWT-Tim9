@@ -17,7 +17,7 @@ export class CulturalOfferFormComponent implements OnInit {
 
   oldImage: File;
 
-  categories: Category[] = []
+  categories: Category[] = [];
 
   culturalOffer: CulturalOffer = { geolocation: {}, category: {} };
 
@@ -25,15 +25,15 @@ export class CulturalOfferFormComponent implements OnInit {
 
   registerForm: FormGroup;
 
-  zoom: number = 2;
+  zoom = 2;
 
-  loc: string = '';
+  loc = '';
 
   submitted = false;
 
   uploadedImage: string | ArrayBuffer = '';
 
-  geoCoder = new google.maps.Geocoder;
+  geoCoder = new google.maps.Geocoder();
 
   markerCoordinates = { geolocation: { lat: undefined, lon: undefined } };
 
@@ -69,13 +69,13 @@ export class CulturalOfferFormComponent implements OnInit {
       file: null,
       location: null
     });
-    this.f['name'].disable();
+    this.f.name.disable();
     this.setLocationValue();
     this.uploadedImage = this.culturalOffer.image;
     (fetch(this.culturalOffer.image)
-      .then(function (res) { return res.arrayBuffer(); })
+      .then(res => res.arrayBuffer())
       .then((buf) => {
-        let newFile = new File([buf], this.culturalOffer.name + ".jpg", { type: "image/jpeg" });
+        const newFile = new File([buf], this.culturalOffer.name + '.jpg', { type: 'image/jpeg' });
         this.registerForm.patchValue({
           file: newFile
         });
@@ -135,11 +135,11 @@ export class CulturalOfferFormComponent implements OnInit {
         this.goBack(Number(this.id));
       }
       else {
-        this.errorMessage("Location need to be unique. Choose another location.");
+        this.errorMessage('Location need to be unique. Choose another location.');
       }
     }, err => {
       console.log(err);
-      this.errorMessage("Location need to be unique. Choose another location.");
+      this.errorMessage('Location need to be unique. Choose another location.');
     });
   }
 
@@ -150,11 +150,11 @@ export class CulturalOfferFormComponent implements OnInit {
         this.goBack(res.id);
       }
       else {
-        this.errorMessage("Location need to be unique. Choose another location.");
+        this.errorMessage('Location need to be unique. Choose another location.');
       }
     }, err => {
       console.log(err);
-      this.errorMessage("Location need to be unique. Choose another location.");
+      this.errorMessage('Location need to be unique. Choose another location.');
     });
   }
 
@@ -189,14 +189,14 @@ export class CulturalOfferFormComponent implements OnInit {
     }
 
     this.registerForm.patchValue({
-      file: file
+      file
     });
 
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onload = (_event) => {
+    reader.onload = () => {
       this.uploadedImage = reader.result;
-    }
+    };
   }
 
   setValueForImagInvalidInput(): void {
@@ -224,7 +224,7 @@ export class CulturalOfferFormComponent implements OnInit {
           if (results[0]) {
             this.registerForm.patchValue({
               location: results[0]
-            })
+            });
             this.loc = results[0].formatted_address;
             this.markerCoordinates.geolocation.lat = results[0].geometry.location.lat();
             this.markerCoordinates.geolocation.lon = results[0].geometry.location.lng();

@@ -2,6 +2,9 @@ package com.ktsnwt.project.team9.services.implementations;
 
 
 import java.util.NoSuchElementException;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,7 +17,6 @@ import com.ktsnwt.project.team9.model.Comment;
 import com.ktsnwt.project.team9.model.CulturalOffer;
 import com.ktsnwt.project.team9.model.Image;
 import com.ktsnwt.project.team9.repositories.ICommentRepository;
-import com.ktsnwt.project.team9.repositories.ICulturalOfferRepository;
 import com.ktsnwt.project.team9.services.interfaces.ICommentService;
 
 @Service
@@ -26,14 +28,11 @@ public class CommentService implements ICommentService {
 	@Autowired
 	private ImageService imageService;
 	
+	@Autowired
 	private FileService fileService;
 	
-	public CommentService() {
-		fileService = new FileService();
-	}
-	
 	@Autowired
-	private ICulturalOfferRepository culturalOfferRepository;
+	private CulturalOfferService culturalOfferService;
 	
 	
 	@Override
@@ -43,17 +42,23 @@ public class CommentService implements ICommentService {
 
 	@Override
 	public Comment getById(Long id) {
-		return commentRepository.findById(id).orElse(null);
+		Optional<Comment> c = commentRepository.findById(id);
+		if (!c.isPresent()) {
+			return null;
+		}
+		return c.get();
 	}
 
+	@Transactional
 	public Comment create(Comment entity, MultipartFile file) throws Exception {
 		entity.setApproved(false);
-		CulturalOffer culturalOffer = culturalOfferRepository.findById(entity.getCulturalOffer().getId()).orElse(null);
+		CulturalOffer culturalOffer = culturalOfferService.getById(entity.getCulturalOffer().getId());
 		if (culturalOffer == null) {
 			throw new NoSuchElementException("Cultural offer doesn't exist.");
 		}
 		if (file != null) {
 			String imagePath = fileService.saveImage(file, "comment"+entity.getAuthor().getId() + entity.getDate());
+			System.out.println(imagePath);
 			Image image = imageService.create(new Image(imagePath));
 			entity.setImageUrl(image);
 		} else {
@@ -63,6 +68,7 @@ public class CommentService implements ICommentService {
 	}
 
 	@Override
+	@Transactional
 	public boolean delete(Long id) throws Exception {
 		Comment c = getById(id);
 		if (c == null) {
@@ -93,15 +99,18 @@ public class CommentService implements ICommentService {
 		return commentRepository.findByApprovedFalseAndCulturalOfferUserId(id, pageable);
 	}
 
-	public void approveComment(Long id, boolean approve) throws Exception {
+	@Transactional
+	public Comment approveComment(Long id, boolean approve) throws Exception {
 		Comment c = getById(id);
 		if (c == null) {
 			throw new NoSuchElementException("Comment doesn't exist");
 		}
 		if (!approve) {
-			delete(c.getId());
+			delete(id);
+			return null;
 		}
 		c.setApproved(approve);
 		commentRepository.save(c);
+		return c;
 	}
 }

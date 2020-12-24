@@ -14,10 +14,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ktsnwt.project.team9.dto.NewsDTO;
@@ -38,25 +41,25 @@ public class NewsController {
 	private NewsMapper newsMapper;
 
 	@PreAuthorize("permitAll()")
-	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<Iterable<NewsDTO>> getAllNewss() {
-		Set<NewsDTO> newssDTO = newsMapper.toDTOList(newsService.getAll());
-		return new ResponseEntity<Iterable<NewsDTO>>(newssDTO, HttpStatus.OK);
+	@GetMapping
+	public ResponseEntity<Iterable<NewsDTO>> getAllNews() {
+		Set<NewsDTO> newsDTO = newsMapper.toDTOList(newsService.getAll());
+		return new ResponseEntity<Iterable<NewsDTO>>(newsDTO, HttpStatus.OK);
 	}
 	
 
 
 	@PreAuthorize("permitAll()")
-	@RequestMapping(value= "/by-page", method = RequestMethod.GET)
-	public ResponseEntity<Page<NewsDTO>> getAllCulturalOffers(Pageable pageable){
+	@GetMapping(value= "/by-page")
+	public ResponseEntity<Page<NewsDTO>> getAllNews(Pageable pageable){
 		Page<News> page = newsService.findAll(pageable);
-        Set<NewsDTO> newssDTO = newsMapper.toDTOList(page.toList());
-        Page<NewsDTO> pageNewsDTO = new PageImpl<NewsDTO>(newssDTO.stream().collect(Collectors.toList()),page.getPageable(),page.getTotalElements());
+        Set<NewsDTO> newsDTO = newsMapper.toDTOList(page.toList());
+        Page<NewsDTO> pageNewsDTO = new PageImpl<NewsDTO>(newsDTO.stream().collect(Collectors.toList()),page.getPageable(),page.getTotalElements());
         return new ResponseEntity<Page<NewsDTO>>(pageNewsDTO, HttpStatus.OK);
 	}
 	
-	
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@PreAuthorize("permitAll()")
+	@GetMapping(value = "/{id}")
 	public ResponseEntity<NewsDTO> getNews(@PathVariable Long id) {
 
 		News news = newsService.getById(id);
@@ -66,7 +69,7 @@ public class NewsController {
 		return new ResponseEntity<NewsDTO>(newsMapper.toDto(news), HttpStatus.OK);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<NewsDTO> createNews(@Valid @RequestBody NewsDTO NewsDTO) {
 
 		try {
@@ -75,12 +78,11 @@ public class NewsController {
 							.toDto(newsService.create(newsMapper.toEntity(NewsDTO))),
 					HttpStatus.CREATED);
 		} catch (Exception e) {
-			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<NewsDTO> updateNews(@PathVariable Long id,
 			@Valid @RequestBody NewsDTO NewsDTO) {
 
@@ -94,12 +96,44 @@ public class NewsController {
 		}
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Boolean> deleteNews(@PathVariable Long id) {
+	@DeleteMapping(value = "/{id}", produces = MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<String> deleteNews(@PathVariable Long id) {
 		try {
-			return new ResponseEntity<Boolean>(newsService.delete(id), HttpStatus.OK);
+			return new ResponseEntity<String>(newsService.delete(id)+ "", HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<Boolean>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
 		}
+	}
+	
+	@PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
+	@PutMapping(value = "/subscribe/{userID}/{coID}")
+	public ResponseEntity<String> subscribe(@PathVariable Long userID, @PathVariable Long coID){
+		try {
+			return new ResponseEntity<String>(newsService.subscribe(userID, coID)+ "", HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
+	@PutMapping(value = "/unsubscribe/{userID}/{coID}")
+	public ResponseEntity<String> unsubscribe(@PathVariable Long userID, @PathVariable Long coID){
+		try {
+			return new ResponseEntity<String>(newsService.unsubscribe(userID, coID) + "", HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
+	@GetMapping(value = "/subscribed-news/{userID}")
+	public ResponseEntity<Page<NewsDTO>> getSubscribedNews(@PathVariable Long userID, Pageable pageable) {
+		
+		Page<News> page = newsService.getSubscribedNews(userID, pageable);
+        Set<NewsDTO> newsDTO = newsMapper.toDTOList(page.toList());
+        Page<NewsDTO> pageNewsDTO = new PageImpl<NewsDTO>(newsDTO.stream().collect(Collectors.toList()),page.getPageable(),page.getTotalElements());
+        
+		return new ResponseEntity<Page<NewsDTO>>(pageNewsDTO, HttpStatus.OK);
 	}
 }

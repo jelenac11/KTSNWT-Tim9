@@ -17,23 +17,23 @@ import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 })
 export class CulturalOfferListComponent implements OnInit {
 
-  private currentCategory: number = 0;
+  private currentCategory = 0;
 
-  role: string = '';
+  role = '';
 
-  page: number = 1;
+  page = 1;
 
-  size: number = 10;
+  size = 10;
 
   rows: [CulturalOffer[]] = [[]];
 
   culturalOffers: CulturalOfferPage = { content: [], totalElements: 0 };
 
-  categories: Category[] = []
+  categories: Category[] = [];
 
   selectField: FormControl;
 
-  searchValue: string = '';
+  searchValue = '';
 
 
   constructor(
@@ -54,7 +54,7 @@ export class CulturalOfferListComponent implements OnInit {
     this.categoryService.getAll().subscribe(categories => {
       this.categories = categories.sort((a, b) => a.id - b.id);
       this.getCulturalOffersByCategoryAndName();
-    })
+    });
   }
 
   getCulturalOffersByCategoryAndName(): void {
@@ -135,13 +135,13 @@ export class CulturalOfferListComponent implements OnInit {
     this.culturalOfferService.delete(id).subscribe(succ => {
       if (succ) {
         this.getCulturalOffers();
-        this.snackBar.success("You have successfully deleted cultural offer!");
+        this.snackBar.success('You have successfully deleted cultural offer!');
       } else {
-        this.snackBar.error("You can't delete this cultural offer or it was already deleted.");
+        this.snackBar.error('You can not delete this cultural offer or it was already deleted.');
       }
     }, err => {
       console.log(err);
-      this.snackBar.error("You can't delete this cultural offer or it was already deleted.");
+      this.snackBar.error('You can not delete this cultural offer or it was already deleted.');
     });
   }
 
@@ -155,7 +155,7 @@ export class CulturalOfferListComponent implements OnInit {
     this.page = 1;
   }
 
-  changeSelect(value: number) {
+  changeSelect(value: number): void {
     this.currentCategory = value;
     this.resetRequiredParameters();
     this.getCulturalOffersByCategoryAndName();
