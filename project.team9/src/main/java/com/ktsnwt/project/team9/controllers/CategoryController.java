@@ -14,10 +14,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ktsnwt.project.team9.dto.CategoryDTO;
@@ -38,21 +41,22 @@ public class CategoryController {
 	private CategoryMapper categoryMapper;
 
 	@PreAuthorize("permitAll()")
-	@RequestMapping(method = RequestMethod.GET)
+	@GetMapping
 	public ResponseEntity<Iterable<CategoryDTO>> getAllCategorys() {
 		Set<CategoryDTO> categorysDTO = categoryMapper.toDTOList(categoryService.getAll());
 		return new ResponseEntity<Iterable<CategoryDTO>>(categorysDTO, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value= "/by-page", method = RequestMethod.GET)
-	public ResponseEntity<Page<CategoryDTO>> getAllCulturalOffers(Pageable pageable){
+	@PreAuthorize("permitAll()")
+	@GetMapping(value= "/by-page")
+	public ResponseEntity<Page<CategoryDTO>> getAllCategory(Pageable pageable){
 		Page<Category> page = categoryService.findAll(pageable);
         Set<CategoryDTO> categoryDTO = categoryMapper.toDTOList(page.toList());
         Page<CategoryDTO> pageCategoryDTO = new PageImpl<CategoryDTO>(categoryDTO.stream().collect(Collectors.toList()),page.getPageable(),page.getTotalElements());
         return new ResponseEntity<Page<CategoryDTO>>(pageCategoryDTO, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@GetMapping(value = "/{id}")
 	public ResponseEntity<CategoryDTO> getCategory(@PathVariable Long id) {
 
 		Category category = categoryService.getById(id);
@@ -62,7 +66,7 @@ public class CategoryController {
 		return new ResponseEntity<CategoryDTO>(categoryMapper.toDto(category), HttpStatus.OK);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<CategoryDTO> createCategory(@Valid @RequestBody CategoryDTO CategoryDTO) {
 
 		try {
@@ -75,7 +79,7 @@ public class CategoryController {
 		}
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<CategoryDTO> updateCategory(@PathVariable Long id,
 			@Valid @RequestBody CategoryDTO CategoryDTO) {
 
@@ -89,7 +93,7 @@ public class CategoryController {
 		}
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Boolean> deleteCategory(@PathVariable Long id) {
 		try {
 			return new ResponseEntity<Boolean>(categoryService.delete(id), HttpStatus.OK);
