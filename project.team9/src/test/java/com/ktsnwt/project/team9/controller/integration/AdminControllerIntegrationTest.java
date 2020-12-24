@@ -152,7 +152,7 @@ public class AdminControllerIntegrationTest {
 		headers.add("Authorization", accessToken);
         HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
         Pageable pageable = PageRequest.of(AdminConstants.NON_EXISTING_PAGE, AdminConstants.PAGE_SIZE);
-		int size = adminService.searchAdmins(pageable,AdminConstants.NON_EXISTING_SEARCH_VALUE).getNumberOfElements();
+		int size = adminService.searchAdmins(pageable, AdminConstants.SEARCH_VALUE).getNumberOfElements();
         ParameterizedTypeReference<CustomPageImplementation<UserResDTO>> type = new ParameterizedTypeReference<CustomPageImplementation<UserResDTO>>() {
 		};
 		
