@@ -6,6 +6,7 @@ import { CategoryService } from 'src/app/core/services/category.service';
 import { CulturalOfferService } from 'src/app/core/services/cultural-offer.service';
 import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 import { CulturalOffer } from 'src/app/core/models/response/cultural-offer.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cultural-offer-form',
@@ -41,7 +42,8 @@ export class CulturalOfferFormComponent implements OnInit {
     private culturalOfferService: CulturalOfferService,
     private formBuilder: FormBuilder,
     private snackBar: Snackbar,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -109,13 +111,9 @@ export class CulturalOfferFormComponent implements OnInit {
       location: this.registerForm.get('location').value.formatted_address,
       lat: this.registerForm.get('location').value.geometry?.location.lat(),
       lon: this.registerForm.get('location').value.geometry?.location.lng()
-    }
-    if (!this.id) {
-      this.culturalOffer.admin = 1;
-    }
-
-    let formData = new FormData();
-    let blob = new Blob([JSON.stringify(this.culturalOffer)], {
+    };
+    const formData = new FormData();
+    const blob = new Blob([JSON.stringify(this.culturalOffer)], {
       type: 'application/json'
     });
 
@@ -133,7 +131,8 @@ export class CulturalOfferFormComponent implements OnInit {
   update(formData: FormData): void {
     this.culturalOfferService.put(this.id, formData).subscribe(res => {
       if (res) {
-        this.succesMessage("You have successfully updated cultural offer!");
+        this.succesMessage('You have successfully updated cultural offer!');
+        this.goBack(Number(this.id));
       }
       else {
         this.errorMessage("Location need to be unique. Choose another location.");
@@ -147,7 +146,8 @@ export class CulturalOfferFormComponent implements OnInit {
   create(formData: FormData): void {
     this.culturalOfferService.post(formData).subscribe(res => {
       if (res) {
-        this.succesMessage("You have successfully created cultural offer!");
+        this.succesMessage('You have successfully created cultural offer!');
+        this.goBack(res.id);
       }
       else {
         this.errorMessage("Location need to be unique. Choose another location.");
@@ -156,6 +156,15 @@ export class CulturalOfferFormComponent implements OnInit {
       console.log(err);
       this.errorMessage("Location need to be unique. Choose another location.");
     });
+  }
+
+  goBack(id: number) {
+    if (this.id) {
+      this.router.navigateByUrl(`/cultural-offers/${id}`);
+    }
+    else {
+      this.router.navigateByUrl(`/cultural-offers/${id}`);
+    }
   }
 
   succesMessage(message: string): void {
