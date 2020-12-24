@@ -51,5 +51,10 @@ public class CommentConstants {
 	public static final Long COMMENT_ID_TO_DECLINE = 7L;
 	public static final Long COMMENT_ID_TO_DECLINE_WITH_IMAGE = 6L;
 	public static final Long CREATE_NO_CO_ID = 100L;
+	
+	public static final String USER_EMAIL = "email_adresa20@gmail.com";
+	public static final String PASSWORD = "sifra123";
+	public static final String ADMIN_EMAIL = "email_adresa1@gmail.com";
+	public static final String ADMIN_EMAIL_WITH_NOT_APPROVED_COMMENTS = "email_adresa3@gmail.com";
 }
 
