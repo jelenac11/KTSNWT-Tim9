@@ -13,7 +13,6 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +22,6 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import com.ktsnwt.project.team9.constants.GeolocationConstants;
 import com.ktsnwt.project.team9.dto.GeolocationDTO;
-import com.ktsnwt.project.team9.dto.UserLoginDTO;
-import com.ktsnwt.project.team9.dto.response.UserTokenStateDTO;
 import com.ktsnwt.project.team9.helper.implementations.CustomPageImplementation;
 import com.ktsnwt.project.team9.model.Geolocation;
 import com.ktsnwt.project.team9.services.implementations.GeolocationService;
@@ -40,25 +37,28 @@ public class GeolocationControllerIntegrationTest {
 
 	@Autowired
 	private GeolocationService geolocationService;
-
-	private String accessToken;
-
-	public void login(String username, String password) {
-		ResponseEntity<UserTokenStateDTO> responseEntity = restTemplate.postForEntity("/auth/login",
-				new UserLoginDTO(username, password), UserTokenStateDTO.class);
-		accessToken = "Bearer " + responseEntity.getBody().getAccessToken();
-	}
+	
+	/*
+	 * private String accessToken;
+	 * 
+	 * public void login(String username, String password) {
+	 * ResponseEntity<UserTokenStateDTO> responseEntity =
+	 * restTemplate.postForEntity("/auth/login", new UserLoginDTO(username,
+	 * password), UserTokenStateDTO.class); accessToken = "Bearer " +
+	 * responseEntity.getBody().getAccessToken(); }
+	 */
 
 	@Test
 	public void testGetAllGeolocations_ShouldReturnAllGeolocations() {
-		login("email_adresa1@gmail.com", "sifra123");
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Authorization", accessToken);
-		HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
+		// login("admin",
+		// "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918");
+		// HttpHeaders headers = new HttpHeaders();
+		// headers.add("Authorization", accessToken);
+		// HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
 		int size = ((List<Geolocation>) geolocationService.getAll()).size();
 
-		ResponseEntity<GeolocationDTO[]> responseEntity = restTemplate.exchange("/api/geolocations", HttpMethod.GET,
-				httpEntity, GeolocationDTO[].class);
+		ResponseEntity<GeolocationDTO[]> responseEntity = restTemplate.getForEntity("/api/geolocations",
+				GeolocationDTO[].class);
 
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 		assertEquals(size, responseEntity.getBody().length);
@@ -66,17 +66,13 @@ public class GeolocationControllerIntegrationTest {
 
 	@Test
 	public void testGetAllGeolocations_WithPageable_ShouldReturnFirst10Geolocations() {
-		login("email_adresa1@gmail.com", "sifra123");
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Authorization", accessToken);
-		HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
 		Pageable pageable = PageRequest.of(0, 10);
 		int size = geolocationService.getAll(pageable).getNumberOfElements();
 		ParameterizedTypeReference<CustomPageImplementation<GeolocationDTO>> type = new ParameterizedTypeReference<CustomPageImplementation<GeolocationDTO>>() {
 		};
 
 		ResponseEntity<CustomPageImplementation<GeolocationDTO>> responseEntity = restTemplate
-				.exchange("/api/geolocations/by-page?page=0&size=10", HttpMethod.GET, httpEntity, type);
+				.exchange("/api/geolocations/by-page?page=0&size=10", HttpMethod.GET, null, type);
 
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 		assertNotNull(responseEntity.getBody());
@@ -85,17 +81,13 @@ public class GeolocationControllerIntegrationTest {
 
 	@Test
 	public void testGetAllGeolocations_WithNonExistingPageable_ShouldReturnEmptyCollection() {
-		login("email_adresa1@gmail.com", "sifra123");
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Authorization", accessToken);
-		HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
 		Pageable pageable = PageRequest.of(3, 10);
 		int size = geolocationService.getAll(pageable).getNumberOfElements();
 		ParameterizedTypeReference<CustomPageImplementation<GeolocationDTO>> type = new ParameterizedTypeReference<CustomPageImplementation<GeolocationDTO>>() {
 		};
 
 		ResponseEntity<CustomPageImplementation<GeolocationDTO>> responseEntity = restTemplate
-				.exchange("/api/geolocations/by-page?page=3&size=10", HttpMethod.GET, httpEntity, type);
+				.exchange("/api/geolocations/by-page?page=3&size=10", HttpMethod.GET, null, type);
 
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 		assertNotNull(responseEntity.getBody());
@@ -104,12 +96,8 @@ public class GeolocationControllerIntegrationTest {
 
 	@Test
 	public void testGetGeolocation_WithExistingId_ShouldReturnGeolocationDTO() throws NotFoundException {
-		login("email_adresa1@gmail.com", "sifra123");
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Authorization", accessToken);
-		HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
-		ResponseEntity<GeolocationDTO> responseEntity = restTemplate.exchange("/api/geolocations/1", HttpMethod.GET,
-				httpEntity, GeolocationDTO.class);
+		ResponseEntity<GeolocationDTO> responseEntity = restTemplate.getForEntity("/api/geolocations/1",
+				GeolocationDTO.class);
 
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 		assertEquals("Neka lokacija 1", responseEntity.getBody().getLocation());
@@ -117,12 +105,8 @@ public class GeolocationControllerIntegrationTest {
 
 	@Test
 	public void testGetGeolocation_WithNonExistingId_ShouldReturnNotFound() {
-		login("email_adresa1@gmail.com", "sifra123");
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Authorization", accessToken);
-		HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
-		ResponseEntity<GeolocationDTO> responseEntity = restTemplate.exchange("/api/geolocations/55", HttpMethod.GET,
-				httpEntity, GeolocationDTO.class);
+		ResponseEntity<GeolocationDTO> responseEntity = restTemplate.getForEntity("/api/geolocations/55",
+				GeolocationDTO.class);
 
 		assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
 	}
@@ -130,11 +114,8 @@ public class GeolocationControllerIntegrationTest {
 	@Test
 	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
 	public void testCreateGeolocation_WithValidParameters_ShouldReturnCreatedGeolocation() throws NotFoundException {
-		login("email_adresa1@gmail.com", "sifra123");
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Authorization", accessToken);
 		int length = ((List<Geolocation>) geolocationService.getAll()).size();
-		HttpEntity<Object> httpEntity = new HttpEntity<Object>(GeolocationConstants.GEOLOCATIONNEW, headers);
+		HttpEntity<Object> httpEntity = new HttpEntity<Object>(GeolocationConstants.GEOLOCATIONNEW);
 
 		ResponseEntity<GeolocationDTO> responseEntity = restTemplate.postForEntity("/api/geolocations", httpEntity,
 				GeolocationDTO.class);
@@ -146,10 +127,7 @@ public class GeolocationControllerIntegrationTest {
 
 	@Test
 	public void testCreateGeolocation_WithExistingLatAndLon_ShouldReturnBadRequest() throws NotFoundException {
-		login("email_adresa1@gmail.com", "sifra123");
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Authorization", accessToken);
-		HttpEntity<Object> httpEntity = new HttpEntity<Object>(GeolocationConstants.GEOLOCATION1, headers);
+		HttpEntity<Object> httpEntity = new HttpEntity<Object>(GeolocationConstants.GEOLOCATION1);
 
 		ResponseEntity<GeolocationDTO> responseEntity = restTemplate.postForEntity("/api/geolocations", httpEntity,
 				GeolocationDTO.class);
@@ -159,10 +137,7 @@ public class GeolocationControllerIntegrationTest {
 
 	@Test
 	public void testCreateGeolocation_WithEmptyLocation_ShouldReturnBadRequest() throws NotFoundException {
-		login("email_adresa1@gmail.com", "sifra123");
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Authorization", accessToken);
-		HttpEntity<Object> httpEntity = new HttpEntity<Object>(new GeolocationDTO("", "", 5, 5), headers);
+		HttpEntity<Object> httpEntity = new HttpEntity<Object>(new GeolocationDTO("", "", 5, 5));
 
 		ResponseEntity<GeolocationDTO> responseEntity = restTemplate.postForEntity("/api/geolocations", httpEntity,
 				GeolocationDTO.class);
@@ -172,10 +147,7 @@ public class GeolocationControllerIntegrationTest {
 
 	@Test
 	public void testCreateGeolocation_WithNullLocation_ShouldReturnBadRequest() throws NotFoundException {
-		login("email_adresa1@gmail.com", "sifra123");
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Authorization", accessToken);
-		HttpEntity<Object> httpEntity = new HttpEntity<Object>(new GeolocationDTO("", null, 5, 5), headers);
+		HttpEntity<Object> httpEntity = new HttpEntity<Object>(new GeolocationDTO("", null, 5, 5));
 
 		ResponseEntity<GeolocationDTO> responseEntity = restTemplate.postForEntity("/api/geolocations", httpEntity,
 				GeolocationDTO.class);
@@ -186,14 +158,11 @@ public class GeolocationControllerIntegrationTest {
 	@Test
 	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
 	public void testDeleteGeolocation_WithExistingId_ShouldReturnTrue() throws NotFoundException {
-		login("email_adresa1@gmail.com", "sifra123");
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Authorization", accessToken);
 		int length = ((List<Geolocation>) geolocationService.getAll()).size();
 
 		ResponseEntity<Boolean> responseEntity = restTemplate.exchange(
 				"/api/geolocations/" + GeolocationConstants.IDFORDELETE, HttpMethod.DELETE,
-				new HttpEntity<Object>(headers), Boolean.class);
+				new HttpEntity<Object>(null), Boolean.class);
 
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 		assertTrue(responseEntity.getBody());
@@ -202,11 +171,8 @@ public class GeolocationControllerIntegrationTest {
 
 	@Test
 	public void testDeleteGeolocation_WithNonExistingId_ShouldReturnNotFound() throws NotFoundException {
-		login("email_adresa1@gmail.com", "sifra123");
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Authorization", accessToken);
 		ResponseEntity<Boolean> responseEntity = restTemplate.exchange("/api/geolocations/55", HttpMethod.DELETE,
-				new HttpEntity<Object>(headers), Boolean.class);
+				new HttpEntity<Object>(null), Boolean.class);
 
 		assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
 	}

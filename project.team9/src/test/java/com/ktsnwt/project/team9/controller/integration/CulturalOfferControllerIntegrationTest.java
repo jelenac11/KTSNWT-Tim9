@@ -34,9 +34,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import com.ktsnwt.project.team9.constants.CulturalOfferConstants;
 import com.ktsnwt.project.team9.dto.CulturalOfferDTO;
 import com.ktsnwt.project.team9.dto.GeolocationDTO;
-import com.ktsnwt.project.team9.dto.UserLoginDTO;
 import com.ktsnwt.project.team9.dto.response.CulturalOfferResDTO;
-import com.ktsnwt.project.team9.dto.response.UserTokenStateDTO;
 import com.ktsnwt.project.team9.helper.implementations.CustomPageImplementation;
 import com.ktsnwt.project.team9.model.CulturalOffer;
 import com.ktsnwt.project.team9.model.Geolocation;
@@ -59,19 +57,17 @@ public class CulturalOfferControllerIntegrationTest {
 	@Autowired
 	GeolocationService geolocationService;
 
-	private String accessToken;
-
-	public void login(String username, String password) {
-		ResponseEntity<UserTokenStateDTO> responseEntity = restTemplate.postForEntity("/auth/login",
-				new UserLoginDTO(username, password), UserTokenStateDTO.class);
-		accessToken = "Bearer " + responseEntity.getBody().getAccessToken();
-	}
-
+	/*
+	 * private String accessToken;
+	 * 
+	 * public void login(String username, String password) {
+	 * ResponseEntity<UserTokenStateDTO> responseEntity =
+	 * restTemplate.postForEntity("/auth/login", new UserLoginDTO(username,
+	 * password), UserTokenStateDTO.class); accessToken = "Bearer " +
+	 * responseEntity.getBody().getAccessToken(); }
+	 */
 	private HttpEntity<LinkedMultiValueMap<String, Object>> createFormData(CulturalOfferDTO culturalOffer,
 			String path) {
-		login("email_adresa1@gmail.com", "sifra123");
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Authorization", accessToken);
 		LinkedMultiValueMap<String, Object> parameters = new LinkedMultiValueMap<String, Object>();
 		// this is how to add multipartfile
 		parameters.add("file", new FileSystemResource(path));
@@ -81,7 +77,7 @@ public class CulturalOfferControllerIntegrationTest {
 		// this represent dto like json and content type json
 		HttpEntity<CulturalOfferDTO> dto = new HttpEntity<CulturalOfferDTO>(culturalOffer, partHeaders);
 		parameters.add("culturalOfferDTO", dto);
-		return new HttpEntity<LinkedMultiValueMap<String, Object>>(parameters, headers);
+		return new HttpEntity<LinkedMultiValueMap<String, Object>>(parameters);
 	}
 
 	@Test
@@ -192,19 +188,18 @@ public class CulturalOfferControllerIntegrationTest {
 	@Test
 	public void testFindCulturalOfferByName_WithContainsName_ShouldReturnTwoCulturalOffers() {
 		Pageable pageable = PageRequest.of(0, 10);
-		int size = culturalOfferService.findByNameContains(CulturalOfferConstants.SUBSTRING_NAME, pageable)
-				.getNumberOfElements();
+		int size = culturalOfferService.findByNameContains(CulturalOfferConstants.SUBSTRING_NAME, pageable).getNumberOfElements();
 		ParameterizedTypeReference<CustomPageImplementation<CulturalOfferResDTO>> type = new ParameterizedTypeReference<CustomPageImplementation<CulturalOfferResDTO>>() {
 		};
 
-		ResponseEntity<CustomPageImplementation<CulturalOfferResDTO>> responseEntity = restTemplate
-				.exchange("/api/cultural-offers/find-by-name/anast?page=0&size=10", HttpMethod.GET, null, type);
+		ResponseEntity<CustomPageImplementation<CulturalOfferResDTO>> responseEntity = restTemplate.exchange(
+				"/api/cultural-offers/find-by-name/anast?page=0&size=10", HttpMethod.GET, null, type);
 
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 		assertNotNull(responseEntity.getBody());
 		assertEquals(size, responseEntity.getBody().getNumberOfElements());
 	}
-
+	
 	@Test
 	public void testFindCulturalOfferByName_WithNotContainsName_ShouldReturnEmptyCollection() {
 		Pageable pageable = PageRequest.of(0, 10);
@@ -212,14 +207,14 @@ public class CulturalOfferControllerIntegrationTest {
 		ParameterizedTypeReference<CustomPageImplementation<CulturalOfferResDTO>> type = new ParameterizedTypeReference<CustomPageImplementation<CulturalOfferResDTO>>() {
 		};
 
-		ResponseEntity<CustomPageImplementation<CulturalOfferResDTO>> responseEntity = restTemplate
-				.exchange("/api/cultural-offers/find-by-name/ffbfx?page=0&size=10", HttpMethod.GET, null, type);
+		ResponseEntity<CustomPageImplementation<CulturalOfferResDTO>> responseEntity = restTemplate.exchange(
+				"/api/cultural-offers/find-by-name/ffbfx?page=0&size=10", HttpMethod.GET, null, type);
 
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 		assertNotNull(responseEntity.getBody());
 		assertEquals(size, responseEntity.getBody().getNumberOfElements());
 	}
-
+	
 	@Test
 	public void testGetCulturalOffer_WithExistingId_ShouldReturnCulturalOffer() {
 		ResponseEntity<CulturalOfferResDTO> responseEntity = restTemplate.getForEntity("/api/cultural-offers/1",
@@ -328,11 +323,9 @@ public class CulturalOfferControllerIntegrationTest {
 
 	@Test
 	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
-	public void testUpdateCulturalOffer_WithValidParameters_ShouldReturnUpdatedCulturalOffer()
-			throws IOException, NotFoundException {
-
+	public void testUpdateCulturalOffer_WithValidParameters_ShouldReturnUpdatedCulturalOffer() throws IOException, NotFoundException {
 		CulturalOffer culturalOffer = culturalOfferService.getById(1L);
-
+		
 		HttpEntity<LinkedMultiValueMap<String, Object>> entity = createFormData(
 				new CulturalOfferDTO("New updated name", "New description",
 						new GeolocationDTO("fgfdgf", "New updated location", 9, 9), 5L, 1L),
@@ -345,14 +338,15 @@ public class CulturalOfferControllerIntegrationTest {
 		assertEquals(5L, responseEntity.getBody().getCategory().getId());
 		assertEquals("New description", responseEntity.getBody().getDescription());
 		assertEquals("New updated location", responseEntity.getBody().getGeolocation().getLocation());
-
+		
 		Path path = Paths.get("src/main/resources/uploadedImages/slika1.jpg");
 		byte[] content = Files.readAllBytes(path);
-		MockMultipartFile file = new MockMultipartFile("file", "slika1.jpg", MediaType.IMAGE_JPEG_VALUE, content);
+		MockMultipartFile file = new MockMultipartFile("file", "slika1.jpg", MediaType.IMAGE_JPEG_VALUE,
+				content);
 
 		culturalOffer = culturalOfferService.update(1L, culturalOffer, file);
 	}
-
+	
 	@Test
 	public void testUpdateCulturalOffer_WithNonExistingId_ShouldReturnUpdatedCulturalOffer() throws IOException {
 		HttpEntity<LinkedMultiValueMap<String, Object>> entity = createFormData(
@@ -365,7 +359,7 @@ public class CulturalOfferControllerIntegrationTest {
 
 		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
 	}
-
+	
 	@Test
 	public void testUpdateCulturalOffer_WithExistingLatAndLon_ShouldReturnUpdatedCulturalOffer() throws IOException {
 		HttpEntity<LinkedMultiValueMap<String, Object>> entity = createFormData(
@@ -378,10 +372,9 @@ public class CulturalOfferControllerIntegrationTest {
 
 		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
 	}
-
+	
 	@Test
-	public void testUpdateCulturalOffer_WithNonExistingCategoryId_ShouldReturnUpdatedCulturalOffer()
-			throws IOException {
+	public void testUpdateCulturalOffer_WithNonExistingCategoryId_ShouldReturnUpdatedCulturalOffer() throws IOException {
 		HttpEntity<LinkedMultiValueMap<String, Object>> entity = createFormData(
 				new CulturalOfferDTO("New updated name", "New description",
 						CulturalOfferConstants.GEOLOCATION_EXIST_DTO, 55L, 1L),
@@ -390,15 +383,12 @@ public class CulturalOfferControllerIntegrationTest {
 		ResponseEntity<CulturalOfferResDTO> responseEntity = restTemplate.exchange("/api/cultural-offers/1",
 				HttpMethod.PUT, entity, CulturalOfferResDTO.class);
 
-		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());	
 	}
 
 	@Test
 	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
 	public void testDeleteCulturalOffer_WithExistingId_ShouldReturnTrue() throws Exception {
-		login("email_adresa1@gmail.com", "sifra123");
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Authorization", accessToken);
 		int length = ((List<CulturalOffer>) culturalOfferService.getAll()).size();
 		CulturalOffer culturalOffer = culturalOfferService.getById(20L);
 		Path path = Paths.get("src/main/resources/uploadedImages/Reka_imageForDelete.jpg");
@@ -407,7 +397,7 @@ public class CulturalOfferControllerIntegrationTest {
 				content);
 
 		ResponseEntity<Boolean> responseEntity = restTemplate.exchange("/api/cultural-offers/20", HttpMethod.DELETE,
-				new HttpEntity<Object>(headers), Boolean.class);
+				new HttpEntity<Object>(null), Boolean.class);
 
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 		assertTrue(responseEntity.getBody());
@@ -418,11 +408,8 @@ public class CulturalOfferControllerIntegrationTest {
 
 	@Test
 	public void testDeleteCulturalOffer_WithNonExistingId_ShouldReturnNotFound() throws Exception {
-		login("email_adresa1@gmail.com", "sifra123");
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Authorization", accessToken);
 		ResponseEntity<Boolean> responseEntity = restTemplate.exchange("/api/cultural-offers/55", HttpMethod.DELETE,
-				new HttpEntity<Object>(headers), Boolean.class);
+				new HttpEntity<Object>(null), Boolean.class);
 
 		assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
 

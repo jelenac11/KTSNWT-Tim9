@@ -221,7 +221,7 @@ public class CulturalOfferServiceIntegrationTest {
 		int length = ((List<CulturalOffer>) culturalOfferService.getAll()).size();
 		int lengthGeolocation = ((List<Geolocation>) geolocationService.getAll()).size();
 		CulturalOffer culturalOffer = culturalOfferService.getById(1L);
-		Path pathComment = Paths.get("src/main/resources/uploadedImages/comment_slika6.jpg");
+		Path pathComment = Paths.get("src/main/resources/uploadedImages/slika6.jpg");
 		byte[] contentCommentImage = Files.readAllBytes(pathComment);
 		File fileExistCommentImage = new File(pathComment.toString());
 		Path path = Paths.get(culturalOffer.getImage().getUrl());
