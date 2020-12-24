@@ -148,7 +148,7 @@ public class NewsControllerIntegrationTest {
 	public void testCreateNews_WithValidParameters_ShouldReturnCreatedNews() throws Exception {
 		int beforeSize = ((List<News>) newsService.getAll()).size();
 
-		login("email_adresa1@gmail.com", "admin1");
+		login("email_adresa1@gmail.com", "sifra123");
         HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", accessToken);
 		
@@ -169,7 +169,7 @@ public class NewsControllerIntegrationTest {
 	@Test
 	public void testCreateNews_WithEmptyContent_ShouldReturnBadRequest() throws NotFoundException {
 		
-		login("email_adresa1@gmail.com", "admin1");
+		login("email_adresa1@gmail.com", "sifra123");
         HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", accessToken);
 		
@@ -183,7 +183,7 @@ public class NewsControllerIntegrationTest {
 	@Test
 	public void testCreateNews_WithNegativeDate_ShouldReturnBadRequest() throws NotFoundException {
 		
-		login("email_adresa1@gmail.com", "admin1");
+		login("email_adresa1@gmail.com", "sifra123");
         HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", accessToken);
 		
@@ -197,7 +197,7 @@ public class NewsControllerIntegrationTest {
 	@Test
 	public void testCreateNews_WithNotExistingCulturalOfferID_ShouldReturnBadRequest() throws NotFoundException {
 		
-		login("email_adresa1@gmail.com", "admin1");
+		login("email_adresa1@gmail.com", "sifra123");
         HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", accessToken);
 		
@@ -213,7 +213,7 @@ public class NewsControllerIntegrationTest {
 	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
 	public void testUpdateNews_WithValidParameters_ShouldReturnUpdatedNews() {
 		
-		login("email_adresa1@gmail.com", "admin1");
+		login("email_adresa1@gmail.com", "sifra123");
         HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", accessToken);
 		
@@ -229,7 +229,7 @@ public class NewsControllerIntegrationTest {
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 		assertNotNull(news);
 		//Proveri da li je promenio kontekst
-		assertEquals(NEWS_ID, news.getContent());
+		assertEquals(NEWS_ID, news.getID());
 		assertEquals(NEWS_FOR_UPDATE.getContent(), news.getContent());
 		//Proveri da li je promenio kontekst u bazi
 		assertEquals(NEWS_ID, baseNews.getId());
@@ -241,7 +241,7 @@ public class NewsControllerIntegrationTest {
 	@Test
 	public void testUpdateNews_WithEmptyContent_ShouldReturnBadRequest() {
 		
-		login("email_adresa1@gmail.com", "admin1");
+		login("email_adresa1@gmail.com", "sifra123");
         HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", accessToken);
 		
@@ -256,7 +256,7 @@ public class NewsControllerIntegrationTest {
 	@Test
 	public void testUpdateNews_WithNonExistingId_ShouldReturnBadRequest() {
 		
-		login("email_adresa1@gmail.com", "admin1");
+		login("email_adresa1@gmail.com", "sifra123");
         HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", accessToken);
 		
@@ -273,7 +273,7 @@ public class NewsControllerIntegrationTest {
 	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
 	public void testDeleteNews_WithExistingId_ShouldReturnTrue() throws NotFoundException {
 		
-		login("email_adresa1@gmail.com", "admin1");
+		login("email_adresa1@gmail.com", "sifra123");
         HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", accessToken);
 		
@@ -281,7 +281,7 @@ public class NewsControllerIntegrationTest {
 
 		ResponseEntity<String> responseEntity = restTemplate.exchange(
 				"/api/news/" + NEWS_ID, HttpMethod.DELETE,
-				new HttpEntity<Object>(null), String.class);
+				new HttpEntity<Object>(null, headers), String.class);
 
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 		assertTrue(Boolean.parseBoolean(responseEntity.getBody()));
@@ -291,7 +291,7 @@ public class NewsControllerIntegrationTest {
 	@Test
 	public void testDeleteNews_WithNonExistingId_ShouldReturnNotFound() throws NotFoundException {
 		
-		login("email_adresa1@gmail.com", "admin1");
+		login("email_adresa1@gmail.com", "sifra123");
         HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", accessToken);
 		
@@ -303,14 +303,15 @@ public class NewsControllerIntegrationTest {
 	
 	
 	@Test
-	public void testSubscribe_WithExistingId_ShouldReturnTurn() {
+	public void testSubscribe_WithExistingId_ShouldReturnTrue() {
 		
-		login("email_adresa20@gmail.com", "user20");
+		login("email_adresa20@gmail.com", "sifra123");
         HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", accessToken);
 		
 		
-		ResponseEntity<String> responseEntity = restTemplate.exchange("/api/news/subscibe/" + EXISTING_REGISTERED_USER_ID + "/" + EXISTING_CULTURAL_OFFER_ID
+		ResponseEntity<String> responseEntity = restTemplate.exchange("/api/news/subscribe/" +
+					EXISTING_REGISTERED_USER_ID + "/" + CULTURAL_OFFER_ID_NOT_SUBSCRIBED
 				, HttpMethod.PUT,
 				new HttpEntity<Object>(null, headers), String.class);
 		
@@ -319,13 +320,30 @@ public class NewsControllerIntegrationTest {
 	}
 	
 	@Test
-	public void testSubscribe_WithNotExistingUserId_ShouldReturnNotFound() {
+	public void testSubscribe_AllreadySubscribed_ShouldReturnFalse() {
 		
-		login("email_adresa20@gmail.com", "user20");
+		login("email_adresa20@gmail.com", "sifra123");
         HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", accessToken);
 		
-		ResponseEntity<String> responseEntity = restTemplate.exchange("/api/news/subscibe/" + NON_EXISTING_REGISTERED_USER_ID + "/" + EXISTING_CULTURAL_OFFER_ID
+		
+		ResponseEntity<String> responseEntity = restTemplate.exchange("/api/news/subscribe/" +
+					EXISTING_REGISTERED_USER_ID + "/" + EXISTING_CULTURAL_OFFER_ID
+				, HttpMethod.PUT,
+				new HttpEntity<Object>(null, headers), String.class);
+		
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+		assertFalse(Boolean.parseBoolean(responseEntity.getBody()));
+	}
+	
+	@Test
+	public void testSubscribe_WithNotExistingUserId_ShouldReturnNotFound() {
+		
+		login("email_adresa20@gmail.com", "sifra123");
+        HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", accessToken);
+		
+		ResponseEntity<String> responseEntity = restTemplate.exchange("/api/news/subscribe/" + NON_EXISTING_REGISTERED_USER_ID + "/" + EXISTING_CULTURAL_OFFER_ID
 				, HttpMethod.PUT,
 				new HttpEntity<Object>(null, headers), String.class);
 		
@@ -335,11 +353,11 @@ public class NewsControllerIntegrationTest {
 	@Test
 	public void testSubscribe_WithNotExistingCOId_ShouldReturnNotFound() {
 		
-		login("email_adresa20@gmail.com", "user20");
+		login("email_adresa20@gmail.com", "sifra123");
         HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", accessToken);
 		
-		ResponseEntity<String> responseEntity = restTemplate.exchange("/api/news/subscibe/" + EXISTING_REGISTERED_USER_ID + "/" + NON_EXISTING_CULTURAL_OFFER_ID
+		ResponseEntity<String> responseEntity = restTemplate.exchange("/api/news/subscribe/" + EXISTING_REGISTERED_USER_ID + "/" + NON_EXISTING_CULTURAL_OFFER_ID
 				, HttpMethod.PUT,
 				new HttpEntity<Object>(null, headers), String.class);
 		
@@ -347,9 +365,9 @@ public class NewsControllerIntegrationTest {
 	}
 	
 	@Test
-	public void testUnsubscribe_WithExistingId_ShouldReturnTurn() {
+	public void testUnsubscribe_WithExistingId_ShouldReturnTrue() {
 		
-		login("email_adresa20@gmail.com", "user20");
+		login("email_adresa20@gmail.com", "sifra123");
         HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", accessToken);
 		
@@ -364,7 +382,7 @@ public class NewsControllerIntegrationTest {
 	@Test
 	public void testUnsubscribe_WithNotExistingUserId_ShouldReturnNotFound() {
 		
-		login("email_adresa20@gmail.com", "user20");
+		login("email_adresa20@gmail.com", "sifra123");
         HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", accessToken);
 		
@@ -378,7 +396,7 @@ public class NewsControllerIntegrationTest {
 	@Test
 	public void testUnsubscribe_WithNotExistingCOId_ShouldReturnNotFound() {
 		
-		login("email_adresa20@gmail.com", "user20");
+		login("email_adresa20@gmail.com", "sifra123");
         HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", accessToken);
 		
@@ -394,7 +412,7 @@ public class NewsControllerIntegrationTest {
 	@Test
 	public void testGetSubscribedNews_WithExistingUserId_ShouldReturnFirst5News(){
 		
-		login("email_adresa20@gmail.com", "user20");
+		login("email_adresa20@gmail.com", "sifra123");
         HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", accessToken);
 		
@@ -406,7 +424,7 @@ public class NewsControllerIntegrationTest {
 		};
 
 		ResponseEntity<CustomPageImplementation<NewsDTO>> responseEntity = restTemplate
-				.exchange("/api/news/subscribed-news?page=" + PAGE_NO + "&size=" + PAGE_SIZE, HttpMethod.GET,
+				.exchange("/api/news/subscribed-news/" + EXISTING_REGISTERED_USER_ID + "?page=" + PAGE_NO + "&size=" + PAGE_SIZE, HttpMethod.GET,
 						new HttpEntity<>(null,headers), type);
 
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
@@ -420,7 +438,7 @@ public class NewsControllerIntegrationTest {
 	public void testGetSubscribedNews_WithNonExistingUserId_ShouldReturnEmptyCollection(){
 
 		
-		login("email_adresa20@gmail.com", "user20");
+		login("email_adresa20@gmail.com", "sifra123");
         HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", accessToken);
 		
@@ -429,7 +447,7 @@ public class NewsControllerIntegrationTest {
 		};
 
 		ResponseEntity<CustomPageImplementation<NewsDTO>> responseEntity = restTemplate
-				.exchange("/api/news/subscribed-news?page=" + PAGE_NO + "&size=" + PAGE_SIZE, HttpMethod.GET, 
+				.exchange("/api/news/subscribed-news/" + NON_EXISTING_REGISTERED_USER_ID + "?page=" + PAGE_NO + "&size=" + PAGE_SIZE, HttpMethod.GET, 
 						new HttpEntity<>(null,headers), type);
 
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());

@@ -9,7 +9,7 @@ public class CategoryConstants {
 	public static final int PAGE_SIZE = 5;
 	
 
-	public static final Long EXISTING_CATEGORY_ID= 1L;
+	public static final Long EXISTING_CATEGORY_ID= 11L;
 	public static final Long NON_EXISTING_CATEGORY_ID = 300L;
 	
 	

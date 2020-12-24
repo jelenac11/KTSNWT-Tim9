@@ -8,12 +8,11 @@ INSERT INTO category(active, description, name) VALUES(true, 'Lorem ipsum dolor 
 INSERT INTO category(active, description, name) VALUES(true, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vestibulum dapibus nisl sit amet laoreet. Etiam congue convallis egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere.', 'Nacionalni parkovi');
 INSERT INTO category(active, description, name) VALUES(true, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vestibulum dapibus nisl sit amet laoreet. Etiam congue convallis egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere.', 'Planine');
 INSERT INTO category(active, description, name) VALUES(true, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vestibulum dapibus nisl sit amet laoreet. Etiam congue convallis egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere.', 'Reke');
+INSERT INTO category(active, description, name) VALUES(true, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vestibulum dapibus nisl sit amet laoreet. Etiam congue convallis egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere.', 'Kategorija za brisanje');
 
 
 INSERT INTO authority (name) VALUES ('ROLE_REGISTERED_USER');
 INSERT INTO authority (name) VALUES ('ROLE_ADMIN');
-																																								/*admin1*/
-INSERT INTO users_table(type, email, first_name, last_name, password, username, active, verified) VALUES('AD', 'email_adresa1@gmail.com', 'admin1', 'admin1', '$2y$12$aigrFZnbDqmoCkULo1RIiONwCpnNMMi7V1NFRbly9PS3HWYYKIZs.', 'admin 1', true, true);
 
 INSERT INTO users_table(type, email, first_name, last_name, password, username, active, verified, last_password_reset_date) VALUES('AD', 'email_adresa1@gmail.com', 'admin1', 'admin1', '$2a$10$pW9Eee2ptMXCv41gjTsFrujLAo6WTRI8LcfA1/qHtyTU5Gn2xHoym', 'admin 1', true, true, 1608560339402);
 INSERT INTO users_table(type, email, first_name, last_name, password, username, active, verified, last_password_reset_date) VALUES('AD', 'email_adresa2@gmail.com', 'admin2', 'admin2', '$2a$10$pW9Eee2ptMXCv41gjTsFrujLAo6WTRI8LcfA1/qHtyTU5Gn2xHoym', 'admin 2', true, true, 1608560339402);

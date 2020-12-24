@@ -111,6 +111,7 @@ public class NewsController {
 		try {
 			return new ResponseEntity<String>(newsService.subscribe(userID, coID)+ "", HttpStatus.OK);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
 		}
 	}

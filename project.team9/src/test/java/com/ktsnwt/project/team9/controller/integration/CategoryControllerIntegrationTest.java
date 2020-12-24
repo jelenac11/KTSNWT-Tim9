@@ -104,8 +104,15 @@ public class CategoryControllerIntegrationTest {
 
 	@Test
 	public void testGetCategory_WithExistingId_ShouldReturnCategoryDTO() throws NotFoundException {
-		ResponseEntity<CategoryDTO> responseEntity = restTemplate.getForEntity("/api/categories/1",
-				CategoryDTO.class);
+		
+		login("email_adresa1@gmail.com", "sifra123");
+        HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", accessToken);
+		
+		ResponseEntity<CategoryDTO> responseEntity = restTemplate.exchange("/api/categories/1", HttpMethod.GET,
+                new HttpEntity<>(headers),
+                CategoryDTO.class);
+		
 
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 		assertEquals(EXISTING_DESC, responseEntity.getBody().getDescription());
@@ -114,9 +121,17 @@ public class CategoryControllerIntegrationTest {
 
 	@Test
 	public void testGetCategory_WithNonExistingId_ShouldReturnNotFound() {
-		ResponseEntity<CategoryDTO> responseEntity = restTemplate.getForEntity("/api/categories/10000",
-				CategoryDTO.class);
+		
+		login("email_adresa1@gmail.com", "sifra123");
+        HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", accessToken);
+		
+		ResponseEntity<CategoryDTO> responseEntity = restTemplate.exchange("/api/categories/10000", HttpMethod.GET,
+                new HttpEntity<>(headers),
+                CategoryDTO.class);
 
+		
+		
 		assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
 	}
 
@@ -124,7 +139,7 @@ public class CategoryControllerIntegrationTest {
 	public void testCreateCategory_WithValidParameters_ShouldReturnCreatedCategory() throws Exception {
 		int beforeSize = ((List<Category>) categoryService.getAll()).size();
 
-		login("email_adresa1@gmail.com", "admin1");
+		login("email_adresa1@gmail.com", "sifra123");
         HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", accessToken);
 		
@@ -145,7 +160,7 @@ public class CategoryControllerIntegrationTest {
 	@Test
 	public void testCreateCategory_WithEmptyName_ShouldReturnBadRequest() throws NotFoundException {
 		
-		login("email_adresa1@gmail.com", "admin1");
+		login("email_adresa1@gmail.com", "sifra123");
         HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", accessToken);
 		
@@ -161,7 +176,7 @@ public class CategoryControllerIntegrationTest {
 	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
 	public void testUpdateCategory_WithValidParameters_ShouldReturnUpdatedCategory() {
 		
-		login("email_adresa1@gmail.com", "admin1");
+		login("email_adresa1@gmail.com", "sifra123");
         HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", accessToken);
 		
@@ -189,7 +204,7 @@ public class CategoryControllerIntegrationTest {
 	@Test
 	public void testUpdateCategory_WithEmptyContent_ShouldReturnBadRequest() throws NotFoundException {
 		
-		login("email_adresa1@gmail.com", "admin1");
+		login("email_adresa1@gmail.com", "sifra123");
         HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", accessToken);
 		
@@ -204,7 +219,7 @@ public class CategoryControllerIntegrationTest {
 	@Test
 	public void testUpdateCategory_WithNonExistingId_ShouldReturnBadRequest() throws NotFoundException {
 		
-		login("email_adresa1@gmail.com", "admin1");
+		login("email_adresa1@gmail.com", "sifra123");
         HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", accessToken);
 		
@@ -221,7 +236,7 @@ public class CategoryControllerIntegrationTest {
 	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
 	public void testDeleteCategory_WithExistingId_ShouldReturnTrue() throws NotFoundException {
 		
-		login("email_adresa1@gmail.com", "admin1");
+		login("email_adresa1@gmail.com", "sifra123");
         HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", accessToken);
 		
@@ -229,7 +244,7 @@ public class CategoryControllerIntegrationTest {
 
 		ResponseEntity<String> responseEntity = restTemplate.exchange(
 				"/api/categories/" + EXISTING_CATEGORY_ID, HttpMethod.DELETE,
-				new HttpEntity<Object>(null), String.class);
+				new HttpEntity<Object>(null, headers), String.class);
 
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 		assertTrue(Boolean.parseBoolean(responseEntity.getBody()));
@@ -239,7 +254,7 @@ public class CategoryControllerIntegrationTest {
 	@Test
 	public void testDeleteCategory_WithNonExistingId_ShouldReturnNotFound() throws NotFoundException {
 		
-		login("email_adresa1@gmail.com", "admin1");
+		login("email_adresa1@gmail.com", "sifra123");
         HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", accessToken);
 		
