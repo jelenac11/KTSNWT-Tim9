@@ -173,11 +173,11 @@ public class AuthenticationController {
 		try {
 			authorityService.confirmRegistration(url);
 		} catch (NoSuchElementException e) {
-			return new ResponseEntity<>("Token doesn't exist.", HttpStatus.OK);
+			return new ResponseEntity<>("Token doesn't exist.", HttpStatus.NOT_FOUND);
 		} catch (Exception e) {
 			return new ResponseEntity<>("Error happened.", HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<>("Account activated.", HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>("Account activated.", HttpStatus.OK);
 	}
 
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_REGISTERED_USER')")

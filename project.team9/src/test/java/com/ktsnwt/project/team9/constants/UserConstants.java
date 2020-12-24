@@ -19,7 +19,7 @@ public class UserConstants {
 	public static final String USERNAME_UPDATED = "user 120";
 	public static final String NON_EXISTING_USERNAME = "user 30";
 	
-	public static final String PASSWORD = "user";
+	public static final String PASSWORD = "sifra123";
 	public static final String FIRST_NAME = "First";
 	public static final String LAST_NAME = "Last";
 	public static final String PASSWORD_UPDATED = "password123";
