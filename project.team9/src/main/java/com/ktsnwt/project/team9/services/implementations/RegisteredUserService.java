@@ -3,6 +3,9 @@ package com.ktsnwt.project.team9.services.implementations;
 import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -43,10 +46,15 @@ public class RegisteredUserService implements IRegisteredUserService {
 
 	@Override
 	public RegisteredUser getById(Long id) {
-		return registeredUserRepository.findById(id).orElse(null);
+		Optional<RegisteredUser> user = registeredUserRepository.findById(id);
+		if (!user.isPresent()) {
+			return null;
+		}
+		return user.get();
 	}
 
 	@Override
+	@Transactional
 	public RegisteredUser create(RegisteredUser entity) throws Exception {
 		User usernameUser = userRepository.findByUsername(entity.getUsername());
 		if (usernameUser != null) {
@@ -58,14 +66,16 @@ public class RegisteredUserService implements IRegisteredUserService {
 		}
 		List<Authority> auth = authService.findByName("ROLE_REGISTERED_USER");
         entity.setAuthorities(auth);
+        entity.setVerified(false);
         entity.setPassword(passwordEncoder.encode(entity.getPassword()));
         entity.setLastPasswordResetDate(new Date().getTime());
 		return registeredUserRepository.save(entity);
 	}
 
 	@Override
+	@Transactional
 	public boolean delete(Long id) throws Exception {
-		RegisteredUser registeredUser = registeredUserRepository.findById(id).orElse(null);
+		RegisteredUser registeredUser = getById(id);
 		if (registeredUser == null) {
 			throw new NoSuchElementException("Registered user with given id doesn't exist.");
 		}

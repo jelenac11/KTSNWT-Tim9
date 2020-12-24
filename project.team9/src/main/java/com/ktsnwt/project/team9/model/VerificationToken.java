@@ -31,11 +31,6 @@ public class VerificationToken {
 	@OneToOne(targetEntity = RegisteredUser.class, fetch = FetchType.LAZY)
 	@JoinColumn(nullable = false, name = "user_id")
 	private RegisteredUser user;
-	
-	public VerificationToken(String token, RegisteredUser user) {
-		this.token = token;
-		this.user = user;
-	}
 
 	public VerificationToken(String token, RegisteredUser user) {
 		this.token = token;

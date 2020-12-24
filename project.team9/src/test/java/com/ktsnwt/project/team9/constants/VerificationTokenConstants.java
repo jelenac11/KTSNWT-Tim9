@@ -13,6 +13,8 @@ public class VerificationTokenConstants {
 	public static final String NON_EXISTING_TOKEN = "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJzcHJpbmctc2VjdXJpdHktZXhhbXBsZSIsInN1YiI6ImVtYWlsQGdtYWlsLmNvbSIsImF";
 	public static final String NEW_TOKEN = "khdfjheyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJzcHJpbmctc2VjdXJpdHktZXhhbXBsZSIsInN1YiI6ImVtYWlsQGdtYWlsLmNvbSIsImF";
 	
+	public static final Long ID = 1L;
+	
 	public static final String EMAIL = "email_adresa21@gmail.com";
 	public static final String NON_EXISTING_EMAIL = "email_adresa66@gmail.com";
 	public static final Long USER_ID = 9L;

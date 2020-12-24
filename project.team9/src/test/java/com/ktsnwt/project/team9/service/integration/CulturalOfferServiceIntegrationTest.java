@@ -147,6 +147,24 @@ public class CulturalOfferServiceIntegrationTest {
 
 		assertEquals(0, culturalOffers.getNumberOfElements());
 	}
+	
+	@Test
+	public void testFindByNameContains_WithContainsName_ShouldReturnTwoGeolocations() {
+		Pageable pageable = PageRequest.of(0, 10);
+
+		Page<CulturalOffer> culturalOffers = culturalOfferService.findByNameContains(CulturalOfferConstants.SUBSTRING_NAME, pageable);
+
+		assertEquals(2, culturalOffers.getNumberOfElements());
+	}
+	
+	@Test
+	public void testFindByNameContains_WithNotContainsName_ShouldReturnEmptyCollection() {
+		Pageable pageable = PageRequest.of(0, 10);
+
+		Page<CulturalOffer> culturalOffers = culturalOfferService.findByNameContains("dhgd", pageable);
+
+		assertEquals(0, culturalOffers.getNumberOfElements());
+	}
 
 	@Test
 	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)

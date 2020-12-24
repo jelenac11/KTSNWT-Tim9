@@ -2,6 +2,8 @@ package com.ktsnwt.project.team9.services.implementations;
 
 import java.util.Collection;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,9 +11,11 @@ import org.springframework.stereotype.Service;
 
 import com.ktsnwt.project.team9.model.CulturalOffer;
 import com.ktsnwt.project.team9.model.News;
+import com.ktsnwt.project.team9.model.RegisteredUser;
 import com.ktsnwt.project.team9.repositories.INewsRepository;
 import com.ktsnwt.project.team9.services.interfaces.ICulturalOfferService;
 import com.ktsnwt.project.team9.services.interfaces.INewsService;
+import com.ktsnwt.project.team9.services.interfaces.IRegisteredUserService;
 
 @Service
 public class NewsService implements INewsService {
@@ -22,6 +26,9 @@ public class NewsService implements INewsService {
 	
 	@Autowired
 	private ICulturalOfferService culturalOfferService;
+	
+	@Autowired
+	private IRegisteredUserService userService;
 	
 	@Autowired
 	private MailService mailService;
@@ -99,4 +106,35 @@ public class NewsService implements INewsService {
 	public Page<News> findAll(Pageable pageable) {
 		return newsRepository.findAll(pageable);
 	}
+
+	@Transactional
+	public Boolean subscribe(Long userID, Long coID) throws Exception {
+		RegisteredUser ru = userService.getById(userID);
+		CulturalOffer co = culturalOfferService.getById(coID);
+		
+		if(ru == null) 
+			throw new Exception("There is no registred user with that ID");
+		else if(co == null)
+			throw new Exception("There is no cultural offer with that ID");
+		
+		return ru.getSubscribed().add(co) && co.getSubscribedUsers().add(ru);
+	}
+	
+	@Transactional
+	public Boolean unsubscribe(Long userID, Long coID) throws Exception {
+		RegisteredUser ru = userService.getById(userID);
+		CulturalOffer co = culturalOfferService.getById(coID);
+		
+		if(ru == null) 
+			throw new Exception("There is no registred user with that ID");
+		else if(co == null)
+			throw new Exception("There is no cultural offer with that ID");
+		
+		return ru.getSubscribed().remove(co) && co.getSubscribedUsers().remove(ru);
+	}
+
+	public Page<News> getSubscribedNews(Long id, Pageable pageable) {
+		return newsRepository.findSubscribedNews(id,pageable);
+	}
+	
 }

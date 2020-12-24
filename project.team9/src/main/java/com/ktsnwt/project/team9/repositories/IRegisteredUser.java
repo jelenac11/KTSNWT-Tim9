@@ -20,7 +20,7 @@ public interface IRegisteredUser extends JpaRepository<RegisteredUser, Long> {
 	
 	RegisteredUser findByUsername(String username);
 	
-	@Query(value ="SELECT * FROM users_table a WHERE a.type='RU' AND ((LOWER(a.username) LIKE ?1) OR (LOWER(a.email) LIKE ?1) OR (LOWER(a.first_name) LIKE ?1) OR (LOWER(a.last_name) LIKE ?1))", nativeQuery=true)
+	@Query(value ="SELECT * FROM users_table a WHERE a.type='RU' AND ((LOWER(a.username) LIKE LOWER(?1)) OR (LOWER(a.email) LIKE LOWER(?1)) OR (LOWER(a.first_name) LIKE LOWER(?1)) OR (LOWER(a.last_name) LIKE LOWER(?1)))", nativeQuery=true)
 	Page<RegisteredUser> findByUsernameOrEmailOrFirstNameOrLastNameContainingIgnoreCase(String value, Pageable pageable);
 	
 }

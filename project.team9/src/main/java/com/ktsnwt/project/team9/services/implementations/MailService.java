@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ktsnwt.project.team9.model.News;
 
-@Component
+@Service
 public class MailService {
 
 	@Autowired

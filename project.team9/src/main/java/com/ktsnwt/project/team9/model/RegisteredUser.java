@@ -28,7 +28,7 @@ public class RegisteredUser extends User {
 	@OneToMany(mappedBy = "grader", cascade = CascadeType.ALL)
 	private Set<Mark> marks;
 	
-	@OneToMany(mappedBy = "author")
+	@OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
 	private Set<Comment> comments;
 	
 	@ManyToMany(cascade=CascadeType.ALL)  

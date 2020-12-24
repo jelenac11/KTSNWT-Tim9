@@ -186,6 +186,36 @@ public class CulturalOfferControllerIntegrationTest {
 	}
 
 	@Test
+	public void testFindCulturalOfferByName_WithContainsName_ShouldReturnTwoCulturalOffers() {
+		Pageable pageable = PageRequest.of(0, 10);
+		int size = culturalOfferService.findByNameContains(CulturalOfferConstants.SUBSTRING_NAME, pageable).getNumberOfElements();
+		ParameterizedTypeReference<CustomPageImplementation<CulturalOfferResDTO>> type = new ParameterizedTypeReference<CustomPageImplementation<CulturalOfferResDTO>>() {
+		};
+
+		ResponseEntity<CustomPageImplementation<CulturalOfferResDTO>> responseEntity = restTemplate.exchange(
+				"/api/cultural-offers/find-by-name/anast?page=0&size=10", HttpMethod.GET, null, type);
+
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+		assertNotNull(responseEntity.getBody());
+		assertEquals(size, responseEntity.getBody().getNumberOfElements());
+	}
+	
+	@Test
+	public void testFindCulturalOfferByName_WithNotContainsName_ShouldReturnEmptyCollection() {
+		Pageable pageable = PageRequest.of(0, 10);
+		int size = culturalOfferService.findByNameContains("ffbfx", pageable).getNumberOfElements();
+		ParameterizedTypeReference<CustomPageImplementation<CulturalOfferResDTO>> type = new ParameterizedTypeReference<CustomPageImplementation<CulturalOfferResDTO>>() {
+		};
+
+		ResponseEntity<CustomPageImplementation<CulturalOfferResDTO>> responseEntity = restTemplate.exchange(
+				"/api/cultural-offers/find-by-name/ffbfx?page=0&size=10", HttpMethod.GET, null, type);
+
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+		assertNotNull(responseEntity.getBody());
+		assertEquals(size, responseEntity.getBody().getNumberOfElements());
+	}
+	
+	@Test
 	public void testGetCulturalOffer_WithExistingId_ShouldReturnCulturalOffer() {
 		ResponseEntity<CulturalOfferResDTO> responseEntity = restTemplate.getForEntity("/api/cultural-offers/1",
 				CulturalOfferResDTO.class);
