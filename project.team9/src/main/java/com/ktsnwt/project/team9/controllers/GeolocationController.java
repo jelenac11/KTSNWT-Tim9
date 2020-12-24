@@ -28,8 +28,8 @@ import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping(value = "/api/geolocations", produces = MediaType.APPLICATION_JSON_VALUE)
-//@PreAuthorize("hasRole('ROLE_ADMIN')")
-@PreAuthorize("permitAll()")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
+//@PreAuthorize("permitAll()")
 @AllArgsConstructor
 public class GeolocationController {
 
