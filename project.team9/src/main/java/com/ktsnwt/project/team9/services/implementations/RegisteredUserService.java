@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ktsnwt.project.team9.model.Authority;
+import com.ktsnwt.project.team9.model.CulturalOffer;
 import com.ktsnwt.project.team9.model.RegisteredUser;
 import com.ktsnwt.project.team9.model.User;
 import com.ktsnwt.project.team9.repositories.IRegisteredUser;
@@ -98,6 +99,10 @@ public class RegisteredUserService implements IRegisteredUserService {
 
 	public Page<RegisteredUser> searchRegUsers(Pageable pageable, String value) {
 		return registeredUserRepository.findByUsernameOrEmailOrFirstNameOrLastNameContainingIgnoreCase('%' + value.toLowerCase() + '%', pageable);
+	}
+
+	public List<RegisteredUser> getSubscribed(CulturalOffer culturalOffer) {
+		return registeredUserRepository.findBySubscribed(culturalOffer);
 	}
 	
 }
