@@ -22,6 +22,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.MethodMode;
 import org.springframework.test.context.TestPropertySource;
@@ -35,9 +39,7 @@ import com.ktsnwt.project.team9.model.CulturalOffer;
 import com.ktsnwt.project.team9.model.Image;
 import com.ktsnwt.project.team9.model.RegisteredUser;
 import com.ktsnwt.project.team9.services.implementations.CommentService;
-import com.ktsnwt.project.team9.services.implementations.CulturalOfferService;
 import com.ktsnwt.project.team9.services.implementations.ImageService;
-import com.ktsnwt.project.team9.services.implementations.RegisteredUserService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -54,10 +56,7 @@ public class CommentServiceIntegrationTest {
 	FileService fileService;
 	
 	@Autowired
-	RegisteredUserService regService;
-	
-	@Autowired
-	CulturalOfferService culturalOfferService;
+	AuthenticationManager authenticationManager;
 	
 	@Test
 	public void testGetAll_ShouldReturnAllCommentss() {
@@ -190,6 +189,28 @@ public class CommentServiceIntegrationTest {
 	@Test
 	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
 	public void testApproveComment_WithAllCorrectValuesForApproving_ShouldReturnComment() throws Exception {
+		Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(CommentConstants.ADMIN_EMAIL_THAT_SHOULD_UPDATE_COMMENT, CommentConstants.PASSWORD));
+		SecurityContextHolder.getContext().setAuthentication(auth);
+		Comment c = commentService.approveComment(CommentConstants.COMMENT_ID_TO_APPROVE, CommentConstants.APPROVED);
+		
+		assertNotNull(c);
+		assertTrue(c.isApproved());
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testApproveComment_WithAlreadyApprovedComment_ShouldThrowIllegalArgumentException() throws Exception {
+		Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(CommentConstants.ADMIN_EMAIL, CommentConstants.PASSWORD));
+		SecurityContextHolder.getContext().setAuthentication(auth);
+		Comment c = commentService.approveComment(CommentConstants.COMMENT_ID, CommentConstants.APPROVED);
+		
+		assertNotNull(c);
+		assertTrue(c.isApproved());
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testApproveComment_WithNotCorrectLoggedAdmin_ShouldThrowIllegalArgumentException() throws Exception {
+		Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(CommentConstants.ADMIN_EMAIL, CommentConstants.PASSWORD));
+		SecurityContextHolder.getContext().setAuthentication(auth);
 		Comment c = commentService.approveComment(CommentConstants.COMMENT_ID_TO_APPROVE, CommentConstants.APPROVED);
 		
 		assertNotNull(c);
@@ -199,6 +220,8 @@ public class CommentServiceIntegrationTest {
 	@Test
 	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
 	public void testApproveComment_WithAllCorrectValuesForDecliningWithNoImage_ShouldDeleteComment() throws Exception {
+		Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(CommentConstants.ADMIN_EMAIL_THAT_SHOULD_UPDATE_COMMENT, CommentConstants.PASSWORD));
+		SecurityContextHolder.getContext().setAuthentication(auth);
 		List<Comment> comments = (List<Comment>) commentService.getAll();
 		int number = comments.size();
 		
@@ -212,6 +235,8 @@ public class CommentServiceIntegrationTest {
 	@Test
 	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
 	public void testApproveComment_WithAllCorrectValuesForDecliningWithImage_ShouldDeleteComment() throws Exception {
+		Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(CommentConstants.ADMIN_EMAIL_THAT_SHOULD_UPDATE_COMMENT_WITH_IMG, CommentConstants.PASSWORD));
+		SecurityContextHolder.getContext().setAuthentication(auth);
 		List<Comment> comments = (List<Comment>) commentService.getAll();
 		int number = comments.size();
 		Path path = Paths.get("src/main/resources/uploadedImages/comment_slika6.jpg");
@@ -233,6 +258,8 @@ public class CommentServiceIntegrationTest {
 	
 	@Test(expected = NoSuchElementException.class)
 	public void testApproveComment_WithNonExistingId_ShouldThrowNoSuchElementException() throws Exception {
+		Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(CommentConstants.ADMIN_EMAIL_THAT_SHOULD_UPDATE_COMMENT_WITH_IMG, CommentConstants.PASSWORD));
+		SecurityContextHolder.getContext().setAuthentication(auth);
 		commentService.approveComment(CommentConstants.NON_EXISTING_COMMENT_ID, CommentConstants.APPROVED);
 	}
 	
@@ -250,8 +277,8 @@ public class CommentServiceIntegrationTest {
 	public void testCreate_WithValidValuesAndNoImage_ShouldReturnComment() throws Exception {
 		List<Comment> comments = (List<Comment>) commentService.getAll();
 		int number = comments.size();
-		RegisteredUser r = regService.getById(CommentConstants.USER_ID);
-		CulturalOffer co = culturalOfferService.getById(CommentConstants.CULTURAL_OFFER_ID);
+		RegisteredUser r = new RegisteredUser(CommentConstants.USER_ID);
+		CulturalOffer co = new CulturalOffer(CommentConstants.CULTURAL_OFFER_ID);
 		Comment c = new Comment(r, co, CommentConstants.TEXT, CommentConstants.TIME);
 		
 		Comment comment = commentService.create(c, null);
@@ -263,6 +290,10 @@ public class CommentServiceIntegrationTest {
 		assertEquals(number + 1, afterCreating);
 		assertFalse(comment.isApproved());
 		assertNull(comment.getImageUrl());
+		assertEquals(CommentConstants.TEXT, comment.getText());
+		assertEquals(CommentConstants.TIME, comment.getDate());
+		assertEquals(CommentConstants.USER_ID, comment.getAuthor().getId());
+		assertEquals(CommentConstants.CULTURAL_OFFER_ID, comment.getCulturalOffer().getId());
 	}
 	
 	@Test
@@ -270,8 +301,8 @@ public class CommentServiceIntegrationTest {
 	public void testCreate_WithValidValuesAndImage_ShouldReturnComment() throws Exception {
 		List<Comment> comments = (List<Comment>) commentService.getAll();
 		int number = comments.size();
-		RegisteredUser r = regService.getById(CommentConstants.USER_ID);
-		CulturalOffer co = culturalOfferService.getById(CommentConstants.CULTURAL_OFFER_ID);
+		RegisteredUser r = new RegisteredUser(CommentConstants.USER_ID);
+		CulturalOffer co = new CulturalOffer(CommentConstants.CULTURAL_OFFER_ID);
 		Comment c = new Comment(r, co, CommentConstants.TEXT, CommentConstants.TIME);
 		String img = "src/main/resources/uploadedImages";
 		Path path = Paths.get("src/main/resources/uploadedImages/comment_slika6.jpg");
@@ -289,7 +320,10 @@ public class CommentServiceIntegrationTest {
 		assertEquals(number + 1, afterCreating);
 		assertFalse(comment.isApproved());
 		assertNotNull(comment.getImageUrl());
-		
+		assertEquals(CommentConstants.TEXT, comment.getText());
+		assertEquals(CommentConstants.TIME, comment.getDate());
+		assertEquals(CommentConstants.USER_ID, comment.getAuthor().getId());
+		assertEquals(CommentConstants.CULTURAL_OFFER_ID, comment.getCulturalOffer().getId());
 		fileService.deleteImageFromFile(img+"/comment" + CommentConstants.USER_ID + CommentConstants.TIME + "_slika6.jpg");
 	}
 	

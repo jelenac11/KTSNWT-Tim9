@@ -56,5 +56,13 @@ public class CommentConstants {
 	public static final String PASSWORD = "sifra123";
 	public static final String ADMIN_EMAIL = "email_adresa1@gmail.com";
 	public static final String ADMIN_EMAIL_WITH_NOT_APPROVED_COMMENTS = "email_adresa3@gmail.com";
+	public static final Long NON_EXISTING_CO = 30L;
+	public static final String IMAGE_PATH_TO_CREATE_COMMENT = "src/test/resources/uploadedImages/comment_slika6.jpg";
+	public static final Long LOGGED_IN_USER_ID = 7L;
+	public static final String NAME_OF_CULTURAL_OFFER_ID = "Manastir 1";
+	public static final Long APPROVED_COMMENT_ID = 1L;
+	public static final String ADMIN_EMAIL_THAT_SHOULD_UPDATE_COMMENT = "email_adresa4@gmail.com";
+	public static final Long ADMIN_THAT_SHOULD_UPDATE_COMMENT_ID = 4L;
+	public static final String ADMIN_EMAIL_THAT_SHOULD_UPDATE_COMMENT_WITH_IMG = "email_adresa3@gmail.com";
 }
 

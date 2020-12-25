@@ -25,4 +25,16 @@ public class MarkConstants {
     
     public static final int VALUE = 2;
     public static final int VALUE_UPDATED = 4;
+    
+    public static final String EMAIL = "email_adresa20@gmail.com";
+    public static final String PASSWORD = "sifra123";
+    
+    public static final Long CULTURAL_OFFER_ID2 = 3L;
+    public static final Long USER_ID = 7L;
+    public static final Long USER_ID2 = 8L;
+    
+    public static final String EMAIL_ADMIN = "email_adresa1@gmail.com";
+    
+    public static final int VALUE_INVALID = 10;
+
 }
