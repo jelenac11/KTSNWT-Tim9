@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ktsnwt.project.team9.dto.CommentDTO;
 import com.ktsnwt.project.team9.dto.response.CommentResDTO;
 import com.ktsnwt.project.team9.helper.implementations.CommentMapper;
+import com.ktsnwt.project.team9.helper.implementations.CustomPageImplementation;
 import com.ktsnwt.project.team9.helper.implementations.FileService;
 import com.ktsnwt.project.team9.model.Comment;
 import com.ktsnwt.project.team9.model.User;
@@ -53,7 +54,7 @@ public class CommentController {
 		Page<Comment> page = commentService.findAllByCOID(pageable, id);
         List<CommentResDTO> commentDTOs = addImage(commentMapper.toResDTOList(page.toList()));
         Page<CommentResDTO> pageCommentDTOs = new PageImpl<>(commentDTOs, page.getPageable(), page.getTotalElements());
-        return new ResponseEntity<>(pageCommentDTOs, HttpStatus.OK);
+        return new ResponseEntity<>(createCustomPage(pageCommentDTOs), HttpStatus.OK);
 	}
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -63,7 +64,7 @@ public class CommentController {
 		Page<Comment> page = commentService.findAllByNotApprovedByAdminId(pageable, current.getId());
         List<CommentResDTO> commentDTOs = addImage(commentMapper.toResDTOList(page.toList()));
         Page<CommentResDTO> pageCommentDTOs = new PageImpl<>(commentDTOs, page.getPageable(), page.getTotalElements());
-        return new ResponseEntity<>(pageCommentDTOs, HttpStatus.OK);
+        return new ResponseEntity<>(createCustomPage(pageCommentDTOs), HttpStatus.OK);
 	}
 
 	@PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
@@ -88,7 +89,7 @@ public class CommentController {
 			commentService.approveComment(id, true);
 			return new ResponseEntity<>("Comment successfully approved", HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>("Comment doesn't exist", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Comment doesn't exist", HttpStatus.NOT_FOUND);
 		}
 	}
 
@@ -99,7 +100,7 @@ public class CommentController {
 			commentService.approveComment(id, false);
 			return new ResponseEntity<>("Comment successfully declined", HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>("Comment doesn't exist", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Comment doesn't exist", HttpStatus.NOT_FOUND);
 		}
 	}
 	
@@ -114,6 +115,12 @@ public class CommentController {
     		}
 		});
 		return commentDTOs;
+	}
+	
+	private Page<CommentResDTO> createCustomPage(Page<CommentResDTO> page) {
+		return new CustomPageImplementation<>(page.getContent(), page.getNumber(), page.getSize(),
+				page.getTotalElements(), null, page.isLast(), page.getTotalPages(), null, page.isFirst(),
+				page.getNumberOfElements());
 	}
 
 }

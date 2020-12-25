@@ -43,5 +43,18 @@ public class CommentConstants {
 	public static final String IMAGE_PATH = PATH + "comment" + USER_ID + TIME + "_slika2.jpg";
 	public static final Image CREATED_IMG = new Image(IMAGE_PATH);
 
+	public static final int NON_EXISTING_PAGE = 100;
+	public static final Long CO_ID_NO_APPROVED_COMMENTS = 7L;
+	public static final Long ADMIN_ID_WITH_NOT_APPROVED_COMMENTS = 3L;
+	public static final Long COMMENT_ID_NO_IMG = 7L;
+	public static final Long COMMENT_ID_TO_APPROVE = 7L;
+	public static final Long COMMENT_ID_TO_DECLINE = 7L;
+	public static final Long COMMENT_ID_TO_DECLINE_WITH_IMAGE = 6L;
+	public static final Long CREATE_NO_CO_ID = 100L;
+	
+	public static final String USER_EMAIL = "email_adresa20@gmail.com";
+	public static final String PASSWORD = "sifra123";
+	public static final String ADMIN_EMAIL = "email_adresa1@gmail.com";
+	public static final String ADMIN_EMAIL_WITH_NOT_APPROVED_COMMENTS = "email_adresa3@gmail.com";
 }
 

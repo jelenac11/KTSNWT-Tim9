@@ -13,9 +13,7 @@ import com.ktsnwt.project.team9.model.CulturalOffer;
 import com.ktsnwt.project.team9.model.News;
 import com.ktsnwt.project.team9.model.RegisteredUser;
 import com.ktsnwt.project.team9.repositories.INewsRepository;
-import com.ktsnwt.project.team9.services.interfaces.ICulturalOfferService;
 import com.ktsnwt.project.team9.services.interfaces.INewsService;
-import com.ktsnwt.project.team9.services.interfaces.IRegisteredUserService;
 
 @Service
 public class NewsService implements INewsService {
@@ -25,10 +23,10 @@ public class NewsService implements INewsService {
 	private INewsRepository newsRepository;
 	
 	@Autowired
-	private ICulturalOfferService culturalOfferService;
+	private CulturalOfferService culturalOfferService;
 	
 	@Autowired
-	private IRegisteredUserService userService;
+	private RegisteredUserService userService;
 	
 	@Autowired
 	private MailService mailService;
@@ -55,13 +53,14 @@ public class NewsService implements INewsService {
 		entity.getImages().forEach(img -> img.setNews(entity));
 		
 		
-		mailService.sendMailNews("debelidusan@gmail.com", entity);
-		
-//		This is how it will be. For presentation make it simple
-//		for(RegisteredUser us : userService.getSubscribed(culturalOffer)) {
-//			
-//			MailService.sendMailNews(us.getEmail(), entity);
-//		}
+		for(RegisteredUser us : userService.getSubscribed(culturalOffer)) {
+			
+			mailService.sendMail(us.getEmail(),
+					"News about cultural offer you subscribed",
+					"There is new event for cultural offer: " +
+							entity.getCulturalOffer().getName() + "\n\n"
+			        				+ "Checkout in your application!!!");
+		}
 		
 		return newsRepository.save(entity);
 	}

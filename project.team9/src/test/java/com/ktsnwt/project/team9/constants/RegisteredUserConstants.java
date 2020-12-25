@@ -42,5 +42,14 @@ public class RegisteredUserConstants {
 	};
 	public static final String ROLE = "ROLE_REGISTERED_USER";
 	public static final String EPASSWORD = "asdghjkafvsbgdnhf,bgghjukilofgthyjuik";
-
+	
+	public static final String EXISTING_PASSWORD = "sifra123";
+	public static final String ADMIN_EMAIL = "email_adresa1@gmail.com";
+	public static final String SEARCH_VALUE = "email";
+	public static final String NON_EXISTING_SEARCH_VALUE = "jelena";
+	
+	public static final Long CULTURAL_OFFER_ID = 1L;
+	public static final Long NON_EXISTING_CULTURAL_OFFER_ID = 10000L;
+	public static final int SUBSCRIBE_NO = 2;
+	
 }

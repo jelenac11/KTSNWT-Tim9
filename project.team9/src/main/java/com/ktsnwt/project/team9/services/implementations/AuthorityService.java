@@ -28,13 +28,8 @@ public class AuthorityService {
     public List<Authority> findById(Long id) {
         Optional<Authority> auth = this.authorityRepository.findById(id);
         List<Authority> auths = new ArrayList<>();
-<<<<<<< Updated upstream
-        if (auth != null) {
-        	auths.add(auth);
-=======
         if (auth.isPresent()) {
         	auths.add(auth.get());
->>>>>>> Stashed changes
         }
         return auths;
     }
@@ -43,11 +38,7 @@ public class AuthorityService {
         Authority auth = this.authorityRepository.findByName(name);
         List<Authority> auths = new ArrayList<>();
         if (auth != null) {
-<<<<<<< Updated upstream
         	 auths.add(auth);
-=======
-        	auths.add(auth);
->>>>>>> Stashed changes
         }
         return auths;
     }

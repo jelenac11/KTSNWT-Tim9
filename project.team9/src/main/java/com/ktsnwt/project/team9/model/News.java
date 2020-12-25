@@ -34,7 +34,7 @@ public class News {
 	@Column
 	private boolean active;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "news_id")
 	private Set<Image> images;
 

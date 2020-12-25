@@ -24,4 +24,10 @@ public class MarkDTO {
 
 	@NotNull(message = "Cultural offer cannot be null.")
 	private Long culturalOffer;
+	
+	public MarkDTO(int value, Long id) {
+		this.value = value;
+		this.culturalOffer = id;
+	}
+	
 }

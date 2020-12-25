@@ -12,7 +12,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.ktsnwt.project.team9.constants.AdminConstants;
 import com.ktsnwt.project.team9.constants.RegisteredUserConstants;
+import com.ktsnwt.project.team9.model.CulturalOffer;
 import com.ktsnwt.project.team9.model.RegisteredUser;
+import com.ktsnwt.project.team9.services.implementations.CulturalOfferService;
 import com.ktsnwt.project.team9.services.implementations.RegisteredUserService;
 
 import static org.junit.Assert.assertEquals;
@@ -34,6 +36,9 @@ public class RegisteredUserServiceIntegrationTest {
 
 	@Autowired
 	RegisteredUserService regUserService;
+	
+	@Autowired
+	private CulturalOfferService coService;
 	
 	@Test
 	public void testGetAll_ShouldReturnAllRegUsers() {
@@ -180,4 +185,14 @@ public class RegisteredUserServiceIntegrationTest {
 		RegisteredUser user = new RegisteredUser(RegisteredUserConstants.EXISTING_USERNAME, RegisteredUserConstants.EXISTING_EMAIL, RegisteredUserConstants.PASSWORD, RegisteredUserConstants.FIRSTNAME, RegisteredUserConstants.LASTNAME);
 		regUserService.create(user);
 	}
+	
+	@Test
+	public void testGetSubscribed_WithValidCulturalOffer_ShouldReturnUsers() {
+		CulturalOffer co = coService.getById(RegisteredUserConstants.CULTURAL_OFFER_ID);
+		List<RegisteredUser> users = regUserService.getSubscribed(co);
+		
+		assertNotNull(users);
+		assertEquals(RegisteredUserConstants.SUBSCRIBE_NO, users.size());
+	}
+
 }

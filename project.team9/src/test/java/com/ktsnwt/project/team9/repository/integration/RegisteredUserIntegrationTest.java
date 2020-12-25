@@ -26,9 +26,9 @@ public class RegisteredUserIntegrationTest {
 	
 	@Test
 	public void testFindByEmail_WithExistingEmail_ShouldReturnRegisteredUser() {
-		RegisteredUser user = registeredUserRepository.findByEmail(RegisteredUserConstants.EMAIL);
+		RegisteredUser user = registeredUserRepository.findByEmail(RegisteredUserConstants.EXISTING_EMAIL);
 		
-		assertEquals(RegisteredUserConstants.EMAIL, user.getEmail());
+		assertEquals(RegisteredUserConstants.EXISTING_EMAIL, user.getEmail());
 	}
 	
 	@Test
@@ -40,9 +40,9 @@ public class RegisteredUserIntegrationTest {
 	
 	@Test
 	public void testFindByUsername_WithExistingUsername_ShouldReturnRegisteredUser() {
-		RegisteredUser user = registeredUserRepository.findByUsername(RegisteredUserConstants.USERNAME);
+		RegisteredUser user = registeredUserRepository.findByUsername(RegisteredUserConstants.EXISTING_USERNAME);
 		
-		assertEquals(RegisteredUserConstants.USERNAME, user.getUsername());
+		assertEquals(RegisteredUserConstants.EXISTING_USERNAME, user.getUsername());
 	}
 	
 	@Test
