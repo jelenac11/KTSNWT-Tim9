@@ -13,26 +13,26 @@ import { JwtService } from 'src/app/core/services/jwt.service';
 })
 export class HomeComponent implements OnInit {
 
-  private currentCategory: number = 0;
-  
+  private currentCategory = 0;
+
   culturalOffers: CulturalOfferPage;
 
   categories: Category[] = [];
 
-  zoom: number = 2;
+  zoom = 2;
 
-  latitude: number = 0;
+  latitude = 0;
 
-  longitude: number = 0;
+  longitude = 0;
 
-  searchValue: string = '';
+  searchValue = '';
 
-  page: number = 1;
+  page = 1;
 
-  size: number = 10;
+  size = 10;
 
   constructor(
-    private culturalOfferService: CulturalOfferService, 
+    private culturalOfferService: CulturalOfferService,
     private categoryService: CategoryService,
     private jwtService: JwtService
   ) { }
@@ -43,7 +43,7 @@ export class HomeComponent implements OnInit {
   }
 
   clickRow(row: CulturalOffer): void {
-    if (this.latitude == row.geolocation.lat && this.longitude == row.geolocation.lon) {
+    if (this.latitude === row.geolocation.lat && this.longitude === row.geolocation.lon) {
       this.latitude = row.geolocation.lat + 0.00001;
       this.longitude = row.geolocation.lon + 0.00001;
     }
@@ -56,9 +56,9 @@ export class HomeComponent implements OnInit {
 
   getAllCategories(): void {
     this.categoryService.getAll().subscribe(categories => {
-      this.categories = categories.sort((a, b)=> a.id - b.id);
+      this.categories = categories.sort((a, b) => a.id - b.id);
       this.getCulturalOffersByCategoryAndName(this.categories[0].id, this.searchValue);
-    })
+    });
   }
 
   getCulturalOffersByCategoryAndName(id: number, value: string): void {
@@ -84,7 +84,7 @@ export class HomeComponent implements OnInit {
     this.searchValue = value;
     this.getCulturalOffersByCategoryAndName(this.categories[this.currentCategory].id, value);
     this.resetRequiredParameters();
-  };
+  }
 
   handlePageChange($event: any): void {
     this.resetRequiredParameters();
@@ -102,7 +102,7 @@ export class HomeComponent implements OnInit {
       this.latitude = 0;
       this.longitude = 0;
     }
-    if (this.zoom == 2) {
+    if (this.zoom === 2) {
       this.zoom = this.zoom + 0.00001;
     }
     else {

@@ -11,15 +11,15 @@ export class MapComponent implements OnInit {
   @Input()
   showInfoWindow!: boolean;
   @Input()
-  latitude: number = 0;
+  latitude = 0;
   @Input()
-  longitude: number = 0;
+  longitude = 0;
   @Input()
-  zoom: number = 1;
+  zoom = 1;
   @Input()
-  data: CulturalOffer[]=[];
+  data: CulturalOffer[] = [];
   @Input()
-  markerZoom:number=6;
+  markerZoom = 6;
 
   constructor() { }
 
@@ -27,7 +27,7 @@ export class MapComponent implements OnInit {
   }
 
   setLocation(culturalOffer: any): void {
-    if (this.latitude == culturalOffer.geolocation.lat && this.longitude == culturalOffer.geolocation.lon) {
+    if (this.latitude === culturalOffer.geolocation.lat && this.longitude === culturalOffer.geolocation.lon) {
       this.latitude = culturalOffer.geolocation.lat + 0.00001;
       this.longitude = culturalOffer.geolocation.lon + 0.00001;
     }
