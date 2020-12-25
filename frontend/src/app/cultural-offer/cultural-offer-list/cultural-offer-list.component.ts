@@ -46,7 +46,6 @@ export class CulturalOfferListComponent implements OnInit {
 
   ngOnInit(): void {
     this.selectField = new FormControl();
-    this.getCulturalOffers();
     this.role = this.jwtService.getRole();
     this.getAllCategories();
   }
@@ -59,7 +58,7 @@ export class CulturalOfferListComponent implements OnInit {
   }
 
   getCulturalOffersByCategoryAndName(): void {
-    if (!this.searchValue && this.currentCategory !== 0) {
+    if (!this.searchValue && this.currentCategory) {
       this.culturalOfferService.getCulturalOffersByCategory(this.currentCategory, this.size, this.page - 1)
         .subscribe(culturalOffers => {
           this.culturalOffers = culturalOffers;
@@ -67,7 +66,7 @@ export class CulturalOfferListComponent implements OnInit {
         });
       return;
     }
-    if (this.currentCategory === 0 && this.searchValue) {
+    if (!this.currentCategory && this.searchValue) {
       this.culturalOfferService.findByName(this.searchValue, this.size, this.page - 1)
         .subscribe(culturalOffers => {
           this.culturalOffers = culturalOffers;
@@ -75,15 +74,17 @@ export class CulturalOfferListComponent implements OnInit {
         });
       return;
     }
-    if (this.currentCategory !== 0 && this.searchValue) {
+    if (this.currentCategory && this.searchValue) {
       this.culturalOfferService.findByCategoryIdAndName(this.currentCategory, this.searchValue, this.size, this.page - 1)
         .subscribe(culturalOffers => {
           this.culturalOffers = culturalOffers;
           this.separateData();
         });
+      return;
     }
-    if (this.currentCategory === 0 && !this.searchValue) {
+    if (!this.currentCategory && !this.searchValue) {
       this.getCulturalOffers();
+      return;
     }
   }
 
@@ -146,8 +147,8 @@ export class CulturalOfferListComponent implements OnInit {
 
   searchChanged(value: string): void {
     this.searchValue = value;
-    this.getCulturalOffersByCategoryAndName();
     this.resetRequiredParameters();
+    this.getCulturalOffersByCategoryAndName();
   }
 
   resetRequiredParameters(): void {
