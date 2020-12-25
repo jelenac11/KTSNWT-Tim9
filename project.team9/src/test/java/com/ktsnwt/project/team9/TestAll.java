@@ -76,6 +76,7 @@ import com.ktsnwt.project.team9.service.unit.UserServiceUnitTest;
 		AuthorityServiceIntegrationTest.class, GenerateRandomPasswordServiceIntegrityTest.class, MarkServiceIntegrationTest.class, UserServiceIntegrationTest.class,
 		AuthorityServiceUnitTest.class, GenerateRandomPasswordServiceUnitTest.class, MarkServiceUnitTest.class, UserServiceUnitTest.class,
 		AuthorityRepositoryIntegrationTest.class, MarkRepositoryIntegrationTest.class,
+
 })
 @ContextConfiguration
 @TestPropertySource("classpath:test.properties")

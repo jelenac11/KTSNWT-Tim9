@@ -19,7 +19,7 @@ export class ImageModalComponent implements OnInit {
   }
 
   open(): void {
-    this.lightbox.open([{ "src": this.imageURL, thumb: "" }], 0);
+    this.lightbox.open([{ src: this.imageURL, thumb: '' }], 0);
   }
 
   close(): void {
