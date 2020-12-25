@@ -158,6 +158,15 @@ export class CulturalOfferFormComponent implements OnInit {
     });
   }
 
+  goBack(id: number): void {
+    if (this.id) {
+      this.router.navigateByUrl(`/cultural-offers/${id}`);
+    }
+    else {
+      this.router.navigateByUrl(`/cultural-offers/${id}`);
+    }
+  }
+
   succesMessage(message: string): void {
     this.snackBar.success(message);
   }

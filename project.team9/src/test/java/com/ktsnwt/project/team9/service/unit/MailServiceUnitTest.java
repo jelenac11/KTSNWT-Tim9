@@ -1,7 +1,7 @@
 package com.ktsnwt.project.team9.service.unit;
 
 import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.verify;
 
 
@@ -41,7 +41,7 @@ public class MailServiceUnitTest {
         doNothing().when(emailSender).send(message);
 		mailService.sendMail(MailConstants.TO, MailConstants.SUBJECT, MailConstants.TEXT);
 		
-		
-		verify(emailSender, times(1)).send(message);
+		verify(emailSender, timeout(1000).times(1)).send(Mockito.any(SimpleMailMessage.class));
+
 	}
 }
