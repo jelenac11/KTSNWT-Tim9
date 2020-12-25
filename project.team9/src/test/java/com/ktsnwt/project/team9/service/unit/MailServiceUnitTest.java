@@ -9,6 +9,7 @@ import javax.mail.MessagingException;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -34,7 +35,7 @@ public class MailServiceUnitTest {
 	@Test
 	public void testSendEmail_WithAllValues_ShouldSendMail() throws MessagingException {
 		SimpleMailMessage message = new SimpleMailMessage(); 
-        message.setFrom("noreply.kts.l9@gmail.com");
+		message.setFrom("noreply.kts.l9@gmail.com");
         message.setTo("aleksa.goljovic4@gmail.com"); 
         message.setSubject(MailConstants.SUBJECT); 
         message.setText(MailConstants.TEXT);
@@ -42,6 +43,5 @@ public class MailServiceUnitTest {
 		mailService.sendMail(MailConstants.TO, MailConstants.SUBJECT, MailConstants.TEXT);
 		
 		verify(emailSender, timeout(1000).times(1)).send(Mockito.any(SimpleMailMessage.class));
-
 	}
 }

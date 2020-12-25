@@ -260,7 +260,7 @@ public class CulturalOfferControllerIntegrationTest {
 		assertEquals(CulturalOfferConstants.NEW_OFFER_GEOLOCATION.getLocation(),
 				responseEntity.getBody().getGeolocation().getLocation());
 		assertEquals(CulturalOfferConstants.NEW_OFFER_CATEGORY.getId(), responseEntity.getBody().getCategory().getId());
-		assertEquals(CulturalOfferConstants.NEW_OFFER_ADMIN.getId(), responseEntity.getBody().getAdmin());
+		assertEquals(1L, responseEntity.getBody().getAdmin());
 		assertEquals(length + 1, ((List<CulturalOffer>) culturalOfferService.getAll()).size());
 		assertEquals(lengthGeolocation + 1, ((List<Geolocation>) geolocationService.getAll()).size());
 		assertTrue(fileExist.exists());

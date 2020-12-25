@@ -1,6 +1,7 @@
 package com.ktsnwt.project.team9.controllers;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -75,8 +76,9 @@ public class CommentController {
 				return new ResponseEntity<>("Comment must have image or text", HttpStatus.BAD_REQUEST);
 			}
 			User current = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			commentDTO = commentMapper.toDto(commentService.create(commentMapper.dtoToEntity(commentDTO, current.getId()), file));
-			return new ResponseEntity<>(commentDTO, HttpStatus.CREATED);
+			Comment res = commentService.create(commentMapper.dtoToEntity(commentDTO, current.getId()), file);
+			CommentResDTO resDTO = commentMapper.toResDTO(commentService.getById(res.getId()));
+			return new ResponseEntity<>(resDTO, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
@@ -88,8 +90,12 @@ public class CommentController {
 		try {
 			commentService.approveComment(id, true);
 			return new ResponseEntity<>("Comment successfully approved", HttpStatus.OK);
-		} catch (Exception e) {
+		} catch (NoSuchElementException e) {
 			return new ResponseEntity<>("Comment doesn't exist", HttpStatus.NOT_FOUND);
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 
@@ -99,8 +105,12 @@ public class CommentController {
 		try {
 			commentService.approveComment(id, false);
 			return new ResponseEntity<>("Comment successfully declined", HttpStatus.OK);
-		} catch (Exception e) {
+		} catch (NoSuchElementException e) {
 			return new ResponseEntity<>("Comment doesn't exist", HttpStatus.NOT_FOUND);
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 	

@@ -9,5 +9,4 @@ export interface CulturalOffer {
     description?: string;
     image?: string;
     averageMark?: number;
-    admin?: number;
 }

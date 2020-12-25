@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,6 +17,7 @@ import com.ktsnwt.project.team9.helper.implementations.FileService;
 import com.ktsnwt.project.team9.model.Comment;
 import com.ktsnwt.project.team9.model.CulturalOffer;
 import com.ktsnwt.project.team9.model.Image;
+import com.ktsnwt.project.team9.model.User;
 import com.ktsnwt.project.team9.repositories.ICommentRepository;
 import com.ktsnwt.project.team9.services.interfaces.ICommentService;
 
@@ -56,9 +58,9 @@ public class CommentService implements ICommentService {
 		if (culturalOffer == null) {
 			throw new NoSuchElementException("Cultural offer doesn't exist.");
 		}
+		entity.setCulturalOffer(culturalOffer);
 		if (file != null) {
 			String imagePath = fileService.saveImage(file, "comment"+entity.getAuthor().getId() + entity.getDate());
-			System.out.println(imagePath);
 			Image image = imageService.create(new Image(imagePath));
 			entity.setImageUrl(image);
 		} else {
@@ -101,9 +103,16 @@ public class CommentService implements ICommentService {
 
 	@Transactional
 	public Comment approveComment(Long id, boolean approve) throws Exception {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Comment c = getById(id);
 		if (c == null) {
 			throw new NoSuchElementException("Comment doesn't exist");
+		}
+		if (user.getId() != c.getCulturalOffer().getAdmin().getId()) {
+			throw new IllegalArgumentException("You can not approve or decline this comment");
+		}
+		if (c.isApproved()) {
+			throw new IllegalArgumentException("This comment is already approved");
 		}
 		if (!approve) {
 			delete(id);
