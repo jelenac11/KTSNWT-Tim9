@@ -158,6 +158,7 @@ export class CulturalOfferFormComponent implements OnInit {
     });
   }
 
+
   goBack(id: number) {
     if (this.id) {
       this.router.navigateByUrl(`/cultural-offers/${id}`);
