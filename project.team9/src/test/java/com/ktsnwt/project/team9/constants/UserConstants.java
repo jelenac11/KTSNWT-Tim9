@@ -33,4 +33,10 @@ public class UserConstants {
 	public static final String TEXT_EMAIL = "Hi " + FIRST_NAME + ",\n\nYour new password is: " + RANDOM_PASSWORD + ".\n\n\nTeam 9";
 	public static final String SUBJECT_EMAIL = "Password reset";
 	
+	public static final String EMAIL_NOT_VERIFIED = "email_adresa25@gmail.com";
+	public static final String TOKEN = "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJzcHJpbmctc2VjdXJpdHktZXhhbXBsZSIsInN1YiI6ImVtYWlsQGdtYWlsLmNvbSIsImF1ZCI6IndlYiIsImlhdCI6MTYwNzU2MTQzMywiZXhwIjoxNjA3NTYzMjMzfQ.hnAdWpJFNsBprJwlRKFqVYf4sn3Te5ry7lllLVBp1fq3jzjWOLwXDpgQV5MDVErJM9MGsj4fBK5a-XZARrnHsz";
+	public static final String NON_EXISTING_TOKEN = "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJzcHJpbmctc2VjdXJpdHktZXhhbXBsZSIsInN1YiI6ImVtYWlsQGdtYWlsLmNvbSIsImF1ZCI6IndlYiIsImlhdCI6MTYwNzU2MTQzMywiZXhwIjoxNjA3NTYzMjMzfQ.hnAdWpJFNsBprJwlRKFqVYf4sn3Te5ry7lllLVBp1fq3jzjWOLwXDpgQV5MDVErJM9MGsj4fBK5a-XZARrnbbb";
+	
+	public static final String SHORT_PASSWORD = "123";
+	
 }
