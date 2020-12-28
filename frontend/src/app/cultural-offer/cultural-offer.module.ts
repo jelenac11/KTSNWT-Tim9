@@ -51,7 +51,6 @@ import { MatSelectModule } from '@angular/material/select';
     SharedModule,
     MatFormFieldModule,
     MatSelectModule
-
   ],
   exports: [CulturalOfferReviewComponent, CulturalOfferListComponent, CulturalOfferFormComponent]
 })

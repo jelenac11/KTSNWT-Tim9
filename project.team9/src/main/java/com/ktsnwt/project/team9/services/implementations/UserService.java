@@ -3,6 +3,8 @@ package com.ktsnwt.project.team9.services.implementations;
 import java.util.Date;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -52,6 +54,7 @@ public class UserService implements IUserService, UserDetailsService {
         }
     }
   
+    @Transactional
     public void changePassword(String oldPassword, String newPassword) throws IllegalAccessException {
         Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
         String username = "";
@@ -60,7 +63,6 @@ public class UserService implements IUserService, UserDetailsService {
         } catch (Exception e) {
         	throw new IllegalAccessException("Invalid token.");
         }
-      
         if (authenticationManager != null) {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, oldPassword));
         } else {
@@ -73,6 +75,7 @@ public class UserService implements IUserService, UserDetailsService {
     }
     
     @Override
+    @Transactional
 	public User changeProfile(User entity) throws Exception {
     	User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if (!entity.getUsername().equals(user.getUsername())) {
@@ -127,13 +130,18 @@ public class UserService implements IUserService, UserDetailsService {
 		return userRepository.findByUsername(username);
 	}
 
+	@Transactional
 	public void forgotPassword(String email) {
 		User user = userRepository.findByEmail(email);
-		String newPassword = grpService.generateRandomPassword();
-		user.setPassword(passwordEncoder.encode(newPassword));
-		user.setLastPasswordResetDate(new Date().getTime());
-        userRepository.save(user);
-        mailService.sendMail(user.getEmail(), "Password reset", "Hi " + user.getFirstName() + ",\n\nYour new password is: " + newPassword + ".\n\n\nTeam 9");
+		if (user == null) {
+            throw new UsernameNotFoundException(String.format("No user found with email '%s'.", email));
+        } else { 
+			String newPassword = grpService.generateRandomPassword();
+			user.setPassword(passwordEncoder.encode(newPassword));
+			user.setLastPasswordResetDate(new Date().getTime());
+	        userRepository.save(user);
+	        mailService.sendMail(user.getEmail(), "Password reset", "Hi " + user.getFirstName() + ",\n\nYour new password is: " + newPassword + ".\n\n\nTeam 9");
+        }
 	}
 	
 }

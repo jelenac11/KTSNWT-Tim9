@@ -16,27 +16,27 @@ import { ApproveCommentComponent } from './comments/approve-comment/approve-comm
 
 const routes: Routes = [
   {
-    path:'', 
+    path: '',
     component: HomeComponent
   },
   {
-    path:'cultural-offers/create', 
+    path: 'cultural-offers/create',
     component: CulturalOfferFormComponent,
-    canActivate: [RoleGuard], 
-    data: { 
+    canActivate: [RoleGuard],
+    data: {
       expectedRoles: 'ROLE_ADMIN'
     }
   },
   {
-    path:'cultural-offers/update/:id',
+    path: 'cultural-offers/update/:id',
     component: CulturalOfferFormComponent,
-    canActivate: [RoleGuard], 
-    data: { 
+    canActivate: [RoleGuard],
+    data: {
       expectedRoles: 'ROLE_ADMIN'
     }
   },
-  { 
-    path:'cultural-offers/:id', 
+  {
+    path: 'cultural-offers/:id',
     component: CulturalOfferReviewComponent,
     children: [
       {
@@ -46,42 +46,42 @@ const routes: Routes = [
     ]
   },
   {
-    path:'cultural-offers', 
+    path: 'cultural-offers',
     component: CulturalOfferListComponent
   },
   {
-    path:'sign-up',
+    path: 'sign-up',
     component: SignUpComponent,
     canActivate: [NoAuthGuard]
   },
   {
-    path:'confirm-registration/:token',
+    path: 'confirm-registration/:token',
     component: ConfirmRegistrationComponent,
     canActivate: [NoAuthGuard]
   },
   {
-    path:'sign-in',
+    path: 'sign-in',
     component: SignInComponent,
     canActivate: [NoAuthGuard]
   },
   {
-    path:'forgot-password',
+    path: 'forgot-password',
     component: ForgotPasswordComponent,
     canActivate: [NoAuthGuard]
   },
   {
-    path:'approving-comments',
+    path: 'approving-comments',
     component: ApproveCommentComponent,
     canActivate: [RoleGuard],
-    data: { 
+    data: {
       expectedRoles: 'ROLE_ADMIN'
     }
   },
   {
-    path:'users',
+    path: 'users',
     component: UsersReviewComponent,
     canActivate: [RoleGuard],
-    data: { 
+    data: {
       expectedRoles: 'ROLE_ADMIN'
     }
   }

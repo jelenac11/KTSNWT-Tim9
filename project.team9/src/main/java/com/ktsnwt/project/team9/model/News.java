@@ -34,7 +34,7 @@ public class News {
 	@Column
 	private boolean active;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "news_id")
 	private Set<Image> images;
 
@@ -58,18 +58,6 @@ public class News {
 		this.images = images;
 		this.culturalOffer = culturalOffer;
 		this.active = active;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (active ? 1231 : 1237);
-		result = prime * result + ((content == null) ? 0 : content.hashCode());
-		result = prime * result + ((culturalOffer == null) ? 0 : culturalOffer.hashCode());
-		result = prime * result + (int) (date ^ (date >>> 32));
-		result = prime * result + ((images == null) ? 0 : images.hashCode());
-		return result;
 	}
 
 	@Override

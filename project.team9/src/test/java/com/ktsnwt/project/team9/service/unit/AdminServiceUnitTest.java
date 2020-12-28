@@ -117,6 +117,12 @@ public class AdminServiceUnitTest {
 		adminService.create(sameUsername);
 		
 		verify(userRepository, times(1)).findByUsername(AdminConstants.EXISTING_USERNAME);
+		verify(userRepository, times(0)).findByEmail(AdminConstants.NEW_EMAIL);
+		verify(authService, times(0)).findByName(AdminConstants.ROLE);
+		verify(grpService, times(0)).generateRandomPassword();
+		verify(passwordEncoder, times(0)).encode(AdminConstants.GPASSWORD);
+		verify(mailService, times(0)).sendMail(AdminConstants.NEW_EMAIL, "Account activation", "You are now new administrator of Cultural content Team 9. Congratulations!\n Your credentials are: \n\tUsername: " + AdminConstants.NEW_USERNAME + 
+        		"\n\tPassoword: "  + AdminConstants.GPASSWORD);
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
@@ -125,10 +131,30 @@ public class AdminServiceUnitTest {
 		adminService.create(sameEmail);
 		
 		verify(userRepository, times(1)).findByEmail(AdminConstants.EXISTING_EMAIL);
+		verify(userRepository, times(1)).findByUsername(AdminConstants.NEW_USERNAME);
+		verify(authService, times(0)).findByName(AdminConstants.ROLE);
+		verify(grpService, times(0)).generateRandomPassword();
+		verify(passwordEncoder, times(0)).encode(AdminConstants.GPASSWORD);
+		verify(mailService, times(0)).sendMail(AdminConstants.NEW_EMAIL, "Account activation", "You are now new administrator of Cultural content Team 9. Congratulations!\n Your credentials are: \n\tUsername: " + AdminConstants.NEW_USERNAME + 
+        		"\n\tPassoword: "  + AdminConstants.GPASSWORD);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testCreate_WithExistingUsernameAndExistingEmail_ShouldThrowIllegalArgumentException() throws Exception {
+		Admin sameUsernameAndMail = new Admin(AdminConstants.EXISTING_USERNAME, AdminConstants.EXISTING_EMAIL, AdminConstants.FIRSTNAME, AdminConstants.LASTNAME);
+		adminService.create(sameUsernameAndMail);
+		
+		verify(userRepository, times(1)).findByUsername(AdminConstants.EXISTING_USERNAME);
+		verify(userRepository, times(0)).findByEmail(AdminConstants.EXISTING_EMAIL);
+		verify(authService, times(0)).findByName(AdminConstants.ROLE);
+		verify(grpService, times(0)).generateRandomPassword();
+		verify(passwordEncoder, times(0)).encode(AdminConstants.GPASSWORD);
+		verify(mailService, times(0)).sendMail(AdminConstants.NEW_EMAIL, "Account activation", "You are now new administrator of Cultural content Team 9. Congratulations!\n Your credentials are: \n\tUsername: " + AdminConstants.NEW_USERNAME + 
+        		"\n\tPassoword: "  + AdminConstants.GPASSWORD);
 	}
 	
 	@Test
-	public void testCreate_WithAllValues_ShouldCreateAdmin() throws Exception {
+	public void testCreate_WithAllCorrectValues_ShouldCreateAdmin() throws Exception {
 		Admin newAdmin = new Admin(AdminConstants.NEW_USERNAME, AdminConstants.NEW_EMAIL, AdminConstants.FIRSTNAME, AdminConstants.LASTNAME);
 		Admin a = adminService.create(newAdmin);
 		
@@ -152,6 +178,7 @@ public class AdminServiceUnitTest {
 		adminService.delete(AdminConstants.NON_EXISTING_ADMIN_ID);
 		
 		verify(adminRepository, times(1)).findById(AdminConstants.NON_EXISTING_ADMIN_ID);
+		verify(adminRepository, times(0)).deleteById(AdminConstants.NON_EXISTING_ADMIN_ID);
 	}
 	
 	@Test(expected = Exception.class)
@@ -159,6 +186,7 @@ public class AdminServiceUnitTest {
 		adminService.delete(AdminConstants.ADMIN_CO_ID);
 		
 		verify(adminRepository, times(1)).findById(AdminConstants.ADMIN_CO_ID);
+		verify(adminRepository, times(0)).deleteById(AdminConstants.ADMIN_CO_ID);
 	}
 	
 	@Test

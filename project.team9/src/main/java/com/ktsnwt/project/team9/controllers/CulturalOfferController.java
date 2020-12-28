@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +28,7 @@ import com.ktsnwt.project.team9.helper.implementations.CulturalOfferMapper;
 import com.ktsnwt.project.team9.helper.implementations.CustomPageImplementation;
 import com.ktsnwt.project.team9.helper.implementations.FileService;
 import com.ktsnwt.project.team9.model.CulturalOffer;
+import com.ktsnwt.project.team9.model.User;
 import com.ktsnwt.project.team9.services.implementations.CulturalOfferService;
 import lombok.AllArgsConstructor;
 
@@ -34,8 +36,8 @@ import lombok.AllArgsConstructor;
 @RequestMapping(value = "/api/cultural-offers", produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
-//@PreAuthorize("hasRole('ROLE_ADMIN')")
-@PreAuthorize("permitAll()") // comment previous line instead of this to enable CRUD operations for frontend
+@PreAuthorize("hasRole('ROLE_ADMIN')")
+//@PreAuthorize("permitAll()")
 public class CulturalOfferController {
 
 	private CulturalOfferService culturalOfferService;
@@ -103,6 +105,8 @@ public class CulturalOfferController {
 			if (file == null || file.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			}
+			User current = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			culturalOfferDTO.setAdmin(current.getId());
 			CulturalOfferResDTO culturalOfferResDTO = culturalOfferMapper
 					.toDTORes(culturalOfferService.create(culturalOfferMapper.toEntity(culturalOfferDTO), file));
 

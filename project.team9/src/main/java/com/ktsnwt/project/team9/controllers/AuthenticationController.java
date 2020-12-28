@@ -1,6 +1,7 @@
 package com.ktsnwt.project.team9.controllers;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 import javax.validation.Valid;
 
@@ -95,7 +96,7 @@ public class AuthenticationController {
 		}
 		// Ubaci korisnika u trenutni security kontekst
 		SecurityContextHolder.getContext().setAuthentication(authentication);
-
+ 
 		String jwt = tokenUtils.generateToken(user.getEmail(), auth.get(0).getName()); // prijavljujemo se na sistem sa
 																						// email adresom
 		int expiresIn = tokenUtils.getExpiredIn();
@@ -169,7 +170,13 @@ public class AuthenticationController {
 
 	@GetMapping(value = "/confirm-registration/{token}")
 	public ResponseEntity<String> potvrdaReg(@PathVariable("token") String url) {
-		authorityService.confirmRegistration(url);
+		try {
+			authorityService.confirmRegistration(url);
+		} catch (NoSuchElementException e) {
+			return new ResponseEntity<>("Token doesn't exist.", HttpStatus.NOT_FOUND);
+		} catch (Exception e) {
+			return new ResponseEntity<>("Error happened.", HttpStatus.BAD_REQUEST);
+		}
 		return new ResponseEntity<>("Account activated.", HttpStatus.OK);
 	}
 

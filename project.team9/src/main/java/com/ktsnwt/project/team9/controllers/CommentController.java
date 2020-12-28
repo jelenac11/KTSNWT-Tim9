@@ -1,6 +1,7 @@
 package com.ktsnwt.project.team9.controllers;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -26,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ktsnwt.project.team9.dto.CommentDTO;
 import com.ktsnwt.project.team9.dto.response.CommentResDTO;
 import com.ktsnwt.project.team9.helper.implementations.CommentMapper;
+import com.ktsnwt.project.team9.helper.implementations.CustomPageImplementation;
 import com.ktsnwt.project.team9.helper.implementations.FileService;
 import com.ktsnwt.project.team9.model.Comment;
 import com.ktsnwt.project.team9.model.User;
@@ -53,7 +55,7 @@ public class CommentController {
 		Page<Comment> page = commentService.findAllByCOID(pageable, id);
         List<CommentResDTO> commentDTOs = addImage(commentMapper.toResDTOList(page.toList()));
         Page<CommentResDTO> pageCommentDTOs = new PageImpl<>(commentDTOs, page.getPageable(), page.getTotalElements());
-        return new ResponseEntity<>(pageCommentDTOs, HttpStatus.OK);
+        return new ResponseEntity<>(createCustomPage(pageCommentDTOs), HttpStatus.OK);
 	}
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -63,7 +65,7 @@ public class CommentController {
 		Page<Comment> page = commentService.findAllByNotApprovedByAdminId(pageable, current.getId());
         List<CommentResDTO> commentDTOs = addImage(commentMapper.toResDTOList(page.toList()));
         Page<CommentResDTO> pageCommentDTOs = new PageImpl<>(commentDTOs, page.getPageable(), page.getTotalElements());
-        return new ResponseEntity<>(pageCommentDTOs, HttpStatus.OK);
+        return new ResponseEntity<>(createCustomPage(pageCommentDTOs), HttpStatus.OK);
 	}
 
 	@PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
@@ -74,8 +76,9 @@ public class CommentController {
 				return new ResponseEntity<>("Comment must have image or text", HttpStatus.BAD_REQUEST);
 			}
 			User current = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			commentDTO = commentMapper.toDto(commentService.create(commentMapper.dtoToEntity(commentDTO, current.getId()), file));
-			return new ResponseEntity<>(commentDTO, HttpStatus.CREATED);
+			Comment res = commentService.create(commentMapper.dtoToEntity(commentDTO, current.getId()), file);
+			CommentResDTO resDTO = commentMapper.toResDTO(commentService.getById(res.getId()));
+			return new ResponseEntity<>(resDTO, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
@@ -87,8 +90,12 @@ public class CommentController {
 		try {
 			commentService.approveComment(id, true);
 			return new ResponseEntity<>("Comment successfully approved", HttpStatus.OK);
+		} catch (NoSuchElementException e) {
+			return new ResponseEntity<>("Comment doesn't exist", HttpStatus.NOT_FOUND);
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
-			return new ResponseEntity<>("Comment doesn't exist", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 
@@ -98,8 +105,12 @@ public class CommentController {
 		try {
 			commentService.approveComment(id, false);
 			return new ResponseEntity<>("Comment successfully declined", HttpStatus.OK);
+		} catch (NoSuchElementException e) {
+			return new ResponseEntity<>("Comment doesn't exist", HttpStatus.NOT_FOUND);
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
-			return new ResponseEntity<>("Comment doesn't exist", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 	
@@ -114,6 +125,12 @@ public class CommentController {
     		}
 		});
 		return commentDTOs;
+	}
+	
+	private Page<CommentResDTO> createCustomPage(Page<CommentResDTO> page) {
+		return new CustomPageImplementation<>(page.getContent(), page.getNumber(), page.getSize(),
+				page.getTotalElements(), null, page.isLast(), page.getTotalPages(), null, page.isFirst(),
+				page.getNumberOfElements());
 	}
 
 }

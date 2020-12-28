@@ -11,6 +11,7 @@ import static org.mockito.Mockito.verify;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collection;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -23,17 +24,24 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.ktsnwt.project.team9.constants.CommentConstants;
 import com.ktsnwt.project.team9.helper.implementations.FileService;
+import com.ktsnwt.project.team9.model.Admin;
 import com.ktsnwt.project.team9.model.Comment;
+import com.ktsnwt.project.team9.model.CulturalOffer;
 import com.ktsnwt.project.team9.model.Image;
+import com.ktsnwt.project.team9.model.User;
 import com.ktsnwt.project.team9.repositories.ICommentRepository;
 import com.ktsnwt.project.team9.services.implementations.CommentService;
 import com.ktsnwt.project.team9.services.implementations.CulturalOfferService;
 import com.ktsnwt.project.team9.services.implementations.ImageService;
+import com.ktsnwt.project.team9.services.implementations.RegisteredUserService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -54,6 +62,9 @@ public class CommentServiceUnitTest {
 	
 	@MockBean
 	ICommentRepository commentRepository;
+	
+	@MockBean
+	RegisteredUserService regService;
 	
 	@Before
 	public void setup() throws Exception {
@@ -84,21 +95,70 @@ public class CommentServiceUnitTest {
 		savedc3.setId(CommentConstants.COMMENT_ID3);
 		savedc3.setApproved(CommentConstants.DECLINED);
 		savedc3.setImageUrl(null);
+		
+		CulturalOffer co = CommentConstants.CULTURAL_OFFER;
+		co.setAdmin(new Admin(CommentConstants.ADMIN_ID_WITH_NOT_APPROVED_COMMENTS));
+		Comment c4 = new Comment(CommentConstants.REG_USER, co, CommentConstants.TEXT, CommentConstants.TIME);
+		c4.setId(CommentConstants.COMMENT_ID4);
+		c4.setApproved(CommentConstants.APPROVED);
+		c4.setImageUrl(null);
 	
 		Path path = Paths.get("src/test/resources/uploadedImages/slika2.jpg");
 		byte[] content = Files.readAllBytes(path);
 		MockMultipartFile file2 = new MockMultipartFile("file", "slika2.jpg", MediaType.IMAGE_JPEG_VALUE, content);
+		User forApproveCorrect = new User(CommentConstants.ADMIN_ID_WITH_NOT_APPROVED_COMMENTS);
+		Authentication auth = new Authentication() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public String getName() {
+				return null;
+			}
+			
+			@Override
+			public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
+				
+			}
+			
+			@Override
+			public boolean isAuthenticated() {
+				return false;
+			}
+			
+			@Override
+			public Object getPrincipal() {
+				return forApproveCorrect;
+			}
+			
+			@Override
+			public Object getDetails() {
+				return null;
+			}
+			
+			@Override
+			public Object getCredentials() {
+				return null;
+			}
+			
+			@Override
+			public Collection<? extends GrantedAuthority> getAuthorities() {
+				return null;
+			}
+		};
+		SecurityContextHolder.getContext().setAuthentication(auth);
 		
 		given(commentRepository.save(c)).willReturn(savedc);
 		given(commentRepository.save(approvedc)).willReturn(approvedc);
 		given(commentRepository.save(c3)).willReturn(savedc3);
 		
 		given(commentRepository.findById(CommentConstants.COMMENT_ID)).willReturn(Optional.of(savedc));
+		given(commentRepository.findById(CommentConstants.COMMENT_ID4)).willReturn(Optional.of(c4));
 		given(commentRepository.findById(CommentConstants.COMMENT_ID3)).willReturn(Optional.of(savedc3));
 		given(commentRepository.findById(CommentConstants.COMMENT_ID2)).willReturn(Optional.of(c2));
 		given(commentRepository.findById(CommentConstants.NON_EXISTING_COMMENT_ID)).willReturn(Optional.empty());
 		
 		given(culturalOfferService.getById(CommentConstants.CULTURAL_OFFER_ID)).willReturn(CommentConstants.CULTURAL_OFFER);
+		given(culturalOfferService.getById(CommentConstants.NON_EXISTING_CULTURAL_OFFER_ID)).willReturn(null);
 		given(culturalOfferService.getById(CommentConstants.NON_EXISTING_CULTURAL_OFFER_ID)).willReturn(null);
 		
 		given(imageService.create(CommentConstants.IMAGE)).willReturn(CommentConstants.IMAGE);
@@ -133,6 +193,8 @@ public class CommentServiceUnitTest {
 		
 		commentService.create(c, file);
 		verify(culturalOfferService, times(1)).getById(CommentConstants.NON_EXISTING_CULTURAL_OFFER_ID);
+		verify(imageService, times(0)).create(Mockito.any(Image.class));
+		verify(fileService, times(0)).saveImage(file, "slika2");
 	}
 	
 	@Test
@@ -180,6 +242,7 @@ public class CommentServiceUnitTest {
 		commentService.delete(CommentConstants.NON_EXISTING_COMMENT_ID);
 		
 		verify(commentRepository, times(1)).findById(CommentConstants.NON_EXISTING_COMMENT_ID);
+		verify(commentRepository, times(0)).delete(CommentConstants.NON_EXISTING_COMMENT_ID);
 	}
 	
 	@Test
@@ -205,11 +268,18 @@ public class CommentServiceUnitTest {
 	@Test(expected = NoSuchElementException.class)
 	public void testApproveComment_WithNonExistingId_ShouldThrowNoSuchElementException() throws Exception {
 		commentService.approveComment(CommentConstants.NON_EXISTING_COMMENT_ID, CommentConstants.DECLINED);
+		
+		
+		verify(commentRepository, times(1)).findById(CommentConstants.NON_EXISTING_COMMENT_ID);
+		verify(commentRepository, times(0)).save(Mockito.any(Comment.class));
+		verify(commentRepository, times(0)).delete(CommentConstants.NON_EXISTING_COMMENT_ID);
 	}
 	
 	@Test
 	public void testApproveComment_WithExistingId_ShouldApproveComment() throws Exception {
-		Comment c = new Comment(CommentConstants.REG_USER, CommentConstants.CULTURAL_OFFER, CommentConstants.TEXT, CommentConstants.TIME); //koment 1
+		CulturalOffer co = CommentConstants.CULTURAL_OFFER;
+		co.setAdmin(new Admin(CommentConstants.ADMIN_ID_WITH_NOT_APPROVED_COMMENTS));
+		Comment c = new Comment(CommentConstants.REG_USER, co, CommentConstants.TEXT, CommentConstants.TIME); //koment 1
 		c.setId(CommentConstants.COMMENT_ID);
 		c.setApproved(CommentConstants.DECLINED);
 		c.setImageUrl(CommentConstants.IMAGE);
@@ -228,7 +298,9 @@ public class CommentServiceUnitTest {
 	
 	@Test
 	public void testApproveComment_WithExistingId_ShouldDeclineComment() throws Exception {
-		Comment c2 = new Comment(CommentConstants.REG_USER, CommentConstants.CULTURAL_OFFER2, CommentConstants.TEXT, CommentConstants.TIME); // koment 2
+		CulturalOffer co = CommentConstants.CULTURAL_OFFER2;
+		co.setAdmin(new Admin(CommentConstants.ADMIN_ID_WITH_NOT_APPROVED_COMMENTS));
+		Comment c2 = new Comment(CommentConstants.REG_USER, co, CommentConstants.TEXT, CommentConstants.TIME); // koment 2
 		c2.setId(CommentConstants.COMMENT_ID2);
 		c2.setApproved(CommentConstants.DECLINED);
 		c2.setImageUrl(null);
@@ -239,6 +311,65 @@ public class CommentServiceUnitTest {
 		verify(commentRepository, times(0)).save(c2);
 		verify(commentRepository, times(1)).delete(CommentConstants.COMMENT_ID2);
 		assertEquals(null, declined);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testApproveComment_WithAlreadyApprovedComment_ShouldThrowIllegalArgumentException() throws Exception {
+		commentService.approveComment(CommentConstants.COMMENT_ID4, CommentConstants.DECLINED);
+		
+		verify(commentRepository, times(1)).findById(CommentConstants.COMMENT_ID4);
+		verify(commentRepository, times(0)).save(Mockito.any(Comment.class));
+		verify(commentRepository, times(0)).delete(CommentConstants.COMMENT_ID2);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testApproveComment_WithNotCorrectAdmin_ShouldThrowIllegalArgumentException() throws Exception {
+		User user = new User(CommentConstants.ADMIN_ID_WITH_NOT_APPROVED_COMMENTS);
+		Authentication auth = new Authentication() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public String getName() {
+				return null;
+			}
+			
+			@Override
+			public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
+				
+			}
+			
+			@Override
+			public boolean isAuthenticated() {
+				return false;
+			}
+			
+			@Override
+			public Object getPrincipal() {
+				return user;
+			}
+			
+			@Override
+			public Object getDetails() {
+				return null;
+			}
+			
+			@Override
+			public Object getCredentials() {
+				return null;
+			}
+			
+			@Override
+			public Collection<? extends GrantedAuthority> getAuthorities() {
+				return null;
+			}
+		};
+		SecurityContextHolder.getContext().setAuthentication(auth);
+		
+		commentService.approveComment(CommentConstants.COMMENT_ID4, CommentConstants.DECLINED);
+		
+		verify(commentRepository, times(1)).findById(CommentConstants.COMMENT_ID4);
+		verify(commentRepository, times(0)).save(Mockito.any(Comment.class));
+		verify(commentRepository, times(0)).delete(CommentConstants.COMMENT_ID2);
 	}
 
 }
