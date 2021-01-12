@@ -340,16 +340,23 @@ public class CulturalOfferE2ETest {
 	@Test
 	public void reviewCulturalOfferThroughHomePage_ShouldShowAllInformationAboutConcreteCulturalOffer()
 			throws InterruptedException, IOException {
-		homePage.ensureIsDisplayedMoreButton();
-
+		homePage.ensureIsDisplayedFestivalsTab();
+		homePage.ensureIsDisplayedSearch();
+		
 		assertEquals("https://localhost:4200/", driver.getCurrentUrl());
+		
+		homePage.getSearch().sendKeys("festival 100");
+		
+		homePage.getFestivalsTab().click();
+		
+		homePage.ensureIsDisplayedMoreButton();
 
 		homePage.getMore().click();
 
 		reviewCulturalOfferPage.ensureIsDisplayedName();
 
-		assertEquals("https://localhost:4200/cultural-offers/2", driver.getCurrentUrl());
-		assertEquals("Manastir 2", reviewCulturalOfferPage.getName().getText());
+		assertEquals("https://localhost:4200/cultural-offers/3", driver.getCurrentUrl());
+		assertEquals("Festival 100", reviewCulturalOfferPage.getName().getText());
 
 		driver.close();
 	}

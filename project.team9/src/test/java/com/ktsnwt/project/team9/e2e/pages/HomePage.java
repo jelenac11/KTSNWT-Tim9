@@ -19,8 +19,14 @@ public class HomePage {
 	@FindBy(id = "culturalOffers_navigation")
 	private WebElement culturalOffersPage;
 	
-	@FindBy(id = "home_page_more_button_2")
+	@FindBy(id = "home_page_more_button_3")
 	private WebElement more;
+	
+	@FindBy(id = "mat-tab-label-0-1")
+	private WebElement festivalsTab;
+	
+	@FindBy(xpath = "//div[@id='search_div_home_page']/app-search/div/mat-form-field/div/div/div[3]/input")
+	private WebElement search;
 
 	public HomePage(WebDriver driver) {
 		this.driver = driver;
@@ -31,6 +37,14 @@ public class HomePage {
     }
 	
 	public void ensureIsDisplayedMoreButton() {
-        (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("home_page_more_button_2")));
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("home_page_more_button_3")));
+    }
+	
+	public void ensureIsDisplayedFestivalsTab() {
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("mat-tab-label-0-1")));
+    }
+	
+	public void ensureIsDisplayedSearch() {
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='search_div_home_page']/app-search/div/mat-form-field/div/div/div[3]/input")));
     }
 }
