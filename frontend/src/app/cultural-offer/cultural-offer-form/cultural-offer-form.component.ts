@@ -159,7 +159,7 @@ export class CulturalOfferFormComponent implements OnInit {
   }
 
 
-  goBack(id: number) {
+  goBack(id: number): void {
     if (this.id) {
       this.router.navigateByUrl(`/cultural-offers/${id}`);
     }
