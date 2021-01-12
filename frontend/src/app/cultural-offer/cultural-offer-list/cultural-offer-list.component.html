@@ -4,11 +4,12 @@
       <div class="pl-2">
         <mat-form-field appearance="outline">
           <mat-label>Select category</mat-label>
-          <mat-select (selectionChange)="changeSelect($event.value)">
+          <mat-select id="select_category_through_culturalOffersPage" (selectionChange)="changeSelect($event.value)">
             <mat-option [value]="0">All</mat-option>
             <mat-option
+              [id]="'select_category_through_culturalOffersPage_'+category.id"
               *ngFor="let category of categories"
-              [value]="category.id"
+              [value]="category.id"        
               >{{ category.name }}</mat-option
             >
           </mat-select>
@@ -20,6 +21,7 @@
     </div>
     <div class="mt-3 mb-3 mr-3">
       <button
+        id="create_new_cultural_offer_button"
         *ngIf="role === 'ROLE_ADMIN'"
         mat-flat-button
         color="primary"
@@ -43,7 +45,7 @@
   >
     <mdb-card-body>
       <div class="card-deck">
-        <mdb-card class="containerCard" *ngFor="let culturalOffer of row">
+        <mdb-card id="culturalOffer.id" class="containerCard" *ngFor="let culturalOffer of row">
           <div class="view overlay waves-light" mdbWavesEffect>
             <mdb-card-img
               src="{{ culturalOffer.image }}"
@@ -58,6 +60,7 @@
             <mdb-card-title class="align-self-center">
               <h4>{{ culturalOffer.name }}</h4>
               <button
+                [id]="'culturalOffer_'+culturalOffer.id+'_remove_button'"
                 *ngIf="role === 'ROLE_ADMIN'"
                 mdbBtn
                 type="button"
@@ -69,6 +72,7 @@
                 Remove
               </button>
               <button
+                [id]="'culturalOffer_'+culturalOffer.id+'_update_button'"
                 *ngIf="role === 'ROLE_ADMIN'"
                 mdbBtn
                 type="button"
@@ -89,6 +93,7 @@
 
             <div class="mt-auto align-self-center">
               <button
+                [id]="'culturalOfferPage_more_button_'+culturalOffer.id"
                 type="button"
                 size="sm"
                 mdbBtn

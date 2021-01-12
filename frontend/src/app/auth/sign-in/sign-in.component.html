@@ -11,14 +11,14 @@
                     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                         <p><mat-form-field appearance="outline" class="full-row">
                             <mat-label>Email</mat-label>
-                            <input formControlName="email" matInput placeholder="Email" [errorStateMatcher]="matcher">
+                            <input id="login_email" formControlName="email" matInput placeholder="Email" [errorStateMatcher]="matcher">
                             <mat-icon matSuffix>email</mat-icon>
                             <mat-error *ngIf="f.email.errors?.required">Email is required</mat-error>
                             <mat-error *ngIf="f.email.errors?.required">Email is not valid</mat-error>
                         </mat-form-field></p>
                         <p><mat-form-field appearance="outline" class="full-row">
                             <mat-label>Password</mat-label>
-                            <input formControlName="password" matInput placeholder="Password" [type]="hidePassword ? 'password' : 'text'" [errorStateMatcher]="matcher">
+                            <input id="login_password" formControlName="password" matInput placeholder="Password" [type]="hidePassword ? 'password' : 'text'" [errorStateMatcher]="matcher">
                             <button type="button" mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
                                 <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
                             </button>
