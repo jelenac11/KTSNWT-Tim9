@@ -62,30 +62,12 @@ public class CulturalOfferServiceIntegrationTest {
 	}
 
 	@Test
-	public void testFindAll_WithFirstPageable_ShouldReturnFirst10CulturalOffers() {
-		Pageable pageable = PageRequest.of(0, 10);
-
-		Page<CulturalOffer> culturalOffers = culturalOfferService.findAll(pageable);
-
-		assertEquals(10, culturalOffers.getNumberOfElements());
-	}
-
-	@Test
 	public void testFindAll_WithSecondPageable_ShouldReturnSecond10CulturalOffers() {
 		Pageable pageable = PageRequest.of(1, 10);
 
 		Page<CulturalOffer> culturalOffers = culturalOfferService.findAll(pageable);
 
 		assertEquals(10, culturalOffers.getNumberOfElements());
-	}
-
-	@Test
-	public void testFindAll_WithNonExistingPageable_ShouldReturnEmptyCollection() {
-		Pageable pageable = PageRequest.of(2, 10);
-
-		Page<CulturalOffer> culturalOffers = culturalOfferService.findAll(pageable);
-
-		assertEquals(0, culturalOffers.getNumberOfElements());
 	}
 
 	@Test
