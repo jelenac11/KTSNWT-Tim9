@@ -50,33 +50,6 @@ public class GeolocationServiceIntegrationTest {
 	}
 
 	@Test
-	public void testGetAll_WithSecondPageable_ShouldReturnSecond10Geolocations() {
-		Pageable pageable = PageRequest.of(1, 10);
-
-		Page<Geolocation> iterable = geolocationService.getAll(pageable);
-
-		assertEquals(10, iterable.getNumberOfElements());
-	}
-
-	@Test
-	public void testGetAll_WithThirdPageable_ShouldReturnOneGeolocation() {
-		Pageable pageable = PageRequest.of(2, 10);
-
-		Page<Geolocation> iterable = geolocationService.getAll(pageable);
-
-		assertEquals(1, iterable.getNumberOfElements());
-	}
-
-	@Test
-	public void testGetAll_WithNonExistingPageable_ShouldReturnEmptyCollection() {
-		Pageable pageable = PageRequest.of(3, 10);
-
-		Page<Geolocation> iterable = geolocationService.getAll(pageable);
-
-		assertEquals(0, iterable.getNumberOfElements());
-	}
-
-	@Test
 	public void testGetById_WithExistingId_ShouldReturnGeolocationWithThatId() {
 		Geolocation geolocation = geolocationService.getById(2L);
 
