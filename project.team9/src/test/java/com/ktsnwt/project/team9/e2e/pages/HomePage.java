@@ -19,6 +19,9 @@ public class HomePage {
 	@FindBy(id = "culturalOffers_navigation")
 	private WebElement culturalOffersPage;
 	
+	@FindBy(id = "signup-navigation")
+	private WebElement signUpPage;
+	
 	@FindBy(id = "home_page_more_button_3")
 	private WebElement more;
 	
@@ -34,6 +37,10 @@ public class HomePage {
 	
 	public void ensureIsDisplayedCulturalOfferNavigation() {
         (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("culturalOffers_navigation")));
+    }
+	
+	public void ensureIsDisplayedSignUpNavigation() {
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("signup-navigation")));
     }
 	
 	public void ensureIsDisplayedMoreButton() {

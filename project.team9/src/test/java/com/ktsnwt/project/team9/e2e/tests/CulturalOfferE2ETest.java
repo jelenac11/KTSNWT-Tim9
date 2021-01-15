@@ -74,7 +74,7 @@ public class CulturalOfferE2ETest {
 	}
 
 	private void loginSetUp() {
-		driver.navigate().to(BASE_URL + "/sign-in");
+		driver.navigate().to(BASE_URL + "/auth/sign-in");
 
 		loginPage.ensureIsDisplayedEmail();
 

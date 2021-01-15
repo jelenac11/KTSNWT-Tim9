@@ -31,7 +31,7 @@ import com.ktsnwt.project.team9.services.implementations.CategoryService;
 @RestController
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 @RequestMapping(value = "/api/categories", produces = MediaType.APPLICATION_JSON_VALUE)
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
+@CrossOrigin(origins = "https://localhost:4200", maxAge = 3600)
 public class CategoryController {
 
 	@Autowired
