@@ -1,6 +1,7 @@
+@use '../../../base';
+
 .div-centered {
-    display: flex;
-    justify-content: center;
+    @extend %flex-center
 }
 
 .comment {
@@ -13,6 +14,6 @@
 }
 
 .green {
-    background-color: green;
-    color: white
+    background-color: base.$success;
+    color: white;
 }

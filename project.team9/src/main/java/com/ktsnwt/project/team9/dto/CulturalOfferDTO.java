@@ -25,7 +25,6 @@ public class CulturalOfferDTO {
 	@NotNull(message = "Category cannot be null.")
 	private Long category;
 	
-	@NotNull(message = "Admin cannot be null.")
 	private Long admin;
 
 	public CulturalOfferDTO() {

@@ -187,5 +187,8 @@ def generateNews():
 def generateUpdate():
     for i in range(1,1000):
         print("UPDATE public.cultural_offer SET  average_mark=(SELECT  COALESCE(avg(m.value),0)::NUMERIC(10,2) FROM public.mark m where m.cultural_offer_id = {}) WHERE cultural_offer_id={};".format(i,i))
+def generateAuthority():
+    for i in range(20,1000):
+        print("insert into user_authority(user_id, authority_id) values({},1);".format(i))
 if __name__ == '__main__':
-    generateUpdate()
+    generateAuthority()

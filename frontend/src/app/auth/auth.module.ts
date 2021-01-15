@@ -17,6 +17,7 @@ import { NoAuthGuard } from './guards/no-auth.guard';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { AuthRoutingModule } from './auth-routing.module';
 
 @NgModule({
   declarations: [SignUpComponent, ConfirmRegistrationComponent, SignInComponent, ForgotPasswordComponent],
@@ -24,7 +25,6 @@ import { MatIconModule } from '@angular/material/icon';
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    BrowserModule,
     RouterModule,
     CardsModule,
     WavesModule,
@@ -33,6 +33,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
+    AuthRoutingModule
   ],
   exports: [SignUpComponent, ConfirmRegistrationComponent, SignInComponent, ForgotPasswordComponent],
   providers: [RoleGuard, NoAuthGuard, { provide: HTTP_INTERCEPTORS, useClass: HttpTokenInterceptor, multi: true }]

@@ -18,11 +18,13 @@
             </mdb-card>
           </div>
           <div class="col-5">
-            <p class="h4 mb-4">Create new cultural offer</p>
+            <p class="h4 mb-4" *ngIf="!id">Create new cultural offer</p>
+            <p class="h4 mb-4" *ngIf="id">Update cultural offer</p>
             <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
               <div class="form-group">
                 <label>Name</label>
                 <input
+                  id="culturalOffer_name_input"
                   type="text"
                   formControlName="name"
                   class="form-control"
@@ -38,6 +40,7 @@
               <div class="form-group">
                 <label>Location</label>
                 <input
+                  id="culturalOffer_location_input"
                   [value]="loc"
                   type="text"
                   formControlName="location"
@@ -61,11 +64,13 @@
               <div class="form-group">
                 <label>Category</label>
                 <select
+                  id="select_category"
                   class="form-control"
                   formControlName="category"
                   [ngClass]="{ 'is-invalid': submitted && f.category.errors }"
                 >
                   <option
+                    [id]="'select_category_'+category.id"
                     *ngFor="let category of categories"
                     [value]="category.id"
                   >
@@ -84,6 +89,7 @@
               <div class="form-group">
                 <label>Description</label>
                 <textarea
+                  id="culturalOffer_description_input"
                   formControlName="description"
                   class="form-control"
                   placeholder="Write some description..."
@@ -98,6 +104,7 @@
                   [height]="200"
                 />
                 <input
+                  id="culturalOffer_image_file_select"
                   type="file"
                   accept="image/jpeg, image/jpg"
                   (change)="chooseFile($event)"
@@ -113,7 +120,22 @@
                 </div>
               </div>
               <div class="form-group">
-                <button type="submit" class="btn btn-primary">Create</button>
+                <button
+                  id="create_culturalOffer_button"
+                  type="submit"
+                  class="mat-raised-button mat-primary"
+                  *ngIf="!id"
+                >
+                  Create
+                </button>
+                <button
+                  id="update_culturalOffer_button"
+                  type="submit"
+                  class="mat-raised-button mat-primary"
+                  *ngIf="id"
+                >
+                  Update
+                </button>
               </div>
             </form>
           </div>

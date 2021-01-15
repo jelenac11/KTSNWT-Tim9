@@ -6,14 +6,14 @@
           <div class="row">
             <div class="col-4">
               <div class="view overlay">
-                <app-image-modal
+                <app-image-modal style="float: left;"
                   [imageURL]="culturalOffer.image"
                 ></app-image-modal>
               </div>
             </div>
             <div class="col-5 mt-3">
               <div>
-                <h1>{{ culturalOffer.name }}</h1>
+                <h1 id="individual_culturalOffer_name"><b>{{ culturalOffer.name }}</b></h1>
               </div>
               <div>
                 <h2>
@@ -25,19 +25,22 @@
             </div>
             <div *ngIf="role === 'ROLE_REGISTERED_USER'" class="col-3">
               <div>
-                <bar-rating
-                  [(rate)]="mark"
-                  [theme]="'stars'"
-                  [max]="5"
-                  (rateChange)="onRate($event)"
-                ></bar-rating>
+                <span>
+                  Average: <b>{{ culturalOffer.averageMark }}/5</b>
+                  <bar-rating
+                    [(rate)]="mark"
+                    [theme]="'stars'"
+                    [max]="5"
+                    (rateChange)="onRate($event)"
+                  ></bar-rating>
+                </span>
               </div>
               <div>
                 <button mdbBtn color="primary" size="sm" mdbWavesEffect>Subscribe</button>
               </div>
             </div>
           </div>
-          <div class="row mt-3" style="text-align: center">
+          <div class="row mt-3 mx-1" style="text-align: justify">
             {{ culturalOffer.description }}
           </div>
         </mdb-card-body>

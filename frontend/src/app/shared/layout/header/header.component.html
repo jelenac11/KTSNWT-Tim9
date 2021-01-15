@@ -24,6 +24,7 @@
       </li>
       <li class="nav-item">
         <a
+          id="culturalOffers_navigation"
           class="nav-link waves-light font-weight-bolder ml-2 mt-2 h6"
           routerLink="/cultural-offers"
           routerLinkActive="active"
@@ -77,7 +78,7 @@
         <a
           *ngIf="!role"
           class="nav-link waves-light font-weight-bolder ml-2 mt-2 h6"
-          routerLink="/sign-in"
+          routerLink="/auth/sign-in"
           mdbWavesEffect
           >Sign in</a
         >
@@ -87,7 +88,7 @@
           id='signup-navigation'
           *ngIf="!role"
           class="nav-link waves-light font-weight-bolder ml-2 mt-2 h6"
-          routerLink="/sign-up"
+          routerLink="/auth/sign-up"
           mdbWavesEffect
           >Sign up</a
         >

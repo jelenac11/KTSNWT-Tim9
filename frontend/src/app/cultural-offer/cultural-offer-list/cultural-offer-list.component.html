@@ -1,36 +1,35 @@
 <div class="content" role="main">
   <div class="d-flex">
-    <div class="mr-auto mt-3 mb-3 ml-3">
-      <button
-        *ngIf="role === 'ROLE_ADMIN'"
-        routerLink="/cultural-offers/create"
-        mdbBtn
-        type="button"
-        size="md"
-        color="primary"
-        mdbWavesEffect
-      >
-        <mdb-icon fas icon="plus" class="mr-1"></mdb-icon>Create new cultural
-        offer
-      </button>
-    </div>
-    <div class="mt-3 mb-3">
-      <app-search (searchChanged)="searchChanged($event)"></app-search>
-    </div>
-    <div class="mt-3 mb-3 mr-3">
+    <div class="mt-3 mb-3 ml-3">
       <div class="pl-2">
         <mat-form-field appearance="outline">
           <mat-label>Select category</mat-label>
-          <mat-select (selectionChange)="changeSelect($event.value)">
-            <mat-option value="0">All</mat-option>
+          <mat-select id="select_category_through_culturalOffersPage" (selectionChange)="changeSelect($event.value)">
+            <mat-option [value]="0">All</mat-option>
             <mat-option
+              [id]="'select_category_through_culturalOffersPage_'+category.id"
               *ngFor="let category of categories"
-              [value]="category.id"
+              [value]="category.id"        
               >{{ category.name }}</mat-option
             >
           </mat-select>
         </mat-form-field>
       </div>
+    </div>
+    <div class="mr-auto mt-3 mb-3">
+      <app-search (searchChanged)="searchChanged($event)"></app-search>
+    </div>
+    <div class="mt-3 mb-3 mr-3">
+      <button
+        id="create_new_cultural_offer_button"
+        *ngIf="role === 'ROLE_ADMIN'"
+        mat-flat-button
+        color="primary"
+        class="button-add"
+        routerLink="/cultural-offers/create"
+      >
+        <mat-icon>account_balance</mat-icon> Create new cultural offer
+      </button>
     </div>
   </div>
   <mdb-card
@@ -46,7 +45,7 @@
   >
     <mdb-card-body>
       <div class="card-deck">
-        <mdb-card class="containerCard" *ngFor="let culturalOffer of row">
+        <mdb-card id="culturalOffer.id" class="containerCard" *ngFor="let culturalOffer of row">
           <div class="view overlay waves-light" mdbWavesEffect>
             <mdb-card-img
               src="{{ culturalOffer.image }}"
@@ -61,6 +60,7 @@
             <mdb-card-title class="align-self-center">
               <h4>{{ culturalOffer.name }}</h4>
               <button
+                [id]="'culturalOffer_'+culturalOffer.id+'_remove_button'"
                 *ngIf="role === 'ROLE_ADMIN'"
                 mdbBtn
                 type="button"
@@ -69,9 +69,10 @@
                 mdbWavesEffect
                 (click)="openDialog(culturalOffer.id)"
               >
-                Delete
+                Remove
               </button>
               <button
+                [id]="'culturalOffer_'+culturalOffer.id+'_update_button'"
                 *ngIf="role === 'ROLE_ADMIN'"
                 mdbBtn
                 type="button"
@@ -92,6 +93,7 @@
 
             <div class="mt-auto align-self-center">
               <button
+                [id]="'culturalOfferPage_more_button_'+culturalOffer.id"
                 type="button"
                 size="sm"
                 mdbBtn

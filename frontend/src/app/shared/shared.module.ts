@@ -22,6 +22,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     ImageModalComponent,
     ConfirmationDialogComponent,
     ProfileComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    PageNotFoundComponent
   ],
   imports: [
     CommonModule,

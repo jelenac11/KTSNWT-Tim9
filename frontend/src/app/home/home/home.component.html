@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-5">
+    <div class="col-5" id="search_div_home_page">
       <app-search (searchChanged)="searchChanged($event)"></app-search>
     </div>
   </div>
@@ -33,6 +33,7 @@
                   <td>{{ item.geolocation.location }}</td>
                   <td class="button-more">
                     <button
+                      [id]="'home_page_more_button_' + item.id"
                       type="button"
                       size="sm"
                       mdbBtn
