@@ -33,7 +33,7 @@ import lombok.AllArgsConstructor;
 @RestController
 @RequestMapping(value = "/api/cultural-offers", produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
+@CrossOrigin(origins = "https://localhost:4200", maxAge = 3600)
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 //@PreAuthorize("permitAll()") // comment previous line instead of this to enable CRUD operations for frontend
 public class CulturalOfferController {

@@ -35,7 +35,7 @@ import com.ktsnwt.project.team9.services.implementations.CommentService;
 
 @RestController
 @RequestMapping(value = "/api/comments", produces = MediaType.APPLICATION_JSON_VALUE)
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowedHeaders = "*")
+@CrossOrigin(origins = "https://localhost:4200", maxAge = 3600, allowedHeaders = "*")
 public class CommentController {
 	
 	@Autowired
