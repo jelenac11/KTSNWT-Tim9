@@ -20,6 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
 import { MatSelectModule } from '@angular/material/select';
+import { CulturalOfferRoutingModule } from './cultural-offer-routing.module';
 
 @NgModule({
   declarations: [CulturalOfferReviewComponent, CulturalOfferListComponent, CulturalOfferFormComponent],
@@ -44,13 +45,11 @@ import { MatSelectModule } from '@angular/material/select';
     MatButtonModule,
     MatSnackBarModule,
     GooglePlaceModule,
-    BrowserModule,
     RouterModule,
     ButtonsModule,
     IconsModule,
-    SharedModule,
     MatFormFieldModule,
-    MatSelectModule
+    MatSelectModule,
   ],
   exports: [CulturalOfferReviewComponent, CulturalOfferListComponent, CulturalOfferFormComponent]
 })

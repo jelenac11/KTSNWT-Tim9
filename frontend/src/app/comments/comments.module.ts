@@ -14,6 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { AddCommentComponent } from './add-comment/add-comment.component';
 import { ApproveCommentComponent } from './approve-comment/approve-comment.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { CommentsRoutingModule } from './comments-routing.module';
 
 @NgModule({
   declarations: [CommentComponent, CommentsReviewComponent, AddCommentComponent, ApproveCommentComponent],
@@ -29,6 +30,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     MatInputModule,
     ReactiveFormsModule,
     RouterModule,
+    CommentsRoutingModule
   ], 
   exports: [CommentComponent, CommentsReviewComponent, AddCommentComponent, ApproveCommentComponent],
 })

@@ -15,6 +15,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { AddAdminComponent } from './add-admin/add-admin.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { UsersRoutingModule } from './users-routing.module';
 
 @NgModule({
   declarations: [UsersReviewComponent, AddAdminComponent],
@@ -33,7 +34,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatIconModule,
     MatDialogModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    UsersRoutingModule
   ],
   exports: [UsersReviewComponent, AddAdminComponent]
 })

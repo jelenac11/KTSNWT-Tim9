@@ -4,7 +4,6 @@ import { ActivatedRoute } from '@angular/router';
 import { AddCommentComponent } from 'src/app/comments/add-comment/add-comment.component';
 import { MarkRequest } from 'src/app/core/models/request/mark-request.model';
 import { CulturalOffer } from 'src/app/core/models/response/cultural-offer.model';
-import { Mark } from 'src/app/core/models/response/mark.model';
 import { CulturalOfferService } from 'src/app/core/services/cultural-offer.service';
 import { JwtService } from 'src/app/core/services/jwt.service';
 import { MarkService } from 'src/app/core/services/mark.service';
@@ -68,17 +67,27 @@ export class CulturalOfferReviewComponent implements OnInit {
       this.markService.create(newMark).subscribe(data => {
         this.mark = data.value;
         this.isRated = true;
+        this.culturalOfferService.get(this.culturalOfferId)
+          .subscribe(culturalOffer => {
+            this.culturalOffer = culturalOffer;
+            this.getCurrentMark();
+          });
       },
-        error => {
-          console.log(error);
-        });
+      error => {
+        console.log(error);
+      });
     } else {
       this.markService.update(newMark).subscribe(data => {
         this.mark = data.value;
+        this.culturalOfferService.get(this.culturalOfferId)
+          .subscribe(culturalOffer => {
+            this.culturalOffer = culturalOffer;
+            this.getCurrentMark();
+          });
       },
-        error => {
-          console.log(error);
-        });
+      error => {
+        console.log(error);
+      });
     }
   }
 

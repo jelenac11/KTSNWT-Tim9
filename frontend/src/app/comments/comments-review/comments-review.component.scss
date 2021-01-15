@@ -1,4 +1,5 @@
+@use '../../../base';
+
 .div-centered {
-    display: flex;
-    justify-content: center;
+    @extend %flex-center;
 }
