@@ -52,7 +52,7 @@ export class ChangePasswordComponent implements OnInit {
       this.snackBar.success("You changed password successfully.");
       this.submited = false;
       this.authenticationService.logout();
-      this.router.navigate(['/sign-in']);
+      this.router.navigate(['/auth/sign-in']);
       this.dialogRef.close();
     },
     error => {

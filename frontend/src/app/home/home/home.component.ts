@@ -33,8 +33,7 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private culturalOfferService: CulturalOfferService,
-    private categoryService: CategoryService,
-    private jwtService: JwtService
+    private categoryService: CategoryService
   ) { }
 
   ngOnInit(): void {

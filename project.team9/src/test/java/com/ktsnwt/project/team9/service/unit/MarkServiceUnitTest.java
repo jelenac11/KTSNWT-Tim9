@@ -6,12 +6,14 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -20,6 +22,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.ktsnwt.project.team9.constants.MarkConstants;
 import com.ktsnwt.project.team9.model.Mark;
+import com.ktsnwt.project.team9.repositories.ICulturalOfferRepository;
 import com.ktsnwt.project.team9.repositories.IMarkRepository;
 import com.ktsnwt.project.team9.services.implementations.CulturalOfferService;
 import com.ktsnwt.project.team9.services.implementations.MarkService;
@@ -35,6 +38,9 @@ public class MarkServiceUnitTest {
 
 	@MockBean
 	IMarkRepository markRepository;
+	
+	@MockBean
+	ICulturalOfferRepository culturalOfferRepository;
 	
 	@MockBean
 	private CulturalOfferService culturalOfferService;
@@ -57,9 +63,11 @@ public class MarkServiceUnitTest {
 		given(markRepository.findById(MarkConstants.NON_EXISTING_MARK_ID)).willReturn(Optional.empty());
 		
 		given(markRepository.findByGraderAndCulturalOfferId(MarkConstants.GRADER_ID, MarkConstants.CULTURAL_OFFER_ID)).willReturn(mark);
+		given(markRepository.findByCulturalOfferId(MarkConstants.CULTURAL_OFFER_ID)).willReturn(new ArrayList<Mark>());
 		
 		given(markRepository.save(newMark)).willReturn(mark);
 		given(markRepository.save(mark)).willReturn(mark);
+		given(culturalOfferRepository.save(Mockito.any())).willReturn(null);
 	}
 	
 	@Test

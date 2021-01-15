@@ -11,8 +11,8 @@ import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 })
 export class ForgotPasswordComponent implements OnInit {
   forgotForm: FormGroup;
-  submitted: boolean = false;
-  matcher : MyErrorStateMatcher = new MyErrorStateMatcher();
+  submitted = false;
+  matcher: MyErrorStateMatcher = new MyErrorStateMatcher();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -26,7 +26,7 @@ export class ForgotPasswordComponent implements OnInit {
     });
   }
 
-  get f() { return this.forgotForm.controls; }
+  get f(): FormGroup["controls"] { return this.forgotForm.controls; }
 
   onSubmit(): void {
     this.submitted = true;

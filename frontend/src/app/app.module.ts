@@ -16,23 +16,25 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
 import { UsersModule } from './users/users.module';
 import { CommentsModule } from './comments/comments.module';
+import { CommonModule } from '@angular/common';
+import { CulturalOfferRoutingModule } from './cultural-offer/cultural-offer-routing.module';
+import { UsersRoutingModule } from './users/users-routing.module';
+import { CommentsRoutingModule } from './comments/comments-routing.module';
+import { AuthRoutingModule } from './auth/auth-routing.module';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
-    AuthModule,
     BrowserModule,
     AppRoutingModule,
     SharedModule,
     CoreModule,
-    CulturalOfferModule,
     CategoryModule,
     NewsModule,
     HomeModule,
-    UsersModule,
-    CommentsModule,
     AgmCoreModule.forRoot({
       apiKey: environment.google_api_key,
       libraries: ['places'],
@@ -41,7 +43,12 @@ import { CommentsModule } from './comments/comments.module';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
-    MatGoogleMapsAutocompleteModule
+    MatGoogleMapsAutocompleteModule,
+    CulturalOfferRoutingModule,
+    UsersRoutingModule,
+    CommentsRoutingModule,
+    AuthRoutingModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

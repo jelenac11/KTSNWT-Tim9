@@ -1,3 +1,5 @@
+@use '../../../base';
+
 .mat-but {
-    outline: none;
+    @extend %simple-raised-button;
 }

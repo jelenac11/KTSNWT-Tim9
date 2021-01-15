@@ -46,4 +46,31 @@ public class Geolocation {
 		this.lat = lat;
 		this.lon = lon;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Geolocation other = (Geolocation) obj;
+		if (Double.doubleToLongBits(lat) != Double.doubleToLongBits(other.lat))
+			return false;
+		if (location == null) {
+			if (other.location != null)
+				return false;
+		} else if (!location.equals(other.location))
+			return false;
+		if (Double.doubleToLongBits(lon) != Double.doubleToLongBits(other.lon))
+			return false;
+		if (placeId == null) {
+			if (other.placeId != null)
+				return false;
+		} else if (!placeId.equals(other.placeId))
+			return false;
+		return true;
+	}
+
 }

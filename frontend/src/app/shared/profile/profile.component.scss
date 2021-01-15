@@ -1,7 +1,21 @@
+@use '../../../base';
+
 .mat-dialog-actions {
-    justify-content: flex-end;
+    @extend %dialog-actions;
 }
-button.mat-raised-button.mat-primary { outline:none; background-color: #1A78C2; } 
-button.mat-raised-button{ outline:none; } 
-.mat-dialog-title { background-color: #1A78C2; color: white; text-align: center; padding-top: 3px; padding-bottom: 3px; }
-.mat-dialog-content { text-align: center; }
+
+.mat-raised-button.mat-primary { 
+    @extend %raised-button;
+} 
+
+.mat-raised-button{ 
+    @extend %simple-raised-button;
+} 
+
+.mat-dialog-title { 
+    @extend %dialog-title;
+}
+
+.mat-dialog-content { 
+    @extend %content-center;
+}

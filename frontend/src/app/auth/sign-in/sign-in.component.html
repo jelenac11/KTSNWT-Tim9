@@ -24,10 +24,10 @@
                             </button>
                             <mat-error *ngIf="f.password.errors?.required">Password is required</mat-error>
                         </mat-form-field></p>
-                        <div ><a [routerLink]="['/forgot-password']" class="text-primary">Forgot password?</a></div>
+                        <div ><a [routerLink]="['/auth/forgot-password']" class="text-primary">Forgot password?</a></div>
                         <button class="mr-3 px-3 mt-2 mb-4 btn sign-in">Sign in</button>
                         <div>
-                            <a [routerLink]="['/sign-up']" class="text-primary mb-2">Don't have an account? Sign up</a>
+                            Don't have an account? <a [routerLink]="['/auth/sign-up']" class="text-primary mb-2">Sign up</a>
                         </div>
                     </form>
                 </mat-card-content>
