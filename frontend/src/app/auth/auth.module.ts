@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { BrowserModule } from '@angular/platform-browser';
 import { ConfirmRegistrationComponent } from './confirm-registration/confirm-registration.component';
 import { CardsModule, WavesModule } from 'angular-bootstrap-md';
 import { MatButtonModule } from '@angular/material/button';
