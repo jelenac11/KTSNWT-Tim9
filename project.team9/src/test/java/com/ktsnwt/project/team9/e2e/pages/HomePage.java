@@ -103,6 +103,9 @@ public class HomePage {
 	@FindBy(xpath = "//div[@id='search_div_home_page']/app-search/div/mat-form-field/div/div/div[3]/input")
 	private WebElement search;
 
+	@FindBy(id = "comment-requests-navigation")
+	private WebElement commentRequestsPage;
+	
 	public HomePage(WebDriver driver) {
 		this.driver = driver;
 	}
@@ -181,5 +184,9 @@ public class HomePage {
 	
 	public void ensureIsDisplayedSearch() {
         (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='search_div_home_page']/app-search/div/mat-form-field/div/div/div[3]/input")));
+    }
+	
+	public void ensureIsDisplayedCommentRequestsNavigation() {
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("comment-requests-navigation")));
     }
 }
