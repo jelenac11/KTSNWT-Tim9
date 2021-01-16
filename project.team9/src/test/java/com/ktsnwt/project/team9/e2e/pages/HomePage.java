@@ -19,11 +19,20 @@ public class HomePage {
 	@FindBy(id = "culturalOffers_navigation")
 	private WebElement culturalOffersPage;
 	
+	@FindBy(id = "signup-navigation")
+	private WebElement signUpPage;
+	
+	@FindBy(id = "signin-navigation")
+	private WebElement signInPage;
+	
 	@FindBy(id = "home_page_more_button_3")
 	private WebElement more;
 	
 	@FindBy(id = "mat-tab-label-0-1")
 	private WebElement festivalsTab;
+	
+	@FindBy(id = "user-navigation")
+	private WebElement userPage;
 	
 	@FindBy(xpath = "//div[@id='search_div_home_page']/app-search/div/mat-form-field/div/div/div[3]/input")
 	private WebElement search;
@@ -34,6 +43,10 @@ public class HomePage {
 	
 	public void ensureIsDisplayedCulturalOfferNavigation() {
         (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("culturalOffers_navigation")));
+    }
+	
+	public void ensureIsDisplayedSignUpNavigation() {
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("signup-navigation")));
     }
 	
 	public void ensureIsDisplayedMoreButton() {

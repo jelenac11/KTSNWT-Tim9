@@ -12,28 +12,43 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class LoginPage {
+public class SignUpPage {
 
 	private WebDriver driver;
 
-	@FindBy(id = "login_email")
+	@FindBy(id = "signup-firstname")
+	private WebElement firstName;
+	
+	@FindBy(id = "signup-lastname")
+	private WebElement lastName;
+	
+	@FindBy(id = "signup-username")
+	private WebElement username;
+	
+	@FindBy(id = "signup-email")
 	private WebElement email;
 
-	@FindBy(id = "login_password")
+	@FindBy(id = "signup-password")
 	private WebElement password;
 	
+	@FindBy(id = "signup-email-error")
+	private WebElement emailError;
+
+	@FindBy(id = "signup-password-length-error")
+	private WebElement passwordLenError;
+	
 	@FindBy(xpath = "//form/button")
-	private WebElement signIn;
+	private WebElement signUp;
 	
 	@FindBy(xpath = "//simple-snack-bar/span")
 	private WebElement message;
 
-	public LoginPage(WebDriver driver) {
+	public SignUpPage(WebDriver driver) {
 		this.driver = driver;
 	}
 	
 	public void ensureIsDisplayedEmail() {
-        (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("login_email")));
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("signup-email")));
     }
 	
 	public void ensureIsDisplayedMessage() {

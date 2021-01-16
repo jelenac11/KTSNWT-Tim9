@@ -3,7 +3,9 @@ import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/c
 import { Observable } from 'rxjs';
 import { JwtService } from '../services/jwt.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class HttpTokenInterceptor implements HttpInterceptor {
   constructor(
     private jwtService: JwtService

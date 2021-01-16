@@ -21,7 +21,7 @@ import com.ktsnwt.project.team9.services.implementations.UserService;
 
 @RestController
 @RequestMapping(value = "/api/users", produces = MediaType.APPLICATION_JSON_VALUE)
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowedHeaders = "*")
+@CrossOrigin(origins = "https://localhost:4200", maxAge = 3600, allowedHeaders = "*")
 public class UserController {
 	
 	@Autowired

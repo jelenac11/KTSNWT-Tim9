@@ -13,7 +13,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CulturalOfferFormComponent } from './cultural-offer-form/cultural-offer-form.component';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
-import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -50,6 +49,7 @@ import { CulturalOfferRoutingModule } from './cultural-offer-routing.module';
     IconsModule,
     MatFormFieldModule,
     MatSelectModule,
+    CulturalOfferRoutingModule
   ],
   exports: [CulturalOfferReviewComponent, CulturalOfferListComponent, CulturalOfferFormComponent]
 })
