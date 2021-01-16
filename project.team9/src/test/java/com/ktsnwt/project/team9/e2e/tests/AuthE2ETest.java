@@ -7,6 +7,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -17,6 +18,7 @@ import org.springframework.test.annotation.DirtiesContext.MethodMode;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.ktsnwt.project.team9.e2e.pages.ForgotPasswordPage;
 import com.ktsnwt.project.team9.e2e.pages.HomePage;
 import com.ktsnwt.project.team9.e2e.pages.LoginPage;
 import com.ktsnwt.project.team9.e2e.pages.SignUpPage;
@@ -40,6 +42,8 @@ public class AuthE2ETest {
 	private HomePage homePage;
 
 	private LoginPage signInPage;
+	
+	private ForgotPasswordPage forgotPasswordPage;
 
 	@Before
 	public void setUp() {
@@ -53,6 +57,18 @@ public class AuthE2ETest {
 		signUpPage = PageFactory.initElements(driver, SignUpPage.class);
 		homePage = PageFactory.initElements(driver, HomePage.class);
 		signInPage = PageFactory.initElements(driver, LoginPage.class);
+		forgotPasswordPage = PageFactory.initElements(driver, ForgotPasswordPage.class);
+	}
+	
+	private void loginSetUp() {
+		driver.navigate().to(BASE_URL + "/auth/sign-in");
+
+		signInPage.ensureIsDisplayedEmail();
+
+		signInPage.getEmail().sendKeys("email_adresa1@gmail.com");
+		signInPage.getPassword().sendKeys("sifra123");
+
+		signInPage.getSignIn().click();
 	}
 	
 	@Test
@@ -198,4 +214,187 @@ public class AuthE2ETest {
 		
 		driver.close();
 	}
+	
+	@Test
+	public void signIn_WithValidParams_ShouldSuccess() {
+		homePage.ensureIsDisplayedSignUpNavigation();
+		
+		assertEquals("https://localhost:4200/", driver.getCurrentUrl());
+		
+		homePage.getSignInPage().click();
+		
+		signInPage.ensureIsDisplayedEmail();
+		
+		assertEquals("https://localhost:4200/auth/sign-in", driver.getCurrentUrl());
+
+		signInPage.getEmail().sendKeys("email_adresa1@gmail.com");
+		signInPage.getPassword().sendKeys("sifra123");
+
+		signInPage.getSignIn().click();
+		
+		homePage.ensureIsDisplayedSearch();
+		assertEquals("https://localhost:4200/", driver.getCurrentUrl());
+		
+		driver.close();
+	}
+	
+	@Test
+	public void signIn_WithInvalidParams_ShouldFail() {
+		homePage.ensureIsDisplayedSignUpNavigation();
+		
+		assertEquals("https://localhost:4200/", driver.getCurrentUrl());
+		
+		homePage.getSignInPage().click();
+		
+		signInPage.ensureIsDisplayedEmail();
+		
+		assertEquals("https://localhost:4200/auth/sign-in", driver.getCurrentUrl());
+
+		signInPage.getEmail().sendKeys("aleksa.g@gmail.com");
+		signInPage.getPassword().sendKeys("sifra123");
+
+		signInPage.getSignIn().click();
+		
+		assertEquals("https://localhost:4200/auth/sign-in", driver.getCurrentUrl());
+		
+		signInPage.ensureIsDisplayedMessage();
+		assertEquals("Incorrect email or password.", signInPage.getMessage().getText());
+		driver.close();
+	}
+	
+	@Test
+	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
+	public void forgotPassword_WithValidParams_ShouldSuccess() {
+		homePage.ensureIsDisplayedSignInNavigation();
+		
+		assertEquals("https://localhost:4200/", driver.getCurrentUrl());
+		
+		homePage.getSignInPage().click();
+		
+		signInPage.ensureIsDisplayedForgotPasswordLink();
+		assertEquals("https://localhost:4200/auth/sign-in", driver.getCurrentUrl());
+		
+		signInPage.getForgotPasswordLink().click();
+		
+		assertEquals("https://localhost:4200/auth/forgot-password", driver.getCurrentUrl());
+		
+		forgotPasswordPage.getEmail().sendKeys("email_adresa1@gmail.com");
+		forgotPasswordPage.getSend().click();
+		
+		forgotPasswordPage.ensureIsDisplayedMessage();
+		assertEquals("New password sent. Check your email.", forgotPasswordPage.getMessage().getText());
+		assertEquals("https://localhost:4200/auth/forgot-password", driver.getCurrentUrl());
+		
+		driver.close();
+	}
+	
+	@Test
+	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
+	public void forgotPassword_WithNonExistingEmail_ShouldFail() {
+		homePage.ensureIsDisplayedSignInNavigation();
+		
+		assertEquals("https://localhost:4200/", driver.getCurrentUrl());
+		
+		homePage.getSignInPage().click();
+		
+		signInPage.ensureIsDisplayedForgotPasswordLink();
+		assertEquals("https://localhost:4200/auth/sign-in", driver.getCurrentUrl());
+		
+		signInPage.getForgotPasswordLink().click();
+		
+		assertEquals("https://localhost:4200/auth/forgot-password", driver.getCurrentUrl());
+		
+		forgotPasswordPage.getEmail().sendKeys("ne_postojeci_email@gmail.com");
+		forgotPasswordPage.getSend().click();
+		
+		forgotPasswordPage.ensureIsDisplayedMessage();
+		assertEquals("That email address is not associated with personal user account.", forgotPasswordPage.getMessage().getText());
+		assertEquals("https://localhost:4200/auth/forgot-password", driver.getCurrentUrl());
+		
+		driver.close();
+	}
+	
+	@Test
+	public void ProfileInfoPreview_WithValidParams_ShouldSuccess() {
+		loginSetUp();
+		
+		homePage.ensureIsDisplayedProfileButton();
+		
+		assertEquals("https://localhost:4200/", driver.getCurrentUrl());
+		
+		homePage.getProfileButton().click();
+		homePage.ensureIsDisplayedEditButton();
+		homePage.ensureIsDisplayedEmailProfile();
+		
+		assertEquals("Email: email_adresa1@gmail.com", homePage.getEmailProfile().getText());
+		assertEquals("Username: admin 1", homePage.getUsernameProfile().getText());
+		assertEquals("First name: admin1", homePage.getFirstNameProfile().getText());
+		assertEquals("Last name: admin1", homePage.getLastNameProfile().getText());
+		driver.close();
+	}
+	
+	@Test
+	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
+	public void ProfileChange_WithValidParams_ShouldSuccess() {
+		loginSetUp();
+		
+		homePage.ensureIsDisplayedProfileButton();
+		
+		assertEquals("https://localhost:4200/", driver.getCurrentUrl());
+		
+		homePage.getProfileButton().click();
+		homePage.ensureIsDisplayedEditButton();
+		homePage.getEditButton().click();
+		
+		homePage.ensureIsDisplayedEmailProfileInput();
+		
+		homePage.getUsernameProfileInput().sendKeys(Keys.CONTROL, Keys.SHIFT, Keys.ARROW_LEFT, Keys.ARROW_LEFT);
+		homePage.getUsernameProfileInput().sendKeys(Keys.BACK_SPACE);
+		homePage.getUsernameProfileInput().sendKeys("ne_postojeci_username");
+		homePage.getFirstNameProfileInput().sendKeys("ime");
+		homePage.getLastNameProfileInput().sendKeys("prezime");
+		
+		homePage.ensureIsDisplayedSaveProfileButton();
+		homePage.getSaveProfileButton().click();
+		
+		homePage.ensureIsDisplayedMessage();
+		assertEquals("You changed account information successfully.", homePage.getMessage().getText());
+		
+		homePage.ensureIsDisplayedEditButton();
+		homePage.ensureIsDisplayedEmailProfile();
+		
+		assertEquals("Email: email_adresa1@gmail.com", homePage.getEmailProfile().getText());
+		assertEquals("Username: ne_postojeci_username", homePage.getUsernameProfile().getText());
+		assertEquals("First name: admin1ime", homePage.getFirstNameProfile().getText());
+		assertEquals("Last name: admin1prezime", homePage.getLastNameProfile().getText());
+		driver.close();
+	}
+	
+	@Test
+	public void ProfileChange_WithExistingUsername_ShouldFail() {
+		loginSetUp();
+		
+		homePage.ensureIsDisplayedProfileButton();
+		
+		assertEquals("https://localhost:4200/", driver.getCurrentUrl());
+		
+		homePage.getProfileButton().click();
+		homePage.ensureIsDisplayedEditButton();
+		homePage.getEditButton().click();
+		
+		homePage.ensureIsDisplayedEmailProfileInput();
+		
+		homePage.getUsernameProfileInput().sendKeys(Keys.CONTROL, Keys.SHIFT, Keys.ARROW_LEFT, Keys.ARROW_LEFT);
+		homePage.getUsernameProfileInput().sendKeys(Keys.BACK_SPACE);
+		homePage.getUsernameProfileInput().sendKeys("user 20");
+		
+		homePage.ensureIsDisplayedSaveProfileButton();
+		homePage.getSaveProfileButton().click();
+		
+		homePage.ensureIsDisplayedMessage();
+		assertEquals("Username already taken", homePage.getMessage().getText());
+		
+		driver.close();
+	}
+	
 }
