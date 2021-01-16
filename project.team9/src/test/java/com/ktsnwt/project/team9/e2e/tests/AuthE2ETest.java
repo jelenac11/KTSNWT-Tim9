@@ -3,6 +3,7 @@ package com.ktsnwt.project.team9.e2e.tests;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -21,8 +22,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.ktsnwt.project.team9.e2e.pages.ForgotPasswordPage;
 import com.ktsnwt.project.team9.e2e.pages.HomePage;
 import com.ktsnwt.project.team9.e2e.pages.LoginPage;
+import com.ktsnwt.project.team9.e2e.pages.ReviewCulturalOfferPage;
 import com.ktsnwt.project.team9.e2e.pages.SignUpPage;
+import com.ktsnwt.project.team9.model.Mark;
 import com.ktsnwt.project.team9.model.RegisteredUser;
+import com.ktsnwt.project.team9.services.implementations.MarkService;
 import com.ktsnwt.project.team9.services.implementations.RegisteredUserService;
 
 @RunWith(SpringRunner.class)
@@ -32,6 +36,9 @@ public class AuthE2ETest {
 
 	@Autowired
 	private RegisteredUserService regService;
+	
+	@Autowired
+	private MarkService markService;
 	
 	public static final String BASE_URL = "https://localhost:4200";
 
@@ -44,6 +51,8 @@ public class AuthE2ETest {
 	private LoginPage signInPage;
 	
 	private ForgotPasswordPage forgotPasswordPage;
+	
+	private ReviewCulturalOfferPage reviewCulturalOfferPage;
 
 	@Before
 	public void setUp() {
@@ -58,6 +67,7 @@ public class AuthE2ETest {
 		homePage = PageFactory.initElements(driver, HomePage.class);
 		signInPage = PageFactory.initElements(driver, LoginPage.class);
 		forgotPasswordPage = PageFactory.initElements(driver, ForgotPasswordPage.class);
+		reviewCulturalOfferPage = PageFactory.initElements(driver, ReviewCulturalOfferPage.class);
 	}
 	
 	private void loginSetUp() {
@@ -71,7 +81,29 @@ public class AuthE2ETest {
 		signInPage.getSignIn().click();
 	}
 	
-	/*@Test
+	private void loginSetUpAsRegisteredUser() {
+		driver.navigate().to(BASE_URL + "/auth/sign-in");
+
+		signInPage.ensureIsDisplayedEmail();
+
+		signInPage.getEmail().sendKeys("email_adresa21@gmail.com");
+		signInPage.getPassword().sendKeys("sifra123");
+
+		signInPage.getSignIn().click();
+	}
+	
+	private void loginSetUpAsRegisteredUserAlreadyRated() {
+		driver.navigate().to(BASE_URL + "/auth/sign-in");
+
+		signInPage.ensureIsDisplayedEmail();
+
+		signInPage.getEmail().sendKeys("email_adresa20@gmail.com");
+		signInPage.getPassword().sendKeys("sifra123");
+
+		signInPage.getSignIn().click();
+	}
+	
+	@Test
 	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
 	public void signUp_WithValidParams_ShouldSuccess() {
 		int size = ((List<RegisteredUser>) regService.getAll()).size();
@@ -368,7 +400,7 @@ public class AuthE2ETest {
 		assertEquals("First name: admin1ime", homePage.getFirstNameProfile().getText());
 		assertEquals("Last name: admin1prezime", homePage.getLastNameProfile().getText());
 		driver.close();
-	}*/
+	}
 	
 	@Test
 	public void ProfileChange_WithExistingUsername_ShouldFail() {
@@ -422,7 +454,7 @@ public class AuthE2ETest {
 		driver.close();
 	}
 	
-	/*@Test
+	@Test
 	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
 	public void ChangePassword_WithValidParams_ShouldSuccess() {
 		loginSetUp();
@@ -526,6 +558,59 @@ public class AuthE2ETest {
 		assertEquals("https://localhost:4200/", driver.getCurrentUrl());
 		
 		driver.close();
-	}*/
+	}
+	
+	
+	@Test
+	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
+	public void Mark_WithValidParams_ShouldSuccess() throws InterruptedException {
+		loginSetUpAsRegisteredUser();
+		int size = ((List<Mark>) markService.getAll()).size();
+		
+		homePage.ensureIsDisplayedCulturalOfferNavigation();
+		assertEquals("https://localhost:4200/", driver.getCurrentUrl());
+		
+		homePage.ensureIsDisplayedMore1Button();
+		homePage.getMore1().click();
+
+		reviewCulturalOfferPage.ensureIsDisplayedStar();
+		assertEquals("https://localhost:4200/cultural-offers/1", driver.getCurrentUrl());
+		reviewCulturalOfferPage.getStar().click();
+		
+		this.pause(5000);
+		assertEquals(size + 1, ((List<Mark>) markService.getAll()).size());
+		
+		driver.close();
+	}
+	
+	@Test
+	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
+	public void MarkUpdate_WithValidParams_ShouldSuccess() throws InterruptedException {
+		loginSetUpAsRegisteredUserAlreadyRated();
+		int size = ((List<Mark>) markService.getAll()).size();
+		
+		homePage.ensureIsDisplayedCulturalOfferNavigation();
+		assertEquals("https://localhost:4200/", driver.getCurrentUrl());
+		
+		homePage.ensureIsDisplayedMore1Button();
+		homePage.getMore1().click();
+		
+		reviewCulturalOfferPage.ensureIsDisplayedStar();
+		assertEquals("https://localhost:4200/cultural-offers/1", driver.getCurrentUrl());
+		reviewCulturalOfferPage.getStar2().click();
+		
+		this.pause(5000);
+		assertEquals(size, ((List<Mark>) markService.getAll()).size());
+		
+		driver.close();
+	}
+	
+	public void pause(Integer milliseconds){
+	    try {
+	        TimeUnit.MILLISECONDS.sleep(milliseconds);
+	    } catch (InterruptedException e) {
+	        e.printStackTrace();
+	    }
+	}
 	
 }
