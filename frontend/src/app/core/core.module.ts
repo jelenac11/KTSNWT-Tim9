@@ -17,6 +17,14 @@ import { AuthenticationService } from './services/authentication.service';
     CategoryService,
     UserService,
     AuthenticationService,
+<<<<<<< Updated upstream
+=======
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpTokenInterceptor,
+      multi: true,
+    }
+>>>>>>> Stashed changes
   ],
   exports: []
 })

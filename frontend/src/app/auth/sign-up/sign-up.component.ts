@@ -12,8 +12,8 @@ import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 })
 export class SignUpComponent implements OnInit {
   registerForm: FormGroup;
-  submitted: boolean = false;
-  hidePassword: boolean = true;
+  submitted = false;
+  hidePassword = true;
   matcher: MyErrorStateMatcher = new MyErrorStateMatcher();
 
   constructor(
@@ -39,17 +39,17 @@ export class SignUpComponent implements OnInit {
     if (this.registerForm.invalid) {
       return;
     }
-    let newUser: UserRequest = { email: '', username: '', password: '', lastName: '', firstName: ''};
-    newUser.email = this.registerForm.value['email'];
-    newUser.password = this.registerForm.value['password'];
-    newUser.firstName = this.registerForm.value['firstName'];
-    newUser.lastName = this.registerForm.value['lastName'];
-    newUser.username = this.registerForm.value['username'];
+    const newUser: UserRequest = { email: '', username: '', password: '', lastName: '', firstName: ''};
+    newUser.email = this.registerForm.value.email;
+    newUser.password = this.registerForm.value.password;
+    newUser.firstName = this.registerForm.value.firstName;
+    newUser.lastName = this.registerForm.value.lastName;
+    newUser.username = this.registerForm.value.username;
     this.userService.signup(newUser).subscribe(data => {
-      this.snackBar.success("Activation link sent. Check your email.");
+      this.snackBar.success('Activation link sent. Check your email.');
       this.submitted = false;
       this.registerForm.reset();
-      for (let control in this.registerForm.controls) {
+      for (const control in this.registerForm.controls) {
         this.registerForm.controls[control].setErrors(null);
       }
     },

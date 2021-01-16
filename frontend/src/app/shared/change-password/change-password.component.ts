@@ -15,11 +15,11 @@ import { CustomValidators } from '../validators/custom-validators';
 })
 export class ChangePasswordComponent implements OnInit {
   form: FormGroup;
-  submited: boolean = false;
+  submited = false;
   matcher: MyErrorStateMatcher = new MyErrorStateMatcher();
-  hideOld: boolean = true;
-  hideNew: boolean = true;
-  hideConfirm: boolean = true;
+  hideOld = true;
+  hideNew = true;
+  hideConfirm = true;
 
   constructor(
     private fb: FormBuilder,
@@ -45,11 +45,11 @@ export class ChangePasswordComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    let passwordChange: PasswordChangeRequest = {oldPassword: '', newPassword: ''};
-    passwordChange.oldPassword = this.form.value['oldPassword'];
-    passwordChange.newPassword = this.form.value['newPassword'];
+    const passwordChange: PasswordChangeRequest = {oldPassword: '', newPassword: ''};
+    passwordChange.oldPassword = this.form.value.oldPassword;
+    passwordChange.newPassword = this.form.value.newPassword;
     this.authenticationService.changePassword(passwordChange).subscribe(data => {
-      this.snackBar.success("You changed password successfully.");
+      this.snackBar.success('You changed password successfully.');
       this.submited = false;
       this.authenticationService.logout();
       this.router.navigate(['/auth/sign-in']);

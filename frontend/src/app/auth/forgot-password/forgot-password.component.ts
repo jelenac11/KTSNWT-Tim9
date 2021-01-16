@@ -26,25 +26,25 @@ export class ForgotPasswordComponent implements OnInit {
     });
   }
 
-  get f(): FormGroup["controls"] { return this.forgotForm.controls; }
+  get f(): FormGroup['controls'] { return this.forgotForm.controls; }
 
   onSubmit(): void {
     this.submitted = true;
     if (this.forgotForm.invalid) {
       return;
     }
-    let email: string = this.forgotForm.value['email'];
+    const email: string = this.forgotForm.value.email;
     this.authenticationService.forgotPassword(email).subscribe((data: string) => {
-      this.snackBar.success("New password sent. Check your email.");
+      this.snackBar.success('New password sent. Check your email.');
       this.forgotForm.reset();
       this.submitted = false;
-      for (let control in this.forgotForm.controls) {
+      for (const control in this.forgotForm.controls) {
         this.forgotForm.controls[control].setErrors(null);
       }
     },
     error => {
       if (error.status !== 200) {
-        this.snackBar.error("That email address is not associated with personal user account.");
+        this.snackBar.error('That email address is not associated with personal user account.');
       }
     });
   }
