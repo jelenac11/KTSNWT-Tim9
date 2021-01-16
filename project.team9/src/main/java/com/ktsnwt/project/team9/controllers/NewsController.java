@@ -1,7 +1,7 @@
 package com.ktsnwt.project.team9.controllers;
 
 
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -45,7 +45,7 @@ public class NewsController {
 	@PreAuthorize("permitAll()")
 	@GetMapping
 	public ResponseEntity<Iterable<NewsDTO>> getAllNews() {
-		Set<NewsDTO> newsDTO = newsMapper.toDTOList(newsService.getAll());
+		List<NewsDTO> newsDTO = newsMapper.toDTOList(newsService.getAll());
 		return new ResponseEntity<Iterable<NewsDTO>>(newsDTO, HttpStatus.OK);
 	}
 	
@@ -55,7 +55,7 @@ public class NewsController {
 	@GetMapping(value= "/by-page")
 	public ResponseEntity<Page<NewsDTO>> getAllNews(Pageable pageable){
 		Page<News> page = newsService.findAll(pageable);
-        Set<NewsDTO> newsDTO = newsMapper.toDTOList(page.toList());
+        List<NewsDTO> newsDTO = newsMapper.toDTOList(page.toList());
         Page<NewsDTO> pageNewsDTO = new PageImpl<NewsDTO>(newsDTO.stream().collect(Collectors.toList()),page.getPageable(),page.getTotalElements());
         return new ResponseEntity<Page<NewsDTO>>(pageNewsDTO, HttpStatus.OK);
 	}
@@ -133,7 +133,7 @@ public class NewsController {
 	public ResponseEntity<Page<NewsDTO>> getSubscribedNews(@PathVariable Long userID, Pageable pageable) {
 		
 		Page<News> page = newsService.getSubscribedNews(userID, pageable);
-        Set<NewsDTO> newsDTO = newsMapper.toDTOList(page.toList());
+        List<NewsDTO> newsDTO = newsMapper.toDTOList(page.toList());
         Page<NewsDTO> pageNewsDTO = new PageImpl<NewsDTO>(newsDTO.stream().collect(Collectors.toList()),page.getPageable(),page.getTotalElements());
         
 		return new ResponseEntity<Page<NewsDTO>>(pageNewsDTO, HttpStatus.OK);
