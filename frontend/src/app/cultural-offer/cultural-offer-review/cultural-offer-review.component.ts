@@ -7,6 +7,8 @@ import { CulturalOffer } from 'src/app/core/models/response/cultural-offer.model
 import { CulturalOfferService } from 'src/app/core/services/cultural-offer.service';
 import { JwtService } from 'src/app/core/services/jwt.service';
 import { MarkService } from 'src/app/core/services/mark.service';
+import { NewsService } from 'src/app/core/services/news.service';
+import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
   selector: 'app-cultural-offer-review',
@@ -27,9 +29,13 @@ export class CulturalOfferReviewComponent implements OnInit {
 
   zoom = 8;
 
+  subscribed = false;
+
   constructor(
     private route: ActivatedRoute,
     private culturalOfferService: CulturalOfferService,
+    private registeredUserService: UserService,
+    private newsService: NewsService,
     private markService: MarkService,
     private dialog: MatDialog,
     private jwtService: JwtService
@@ -47,6 +53,12 @@ export class CulturalOfferReviewComponent implements OnInit {
         this.culturalOffer = culturalOffer;
         this.getCurrentMark();
       });
+    if (this.role === 'ROLE_REGISTERED_USER'){
+      this.registeredUserService.isSubscribed(this.jwtService.getEmail(), this.culturalOfferId)
+      .subscribe(sub => {
+        this.subscribed = sub;
+    });
+    }
   }
 
   private getCurrentMark(): void {
@@ -97,6 +109,24 @@ export class CulturalOfferReviewComponent implements OnInit {
     dialogConfig.minHeight = '400px';
     dialogConfig.minWidth = '400px';
     const dialogRef = this.dialog.open(AddCommentComponent, dialogConfig);
+  }
+
+  subscribe(): void{
+    this.newsService.subscribe('1', this.culturalOfferId)
+    .subscribe(succ => {
+      if (succ){
+        this.subscribed = true;
+      }
+    });
+  }
+
+  unsubscribe(): void{
+    this.newsService.unsubscribe('1', this.culturalOfferId)
+    .subscribe(succ => {
+      if (succ){
+        this.subscribed = false;
+      }
+    });
   }
 
 }

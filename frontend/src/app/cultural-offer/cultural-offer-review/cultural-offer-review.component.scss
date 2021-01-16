@@ -3,3 +3,15 @@
 .mat-but {
     @extend %simple-raised-button;
 }
+
+.green {
+    background-color: green;
+    color: #fff;
+    
+}
+
+.red {
+    background-color: red;
+    color: #fff;
+    
+}

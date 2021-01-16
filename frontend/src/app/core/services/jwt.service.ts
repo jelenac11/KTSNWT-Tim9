@@ -31,4 +31,13 @@ export class JwtService {
     return '';
   }
 
+  getEmail(): string{
+    const jwt: JwtHelperService = new JwtHelperService();
+    const token: UserTokenState = JSON.parse(localStorage.getItem('jwtToken'));
+    if (token) {
+      const info = jwt.decodeToken(token.accessToken);
+      return info.sub;
+    }
+    return '';
+  }
 }
