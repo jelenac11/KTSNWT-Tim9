@@ -28,6 +28,9 @@ public class HomePage {
 	@FindBy(id = "home_page_more_button_3")
 	private WebElement more;
 	
+	@FindBy(id = "home_page_more_button_1")
+	private WebElement more1;
+	
 	@FindBy(id = "profile-button")
 	private WebElement profileButton;
 	
@@ -100,6 +103,9 @@ public class HomePage {
 	@FindBy(xpath = "//div[@id='search_div_home_page']/app-search/div/mat-form-field/div/div/div[3]/input")
 	private WebElement search;
 
+	@FindBy(id = "comment-requests-navigation")
+	private WebElement commentRequestsPage;
+	
 	public HomePage(WebDriver driver) {
 		this.driver = driver;
 	}
@@ -118,6 +124,10 @@ public class HomePage {
 
 	public void ensureIsDisplayedMoreButton() {
         (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("home_page_more_button_3")));
+    }
+	
+	public void ensureIsDisplayedMore1Button() {
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("home_page_more_button_1")));
     }
 	
 	public void ensureIsDisplayedProfileButton() {
@@ -174,5 +184,9 @@ public class HomePage {
 	
 	public void ensureIsDisplayedSearch() {
         (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='search_div_home_page']/app-search/div/mat-form-field/div/div/div[3]/input")));
+    }
+	
+	public void ensureIsDisplayedCommentRequestsNavigation() {
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("comment-requests-navigation")));
     }
 }

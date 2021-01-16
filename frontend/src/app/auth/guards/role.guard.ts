@@ -24,11 +24,11 @@ export class RoleGuard implements CanActivate {
     }
     const info = jwt.decodeToken(token.accessToken);
     const roles: string[] = expectedRoles.split('|', 2);
-    if (roles.indexOf(info['role']) === -1) {
+    if (roles.indexOf(info.role) === -1) {
       this.router.navigate(['/']);
       return false;
     }
     return true;
   }
-  
+
 }

@@ -31,7 +31,7 @@ import { CommentsRoutingModule } from './comments-routing.module';
     ReactiveFormsModule,
     RouterModule,
     CommentsRoutingModule
-  ], 
+  ],
   exports: [CommentComponent, CommentsReviewComponent, AddCommentComponent, ApproveCommentComponent],
 })
 export class CommentsModule { }

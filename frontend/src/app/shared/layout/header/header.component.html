@@ -47,7 +47,7 @@
       </li>
       <li class="nav-item">
         <a
-          id='user-navigation'
+          id="user-navigation"
           *ngIf="role === 'ROLE_ADMIN'"
           class="nav-link waves-light font-weight-bolder ml-2 mt-2 h6"
           routerLink="/users"
@@ -58,6 +58,7 @@
       </li>
       <li class="nav-item">
         <a
+          id="comment-requests-navigation"
           *ngIf="role === 'ROLE_ADMIN'"
           class="nav-link waves-light font-weight-bolder ml-2 mt-2 h6"
           routerLink="/approving-comments"
@@ -70,7 +71,7 @@
     <ul class="navbar-nav ml-auto nav-flex-icons">
       <li class="nav-item">
         <a
-          id='signin-navigation'
+          id="signin-navigation"
           *ngIf="!role"
           class="nav-link waves-light font-weight-bolder ml-2 mt-2 h6"
           routerLink="/auth/sign-in"
@@ -80,7 +81,7 @@
       </li>
       <li class="nav-item">
         <a
-          id='signup-navigation'
+          id="signup-navigation"
           *ngIf="!role"
           class="nav-link waves-light font-weight-bolder ml-2 mt-2 h6"
           routerLink="/auth/sign-up"

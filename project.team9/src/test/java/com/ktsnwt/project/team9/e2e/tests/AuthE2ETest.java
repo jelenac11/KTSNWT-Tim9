@@ -44,7 +44,7 @@ public class AuthE2ETest {
 	private LoginPage signInPage;
 	
 	private ForgotPasswordPage forgotPasswordPage;
-
+	
 	@Before
 	public void setUp() {
 		System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
@@ -71,7 +71,7 @@ public class AuthE2ETest {
 		signInPage.getSignIn().click();
 	}
 	
-	/*@Test
+	@Test
 	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
 	public void signUp_WithValidParams_ShouldSuccess() {
 		int size = ((List<RegisteredUser>) regService.getAll()).size();
@@ -368,7 +368,7 @@ public class AuthE2ETest {
 		assertEquals("First name: admin1ime", homePage.getFirstNameProfile().getText());
 		assertEquals("Last name: admin1prezime", homePage.getLastNameProfile().getText());
 		driver.close();
-	}*/
+	}
 	
 	@Test
 	public void ProfileChange_WithExistingUsername_ShouldFail() {
@@ -422,7 +422,7 @@ public class AuthE2ETest {
 		driver.close();
 	}
 	
-	/*@Test
+	@Test
 	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
 	public void ChangePassword_WithValidParams_ShouldSuccess() {
 		loginSetUp();
@@ -526,6 +526,6 @@ public class AuthE2ETest {
 		assertEquals("https://localhost:4200/", driver.getCurrentUrl());
 		
 		driver.close();
-	}*/
+	}
 	
 }
