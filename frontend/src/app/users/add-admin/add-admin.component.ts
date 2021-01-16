@@ -2,7 +2,6 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AdminRequest } from 'src/app/core/models/request/admin-request.model';
-import { User } from 'src/app/core/models/response/user.model';
 import { UserService } from 'src/app/core/services/user.service';
 import { MyErrorStateMatcher } from 'src/app/shared/ErrorStateMatcher';
 import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';

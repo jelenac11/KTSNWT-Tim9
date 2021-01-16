@@ -43,7 +43,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @RestController
-@CrossOrigin(origins = "https://localhost:4200", maxAge = 3600)
+@CrossOrigin(origins = "https://localhost:4200", maxAge = 3600, allowedHeaders = "*")
 @RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AuthenticationController {
 
