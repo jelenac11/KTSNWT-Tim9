@@ -48,7 +48,7 @@ public class HomePage {
 	public void ensureIsDisplayedSignUpNavigation() {
         (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("signup-navigation")));
     }
-	
+
 	public void ensureIsDisplayedMoreButton() {
         (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("home_page_more_button_3")));
     }

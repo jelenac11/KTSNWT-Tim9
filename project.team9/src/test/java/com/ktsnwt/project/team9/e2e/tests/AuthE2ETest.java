@@ -38,9 +38,9 @@ public class AuthE2ETest {
 	private SignUpPage signUpPage;
 	
 	private HomePage homePage;
-	
+
 	private LoginPage signInPage;
-	
+
 	@Before
 	public void setUp() {
 		System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
