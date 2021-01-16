@@ -28,6 +28,9 @@ public class HomePage {
 	@FindBy(id = "home_page_more_button_3")
 	private WebElement more;
 	
+	@FindBy(id = "home_page_more_button_1")
+	private WebElement more1;
+	
 	@FindBy(id = "profile-button")
 	private WebElement profileButton;
 	
@@ -118,6 +121,10 @@ public class HomePage {
 
 	public void ensureIsDisplayedMoreButton() {
         (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("home_page_more_button_3")));
+    }
+	
+	public void ensureIsDisplayedMore1Button() {
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("home_page_more_button_1")));
     }
 	
 	public void ensureIsDisplayedProfileButton() {
