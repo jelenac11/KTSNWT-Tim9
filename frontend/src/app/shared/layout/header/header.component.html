@@ -32,25 +32,18 @@
           >Cultural offers</a
         >
       </li>
-      <li class="nav-item dropdown" dropdown>
+      <li class="nav-item" dropdown>
         <a
+          *ngIf="role === 'ROLE_ADMIN'"
           dropdownToggle
           mdbWavesEffect
           type="button"
-          class="nav-link dropdown-toggle waves-light font-weight-bolder ml-2 mt-2 h6"
+          class="nav-link waves-light font-weight-bolder ml-2 mt-2 h6"
+          routerLink="/categories"
+          routerLinkActive="active"
           mdbWavesEffect
         >
-          Categories<span class="caret"></span
-        ></a>
-        <div
-          *dropdownMenu
-          class="dropdown-menu dropdown dropdown-primary"
-          role="menu"
-        >
-          <a class="dropdown-item waves-light" mdbWavesEffect>Galleries</a>
-          <a class="dropdown-item waves-light" mdbWavesEffect>Festivals</a>
-          <a class="dropdown-item waves-light" mdbWavesEffect>Concerts</a>
-        </div>
+          Categories</a>
       </li>
       <li class="nav-item">
         <a
