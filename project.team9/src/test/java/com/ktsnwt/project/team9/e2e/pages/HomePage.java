@@ -31,6 +31,12 @@ public class HomePage {
 	@FindBy(id = "profile-button")
 	private WebElement profileButton;
 	
+	@FindBy(id = "profile-circle-button")
+	private WebElement profileCircleButton;
+	
+	@FindBy(id = "change-password-button")
+	private WebElement changePasswordButton;
+	
 	@FindBy(id = "edit-button")
 	private WebElement editButton;
 	
@@ -46,6 +52,9 @@ public class HomePage {
 	@FindBy(id = "first-name-profile")
 	private WebElement firstNameProfile;
 	
+	@FindBy(id = "first-name-error")
+	private WebElement firstNameError;
+	
 	@FindBy(id = "last-name-profile")
 	private WebElement lastNameProfile;
 	
@@ -60,6 +69,24 @@ public class HomePage {
 	
 	@FindBy(id = "last-name-profile-input")
 	private WebElement lastNameProfileInput;
+	
+	@FindBy(id = "old-password")
+	private WebElement oldPassword;
+	
+	@FindBy(id = "new-password")
+	private WebElement newPassword;
+	
+	@FindBy(id = "six-characters")
+	private WebElement sixCharacters;
+	
+	@FindBy(id = "confirm-password")
+	private WebElement confirmPassword;
+	
+	@FindBy(id = "no-match")
+	private WebElement noMatch;
+	
+	@FindBy(id = "submit-password-button")
+	private WebElement submitPasswordButton;
 	
 	@FindBy(xpath = "//simple-snack-bar/span")
 	private WebElement message;
@@ -97,6 +124,14 @@ public class HomePage {
         (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("profile-button")));
     }
 	
+	public void ensureIsDisplayedProfileCircleButton() {
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("profile-circle-button")));
+    }
+	
+	public void ensureIsDisplayedChangePasswordButton() {
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("change-password-button")));
+    }
+	
 	public void ensureIsDisplayedEditButton() {
         (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("edit-button")));
     }
@@ -111,6 +146,22 @@ public class HomePage {
 	
 	public void ensureIsDisplayedEmailProfileInput() {
         (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("email-profile-input")));
+    }
+	
+	public void ensureIsDisplayedOldPassword() {
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("old-password")));
+    }
+	
+	public void ensureIsDisplayedSixCharacters() {
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("six-characters")));
+    }
+	
+	public void ensureIsDisplayedNoMatch() {
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("no-match")));
+    }
+	
+	public void ensureIsDisplayedSubmitPasswordButton() {
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("submit-password-button")));
     }
 	
 	public void ensureIsDisplayedMessage() {

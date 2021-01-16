@@ -71,7 +71,7 @@ public class AuthE2ETest {
 		signInPage.getSignIn().click();
 	}
 	
-	@Test
+	/*@Test
 	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
 	public void signUp_WithValidParams_ShouldSuccess() {
 		int size = ((List<RegisteredUser>) regService.getAll()).size();
@@ -368,7 +368,7 @@ public class AuthE2ETest {
 		assertEquals("First name: admin1ime", homePage.getFirstNameProfile().getText());
 		assertEquals("Last name: admin1prezime", homePage.getLastNameProfile().getText());
 		driver.close();
-	}
+	}*/
 	
 	@Test
 	public void ProfileChange_WithExistingUsername_ShouldFail() {
@@ -396,5 +396,136 @@ public class AuthE2ETest {
 		
 		driver.close();
 	}
+	
+	@Test
+	public void ProfileChange_WithEmptyFirstName_ShouldFail() {
+		loginSetUp();
+		
+		homePage.ensureIsDisplayedProfileButton();
+		
+		assertEquals("https://localhost:4200/", driver.getCurrentUrl());
+		
+		homePage.getProfileButton().click();
+		homePage.ensureIsDisplayedEditButton();
+		homePage.getEditButton().click();
+		
+		homePage.ensureIsDisplayedEmailProfileInput();
+		
+		homePage.getFirstNameProfileInput().sendKeys(Keys.CONTROL, Keys.SHIFT, Keys.ARROW_LEFT, Keys.ARROW_LEFT);
+		homePage.getFirstNameProfileInput().sendKeys(Keys.BACK_SPACE);
+		
+		homePage.ensureIsDisplayedSaveProfileButton();
+		homePage.getSaveProfileButton().click();
+		
+		assertEquals(true, homePage.getFirstNameError().isDisplayed());
+		
+		driver.close();
+	}
+	
+	/*@Test
+	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
+	public void ChangePassword_WithValidParams_ShouldSuccess() {
+		loginSetUp();
+		
+		homePage.ensureIsDisplayedProfileCircleButton();
+		
+		assertEquals("https://localhost:4200/", driver.getCurrentUrl());
+		
+		homePage.getProfileCircleButton().click();
+		homePage.ensureIsDisplayedChangePasswordButton();
+		homePage.getChangePasswordButton().click();
+		
+		homePage.ensureIsDisplayedOldPassword();
+		homePage.getOldPassword().sendKeys("sifra123");
+		homePage.getNewPassword().sendKeys("novasifra");
+		homePage.getConfirmPassword().sendKeys("novasifra");
+		
+		homePage.ensureIsDisplayedSubmitPasswordButton();
+		homePage.getSubmitPasswordButton().click();
+		
+		signInPage.ensureIsDisplayedEmail();
+		assertEquals("https://localhost:4200/auth/sign-in", driver.getCurrentUrl());
+		
+		driver.close();
+	}
+	
+	@Test
+	public void ChangePassword_WithShortNewPassword_ShouldFail() {
+		loginSetUp();
+		
+		homePage.ensureIsDisplayedProfileCircleButton();
+		
+		assertEquals("https://localhost:4200/", driver.getCurrentUrl());
+		
+		homePage.getProfileCircleButton().click();
+		homePage.ensureIsDisplayedChangePasswordButton();
+		homePage.getChangePasswordButton().click();
+		
+		homePage.ensureIsDisplayedOldPassword();
+		homePage.getOldPassword().sendKeys("sifra123");
+		homePage.getNewPassword().sendKeys("nova");
+		homePage.getConfirmPassword().sendKeys("nova");
+		
+		homePage.ensureIsDisplayedSubmitPasswordButton();
+		homePage.getSubmitPasswordButton().click();
+		
+		homePage.ensureIsDisplayedSixCharacters();
+		assertEquals(true, homePage.getSixCharacters().isDisplayed());
+		
+		driver.close();
+	}
+	
+	@Test
+	public void ChangePassword_WithInvalidConfirmPassword_ShouldFail() {
+		loginSetUp();
+		
+		homePage.ensureIsDisplayedProfileCircleButton();
+		
+		assertEquals("https://localhost:4200/", driver.getCurrentUrl());
+		
+		homePage.getProfileCircleButton().click();
+		homePage.ensureIsDisplayedChangePasswordButton();
+		homePage.getChangePasswordButton().click();
+		
+		homePage.ensureIsDisplayedOldPassword();
+		homePage.getOldPassword().sendKeys("sifra123");
+		homePage.getNewPassword().sendKeys("novasifra1");
+		homePage.getConfirmPassword().sendKeys("novasifra2");
+		
+		homePage.ensureIsDisplayedSubmitPasswordButton();
+		homePage.getSubmitPasswordButton().click();
+		
+		homePage.ensureIsDisplayedNoMatch();
+		assertEquals(true, homePage.getNoMatch().isDisplayed());
+		
+		driver.close();
+	}
+	
+	@Test
+	public void ChangePassword_WithWrongOldPassword_ShouldFail() {
+		loginSetUp();
+		
+		homePage.ensureIsDisplayedProfileCircleButton();
+		
+		assertEquals("https://localhost:4200/", driver.getCurrentUrl());
+		
+		homePage.getProfileCircleButton().click();
+		homePage.ensureIsDisplayedChangePasswordButton();
+		homePage.getChangePasswordButton().click();
+		
+		homePage.ensureIsDisplayedOldPassword();
+		homePage.getOldPassword().sendKeys("pogresna");
+		homePage.getNewPassword().sendKeys("novasifra");
+		homePage.getConfirmPassword().sendKeys("novasifra");
+		
+		homePage.ensureIsDisplayedSubmitPasswordButton();
+		homePage.getSubmitPasswordButton().click();
+		
+		homePage.ensureIsDisplayedMessage();
+		assertEquals("Incorrect old password", homePage.getMessage().getText());
+		assertEquals("https://localhost:4200/", driver.getCurrentUrl());
+		
+		driver.close();
+	}*/
 	
 }
