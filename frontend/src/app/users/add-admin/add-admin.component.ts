@@ -14,7 +14,7 @@ import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 export class AddAdminComponent implements OnInit {
   form: FormGroup;
   matcher: MyErrorStateMatcher = new MyErrorStateMatcher();
-  
+
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<AddAdminComponent>,
@@ -38,13 +38,13 @@ export class AddAdminComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    let admin: AdminRequest = { email: '', username: '', lastName: '', firstName: ''};
-    admin.email = this.form.value['email'];
-    admin.firstName = this.form.value['firstName'];
-    admin.lastName = this.form.value['lastName'];
-    admin.username = this.form.value['username'];
+    const admin: AdminRequest = { email: '', username: '', lastName: '', firstName: ''};
+    admin.email = this.form.value.email;
+    admin.firstName = this.form.value.firstName;
+    admin.lastName = this.form.value.lastName;
+    admin.username = this.form.value.username;
     this.userService.addAdmin(admin).subscribe(data => {
-      this.snackBar.success("Administrator added successfully.");
+      this.snackBar.success('Administrator added successfully.');
       this.dialogRef.close(true);
     },
     error => {

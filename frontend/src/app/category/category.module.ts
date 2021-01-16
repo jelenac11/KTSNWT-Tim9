@@ -6,6 +6,6 @@ import { CommonModule } from '@angular/common';
   imports: [
     CommonModule
   ],
-  exports:[]
+  exports: []
 })
 export class CategoryModule { }
