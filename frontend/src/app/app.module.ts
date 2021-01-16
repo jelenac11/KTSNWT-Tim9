@@ -17,6 +17,7 @@ import { UsersRoutingModule } from './users/users-routing.module';
 import { CommentsRoutingModule } from './comments/comments-routing.module';
 import { AuthRoutingModule } from './auth/auth-routing.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     UsersRoutingModule,
     CommentsRoutingModule,
     AuthRoutingModule,
+    HttpClientModule,
     MatSnackBarModule
   ],
   providers: [],

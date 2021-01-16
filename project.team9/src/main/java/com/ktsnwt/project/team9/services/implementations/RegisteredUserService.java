@@ -104,5 +104,9 @@ public class RegisteredUserService implements IRegisteredUserService {
 	public List<RegisteredUser> getSubscribed(CulturalOffer culturalOffer) {
 		return registeredUserRepository.findBySubscribed(culturalOffer);
 	}
+
+	public Boolean isSubscribed(String email, Long cOID) {
+		return registeredUserRepository.findByEmailAndSubscribedId(email, cOID) != null;
+	}
 	
 }

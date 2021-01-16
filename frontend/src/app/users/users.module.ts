@@ -26,7 +26,6 @@ import { UsersRoutingModule } from './users-routing.module';
     ReactiveFormsModule,
     SharedModule,
     MatButtonModule,
-    BrowserAnimationsModule,
     NgxPaginationModule,
     RouterModule,
     ButtonsModule,

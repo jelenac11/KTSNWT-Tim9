@@ -54,6 +54,7 @@
       </li>
       <li class="nav-item">
         <a
+          id='user-navigation'
           *ngIf="role === 'ROLE_ADMIN'"
           class="nav-link waves-light font-weight-bolder ml-2 mt-2 h6"
           routerLink="/users"
@@ -76,6 +77,7 @@
     <ul class="navbar-nav ml-auto nav-flex-icons">
       <li class="nav-item">
         <a
+          id='signin-navigation'
           *ngIf="!role"
           class="nav-link waves-light font-weight-bolder ml-2 mt-2 h6"
           routerLink="/auth/sign-in"
@@ -95,6 +97,7 @@
       </li>
       <li class="nav-item">
         <a
+          id="profile-button"
           *ngIf="role"
           class="nav-link waves-light font-weight-bolder ml-2 mt-2 h6"
           (click)="showProfile()"
@@ -103,12 +106,12 @@
         >
       </li>
       <li class="nav-item">
-        <button *ngIf="role" mat-icon-button [matMenuTriggerFor]="menu">
+        <button *ngIf="role" mat-icon-button [matMenuTriggerFor]="menu" id="profile-circle-button">
           <mat-icon>account_circle</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
           <button (click)="showProfile()" mat-menu-item><mat-icon>person_outline</mat-icon> Your account</button>
-          <button (click)="changePassword()" mat-menu-item><mat-icon>security</mat-icon> Change password</button>
+          <button (click)="changePassword()" mat-menu-item id="change-password-button"><mat-icon>security</mat-icon> Change password</button>
           <button (click)="logout()" mat-menu-item><mat-icon>exit_to_app</mat-icon> Log out</button>
         </mat-menu>
       </li>

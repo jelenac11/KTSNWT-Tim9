@@ -9,7 +9,7 @@ const routes: Routes = [
         component: UsersReviewComponent,
         canActivate: [RoleGuard],
         data: {
-        expectedRoles: 'ROLE_ADMIN'
+            expectedRoles: 'ROLE_ADMIN'
         }
     }
 ];

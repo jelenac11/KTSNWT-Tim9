@@ -10,8 +10,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,10 +22,12 @@ import com.ktsnwt.project.team9.dto.response.UserResDTO;
 import com.ktsnwt.project.team9.helper.implementations.CustomPageImplementation;
 import com.ktsnwt.project.team9.helper.implementations.RegisteredUserMapper;
 import com.ktsnwt.project.team9.model.RegisteredUser;
+import com.ktsnwt.project.team9.model.User;
 import com.ktsnwt.project.team9.services.implementations.RegisteredUserService;
 
 @RestController
 @RequestMapping(value = "/api/registered-users", produces = MediaType.APPLICATION_JSON_VALUE)
+@CrossOrigin(origins = "https://localhost:4200", maxAge = 3600, allowedHeaders = "*")
 public class RegisteredUserController {
 	
 	@Autowired
@@ -73,5 +78,14 @@ public class RegisteredUserController {
 		return new CustomPageImplementation<>(page.getContent(), page.getNumber(), page.getSize(),
 				page.getTotalElements(), null, page.isLast(), page.getTotalPages(), null, page.isFirst(),
 				page.getNumberOfElements());
+	}
+	
+	@PreAuthorize("permitAll()")
+	@PostMapping(value = "/is-subscibed/{email}/{COID}")
+	public ResponseEntity<String> isSubscribedToCulturalOffer(@PathVariable String email, @PathVariable Long COID) {
+		
+		Boolean isSubscribed = registeredUserService.isSubscribed(email, COID);
+		
+		return new ResponseEntity<String>(isSubscribed.toString(), HttpStatus.OK);
 	}
 }

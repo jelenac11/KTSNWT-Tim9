@@ -36,7 +36,10 @@
                 </span>
               </div>
               <div>
-                <button mdbBtn color="primary" size="sm" mdbWavesEffect>Subscribe</button>
+                <button *ngIf="!subscribed" mat-stroked-button	 class="green" size="sm" mdbWavesEffect (click)="subscribe()">
+                  Subscribe
+                </button>
+                <button *ngIf="subscribed" mat-stroked-button	 class="red" size="sm" mdbWavesEffect (click)="unsubscribe()">Unsubscribe</button>
               </div>
             </div>
           </div>
