@@ -9,7 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { SignInComponent } from './sign-in/sign-in.component';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpTokenInterceptor } from '../core/interceptors/http.token.interceptor';
 import { RoleGuard } from './guards/role.guard';
 import { NoAuthGuard } from './guards/no-auth.guard';

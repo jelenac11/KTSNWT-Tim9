@@ -24,6 +24,9 @@ public class LoginPage {
 	
 	@FindBy(xpath = "//form/button")
 	private WebElement signIn;
+	
+	@FindBy(xpath = "//simple-snack-bar/span")
+	private WebElement message;
 
 	public LoginPage(WebDriver driver) {
 		this.driver = driver;
@@ -32,5 +35,8 @@ public class LoginPage {
 	public void ensureIsDisplayedEmail() {
         (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("login_email")));
     }
-
+	
+	public void ensureIsDisplayedMessage() {
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//simple-snack-bar/span")));
+    }
 }

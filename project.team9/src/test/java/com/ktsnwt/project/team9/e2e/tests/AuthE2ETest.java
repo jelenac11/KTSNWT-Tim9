@@ -18,6 +18,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.ktsnwt.project.team9.e2e.pages.HomePage;
+import com.ktsnwt.project.team9.e2e.pages.LoginPage;
 import com.ktsnwt.project.team9.e2e.pages.SignUpPage;
 import com.ktsnwt.project.team9.model.RegisteredUser;
 import com.ktsnwt.project.team9.services.implementations.RegisteredUserService;
@@ -37,7 +38,9 @@ public class AuthE2ETest {
 	private SignUpPage signUpPage;
 	
 	private HomePage homePage;
-	
+
+	private LoginPage signInPage;
+
 	@Before
 	public void setUp() {
 		System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
@@ -49,6 +52,7 @@ public class AuthE2ETest {
 
 		signUpPage = PageFactory.initElements(driver, SignUpPage.class);
 		homePage = PageFactory.initElements(driver, HomePage.class);
+		signInPage = PageFactory.initElements(driver, LoginPage.class);
 	}
 	
 	@Test
@@ -194,6 +198,4 @@ public class AuthE2ETest {
 		
 		driver.close();
 	}
-	
-	
 }
