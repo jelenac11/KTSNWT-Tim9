@@ -60,7 +60,6 @@ import com.ktsnwt.project.team9.service.unit.UserServiceUnitTest;
 		GeolocationServiceUnitTest.class, CulturalOfferServiceUnitTest.class, FileServiceUnitTest.class,
 		CulturalOfferRepositoryIntegrationTest.class, GeolocationRepositoryIntegrationTest.class,
 		
-		
 		NewsRepositoryIntegrationTest.class, NewsControllerIntegrationTest.class, 
 		NewsServiceIntegrationTest.class, NewsServiceUnitTest.class,
 		CategoryControllerIntegrationTest.class, CategoryServiceIntegrationTest.class, 
