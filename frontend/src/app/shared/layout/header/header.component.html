@@ -106,12 +106,12 @@
         >
       </li>
       <li class="nav-item">
-        <button *ngIf="role" mat-icon-button [matMenuTriggerFor]="menu">
+        <button *ngIf="role" mat-icon-button [matMenuTriggerFor]="menu" id="profile-circle-button">
           <mat-icon>account_circle</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
           <button (click)="showProfile()" mat-menu-item><mat-icon>person_outline</mat-icon> Your account</button>
-          <button (click)="changePassword()" mat-menu-item><mat-icon>security</mat-icon> Change password</button>
+          <button (click)="changePassword()" mat-menu-item id="change-password-button"><mat-icon>security</mat-icon> Change password</button>
           <button (click)="logout()" mat-menu-item><mat-icon>exit_to_app</mat-icon> Log out</button>
         </mat-menu>
       </li>
