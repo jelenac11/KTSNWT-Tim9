@@ -12,39 +12,29 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class LoginPage {
+public class ForgotPasswordPage {
 
 	private WebDriver driver;
 
-	@FindBy(id = "login_email")
+	@FindBy(id = "email-address")
 	private WebElement email;
-
-	@FindBy(id = "login_password")
-	private WebElement password;
 	
 	@FindBy(xpath = "//form/button")
-	private WebElement signIn;
-	
-	@FindBy(id = "forgot-password-link")
-	private WebElement forgotPasswordLink;
+	private WebElement send;
 	
 	@FindBy(xpath = "//simple-snack-bar/span")
 	private WebElement message;
 
-	public LoginPage(WebDriver driver) {
+	public ForgotPasswordPage(WebDriver driver) {
 		this.driver = driver;
 	}
 	
 	public void ensureIsDisplayedEmail() {
-        (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("login_email")));
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("email-address")));
     }
 	
 	public void ensureIsDisplayedMessage() {
         (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//simple-snack-bar/span")));
-    }
-	
-	public void ensureIsDisplayedForgotPasswordLink() {
-        (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("forgot-password-link")));
     }
 	
 }

@@ -28,6 +28,42 @@ public class HomePage {
 	@FindBy(id = "home_page_more_button_3")
 	private WebElement more;
 	
+	@FindBy(id = "profile-button")
+	private WebElement profileButton;
+	
+	@FindBy(id = "edit-button")
+	private WebElement editButton;
+	
+	@FindBy(id = "save-profile-button")
+	private WebElement saveProfileButton;
+	
+	@FindBy(id = "email-profile")
+	private WebElement emailProfile;
+	
+	@FindBy(id = "username-profile")
+	private WebElement usernameProfile;
+
+	@FindBy(id = "first-name-profile")
+	private WebElement firstNameProfile;
+	
+	@FindBy(id = "last-name-profile")
+	private WebElement lastNameProfile;
+	
+	@FindBy(id = "email-profile-input")
+	private WebElement emailProfileInput;
+	
+	@FindBy(id = "username-profile-input")
+	private WebElement usernameProfileInput;
+
+	@FindBy(id = "first-name-profile-input")
+	private WebElement firstNameProfileInput;
+	
+	@FindBy(id = "last-name-profile-input")
+	private WebElement lastNameProfileInput;
+	
+	@FindBy(xpath = "//simple-snack-bar/span")
+	private WebElement message;
+	
 	@FindBy(id = "mat-tab-label-0-1")
 	private WebElement festivalsTab;
 	
@@ -48,9 +84,37 @@ public class HomePage {
 	public void ensureIsDisplayedSignUpNavigation() {
         (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("signup-navigation")));
     }
+	
+	public void ensureIsDisplayedSignInNavigation() {
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("signin-navigation")));
+    }
 
 	public void ensureIsDisplayedMoreButton() {
         (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("home_page_more_button_3")));
+    }
+	
+	public void ensureIsDisplayedProfileButton() {
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("profile-button")));
+    }
+	
+	public void ensureIsDisplayedEditButton() {
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("edit-button")));
+    }
+	
+	public void ensureIsDisplayedSaveProfileButton() {
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("save-profile-button")));
+    }
+	
+	public void ensureIsDisplayedEmailProfile() {
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("email-profile")));
+    }
+	
+	public void ensureIsDisplayedEmailProfileInput() {
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("email-profile-input")));
+    }
+	
+	public void ensureIsDisplayedMessage() {
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//simple-snack-bar/span")));
     }
 	
 	public void ensureIsDisplayedFestivalsTab() {
