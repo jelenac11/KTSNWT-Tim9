@@ -1,10 +1,10 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
-import { RoleGuard } from "../auth/guards/role.guard";
-import { CommentsReviewComponent } from "../comments/comments-review/comments-review.component";
-import { CulturalOfferFormComponent } from "./cultural-offer-form/cultural-offer-form.component";
-import { CulturalOfferListComponent } from "./cultural-offer-list/cultural-offer-list.component";
-import { CulturalOfferReviewComponent } from "./cultural-offer-review/cultural-offer-review.component";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { RoleGuard } from '../auth/guards/role.guard';
+import { CommentsReviewComponent } from '../comments/comments-review/comments-review.component';
+import { CulturalOfferFormComponent } from './cultural-offer-form/cultural-offer-form.component';
+import { CulturalOfferListComponent } from './cultural-offer-list/cultural-offer-list.component';
+import { CulturalOfferReviewComponent } from './cultural-offer-review/cultural-offer-review.component';
 
 const routes: Routes = [
     {
@@ -37,13 +37,11 @@ const routes: Routes = [
             }
         ]
     },
-]
-
+];
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
   })
-  
+
 export class CulturalOfferRoutingModule { }
-  

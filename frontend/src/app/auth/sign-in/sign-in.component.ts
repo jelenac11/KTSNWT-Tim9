@@ -14,8 +14,8 @@ import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 })
 export class SignInComponent implements OnInit {
   loginForm: FormGroup;
-  submitted: boolean = false;
-  hidePassword : boolean = true;
+  submitted = false;
+  hidePassword = true;
   matcher: MyErrorStateMatcher = new MyErrorStateMatcher();
 
   constructor(
@@ -40,9 +40,9 @@ export class SignInComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     }
-    let credentials: UserLogin = { email: '', password: '' }
-    credentials.email = this.loginForm.value['email'];
-    credentials.password = this.loginForm.value['password'];
+    const credentials: UserLogin = { email: '', password: '' };
+    credentials.email = this.loginForm.value.email;
+    credentials.password = this.loginForm.value.password;
     this.authenticationService.login(credentials).subscribe(data => {
       this.jwtService.saveToken(data);
       this.router.navigate(['/']);

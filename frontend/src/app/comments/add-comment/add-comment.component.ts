@@ -38,7 +38,7 @@ export class AddCommentComponent implements OnInit {
 
   get f() { return this.form.controls; }
 
-  chooseFile(event: any) {
+  chooseFile(event: any): void {
     if (event.target.files.length <= 0) {
       this.setValueForImageInvalidInput();
       return;
@@ -59,7 +59,7 @@ export class AddCommentComponent implements OnInit {
     reader.readAsDataURL(file);
     reader.onload = (_event) => {
       this.uploadedImage = reader.result;
-    }
+    };
   }
 
   setValueForImageInvalidInput(): void {
@@ -73,16 +73,16 @@ export class AddCommentComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    let comment: CommentRequest = { culturalOffer: this.culturalOfferId, text: ''};
-    comment.text = this.form.value['text'];
-    let formData = new FormData();
-    let blob = new Blob([JSON.stringify(comment)], {
+    const comment: CommentRequest = { culturalOffer: this.culturalOfferId, text: ''};
+    comment.text = this.form.value.text;
+    const formData = new FormData();
+    const blob = new Blob([JSON.stringify(comment)], {
       type: 'application/json'
     });
     formData.append('commentDTO', blob);
     formData.append('file', this.form.get('file').value);
     this.commentService.post(formData).subscribe(res => {
-      this.snackBar.success("Your comment is sent to administrator for approval")
+      this.snackBar.success('Your comment is sent to administrator for approval');
       this.close();
     },
     error => {

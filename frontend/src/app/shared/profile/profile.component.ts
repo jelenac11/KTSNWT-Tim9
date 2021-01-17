@@ -16,7 +16,7 @@ export class ProfileComponent implements OnInit {
 
   form: FormGroup;
   user: User = {email: '', username: '', firstName: '', lastName: ''};
-  edit: boolean = false;
+  edit = false;
   matcher: MyErrorStateMatcher = new MyErrorStateMatcher();
 
   constructor(
@@ -44,20 +44,20 @@ export class ProfileComponent implements OnInit {
       username: [this.user.username, Validators.required],
       email: [this.user.email, [Validators.required, Validators.email]]
     });
-    this.f['email'].disable();
+    this.f.email.disable();
   }
 
   save(): void {
     if (this.form.invalid) {
       return;
     }
-    let newUser: UserRequest = { email: '', username: '', password: 'password', lastName: '', firstName: ''};
+    const newUser: UserRequest = { email: '', username: '', password: 'password', lastName: '', firstName: ''};
     newUser.email = this.user.email;
-    newUser.firstName = this.form.value['firstName'];
-    newUser.lastName = this.form.value['lastName'];
-    newUser.username = this.form.value['username'];
+    newUser.firstName = this.form.value.firstName;
+    newUser.lastName = this.form.value.lastName;
+    newUser.username = this.form.value.username;
     this.userService.changeProfile(newUser).subscribe(data => {
-      this.snackBar.success("You changed account information successfully.");
+      this.snackBar.success('You changed account information successfully.');
       this.user = data;
       this.edit = false;
     },

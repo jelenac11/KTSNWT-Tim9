@@ -17,7 +17,7 @@ import { HttpTokenInterceptor } from './interceptors/http.token.interceptor';
     CulturalOfferService,
     CategoryService,
     UserService,
-    AuthenticationService, 
+    AuthenticationService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpTokenInterceptor,

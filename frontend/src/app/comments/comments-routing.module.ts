@@ -1,7 +1,7 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
-import { RoleGuard } from "../auth/guards/role.guard";
-import { ApproveCommentComponent } from "./approve-comment/approve-comment.component";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { RoleGuard } from '../auth/guards/role.guard';
+import { ApproveCommentComponent } from './approve-comment/approve-comment.component';
 
 const routes: Routes = [
     {
@@ -12,13 +12,11 @@ const routes: Routes = [
         expectedRoles: 'ROLE_ADMIN'
         }
     }
-]
-
+];
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
   })
-  
+
 export class CommentsRoutingModule { }
-  
