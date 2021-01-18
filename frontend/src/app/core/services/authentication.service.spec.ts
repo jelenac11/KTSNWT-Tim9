@@ -217,7 +217,7 @@ describe('AuthenticationService', () => {
       message = JSON.parse(data).statusText;
       status = JSON.parse(data).status;
     });
-
+    
     const req = httpMock.expectOne(`${environment.auth_url}change-password`);
     expect(req.request.method).toBe('POST');
     req.flush({

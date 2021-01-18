@@ -264,7 +264,6 @@ describe('CommentService', () => {
       totalElements: 1
     };
     let commentPage: CommentPage;
-
     service.getNotApprovedComments(size, page).subscribe(data => {
       commentPage = data;
     });
@@ -281,5 +280,4 @@ describe('CommentService', () => {
     expect(commentPage.content[0].text).toEqual('Ovo je prvi komentar za ovu ponudu.');
     expect(commentPage.content[0].imageUrl).toEqual('');
   }));
-
 });
