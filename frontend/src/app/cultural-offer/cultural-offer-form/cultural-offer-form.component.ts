@@ -7,6 +7,9 @@ import { CulturalOfferService } from 'src/app/core/services/cultural-offer.servi
 import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 import { CulturalOffer } from 'src/app/core/models/response/cultural-offer.model';
 import { Router } from '@angular/router';
+import { google } from 'google-maps';
+
+declare var google: google;
 
 @Component({
   selector: 'app-cultural-offer-form',
