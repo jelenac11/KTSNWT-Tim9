@@ -7,6 +7,7 @@ import { UserLogin } from '../models/request/user-login-request.models';
 import { PasswordChangeRequest } from '../models/request/password-change-request.model';
 import { UserTokenState } from '../models/response/user-token-state.model';
 import { JwtService } from './jwt.service';
+import { environment } from 'src/environments/environment';
 import { of } from 'rxjs';
 
 describe('AuthenticationService', () => {
@@ -47,185 +48,185 @@ describe('AuthenticationService', () => {
   it('confirmRegistration() should return token does not exist', fakeAsync(() => {
     const token: string = 'wrong_token_asdfghjkl';
     let message: string;
-    let resp: string = "Token doesn't exist.";
+    let mockMessage: string = "Token doesn't exist.";
     let status: number;
     service.confirmRegistration(token).subscribe(data => {
       message = JSON.parse(data).statusText;
       status = JSON.parse(data).status;
     });
 
-    const req = httpMock.expectOne('https://localhost:8081/auth/confirm-registration/' + token);
+    const req = httpMock.expectOne(`${environment.auth_url}confirm-registration/${token}`);
     expect(req.request.method).toBe('GET');
     req.flush({
       status: 404,
-      statusText: resp
+      statusText: mockMessage
     });
 
     tick();
-    expect(message).toEqual(resp);
+    expect(message).toEqual("Token doesn't exist.");
     expect(status).toEqual(404);
   }));
 
   it('confirmRegistration() should return account activated', fakeAsync(() => {
     const token: string = "adsrf2134vxsahneuijfer748594";
     let message: string;
-    let resp: string = "Account activated.";
+    let mockMessage: string = "Account activated.";
     let status: number;
     service.confirmRegistration(token).subscribe(data => {
       message = JSON.parse(data).statusText;
       status = JSON.parse(data).status;
     });
 
-    const req = httpMock.expectOne('https://localhost:8081/auth/confirm-registration/' + token);
+    const req = httpMock.expectOne(`${environment.auth_url}confirm-registration/${token}`);
     expect(req.request.method).toBe('GET');
     req.flush({
       status: 200,
-      statusText: resp
+      statusText: mockMessage
     });
 
     tick();
-    expect(message).toEqual(resp);
+    expect(message).toEqual("Account activated.");
     expect(status).toEqual(200);
   }));
 
   it('login() should return incorrect email or password', fakeAsync(() => {
     const user: UserLogin = { email: 'email_adresa1@gmail.com', password: 'sifra143'};
     let message: any;
-    let resp: string = "Incorrect email or password.";
+    let mockMessage: string = "Incorrect email or password.";
     service.login(user).subscribe(data => {
       message = data;
     });
 
-    const req = httpMock.expectOne('https://localhost:8081/auth/login');
+    const req = httpMock.expectOne(`${environment.auth_url}login`);
     expect(req.request.method).toBe('POST');
-    req.flush(resp);
+    req.flush(mockMessage);
 
     tick();
-    expect(message).toEqual(resp);
+    expect(message).toEqual("Incorrect email or password.");
   }));
 
   it('login() should return account not activated', fakeAsync(() => {
     const user: UserLogin = { email: 'email_adresa11@gmail.com', password: 'sifra123'};
     let message: any;
-    let resp: string = "Account not activated.";
+    let mockMessage: string = "Account not activated.";
     service.login(user).subscribe(data => {
       message = data;
     });
 
-    const req = httpMock.expectOne('https://localhost:8081/auth/login');
+    const req = httpMock.expectOne(`${environment.auth_url}login`);
     expect(req.request.method).toBe('POST');
-    req.flush(resp);
+    req.flush(mockMessage);
 
     tick();
-    expect(message).toEqual(resp);
+    expect(message).toEqual("Account not activated.");
   }));
 
   it('login() should return jwt token', fakeAsync(() => {
     const user: UserLogin = { email: 'email_adresa1@gmail.com', password: 'sifra123'};
-    let tokenRes: UserTokenState;
-    let token: UserTokenState = {
+    let token: UserTokenState;
+    let mockToken: UserTokenState = {
       accessToken: "asedrftgyhujsdrftgyhuji",
       expiresIn: 1235678
     }
     service.login(user).subscribe(data => {
-      tokenRes = data;
+      token = data;
     });
 
-    const req = httpMock.expectOne('https://localhost:8081/auth/login');
+    const req = httpMock.expectOne(`${environment.auth_url}login`);
     expect(req.request.method).toBe('POST');
-    req.flush(token);
+    req.flush(mockToken);
 
     tick();
 
-    expect(tokenRes.accessToken).toEqual(token.accessToken);
-    expect(tokenRes.expiresIn).toEqual(token.expiresIn);
+    expect(token.accessToken).toEqual("asedrftgyhujsdrftgyhuji");
+    expect(token.expiresIn).toEqual(1235678);
   }));
 
   it('forgotPassword() should return user with given email does not exist', fakeAsync(() => {
     const email: string = 'email_adresa111@gmail.com';
     let message: string;
-    let resp: string = "User with given email doesn't exist";
+    let mockMessage: string = "User with given email doesn't exist";
     let status: number;
     service.forgotPassword(email).subscribe(data => {
       message = JSON.parse(data).statusText;
       status = JSON.parse(data).status;
     });
 
-    const req = httpMock.expectOne('https://localhost:8081/auth/forgot-password');
+    const req = httpMock.expectOne(`${environment.auth_url}forgot-password`);
     expect(req.request.method).toBe('POST');
     req.flush({
       status: 404,
-      statusText: resp
+      statusText: mockMessage
     });
 
     tick();
-    expect(message).toEqual(resp);
+    expect(message).toEqual("User with given email doesn't exist");
     expect(status).toEqual(404);
   }));
 
   it('forgotPassword() should return password reset successfully', fakeAsync(() => {
     const email: string = 'email_adresa1@gmail.com';
     let message: string;
-    let resp: string = "Password reset successfully.";
+    let mockMessage: string = "Password reset successfully.";
     let status: number;
     service.forgotPassword(email).subscribe(data => {
       message = JSON.parse(data).statusText;
       status = JSON.parse(data).status;
     });
 
-    const req = httpMock.expectOne('https://localhost:8081/auth/forgot-password');
+    const req = httpMock.expectOne(`${environment.auth_url}forgot-password`);
     expect(req.request.method).toBe('POST');
     req.flush({
       status: 200,
-      statusText: resp
+      statusText: mockMessage
     });
 
     tick();
-    expect(message).toEqual(resp);
+    expect(message).toEqual("Password reset successfully.");
     expect(status).toEqual(200);
   }));
 
   it('changePassword() should return incorrect old password', fakeAsync(() => {
     const passwordRequest: PasswordChangeRequest = { oldPassword: "sifra124", newPassword: "sifra125"};
     let message: string;
-    let resp: string = "Incorrect old password";
+    let mockMessage: string = "Incorrect old password";
     let status: number;
     service.changePassword(passwordRequest).subscribe(data => {
       message = JSON.parse(data).statusText;
       status = JSON.parse(data).status;
     });
 
-    const req = httpMock.expectOne('https://localhost:8081/auth/change-password');
+    const req = httpMock.expectOne(`${environment.auth_url}change-password`);
     expect(req.request.method).toBe('POST');
     req.flush({
       status: 400,
-      statusText: resp
+      statusText: mockMessage
     });
 
     tick();
-    expect(message).toEqual(resp);
+    expect(message).toEqual("Incorrect old password");
     expect(status).toEqual(400);
   }));
 
   it('changePassword() should return password changed successfully', fakeAsync(() => {
     const passwordRequest: PasswordChangeRequest = { oldPassword: "sifra123", newPassword: "sifra125"};
     let message: string;
-    let resp: string = "Password changed successfully";
+    let mockMessage: string = "Password changed successfully";
     let status: number;
     service.changePassword(passwordRequest).subscribe(data => {
       message = JSON.parse(data).statusText;
       status = JSON.parse(data).status;
     });
-
-    const req = httpMock.expectOne('https://localhost:8081/auth/change-password');
+    
+    const req = httpMock.expectOne(`${environment.auth_url}change-password`);
     expect(req.request.method).toBe('POST');
     req.flush({
       status: 200,
-      statusText: resp
+      statusText: mockMessage
     });
 
     tick();
-    expect(message).toEqual(resp);
+    expect(message).toEqual("Password changed successfully");
     expect(status).toEqual(200);
   }));
 
