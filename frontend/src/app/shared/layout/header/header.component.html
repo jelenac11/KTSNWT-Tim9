@@ -32,29 +32,22 @@
           >Cultural offers</a
         >
       </li>
-      <li class="nav-item dropdown" dropdown>
+      <li class="nav-item" dropdown>
         <a
+          *ngIf="role === 'ROLE_ADMIN'"
           dropdownToggle
           mdbWavesEffect
           type="button"
-          class="nav-link dropdown-toggle waves-light font-weight-bolder ml-2 mt-2 h6"
+          class="nav-link waves-light font-weight-bolder ml-2 mt-2 h6"
+          routerLink="/categories"
+          routerLinkActive="active"
           mdbWavesEffect
         >
-          Categories<span class="caret"></span
-        ></a>
-        <div
-          *dropdownMenu
-          class="dropdown-menu dropdown dropdown-primary"
-          role="menu"
-        >
-          <a class="dropdown-item waves-light" mdbWavesEffect>Galleries</a>
-          <a class="dropdown-item waves-light" mdbWavesEffect>Festivals</a>
-          <a class="dropdown-item waves-light" mdbWavesEffect>Concerts</a>
-        </div>
+          Categories</a>
       </li>
       <li class="nav-item">
         <a
-          id='user-navigation'
+          id="user-navigation"
           *ngIf="role === 'ROLE_ADMIN'"
           class="nav-link waves-light font-weight-bolder ml-2 mt-2 h6"
           routerLink="/users"
@@ -65,6 +58,7 @@
       </li>
       <li class="nav-item">
         <a
+          id="comment-requests-navigation"
           *ngIf="role === 'ROLE_ADMIN'"
           class="nav-link waves-light font-weight-bolder ml-2 mt-2 h6"
           routerLink="/approving-comments"
@@ -77,7 +71,7 @@
     <ul class="navbar-nav ml-auto nav-flex-icons">
       <li class="nav-item">
         <a
-          id='signin-navigation'
+          id="signin-navigation"
           *ngIf="!role"
           class="nav-link waves-light font-weight-bolder ml-2 mt-2 h6"
           routerLink="/auth/sign-in"
@@ -87,7 +81,7 @@
       </li>
       <li class="nav-item">
         <a
-          id='signup-navigation'
+          id="signup-navigation"
           *ngIf="!role"
           class="nav-link waves-light font-weight-bolder ml-2 mt-2 h6"
           routerLink="/auth/sign-up"
