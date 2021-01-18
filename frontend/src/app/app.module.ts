@@ -18,6 +18,7 @@ import { CommentsRoutingModule } from './comments/comments-routing.module';
 import { AuthRoutingModule } from './auth/auth-routing.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HttpClientModule } from '@angular/common/http';
+import { UserProfileModule } from './user-profile/user-profile.module';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { HttpClientModule } from '@angular/common/http';
     CoreModule,
     CategoryModule,
     NewsModule,
+    UserProfileModule,
     HomeModule,
     AgmCoreModule.forRoot({
       apiKey: environment.google_api_key,

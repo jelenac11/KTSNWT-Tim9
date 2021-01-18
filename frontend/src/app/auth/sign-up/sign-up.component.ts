@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserRequest } from 'src/app/core/models/request/user-request.model';
 import { UserService } from 'src/app/core/services/user.service';
-import { MyErrorStateMatcher } from 'src/app/shared/ErrorStateMatcher';
+import { MyErrorStateMatcher } from 'src/app/core/error-matchers/ErrorStateMatcher';
 import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 
 @Component({
@@ -32,7 +32,7 @@ export class SignUpComponent implements OnInit {
     });
   }
 
-  get f() { return this.registerForm.controls; }
+  get f(): { [key: string]: AbstractControl; } { return this.registerForm.controls; }
 
   onSubmit(): void {
     this.submitted = true;
@@ -50,7 +50,9 @@ export class SignUpComponent implements OnInit {
       this.submitted = false;
       this.registerForm.reset();
       for (const control in this.registerForm.controls) {
-        this.registerForm.controls[control].setErrors(null);
+        if (this.registerForm.controls.hasOwnProperty(control)) {
+          this.registerForm.controls[control].setErrors(null);
+        }
       }
     },
     error => {

@@ -46,5 +46,4 @@ export class CategoryService {
     params = params.append('page', page.toString());
     return this.http.get(`${environment.api_url}categories/by-page/${value}`, { params });
   }
-
 }

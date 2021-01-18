@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CategoryService } from 'src/app/core/services/category.service';
-import { MyErrorStateMatcher } from 'src/app/shared/ErrorStateMatcher';
+import { MyErrorStateMatcher } from 'src/app/core/error-matchers/ErrorStateMatcher';
 import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 
 @Component({
@@ -39,13 +39,13 @@ export class CategoryDialogComponent implements OnInit {
     }
   }
 
-  get f() { return this.form.controls; }
+  get f(): { [key: string]: AbstractControl; } { return this.form.controls; }
 
   submit(): void {
-    if(this.category){
+    if (this.category) {
       this.update();
     }
-    else{
+    else {
       this.add();
     }
   }
@@ -55,10 +55,10 @@ export class CategoryDialogComponent implements OnInit {
       return;
     }
     const category = {id: null, name: '', description: ''};
-    category.name = this.form.value['name'];
-    category.description = this.form.value['description'];
+    category.name = this.form.value.name;
+    category.description = this.form.value.description;
     this.categoryService.post(category).subscribe(data => {
-      this.snackBar.success("Category added successfully");
+      this.snackBar.success('Category added successfully');
       this.dialogRef.close(true);
     },
     error => {
@@ -72,8 +72,8 @@ export class CategoryDialogComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    this.category.name = this.form.value['name'];
-    this.category.description = this.form.value['description'];
+    this.category.name = this.form.value.name;
+    this.category.description = this.form.value.description;
     this.categoryService.put(this.category.id, this.category).subscribe(data => {
       this.snackBar.success('Category updated successfully');
       this.dialogRef.close(true);
