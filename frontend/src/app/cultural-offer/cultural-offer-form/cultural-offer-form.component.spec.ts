@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CulturalOfferUpdateComponent } from './cultural-offer-form.component';
+import { CulturalOfferFormComponent } from './cultural-offer-form.component';
 
 describe('CulturalOfferUpdateComponent', () => {
-  let component: CulturalOfferUpdateComponent;
-  let fixture: ComponentFixture<CulturalOfferUpdateComponent>;
+  let component: CulturalOfferFormComponent;
+  let fixture: ComponentFixture<CulturalOfferFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CulturalOfferUpdateComponent ]
+      declarations: [ CulturalOfferFormComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CulturalOfferUpdateComponent);
+    fixture = TestBed.createComponent(CulturalOfferFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
