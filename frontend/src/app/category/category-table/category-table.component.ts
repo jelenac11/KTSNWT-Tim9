@@ -75,7 +75,7 @@ export class CategoryTableComponent implements OnInit {
   searchChanged(value: string): void {
     this.searchValue = value;
     this.searchCategory();
-  };
+  }
 
   searchCategory(): void{
     this.categoryService.getAllPagesByName(this.size, this.page - 1, this.searchValue)
@@ -89,8 +89,8 @@ export class CategoryTableComponent implements OnInit {
   addCategory(): void {
     const dialogConfig: MatDialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
-    dialogConfig.minHeight = "240px";
-    dialogConfig.minWidth = "400px";
+    dialogConfig.minHeight = '240px';
+    dialogConfig.minWidth = '400px';
     dialogConfig.data = null;
     const dialogRef = this.dialog.open(CategoryDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
@@ -103,8 +103,8 @@ export class CategoryTableComponent implements OnInit {
   updateCategory(category: Category): void {
     const dialogConfig: MatDialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
-    dialogConfig.minHeight = "240px";
-    dialogConfig.minWidth = "400px";
+    dialogConfig.minHeight = '240px';
+    dialogConfig.minWidth = '400px';
     dialogConfig.data = category;
     const dialogRef = this.dialog.open(CategoryDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {

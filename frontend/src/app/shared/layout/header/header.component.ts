@@ -5,8 +5,8 @@ import { User } from 'src/app/core/models/response/user.model';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { JwtService } from 'src/app/core/services/jwt.service';
 import { UserService } from 'src/app/core/services/user.service';
-import { ChangePasswordComponent } from '../../change-password/change-password.component';
-import { ProfileComponent } from '../../profile/profile.component';
+import { ChangePasswordComponent } from '../../../user-profile/change-password/change-password.component';
+import { ProfileComponent } from '../../../user-profile/profile/profile.component';
 
 @Component({
   selector: 'app-header',

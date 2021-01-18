@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
-import { MyErrorStateMatcher } from 'src/app/shared/ErrorStateMatcher';
+import { MyErrorStateMatcher } from 'src/app/core/error-matchers/ErrorStateMatcher';
 import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 
 @Component({
@@ -39,7 +39,9 @@ export class ForgotPasswordComponent implements OnInit {
       this.forgotForm.reset();
       this.submitted = false;
       for (const control in this.forgotForm.controls) {
-        this.forgotForm.controls[control].setErrors(null);
+        if (this.forgotForm.controls.hasOwnProperty(control)) {
+          this.forgotForm.controls[control].setErrors(null);
+        }
       }
     },
     error => {
