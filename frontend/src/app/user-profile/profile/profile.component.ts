@@ -1,11 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UserRequest } from 'src/app/core/models/request/user-request.model';
 import { User } from 'src/app/core/models/response/user.model';
 import { UserService } from 'src/app/core/services/user.service';
-import { MyErrorStateMatcher } from '../ErrorStateMatcher';
-import { Snackbar } from '../snackbars/snackbar/snackbar';
+import { MyErrorStateMatcher } from '../../core/error-matchers/ErrorStateMatcher';
+import { Snackbar } from '../../shared/snackbars/snackbar/snackbar';
 
 @Component({
   selector: 'app-profile',
@@ -34,7 +34,7 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  get f() { return this.form.controls; }
+  get f(): { [key: string]: AbstractControl; } { return this.form.controls; }
 
   startEdit(): void {
     this.edit = true;

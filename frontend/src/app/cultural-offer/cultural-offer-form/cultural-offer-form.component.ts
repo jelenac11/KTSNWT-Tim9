@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Category } from 'src/app/core/models/response/category.model';
 import { CategoryService } from 'src/app/core/services/category.service';
@@ -96,7 +96,7 @@ export class CulturalOfferFormComponent implements OnInit {
       });
   }
 
-  get f() { return this.registerForm.controls; }
+  get f(): { [key: string]: AbstractControl; } { return this.registerForm.controls; }
 
   onSubmit(): void {
     this.submitted = true;
