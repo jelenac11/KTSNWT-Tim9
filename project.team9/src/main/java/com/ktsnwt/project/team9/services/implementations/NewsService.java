@@ -135,5 +135,9 @@ public class NewsService implements INewsService {
 	public Page<News> getSubscribedNews(Long id, Pageable pageable) {
 		return newsRepository.findSubscribedNews(id,pageable);
 	}
+
+	public Page<News> findAllByCulturalOffer(Long id, Pageable pageable) {
+		return newsRepository.findByCulturalOfferId(id, pageable);
+	}
 	
 }

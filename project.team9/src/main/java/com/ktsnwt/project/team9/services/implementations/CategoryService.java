@@ -62,6 +62,6 @@ public class CategoryService implements ICategoryService {
 	}
 	
 	public Page<Category> findByName(String value, Pageable pageable){
-		return categoryRepository.findByNameContainingIgnoreCase(value, pageable);
+		return categoryRepository.findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(value, value, pageable);
 	}
 }

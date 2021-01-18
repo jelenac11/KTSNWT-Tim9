@@ -40,4 +40,11 @@ export class CategoryService {
     return this.http.delete<string>(`${environment.api_url}categories/${slug}`);
   }
 
+  getAllPagesByName(size: number, page: number, value: string): Observable<CategoryPage>{
+    let params = new HttpParams();
+    params = params.append('size', size.toString());
+    params = params.append('page', page.toString());
+    return this.http.get(`${environment.api_url}categories/by-page/${value}`, { params });
+  }
+
 }

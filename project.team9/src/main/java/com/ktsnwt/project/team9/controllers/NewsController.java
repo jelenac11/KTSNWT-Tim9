@@ -61,6 +61,15 @@ public class NewsController {
 	}
 	
 	@PreAuthorize("permitAll()")
+	@GetMapping(value= "/{coid}/by-page")
+	public ResponseEntity<Page<NewsDTO>> getAllNewsByCulturalOffer(@PathVariable Long coid,Pageable pageable){
+		Page<News> page = newsService.findAllByCulturalOffer(coid, pageable);
+        List<NewsDTO> newsDTO = newsMapper.toDTOList(page.toList());
+        Page<NewsDTO> pageNewsDTO = new PageImpl<NewsDTO>(newsDTO.stream().collect(Collectors.toList()),page.getPageable(),page.getTotalElements());
+        return new ResponseEntity<Page<NewsDTO>>(pageNewsDTO, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("permitAll()")
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<NewsDTO> getNews(@PathVariable Long id) {
 
