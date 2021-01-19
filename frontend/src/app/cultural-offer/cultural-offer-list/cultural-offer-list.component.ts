@@ -50,16 +50,16 @@ export class CulturalOfferListComponent implements OnInit {
     this.getAllCategories();
   }
 
-  getAllCategories(): void {
+  private getAllCategories(): void {
     this.categoryService.getAll().subscribe(categories => {
       this.categories = categories.sort((a, b) => a.id - b.id);
       this.getCulturalOffersByCategoryAndName();
     });
   }
 
-  getCulturalOffersByCategoryAndName(): void {
+  private getCulturalOffersByCategoryAndName(): void {
     if (!this.searchValue && this.currentCategory) {
-      this.culturalOfferService.getCulturalOffersByCategory(this.currentCategory, this.size, this.page - 1)
+      this.culturalOfferService.getCulturalOffersByCategory(this.currentCategory.toString(), this.size, this.page - 1)
         .subscribe(culturalOffers => {
           this.culturalOffers = culturalOffers;
           this.separateData();
@@ -75,7 +75,7 @@ export class CulturalOfferListComponent implements OnInit {
       return;
     }
     if (this.currentCategory && this.searchValue) {
-      this.culturalOfferService.findByCategoryIdAndName(this.currentCategory, this.searchValue, this.size, this.page - 1)
+      this.culturalOfferService.findByCategoryIdAndName(this.currentCategory.toString(), this.searchValue, this.size, this.page - 1)
         .subscribe(culturalOffers => {
           this.culturalOffers = culturalOffers;
           this.separateData();
@@ -93,14 +93,14 @@ export class CulturalOfferListComponent implements OnInit {
     this.getCulturalOffersByCategoryAndName();
   }
 
-  getCulturalOffers(): void {
+  private getCulturalOffers(): void {
     this.culturalOfferService.getAll(this.size, this.page - 1).subscribe(culturalOffers => {
       this.culturalOffers = culturalOffers;
       this.separateData();
     });
   }
 
-  separateData(): void {
+  private separateData(): void {
     this.rows = [[]];
     for (let i = 0; i < this.culturalOffers.content.length / 5; i++) {
       this.rows.push([]);
@@ -131,8 +131,8 @@ export class CulturalOfferListComponent implements OnInit {
     });
   }
 
-  delete(id: number): void {
-    this.culturalOfferService.delete(id).subscribe(succ => {
+  private delete(id: number): void {
+    this.culturalOfferService.delete(id.toString()).subscribe(succ => {
       if (succ) {
         this.getCulturalOffers();
         this.snackBar.success('You have successfully deleted cultural offer!');
@@ -151,7 +151,7 @@ export class CulturalOfferListComponent implements OnInit {
     this.getCulturalOffersByCategoryAndName();
   }
 
-  resetRequiredParameters(): void {
+  private resetRequiredParameters(): void {
     this.page = 1;
   }
 

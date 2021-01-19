@@ -43,21 +43,21 @@ export class CulturalOfferReviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.culturalOfferId = this.route.snapshot.paramMap.get('id');
+    this.role = this.jwtService.getRole();
     this.getCulturalOfferById();
   }
 
   private getCulturalOfferById(): void {
-    this.role = this.jwtService.getRole();
     this.culturalOfferService.get(this.culturalOfferId)
       .subscribe(culturalOffer => {
         this.culturalOffer = culturalOffer;
         this.getCurrentMark();
       });
-    if (this.role === 'ROLE_REGISTERED_USER'){
+    if (this.role === 'ROLE_REGISTERED_USER') {
       this.registeredUserService.isSubscribed(this.jwtService.getEmail(), this.culturalOfferId)
-      .subscribe(sub => {
-        this.subscribed = sub;
-    });
+        .subscribe(sub => {
+          this.subscribed = sub;
+        });
     }
   }
 
@@ -85,9 +85,9 @@ export class CulturalOfferReviewComponent implements OnInit {
             this.getCurrentMark();
           });
       },
-      error => {
-        console.log(error);
-      });
+        error => {
+          console.log(error);
+        });
     } else {
       this.markService.update(newMark).subscribe(data => {
         this.mark = data.value;
@@ -97,9 +97,9 @@ export class CulturalOfferReviewComponent implements OnInit {
             this.getCurrentMark();
           });
       },
-      error => {
-        console.log(error);
-      });
+        error => {
+          console.log(error);
+        });
     }
   }
 
@@ -111,22 +111,22 @@ export class CulturalOfferReviewComponent implements OnInit {
     const dialogRef = this.dialog.open(AddCommentComponent, dialogConfig);
   }
 
-  subscribe(): void{
+  subscribe(): void {
     this.newsService.subscribe('1', this.culturalOfferId)
-    .subscribe(succ => {
-      if (succ){
-        this.subscribed = true;
-      }
-    });
+      .subscribe(succ => {
+        if (succ) {
+          this.subscribed = true;
+        }
+      });
   }
 
-  unsubscribe(): void{
+  unsubscribe(): void {
     this.newsService.unsubscribe('1', this.culturalOfferId)
-    .subscribe(succ => {
-      if (succ){
-        this.subscribed = false;
-      }
-    });
+      .subscribe(succ => {
+        if (succ) {
+          this.subscribed = false;
+        }
+      });
   }
 
 }
