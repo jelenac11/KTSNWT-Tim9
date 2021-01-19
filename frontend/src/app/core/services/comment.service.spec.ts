@@ -27,12 +27,12 @@ describe('CommentService', () => {
   afterEach(() => {
     httpMock.verify();
   });
-  
+
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
 
- it('getCommentsByCulturalOfferId() should return comment page', fakeAsync(() => {
+  it('getCommentsByCulturalOfferId() should return comment page', fakeAsync(() => {
     const size = 1;
     const page = 0;
     const id = 1;
@@ -73,7 +73,7 @@ describe('CommentService', () => {
     const commentRequest: CommentRequest = {
       culturalOffer: 1,
       text: 'Nema teksta'
-    }
+    };
     const blob = new Blob([JSON.stringify(commentRequest)], {
       type: 'application/json'
     });
@@ -86,7 +86,7 @@ describe('CommentService', () => {
       culturalOfferName: 'Manastir 1',
       text: 'Nema teksta',
       imageUrl: '',
-    }
+    };
     let comment: Comment;
 
     service.post(formData).subscribe(data => {
@@ -110,13 +110,13 @@ describe('CommentService', () => {
     const commentRequest: CommentRequest = {
       culturalOffer: 1,
       text: ''
-    }
+    };
     const blob = new Blob([JSON.stringify(commentRequest)], {
       type: 'application/json'
     });
     formData.append('commentDTO', blob);
     formData.append('file', '');
-    const mockMessage: string = 'Comment must have image or text';
+    const mockMessage = 'Comment must have image or text';
     let message: any;
 
     service.post(formData).subscribe(data => {
@@ -135,13 +135,13 @@ describe('CommentService', () => {
     const commentRequest: CommentRequest = {
       culturalOffer: 111111111,
       text: 'Nema teksta'
-    }
+    };
     const blob = new Blob([JSON.stringify(commentRequest)], {
       type: 'application/json'
     });
     formData.append('commentDTO', blob);
     formData.append('file', '');
-    const mockMessage: string = 'Cultural offer doesn\'t exist.';
+    const mockMessage = 'Cultural offer doesn\'t exist.';
     let message: any;
 
     service.post(formData).subscribe(data => {
@@ -164,8 +164,8 @@ describe('CommentService', () => {
       culturalOfferName: 'Manastir 1',
       text: 'Nema teksta',
       imageUrl: '',
-    }
-    const mockMessage: string = 'Comment successfully approved';
+    };
+    const mockMessage = 'Comment successfully approved';
     let message: string;
 
     service.approve(comment, approve).subscribe(data => {
@@ -188,8 +188,8 @@ describe('CommentService', () => {
       culturalOfferName: 'Manastir 1',
       text: 'Nema teksta',
       imageUrl: '',
-    }
-    const mockMessage: string = 'Comment doesn\'t exist';
+    };
+    const mockMessage = 'Comment doesn\'t exist';
     let message: string;
 
     service.approve(comment, approve).subscribe(data => {
@@ -212,8 +212,8 @@ describe('CommentService', () => {
       culturalOfferName: 'Manastir 1',
       text: 'Nema teksta',
       imageUrl: '',
-    }
-    const mockMessage: string = 'Comment successfully declined';
+    };
+    const mockMessage = 'Comment successfully declined';
     let message: string;
 
     service.approve(comment, approve).subscribe(data => {
@@ -236,8 +236,8 @@ describe('CommentService', () => {
       culturalOfferName: 'Manastir 1',
       text: 'Nema teksta',
       imageUrl: '',
-    }
-    const mockMessage: string = 'Comment doesn\'t exist';
+    };
+    const mockMessage = 'Comment doesn\'t exist';
     let message: string;
 
     service.approve(comment, approve).subscribe(data => {
@@ -250,7 +250,7 @@ describe('CommentService', () => {
     tick();
     expect(message).toEqual('Comment doesn\'t exist');
   }));
-  
+
   it('getNotApprovedComments() should return comment page', fakeAsync(() => {
     const size = 1;
     const page = 0;
