@@ -24,6 +24,10 @@ describe('CommentService', () => {
     service = TestBed.inject(CommentService);
   });
 
+  afterEach(() => {
+    httpMock.verify();
+  });
+  
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
