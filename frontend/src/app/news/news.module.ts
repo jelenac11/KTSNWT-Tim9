@@ -15,10 +15,12 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { NewsRoutingModule } from './news-routing.module';
 import { NewsReviewComponent } from './news-review/news-review.component';
 import { NewsDialogComponent } from './news-dialog/news-dialog.component';
+import { SubscriedNewsComponent } from './subscried-news/subscried-news.component';
+import { MatTabsModule } from '@angular/material/tabs';
 
 
 @NgModule({
-  declarations: [NewsReviewComponent, NewsDialogComponent],
+  declarations: [NewsReviewComponent, NewsDialogComponent, SubscriedNewsComponent],
   imports: [
     CommonModule,
     MatIconModule,
@@ -37,6 +39,8 @@ import { NewsDialogComponent } from './news-dialog/news-dialog.component';
     MatDialogModule,
     MatGridListModule,
     CarouselModule,
-  ]
+    MatTabsModule
+  ],
+  exports: [NewsReviewComponent, NewsDialogComponent, SubscriedNewsComponent]
 })
 export class NewsModule { }

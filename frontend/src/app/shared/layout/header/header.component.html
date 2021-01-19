@@ -20,7 +20,8 @@
         >
       </li>
       <li class="nav-item">
-        <a *ngIf="role === 'ROLE_REGISTERED_USER'" class="nav-link waves-light font-weight-bolder ml-2 mt-2 h6" mdbWavesEffect>My News</a>
+        <a *ngIf="role === 'ROLE_REGISTERED_USER'" class="nav-link waves-light font-weight-bolder ml-2 mt-2 h6" 
+        routerLink="/news/my-news" mdbWavesEffect>My News</a>
       </li>
       <li class="nav-item">
         <a

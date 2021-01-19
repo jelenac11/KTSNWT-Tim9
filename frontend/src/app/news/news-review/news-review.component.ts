@@ -7,7 +7,7 @@ import { News } from 'src/app/core/models/response/news.model';
 import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 import { CulturalOfferService } from 'src/app/core/services/cultural-offer.service';
 import { ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation-dialog/confirmation-dialog.component';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { NewsDialogComponent } from '../news-dialog/news-dialog.component';
 import { ImageService } from 'src/app/core/services/image.service';
 
@@ -26,7 +26,7 @@ export class NewsReviewComponent implements OnInit {
 
   news: NewsPage;
 
-  coid;
+  coid = null;
 
   culturalOffer = new Map();
 
@@ -40,7 +40,6 @@ export class NewsReviewComponent implements OnInit {
     private jwtService: JwtService,
     private coService: CulturalOfferService,
     private imageService: ImageService,
-    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -53,7 +52,6 @@ export class NewsReviewComponent implements OnInit {
     this.newsService.getAllByCOID(this.coid, this.size, this.page - 1).subscribe(news => {
       if (news.content.length === 0){
         this.snackBar.error('There is no news for this cultural offer!');
-        this.router.navigateByUrl('/');
       }
       this.images = [];
       this.getImages(news);
@@ -115,7 +113,7 @@ export class NewsReviewComponent implements OnInit {
     dialogConfig.disableClose = true;
     dialogConfig.minHeight = '240px';
     dialogConfig.minWidth = '400px';
-    dialogConfig.data = null;
+    dialogConfig.data = this.coid;
     const dialogRef = this.dialog.open(NewsDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {

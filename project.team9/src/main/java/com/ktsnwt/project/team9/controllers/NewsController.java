@@ -84,11 +84,13 @@ public class NewsController {
 	public ResponseEntity<NewsDTO> createNews(@Valid @RequestBody NewsDTO NewsDTO) {
 
 		try {
+			System.out.println("Napravljen " + NewsDTO.getCulturalOfferID());
 			return new ResponseEntity<NewsDTO>(
 					newsMapper
 							.toDto(newsService.create(newsMapper.toEntity(NewsDTO))),
 					HttpStatus.CREATED);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -142,6 +144,17 @@ public class NewsController {
 	public ResponseEntity<Page<NewsDTO>> getSubscribedNews(@PathVariable Long userID, Pageable pageable) {
 		
 		Page<News> page = newsService.getSubscribedNews(userID, pageable);
+        List<NewsDTO> newsDTO = newsMapper.toDTOList(page.toList());
+        Page<NewsDTO> pageNewsDTO = new PageImpl<NewsDTO>(newsDTO.stream().collect(Collectors.toList()),page.getPageable(),page.getTotalElements());
+        
+		return new ResponseEntity<Page<NewsDTO>>(pageNewsDTO, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
+	@GetMapping(value = "/subscribed-news/{userID}/{categoryID}")
+	public ResponseEntity<Page<NewsDTO>> getSubscribedNews(@PathVariable Long userID, @PathVariable Long categoryID, Pageable pageable) {
+		
+		Page<News> page = newsService.getSubscribedNews(userID, categoryID, pageable);
         List<NewsDTO> newsDTO = newsMapper.toDTOList(page.toList());
         Page<NewsDTO> pageNewsDTO = new PageImpl<NewsDTO>(newsDTO.stream().collect(Collectors.toList()),page.getPageable(),page.getTotalElements());
         

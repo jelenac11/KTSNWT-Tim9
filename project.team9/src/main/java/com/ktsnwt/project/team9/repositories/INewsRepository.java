@@ -14,6 +14,10 @@ public interface INewsRepository extends JpaRepository<News, Long> {
 	@Query("SELECT n FROM News n JOIN n.culturalOffer co "
 			+ " JOIN co.subscribedUsers us WHERE us.id = ?1")
 	Page<News> findSubscribedNews(Long userID, Pageable pageable);
+	
+	@Query("SELECT n FROM News n JOIN n.culturalOffer co JOIN co.category c"
+			+ " JOIN co.subscribedUsers us WHERE us.id = ?1 and c.id = ?2")
+	Page<News> findSubscribedNews(Long userID, Long categoryID, Pageable pageable);
 
 	Page<News> findByCulturalOfferId(Long id, Pageable pageable);
 

@@ -1,10 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MyErrorStateMatcher } from 'src/app/core/error-matchers/ErrorStateMatcher';
 import { News } from 'src/app/core/models/response/news.model';
 import { ImageService } from 'src/app/core/services/image.service';
 import { NewsService } from 'src/app/core/services/news.service';
-import { MyErrorStateMatcher } from 'src/app/shared/ErrorStateMatcher';
 import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 
 @Component({
@@ -20,7 +20,7 @@ export class NewsDialogComponent implements OnInit {
   images = [];
   preview = [];
   removedImages = [];
-  coid = 1;
+  coid;
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<NewsDialogComponent>,
@@ -31,7 +31,7 @@ export class NewsDialogComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.data){
+    if (typeof this.data !== 'string'){
       this.news = this.data;
       this.images = this.news.images;
       for (const image of this.images){
@@ -44,7 +44,8 @@ export class NewsDialogComponent implements OnInit {
       });
     }
     else{
-      this.news = {id: null, content: '', images: [], date: new Date().getTime()};
+      this.coid = +this.data;
+      this.news = {id: null, content: '', images: [], date: new Date().getTime(), culturalOfferID: +this.data};
       this.form = this.fb.group({
         content: ['', Validators.required],
       });
@@ -209,7 +210,7 @@ export class NewsDialogComponent implements OnInit {
   }
 
   close(): void {
-    if(this.news.id){
+    if (this.news.id){
       for (const item of this.removedImages){
         this.preview.splice(item.index, 0, item.preview);
         this.images.splice(item.index, 0, item.image);
