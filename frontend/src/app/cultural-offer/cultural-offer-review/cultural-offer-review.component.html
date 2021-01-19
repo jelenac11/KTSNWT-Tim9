@@ -6,14 +6,17 @@
           <div class="row">
             <div class="col-4">
               <div class="view overlay">
-                <app-image-modal style="float: left;"
+                <app-image-modal
+                  style="float: left"
                   [imageURL]="culturalOffer.image"
                 ></app-image-modal>
               </div>
             </div>
             <div class="col-5 mt-3">
               <div>
-                <h1 id="individual_culturalOffer_name"><b>{{ culturalOffer.name }}</b></h1>
+                <h1 id="individual_culturalOffer_name">
+                  <b>{{ culturalOffer.name }}</b>
+                </h1>
               </div>
               <div>
                 <h2>
@@ -36,10 +39,26 @@
                 </span>
               </div>
               <div>
-                <button *ngIf="!subscribed" mat-stroked-button	 class="green" size="sm" mdbWavesEffect (click)="subscribe()">
+                <button
+                  *ngIf="!subscribed"
+                  mat-stroked-button
+                  class="green"
+                  size="sm"
+                  mdbWavesEffect
+                  (click)="subscribe()"
+                >
                   Subscribe
                 </button>
-                <button *ngIf="subscribed" mat-stroked-button	 class="red" size="sm" mdbWavesEffect (click)="unsubscribe()">Unsubscribe</button>
+                <button
+                  *ngIf="subscribed"
+                  mat-stroked-button
+                  class="red"
+                  size="sm"
+                  mdbWavesEffect
+                  (click)="unsubscribe()"
+                >
+                  Unsubscribe
+                </button>
               </div>
             </div>
           </div>
@@ -48,10 +67,22 @@
           </div>
         </mdb-card-body>
         <div class="mb-3">
-          <a mat-flat-button class="mat-but ml-5 mt-3" color="primary" [routerLink]="['comments']" id="comments-review-btn"> 
+          <a
+            mat-flat-button
+            class="mat-but ml-5 mt-3"
+            color="primary"
+            [routerLink]="['comments']"
+            id="comments-review-btn"
+          >
             <mat-icon class="mr-2">comment</mat-icon> Comments
           </a>
-          <button *ngIf="role === 'ROLE_REGISTERED_USER'" mat-flat-button class="mat-but ml-2" (click)="openDialog()" id="add-new-comment-btn">
+          <button
+            *ngIf="role === 'ROLE_REGISTERED_USER'"
+            mat-flat-button
+            class="mat-but ml-2"
+            (click)="openDialog()"
+            id="add-new-comment-btn"
+          >
             <mat-icon class="ml-3">add_comment</mat-icon> Add new comment
           </button>
           <a mat-flat-button class="mat-but ml-5 mt-3" routerLink="/news/view/{{culturalOfferId}}" id="news-review-btn"> 
