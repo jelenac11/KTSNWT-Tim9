@@ -31,6 +31,8 @@ export class CulturalOfferReviewComponent implements OnInit {
 
   subscribed = false;
 
+  userID;
+
   constructor(
     private route: ActivatedRoute,
     private culturalOfferService: CulturalOfferService,
@@ -38,12 +40,16 @@ export class CulturalOfferReviewComponent implements OnInit {
     private newsService: NewsService,
     private markService: MarkService,
     private dialog: MatDialog,
-    private jwtService: JwtService
+    private jwtService: JwtService,
+    private userService: UserService
   ) { }
 
   ngOnInit(): void {
     this.culturalOfferId = this.route.snapshot.paramMap.get('id');
     this.role = this.jwtService.getRole();
+    this.userService.getCurrentUser().subscribe(user => {
+      this.userID = user.id;
+    });
     this.getCulturalOfferById();
   }
 
@@ -111,22 +117,22 @@ export class CulturalOfferReviewComponent implements OnInit {
     const dialogRef = this.dialog.open(AddCommentComponent, dialogConfig);
   }
 
-  subscribe(): void {
-    this.newsService.subscribe('1', this.culturalOfferId)
-      .subscribe(succ => {
-        if (succ) {
-          this.subscribed = true;
-        }
-      });
+  subscribe(): void{
+    this.newsService.subscribe(this.userID, this.culturalOfferId)
+    .subscribe(succ => {
+      if (succ){
+        this.subscribed = true;
+      }
+    });
   }
 
-  unsubscribe(): void {
-    this.newsService.unsubscribe('1', this.culturalOfferId)
-      .subscribe(succ => {
-        if (succ) {
-          this.subscribed = false;
-        }
-      });
+  unsubscribe(): void{
+    this.newsService.unsubscribe(this.userID, this.culturalOfferId)
+    .subscribe(succ => {
+      if (succ){
+        this.subscribed = false;
+      }
+    });
   }
 
 }

@@ -1,0 +1,47 @@
+@use '../../../base';
+
+pagination-controls {
+  @extend %content-center;
+  margin: 20px;
+}
+.containerCard{
+  max-width: 300px;
+}
+
+.row {
+  padding: 15px;
+}
+.col-3{
+  margin-top: 500px;
+  padding-bottom: 100px;
+}
+
+mdb-card-body{
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+mdb-card-text {
+  text-overflow: ellipsis;
+}
+
+.button-co{
+  background-color: orange;
+}
+
+.button-add{
+  float: right;
+}
+
+.add{
+  height: 50px;
+}
+
+mdb-carousel-item {
+  max-width: 100%;
+  align-content: center;
+  img{
+      max-width: 200px;
+      margin: auto;
+  }
+}

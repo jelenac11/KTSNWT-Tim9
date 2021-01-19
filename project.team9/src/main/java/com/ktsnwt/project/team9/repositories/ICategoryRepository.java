@@ -10,5 +10,5 @@ import com.ktsnwt.project.team9.model.Category;
 @Repository
 public interface ICategoryRepository extends JpaRepository<Category, Long> {
 
-	Page<Category> findByNameContainingIgnoreCase(String value, Pageable pageable);
+	Page<Category> findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(String name, String description,Pageable pageable);
 }

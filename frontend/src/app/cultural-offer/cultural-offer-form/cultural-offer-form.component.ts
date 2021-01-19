@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Category } from 'src/app/core/models/response/category.model';
 import { CategoryService } from 'src/app/core/services/category.service';
@@ -7,7 +7,7 @@ import { CulturalOfferService } from 'src/app/core/services/cultural-offer.servi
 import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 import { CulturalOffer } from 'src/app/core/models/response/cultural-offer.model';
 import { Router } from '@angular/router';
-import { google } from "google-maps";
+import { google } from 'google-maps';
 
 declare var google: google;
 
@@ -99,7 +99,7 @@ export class CulturalOfferFormComponent implements OnInit {
       });
   }
 
-  get f() { return this.registerForm.controls; }
+  get f(): { [key: string]: AbstractControl; } { return this.registerForm.controls; }
 
   onSubmit(): void {
     this.submitted = true;

@@ -49,7 +49,7 @@ export class UserService {
     return this.http.post(`${environment.api_url}admins`, admin, { headers: this.headers, responseType: 'json' });
   }
 
-  isSubscribed(email: string, culturalOfferId: any): Observable<boolean> {
+  isSubscribed(email: string, culturalOfferId: number): Observable<boolean> {
     return this.http.post<boolean>(`${environment.api_url}registered-users/is-subscibed/${email}/${culturalOfferId}`,
     { responseType: 'json' });
   }

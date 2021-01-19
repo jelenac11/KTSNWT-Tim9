@@ -31,7 +31,7 @@ export class JwtService {
     return '';
   }
 
-  getEmail(): string{
+  getEmail(): string {
     const jwt: JwtHelperService = new JwtHelperService();
     const token: UserTokenState = JSON.parse(localStorage.getItem('jwtToken'));
     if (token) {
