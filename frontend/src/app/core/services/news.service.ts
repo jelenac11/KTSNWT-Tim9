@@ -44,10 +44,24 @@ export class NewsService {
     return this.http.put<string>(`${environment.api_url}news/unsubscribe/${userId}/${coID}`, { responseType: 'json' });
   }
 
+  getAllByCOID(coid: number, size: number, page: number): Observable<NewsPage>{
+    let params = new HttpParams();
+    params = params.append('size', size.toString());
+    params = params.append('page', page.toString());
+    return this.http.get(`${environment.api_url}news/${coid}/by-page`, { params });
+  }
+
   getSubscribedNews(size: number, page: number, userId: string): Observable<NewsPage>{
     let params = new HttpParams();
     params = params.append('size', size.toString());
     params = params.append('page', page.toString());
     return this.http.get(`${environment.api_url}news/subscribed-news/${userId}`, { responseType: 'json' });
+  }
+
+  getAllByCategoryId(size: number, page: number, userId: string, categoryId: string): Observable<NewsPage>{
+    let params = new HttpParams();
+    params = params.append('size', size.toString());
+    params = params.append('page', page.toString());
+    return this.http.get(`${environment.api_url}news/subscribed-news/${userId}/${categoryId}`, { responseType: 'json' });
   }
 }
