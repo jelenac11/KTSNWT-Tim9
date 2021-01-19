@@ -1,20 +1,38 @@
-import { TestBed } from '@angular/core/testing';
+import { HttpClient } from '@angular/common/http';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { fakeAsync, getTestBed, TestBed, tick } from '@angular/core/testing';
+import { environment } from 'src/environments/environment';
+import { AdminRequest } from '../models/request/admin-request.model';
+import { UserRequest } from '../models/request/user-request.model';
+import { UserPage } from '../models/response/user-page.model';
+import { User } from '../models/response/user.model';
 
 import { UserService } from './user.service';
 
 describe('UserService', () => {
   let service: UserService;
+  let injector;
+  let httpMock: HttpTestingController;
+  let httpClient: HttpClient;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [UserService]
+    });
+    injector = getTestBed();
+    httpClient = TestBed.inject(HttpClient);
+    httpMock = TestBed.inject(HttpTestingController);
     service = TestBed.inject(UserService);
+  });
+
+  afterEach(() => {
+    httpMock.verify();
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
-<<<<<<< Updated upstream
-=======
 
   it('signup() should return email already exists', fakeAsync(() => {
     const user: UserRequest = {
@@ -262,6 +280,7 @@ describe('UserService', () => {
     service.getUsers(size, page, user).subscribe(data => {
       userPage = data;
     });
+
     const req = httpMock.expectOne(`${environment.api_url}${user}/by-page?size=1&page=0`);
     expect(req.request.method).toBe('GET');
     req.flush(mockUserPage);
@@ -441,5 +460,4 @@ describe('UserService', () => {
     expect(isSub).toBeFalse();
   }));
 
->>>>>>> Stashed changes
 });
