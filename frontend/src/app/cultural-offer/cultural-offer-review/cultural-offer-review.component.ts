@@ -46,7 +46,7 @@ export class CulturalOfferReviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.culturalOfferId = this.route.snapshot.paramMap.get('id');
-    this.userService.getCurrentUser().subscribe(user =>{
+    this.userService.getCurrentUser().subscribe(user => {
       this.userID = user.id;
     });
     this.getCulturalOfferById();

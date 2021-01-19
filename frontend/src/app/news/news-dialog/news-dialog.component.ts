@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MyErrorStateMatcher } from 'src/app/core/error-matchers/ErrorStateMatcher';
 import { News } from 'src/app/core/models/response/news.model';
@@ -52,7 +52,7 @@ export class NewsDialogComponent implements OnInit {
     }
   }
 
-  get f() { return this.form.controls; }
+  get f(): { [key: string]: AbstractControl; } { return this.form.controls; }
 
   submit(): void {
     if (this.news.id){
@@ -67,7 +67,7 @@ export class NewsDialogComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    this.news.content = this.form.value['content'];
+    this.news.content = this.form.value.content;
     const urls = [];
     for (const image of this.images){
       if (image === this.images[this.images.length - 1]){
@@ -102,7 +102,7 @@ export class NewsDialogComponent implements OnInit {
 
   addNews(): void{
     this.newsService.post(this.news).subscribe(data => {
-      this.snackBar.success("News added successfully");
+      this.snackBar.success('News added successfully');
       this.dialogRef.close(true);
     },
     error => {
@@ -114,7 +114,7 @@ export class NewsDialogComponent implements OnInit {
 
   updateNews(): void{
     this.newsService.put(this.news.id, this.news).subscribe(data => {
-      this.snackBar.success("News added successfully");
+      this.snackBar.success('News added successfully');
       this.dialogRef.close(true);
     },
     error => {
@@ -148,7 +148,7 @@ export class NewsDialogComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    this.news.content = this.form.value['content'];
+    this.news.content = this.form.value.content;
     const urls = [];
     for (const item of this.removedImages){
       console.log(typeof item.image);
