@@ -18,12 +18,12 @@ describe('AuthenticationService', () => {
   let jwtService: JwtService;
 
   beforeEach(() => {
-    let jwtServiceMock = {
-      destroyToken: jasmine.createSpy('destroyToken'), 
+    const jwtServiceMock = {
+      destroyToken: jasmine.createSpy('destroyToken'),
       getToken: jasmine.createSpy('getToken')
-        .and.returnValue(of("asdftgbyhfnuj")),
+        .and.returnValue(of('asdftgbyhfnuj')),
       getRole: jasmine.createSpy('getRole')
-        .and.returnValue(of("ADMIN")),
+        .and.returnValue(of('ADMIN')),
     };
 
     TestBed.configureTestingModule({
@@ -46,9 +46,9 @@ describe('AuthenticationService', () => {
   });
 
   it('confirmRegistration() should return token does not exist', fakeAsync(() => {
-    const token: string = 'wrong_token_asdfghjkl';
+    const token = 'wrong_token_asdfghjkl';
     let message: string;
-    let mockMessage: string = "Token doesn't exist.";
+    const mockMessage = 'Token doesn\'t exist.';
     let status: number;
     service.confirmRegistration(token).subscribe(data => {
       message = JSON.parse(data).statusText;
@@ -63,14 +63,14 @@ describe('AuthenticationService', () => {
     });
 
     tick();
-    expect(message).toEqual("Token doesn't exist.");
+    expect(message).toEqual('Token doesn\'t exist.');
     expect(status).toEqual(404);
   }));
 
   it('confirmRegistration() should return account activated', fakeAsync(() => {
-    const token: string = "adsrf2134vxsahneuijfer748594";
+    const token = 'adsrf2134vxsahneuijfer748594';
     let message: string;
-    let mockMessage: string = "Account activated.";
+    const mockMessage = 'Account activated.';
     let status: number;
     service.confirmRegistration(token).subscribe(data => {
       message = JSON.parse(data).statusText;
@@ -85,14 +85,14 @@ describe('AuthenticationService', () => {
     });
 
     tick();
-    expect(message).toEqual("Account activated.");
+    expect(message).toEqual('Account activated.');
     expect(status).toEqual(200);
   }));
 
   it('login() should return incorrect email or password', fakeAsync(() => {
     const user: UserLogin = { email: 'email_adresa1@gmail.com', password: 'sifra143'};
     let message: any;
-    let mockMessage: string = "Incorrect email or password.";
+    const mockMessage = 'Incorrect email or password.';
     service.login(user).subscribe(data => {
       message = data;
     });
@@ -102,13 +102,13 @@ describe('AuthenticationService', () => {
     req.flush(mockMessage);
 
     tick();
-    expect(message).toEqual("Incorrect email or password.");
+    expect(message).toEqual('Incorrect email or password.');
   }));
 
   it('login() should return account not activated', fakeAsync(() => {
     const user: UserLogin = { email: 'email_adresa11@gmail.com', password: 'sifra123'};
     let message: any;
-    let mockMessage: string = "Account not activated.";
+    const mockMessage = 'Account not activated.';
     service.login(user).subscribe(data => {
       message = data;
     });
@@ -118,16 +118,16 @@ describe('AuthenticationService', () => {
     req.flush(mockMessage);
 
     tick();
-    expect(message).toEqual("Account not activated.");
+    expect(message).toEqual('Account not activated.');
   }));
 
   it('login() should return jwt token', fakeAsync(() => {
     const user: UserLogin = { email: 'email_adresa1@gmail.com', password: 'sifra123'};
     let token: UserTokenState;
-    let mockToken: UserTokenState = {
-      accessToken: "asedrftgyhujsdrftgyhuji",
+    const mockToken: UserTokenState = {
+      accessToken: 'asedrftgyhujsdrftgyhuji',
       expiresIn: 1235678
-    }
+    };
     service.login(user).subscribe(data => {
       token = data;
     });
@@ -138,14 +138,14 @@ describe('AuthenticationService', () => {
 
     tick();
 
-    expect(token.accessToken).toEqual("asedrftgyhujsdrftgyhuji");
+    expect(token.accessToken).toEqual('asedrftgyhujsdrftgyhuji');
     expect(token.expiresIn).toEqual(1235678);
   }));
 
   it('forgotPassword() should return user with given email does not exist', fakeAsync(() => {
-    const email: string = 'email_adresa111@gmail.com';
+    const email = 'email_adresa111@gmail.com';
     let message: string;
-    let mockMessage: string = "User with given email doesn't exist";
+    const mockMessage = 'User with given email doesn\'t exist';
     let status: number;
     service.forgotPassword(email).subscribe(data => {
       message = JSON.parse(data).statusText;
@@ -160,14 +160,14 @@ describe('AuthenticationService', () => {
     });
 
     tick();
-    expect(message).toEqual("User with given email doesn't exist");
+    expect(message).toEqual('User with given email doesn\'t exist');
     expect(status).toEqual(404);
   }));
 
   it('forgotPassword() should return password reset successfully', fakeAsync(() => {
-    const email: string = 'email_adresa1@gmail.com';
+    const email = 'email_adresa1@gmail.com';
     let message: string;
-    let mockMessage: string = "Password reset successfully.";
+    const mockMessage = 'Password reset successfully.';
     let status: number;
     service.forgotPassword(email).subscribe(data => {
       message = JSON.parse(data).statusText;
@@ -182,14 +182,14 @@ describe('AuthenticationService', () => {
     });
 
     tick();
-    expect(message).toEqual("Password reset successfully.");
+    expect(message).toEqual('Password reset successfully.');
     expect(status).toEqual(200);
   }));
 
   it('changePassword() should return incorrect old password', fakeAsync(() => {
-    const passwordRequest: PasswordChangeRequest = { oldPassword: "sifra124", newPassword: "sifra125"};
+    const passwordRequest: PasswordChangeRequest = { oldPassword: 'sifra124', newPassword: 'sifra125'};
     let message: string;
-    let mockMessage: string = "Incorrect old password";
+    const mockMessage = 'Incorrect old password';
     let status: number;
     service.changePassword(passwordRequest).subscribe(data => {
       message = JSON.parse(data).statusText;
@@ -204,20 +204,20 @@ describe('AuthenticationService', () => {
     });
 
     tick();
-    expect(message).toEqual("Incorrect old password");
+    expect(message).toEqual('Incorrect old password');
     expect(status).toEqual(400);
   }));
 
   it('changePassword() should return password changed successfully', fakeAsync(() => {
-    const passwordRequest: PasswordChangeRequest = { oldPassword: "sifra123", newPassword: "sifra125"};
+    const passwordRequest: PasswordChangeRequest = { oldPassword: 'sifra123', newPassword: 'sifra125'};
     let message: string;
-    let mockMessage: string = "Password changed successfully";
+    const mockMessage = 'Password changed successfully';
     let status: number;
     service.changePassword(passwordRequest).subscribe(data => {
       message = JSON.parse(data).statusText;
       status = JSON.parse(data).status;
     });
-    
+
     const req = httpMock.expectOne(`${environment.auth_url}change-password`);
     expect(req.request.method).toBe('POST');
     req.flush({
@@ -226,7 +226,7 @@ describe('AuthenticationService', () => {
     });
 
     tick();
-    expect(message).toEqual("Password changed successfully");
+    expect(message).toEqual('Password changed successfully');
     expect(status).toEqual(200);
   }));
 

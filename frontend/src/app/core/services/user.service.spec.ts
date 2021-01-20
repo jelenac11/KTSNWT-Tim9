@@ -280,7 +280,8 @@ describe('UserService', () => {
     service.getUsers(size, page, user).subscribe(data => {
       userPage = data;
     });
-    const req = httpMock.expectOne(`${environment.api_url}${user}/by-page?size=1&page=0y`);
+
+    const req = httpMock.expectOne(`${environment.api_url}${user}/by-page?size=1&page=0`);
     expect(req.request.method).toBe('GET');
     req.flush(mockUserPage);
 

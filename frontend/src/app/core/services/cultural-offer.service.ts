@@ -18,18 +18,18 @@ export class CulturalOfferService {
     return this.http.get(`${environment.api_url}cultural-offers/by-page`, { params });
   }
 
-  get(slug: any): Observable<CulturalOffer> {
+  get(slug: string): Observable<CulturalOffer> {
     return this.http.get(`${environment.api_url}cultural-offers/${slug}`);
   }
 
-  getCulturalOffersByCategory(slug: any, size: number, page: number): Observable<CulturalOfferPage> {
+  getCulturalOffersByCategory(slug: string, size: number, page: number): Observable<CulturalOfferPage> {
     let params = new HttpParams();
     params = params.append('size', size.toString());
     params = params.append('page', page.toString());
     return this.http.get(`${environment.api_url}cultural-offers/category/${slug}`, { params });
   }
 
-  findByCategoryIdAndName(slug: any, name: string, size: number, page: number): Observable<CulturalOfferPage> {
+  findByCategoryIdAndName(slug: string, name: string, size: number, page: number): Observable<CulturalOfferPage> {
     let params = new HttpParams();
     params = params.append('size', size.toString());
     params = params.append('page', page.toString());
@@ -43,15 +43,15 @@ export class CulturalOfferService {
     return this.http.get(`${environment.api_url}cultural-offers/find-by-name/${name}`, { params });
   }
 
-  post(body: any): Observable<CulturalOffer> {
+  post(body: FormData): Observable<CulturalOffer> {
     return this.http.post(`${environment.api_url}cultural-offers`, body);
   }
 
-  put(slug: any, body: any): Observable<CulturalOffer> {
+  put(slug: string, body: FormData): Observable<CulturalOffer> {
     return this.http.put(`${environment.api_url}cultural-offers/${slug}`, body);
   }
 
-  delete(slug: any): Observable<boolean> {
+  delete(slug: string): Observable<boolean> {
     return this.http.delete<boolean>(`${environment.api_url}cultural-offers/${slug}`);
   }
 

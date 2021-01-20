@@ -13,9 +13,9 @@ describe('JwtService', () => {
     injector = getTestBed();
     service = TestBed.inject(JwtService);
     localStorage.setItem('jwtToken', JSON.stringify({
-      "accessToken": "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJzcHJpbmctc2VjdXJpdHktZXhhbXBsZSIsInN1YiI6ImVtYWlsX2FkcmVzYTFAZ21haWwuY29tIiwiYXVkIjoid2ViIiwiaWF0IjoxNjExMDE0MDk0LCJleHAiOjE2MTEwMTU4OTQsInJvbGUiOiJST0xFX0FETUlOIn0.bl85WgHa1NStDvrlxrWa3P6WO7TUMqcrDDd1WPtxVkOV0gh8Mb0kAcaPU3UzlTR0xsNAl8b08N8rLMTGoJD4HQ",
-      "expiresIn": 1800000
-    }))
+      accessToken: 'eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJzcHJpbmctc2VjdXJpdHktZXhhbXBsZSIsInN1YiI6ImVtYWlsX2FkcmVzYTFAZ21haWwuY29tIiwiYXVkIjoid2ViIiwiaWF0IjoxNjExMDE0MDk0LCJleHAiOjE2MTEwMTU4OTQsInJvbGUiOiJST0xFX0FETUlOIn0.bl85WgHa1NStDvrlxrWa3P6WO7TUMqcrDDd1WPtxVkOV0gh8Mb0kAcaPU3UzlTR0xsNAl8b08N8rLMTGoJD4HQ',
+      expiresIn: 1800000
+    }));
   });
 
   afterEach(() => {
@@ -30,19 +30,19 @@ describe('JwtService', () => {
     const token = service.getToken();
 
     expect(token.expiresIn).toEqual(1800000);
-    expect(token.accessToken).toEqual("eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJzcHJpbmctc2VjdXJpdHktZXhhbXBsZSIsInN1YiI6ImVtYWlsX2FkcmVzYTFAZ21haWwuY29tIiwiYXVkIjoid2ViIiwiaWF0IjoxNjExMDE0MDk0LCJleHAiOjE2MTEwMTU4OTQsInJvbGUiOiJST0xFX0FETUlOIn0.bl85WgHa1NStDvrlxrWa3P6WO7TUMqcrDDd1WPtxVkOV0gh8Mb0kAcaPU3UzlTR0xsNAl8b08N8rLMTGoJD4HQ");
+    expect(token.accessToken).toEqual('eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJzcHJpbmctc2VjdXJpdHktZXhhbXBsZSIsInN1YiI6ImVtYWlsX2FkcmVzYTFAZ21haWwuY29tIiwiYXVkIjoid2ViIiwiaWF0IjoxNjExMDE0MDk0LCJleHAiOjE2MTEwMTU4OTQsInJvbGUiOiJST0xFX0FETUlOIn0.bl85WgHa1NStDvrlxrWa3P6WO7TUMqcrDDd1WPtxVkOV0gh8Mb0kAcaPU3UzlTR0xsNAl8b08N8rLMTGoJD4HQ');
   });
 
   it('saveToken() should save token', () => {
     localStorage.removeItem('jwtToken');
     service.saveToken({
-      "accessToken": "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJzcHJpbmctc2VjdXJpdHktZXhhbXBsZSIsInN1YiI6ImVtYWlsX2FkcmVzYTFAZ21haWwuY29tIiwiYXVkIjoid2ViIiwiaWF0IjoxNjExMDE0MDk0LCJleHAiOjE2MTEwMTU4OTQsInJvbGUiOiJST0xFX0FETUlOIn0.bl85WgHa1NStDvrlxrWa3P6WO7TUMqcrDDd1WPtxVkOV0gh8Mb0kAcaPU3UzlTR0xsNAl8b08N8rLMTGoJD4HQ",
-      "expiresIn": 1800000
+      accessToken: 'eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJzcHJpbmctc2VjdXJpdHktZXhhbXBsZSIsInN1YiI6ImVtYWlsX2FkcmVzYTFAZ21haWwuY29tIiwiYXVkIjoid2ViIiwiaWF0IjoxNjExMDE0MDk0LCJleHAiOjE2MTEwMTU4OTQsInJvbGUiOiJST0xFX0FETUlOIn0.bl85WgHa1NStDvrlxrWa3P6WO7TUMqcrDDd1WPtxVkOV0gh8Mb0kAcaPU3UzlTR0xsNAl8b08N8rLMTGoJD4HQ',
+      expiresIn: 1800000
     });
 
     const token = JSON.parse(localStorage.getItem('jwtToken'));
     expect(token.expiresIn).toEqual(1800000);
-    expect(token.accessToken).toEqual("eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJzcHJpbmctc2VjdXJpdHktZXhhbXBsZSIsInN1YiI6ImVtYWlsX2FkcmVzYTFAZ21haWwuY29tIiwiYXVkIjoid2ViIiwiaWF0IjoxNjExMDE0MDk0LCJleHAiOjE2MTEwMTU4OTQsInJvbGUiOiJST0xFX0FETUlOIn0.bl85WgHa1NStDvrlxrWa3P6WO7TUMqcrDDd1WPtxVkOV0gh8Mb0kAcaPU3UzlTR0xsNAl8b08N8rLMTGoJD4HQ");
+    expect(token.accessToken).toEqual('eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJzcHJpbmctc2VjdXJpdHktZXhhbXBsZSIsInN1YiI6ImVtYWlsX2FkcmVzYTFAZ21haWwuY29tIiwiYXVkIjoid2ViIiwiaWF0IjoxNjExMDE0MDk0LCJleHAiOjE2MTEwMTU4OTQsInJvbGUiOiJST0xFX0FETUlOIn0.bl85WgHa1NStDvrlxrWa3P6WO7TUMqcrDDd1WPtxVkOV0gh8Mb0kAcaPU3UzlTR0xsNAl8b08N8rLMTGoJD4HQ');
   });
 
   it('destroyToken() should destroy token', () => {
@@ -59,8 +59,5 @@ describe('JwtService', () => {
     const email = service.getEmail();
     expect(email).toEqual('email_adresa1@gmail.com');
   });
-
-
-
 
 });

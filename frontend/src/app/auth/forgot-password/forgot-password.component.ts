@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { MyErrorStateMatcher } from 'src/app/core/error-matchers/ErrorStateMatcher';
 import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
@@ -26,7 +26,7 @@ export class ForgotPasswordComponent implements OnInit {
     });
   }
 
-  get f(): FormGroup['controls'] { return this.forgotForm.controls; }
+  get f(): { [key: string]: AbstractControl; } { return this.forgotForm.controls; }
 
   onSubmit(): void {
     this.submitted = true;

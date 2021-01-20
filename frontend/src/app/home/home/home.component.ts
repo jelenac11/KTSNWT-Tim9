@@ -53,21 +53,21 @@ export class HomeComponent implements OnInit {
     this.zoom = 6 + Math.random() * 0.1;
   }
 
-  getAllCategories(): void {
+  private getAllCategories(): void {
     this.categoryService.getAll().subscribe(categories => {
       this.categories = categories.sort((a, b) => a.id - b.id);
       this.getCulturalOffersByCategoryAndName(this.categories[0].id, this.searchValue);
     });
   }
 
-  getCulturalOffersByCategoryAndName(id: number, value: string): void {
+  private getCulturalOffersByCategoryAndName(id: number, value: string): void {
     if (!value) {
-      this.culturalOfferService.getCulturalOffersByCategory(id, this.size, this.page - 1).subscribe(culturalOffers => {
+      this.culturalOfferService.getCulturalOffersByCategory(id.toString(), this.size, this.page - 1).subscribe(culturalOffers => {
         this.culturalOffers = culturalOffers;
       });
     }
     else {
-      this.culturalOfferService.findByCategoryIdAndName(id, value, this.size, this.page - 1).subscribe(culturalOffers => {
+      this.culturalOfferService.findByCategoryIdAndName(id.toString(), value, this.size, this.page - 1).subscribe(culturalOffers => {
         this.culturalOffers = culturalOffers;
       });
     }
@@ -85,13 +85,13 @@ export class HomeComponent implements OnInit {
     this.resetRequiredParameters();
   }
 
-  handlePageChange($event: any): void {
+  handlePageChange($event: number): void {
     this.resetRequiredParameters();
     this.page = $event;
     this.getCulturalOffersByCategoryAndName(this.categories[this.currentCategory].id, this.searchValue);
   }
 
-  resetRequiredParameters(): void {
+  private resetRequiredParameters(): void {
     this.page = 1;
     if (!this.latitude && !this.longitude) {
       this.latitude = this.latitude + 0.00001;
