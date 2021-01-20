@@ -17,8 +17,8 @@
     </form>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button *ngIf="!category" class="mat-raised-button mat-primary" type="submit" form="forma" id='category-btn'>Add</button>
-    <button *ngIf="category" class="mat-raised-button mat-primary" type="submit" form="forma" id='category-btn'>Update</button>
+    <button id='category-btn' *ngIf="!category" class="mat-raised-button mat-primary" type="submit" form="forma" >Add</button>
+    <button id='category-btn' *ngIf="category" class="mat-raised-button mat-primary" type="submit" form="forma" >Update</button>
     <button class="ml-2 mat-raised-button" (click)="close()" id='close-category-btn'>Close</button>
 </mat-dialog-actions>
   

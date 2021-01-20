@@ -42,7 +42,7 @@ public class CulturalOffersPage {
 	
 	@FindBy(id = "select_category_through_culturalOffersPage")
 	private WebElement select;
-
+	
 	public CulturalOffersPage(WebDriver driver) {
 		this.driver = driver;
 	}

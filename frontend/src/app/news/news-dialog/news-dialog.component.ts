@@ -69,14 +69,14 @@ export class NewsDialogComponent implements OnInit {
     }
     this.news.content = this.form.value.content;
     const urls = [];
+    if (!this.images.length){
+      this.addNews(urls);
+    }
     for (const image of this.images){
       if (image === this.images[this.images.length - 1]){
         this.imageService.upload(image).subscribe(url => {
           urls.push(url);
-          this.news.images = urls;
-          this.news.date = new Date().getTime();
-          this.news.culturalOfferID = this.coid;
-          this.addNews();
+          this.addNews(urls);
         },
         (err) => {
           console.log(err);
@@ -100,7 +100,10 @@ export class NewsDialogComponent implements OnInit {
     }
   }
 
-  addNews(): void{
+  addNews(urls): void{
+    this.news.images = urls;
+    this.news.date = new Date().getTime();
+    this.news.culturalOfferID = this.coid;
     this.newsService.post(this.news).subscribe(data => {
       this.snackBar.success('News added successfully');
       this.dialogRef.close(true);
@@ -112,9 +115,11 @@ export class NewsDialogComponent implements OnInit {
     });
   }
 
-  updateNews(): void{
+  updateNews(urls): void{
+    this.news.images = urls;
+    this.news.date = new Date().getTime();
     this.newsService.put(this.news.id, this.news).subscribe(data => {
-      this.snackBar.success('News added successfully');
+      this.snackBar.success('News updated successfully');
       this.dialogRef.close(true);
     },
     error => {
@@ -151,42 +156,30 @@ export class NewsDialogComponent implements OnInit {
     this.news.content = this.form.value.content;
     const urls = [];
     for (const item of this.removedImages){
-      console.log(typeof item.image);
       if (typeof item.image === 'string'){
         this.imageService.delete(item.image);
       }
     }
-    for (const image of this.images){
+    if (this.images.filter(img => typeof img !== 'string').length === 0 ){
+      urls.push(...this.images);
+      this.updateNews(urls);
+    }
+    for (const image of this.images.filter(img => typeof img !== 'string')){
       if (image === this.images[this.images.length - 1]){
-        if (typeof image === 'string'){
-          urls.push(...this.images.filter(img => typeof img === 'string'));
-          this.news.images = urls;
-          this.news.date = new Date().getTime();
-          this.news.culturalOfferID = this.coid;
-          this.updateNews();
-        }
-        else{
-          this.imageService.upload(image).subscribe(url => {
-            urls.push(...this.images.filter(img => typeof img === 'string'));
-            urls.push(url);
-            this.news.images = urls;
-            this.news.date = new Date().getTime();
-            this.news.culturalOfferID = this.coid;
-            this.updateNews();
-          },
-          (err) => {
-            console.log(err);
-            for (const url of urls){
-              this.imageService.delete(url);
-            }
-            return;
-          });
-        }
+        urls.push(...(this.images.filter(img => typeof img === 'string')));
+        this.imageService.upload(image).subscribe(url => {
+          urls.push(url);
+          this.updateNews(urls);
+          return;
+        },
+        () => {
+          for (const url of urls){
+            this.imageService.delete(url);
+          }
+          return;
+        });
       }
       else{
-        if (typeof image === 'string'){
-          continue;
-        }
         this.imageService.upload(image).subscribe(url => {
           urls.push(url);
         },

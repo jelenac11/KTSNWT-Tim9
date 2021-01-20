@@ -37,7 +37,7 @@ describe('CommentsReviewComponent', () => {
     };
     const commentServiceMocked = {
       getCommentsByCulturalOfferId: jasmine.createSpy('getCommentsByCulturalOfferId').and.returnValue(of(data))
-    }
+    };
     await TestBed.configureTestingModule({
       imports: [NgxPaginationModule],
       declarations: [ CommentsReviewComponent ],
@@ -67,7 +67,7 @@ describe('CommentsReviewComponent', () => {
     expect(commentService.getCommentsByCulturalOfferId).toHaveBeenCalledWith(10, 0, 1);
 
     tick();
-    
+
     expect(component.comments.totalElements).toEqual(2);
 
     expect(component.comments.content[0].id).toEqual(1);
@@ -95,7 +95,7 @@ describe('CommentsReviewComponent', () => {
     expect(commentService.getCommentsByCulturalOfferId).toHaveBeenCalledWith(10, 1, 1);
 
     tick();
-    
+
     expect(component.comments.totalElements).toEqual(2);
 
     expect(component.comments.content[0].id).toEqual(1);

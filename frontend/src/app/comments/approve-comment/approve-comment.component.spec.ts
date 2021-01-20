@@ -52,7 +52,7 @@ describe('ApproveCommentComponent', () => {
         { provide: CommentService, useValue: commentServiceMocked },
         { provide: Snackbar, useValue: snackBarMocked }
       ]
-    })
+    });
   });
 
   it('should create', () => {
@@ -111,7 +111,7 @@ describe('ApproveCommentComponent', () => {
     expect(commentService.getNotApprovedComments).toHaveBeenCalledWith(5, 1);
 
     tick();
-    
+
     expect(component.comments.totalElements).toEqual(2);
 
     expect(component.comments.content[0].id).toEqual(1);

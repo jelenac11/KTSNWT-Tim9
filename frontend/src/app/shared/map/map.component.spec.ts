@@ -22,20 +22,20 @@ describe('MapComponent', () => {
   it('setLocation with same latitude and longitude', () => {
     let data = {
       id: 5,
-      name: "Srbija",
+      name: 'Srbija',
       category: {
         id: 1,
-        name: "Kategorija 1",
-        description: "Opis"
+        name: 'Kategorija 1',
+        description: 'Opis'
       },
       geolocation: {
-        placeId: "123",
-        location: "Srbija",
+        placeId: '123',
+        location: 'Srbija',
         lon: 0,
         lat: 0
       },
-      description: "Opis",
-      image: "nekiUrl",
+      description: 'Opis',
+      image: 'nekiUrl',
       averageMark: 4.85
     };
     component.setLocation(data);
@@ -46,24 +46,25 @@ describe('MapComponent', () => {
   it('setLocation with differente latitude and longitude', () => {
     let data = {
       id: 5,
-      name: "Srbija",
+      name: 'Srbija',
       category: {
         id: 1,
-        name: "Kategorija 1",
-        description: "Opis"
+        name: 'Kategorija 1',
+        description: 'Opis'
       },
       geolocation: {
-        placeId: "123",
-        location: "Srbija",
+        placeId: '123',
+        location: 'Srbija',
         lon: 5,
         lat: 5
       },
-      description: "Opis",
-      image: "nekiUrl",
+      description: 'Opis',
+      image: 'nekiUrl',
       averageMark: 4.85
     };
     component.setLocation(data);
     expect(component.latitude).toEqual(5);
     expect(component.longitude).toEqual(5);
   });
+
 });

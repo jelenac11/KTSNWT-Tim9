@@ -34,10 +34,10 @@ describe('HeaderComponent', () => {
       getCurrentUser: jasmine.createSpy('getCurrentUser').and.returnValue(of(
         {
           id: 1,
-          username: "User",
-          email: "mail@mail.com",
-          firstName: "User",
-          lastName: "User"
+          username: 'User',
+          email: 'mail@mail.com',
+          firstName: 'User',
+          lastName: 'User'
         }
       )),
     }
@@ -77,15 +77,14 @@ describe('HeaderComponent', () => {
     expect(jwtService.getRole).toHaveBeenCalled();
     expect(userService.getCurrentUser).toHaveBeenCalled();
     expect(component.user.id).toEqual(1);
-    expect(component.user.firstName).toEqual("User");
-    expect(component.user.lastName).toEqual("User");
-    expect(component.user.username).toEqual("User");
-    expect(component.user.email).toEqual("mail@mail.com");
+    expect(component.user.firstName).toEqual('User');
+    expect(component.user.lastName).toEqual('User');
+    expect(component.user.username).toEqual('User');
+    expect(component.user.email).toEqual('mail@mail.com');
 
     fixture.whenStable()
       .then(() => {
-
-        expect(component.role).toBe("ROLE_ADMIN");
+        expect(component.role).toBe('ROLE_ADMIN');
       });
   });
 
@@ -105,4 +104,5 @@ describe('HeaderComponent', () => {
     component.showProfile();
     expect(dialog.open).toHaveBeenCalled();
   });
+
 });

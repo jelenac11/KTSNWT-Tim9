@@ -26,20 +26,20 @@ describe('CulturalOfferReviewComponent', () => {
   beforeEach(() => {
     let data = {
       id: 5,
-      name: "Srbija",
+      name: 'Srbija',
       category: {
         id: 1,
-        name: "Kategorija 1",
-        description: "Opis"
+        name: 'Kategorija 1',
+        description: 'Opis'
       },
       geolocation: {
-        placeId: "123",
-        location: "Srbija",
+        placeId: '123',
+        location: 'Srbija',
         lon: 5,
         lat: 5
       },
-      description: "Opis",
-      image: "nekiUrl",
+      description: 'Opis',
+      image: 'nekiUrl',
       averageMark: 4.85
     };
 
@@ -99,11 +99,11 @@ describe('CulturalOfferReviewComponent', () => {
     expect(component.mark).toEqual(5);
     expect(component.culturalOfferId).toEqual('5')
     expect(component.culturalOffer.id).toEqual(5);
-    expect(component.culturalOffer.name).toEqual("Srbija");
-    expect(component.culturalOffer.geolocation.location).toEqual("Srbija");
+    expect(component.culturalOffer.name).toEqual('Srbija');
+    expect(component.culturalOffer.geolocation.location).toEqual('Srbija');
     expect(component.culturalOffer.category.id).toEqual(1);
-    expect(component.culturalOffer.description).toEqual("Opis");
-    expect(component.culturalOffer.image).toEqual("nekiUrl");
+    expect(component.culturalOffer.description).toEqual('Opis');
+    expect(component.culturalOffer.image).toEqual('nekiUrl');
     expect(component.culturalOffer.averageMark).toEqual(4.85);
 
     fixture.detectChanges();
@@ -125,11 +125,11 @@ describe('CulturalOfferReviewComponent', () => {
     expect(markService.get).toHaveBeenCalled();
     expect(component.mark).toEqual(5);
     expect(component.culturalOffer.id).toEqual(5);
-    expect(component.culturalOffer.name).toEqual("Srbija");
-    expect(component.culturalOffer.geolocation.location).toEqual("Srbija");
+    expect(component.culturalOffer.name).toEqual('Srbija');
+    expect(component.culturalOffer.geolocation.location).toEqual('Srbija');
     expect(component.culturalOffer.category.id).toEqual(1);
-    expect(component.culturalOffer.description).toEqual("Opis");
-    expect(component.culturalOffer.image).toEqual("nekiUrl");
+    expect(component.culturalOffer.description).toEqual('Opis');
+    expect(component.culturalOffer.image).toEqual('nekiUrl');
     expect(component.culturalOffer.averageMark).toEqual(4.85);
 
   }));
@@ -143,11 +143,11 @@ describe('CulturalOfferReviewComponent', () => {
     expect(component.mark).toEqual(5);
 
     expect(component.culturalOffer.id).toEqual(5);
-    expect(component.culturalOffer.name).toEqual("Srbija");
-    expect(component.culturalOffer.geolocation.location).toEqual("Srbija");
+    expect(component.culturalOffer.name).toEqual('Srbija');
+    expect(component.culturalOffer.geolocation.location).toEqual('Srbija');
     expect(component.culturalOffer.category.id).toEqual(1);
-    expect(component.culturalOffer.description).toEqual("Opis");
-    expect(component.culturalOffer.image).toEqual("nekiUrl");
+    expect(component.culturalOffer.description).toEqual('Opis');
+    expect(component.culturalOffer.image).toEqual('nekiUrl');
     expect(component.culturalOffer.averageMark).toEqual(4.85);
 
   }));

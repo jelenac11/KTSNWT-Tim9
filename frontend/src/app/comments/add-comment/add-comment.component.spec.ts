@@ -32,7 +32,7 @@ describe('AddCommentComponent', () => {
     const snackBarMocked = {
       success: jasmine.createSpy('success'),
       error: jasmine.createSpy('error')
-    }; 
+    };
     const dialogMocked = {
       close: jasmine.createSpy('close')
     };
@@ -91,7 +91,7 @@ describe('AddCommentComponent', () => {
     expect(component.form.invalid).toBeTruthy();
     expect(commentService.post).toHaveBeenCalledTimes(0);
     expect(snackBar.success).toHaveBeenCalledTimes(0);
-   
+
     const errorMsg = fixture.debugElement.query(By.css('#all-empty-comment')).nativeElement;
     expect(errorMsg).toBeDefined();
     expect(errorMsg.innerHTML).toContain('Comment must contain either text or image');

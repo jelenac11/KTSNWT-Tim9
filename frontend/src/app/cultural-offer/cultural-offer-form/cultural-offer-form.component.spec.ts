@@ -20,20 +20,20 @@ describe('CulturalOfferUpdateComponent', () => {
   beforeEach(() => {
     let data = {
       id: 5,
-      name: "Srbija",
+      name: 'Srbija',
       category: {
         id: 1,
-        name: "Kategorija 1",
-        description: "Opis"
+        name: 'Kategorija 1',
+        description: 'Opis'
       },
       geolocation: {
-        placeId: "123",
-        location: "Srbija",
+        placeId: '123',
+        location: 'Srbija',
         lon: 5,
         lat: 5
       },
-      description: "Opis",
-      image: "nekiUrl",
+      description: 'Opis',
+      image: 'nekiUrl',
       averageMark: 4.85
     };
 
@@ -46,16 +46,16 @@ describe('CulturalOfferUpdateComponent', () => {
     let categoryServiceMock = {
       getAll: jasmine.createSpy('getAll').and.returnValue(of([{
         id: 1,
-        name: "Kategorija 1",
-        description: "Opis"
+        name: 'Kategorija 1',
+        description: 'Opis'
       }, {
         id: 2,
-        name: "Kategorija 2",
-        description: "Opis"
+        name: 'Kategorija 2',
+        description: 'Opis'
       }, {
         id: 3,
-        name: "Kategorija 3",
-        description: "Opis"
+        name: 'Kategorija 3',
+        description: 'Opis'
       }])),
     };
 
