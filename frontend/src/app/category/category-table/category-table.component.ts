@@ -32,6 +32,7 @@ export class CategoryTableComponent implements OnInit {
     this.categoryService.getAllPages(this.size, this.page - 1)
     .subscribe(
       data => {
+        data.content = data.content.sort((a, b) => a.id - b.id);
         this.categories = data;
       }
     );
@@ -68,7 +69,7 @@ export class CategoryTableComponent implements OnInit {
       this.getCategories();
       this.snackBar.success('You have successfully deleted category!');
     }, err => {
-      this.snackBar.error('Can\'t delete this, category has category!');
+      this.snackBar.error('Can\'t delete this, category has cultural offer!');
     });
   }
 
