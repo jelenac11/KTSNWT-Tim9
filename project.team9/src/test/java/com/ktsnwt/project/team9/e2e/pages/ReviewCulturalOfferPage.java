@@ -55,6 +55,15 @@ public class ReviewCulturalOfferPage {
 	@FindBy(id = "all-empty-comment")
 	private WebElement emptyComment;
 	
+	@FindBy(id = "news-review-btn")
+	private WebElement newsButton;
+	
+	@FindBy(xpath = "//*[contains(text(),'Subscribe')]")
+	private WebElement subscribeButton;
+
+	@FindBy(xpath = "//*[contains(text(),'Unsubscribe')]")
+	private WebElement unsubscribeButton;
+	
 	public ReviewCulturalOfferPage(WebDriver driver) {
 		this.driver = driver;
 	}
@@ -101,5 +110,19 @@ public class ReviewCulturalOfferPage {
 	
 	public void ensureIsDisplayedMessage() {
 		(new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//simple-snack-bar/span")));
+	}
+	
+	public void ensureIsDisplayedNewsButton() {
+		(new WebDriverWait(driver, 30))
+		.until(ExpectedConditions.visibilityOfElementLocated(By.id("news-review-btn")));
+	}
+
+	public void ensureIsDisplayedSubscribeButton() {
+		(new WebDriverWait(driver, 30))
+		.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(text(),'Subscribe')]")));
+	}
+	public void ensureIsDisplayedUnsubscribeButton() {
+		(new WebDriverWait(driver, 30))
+		.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(text(),'Unsubscribe')]")));
 	}
 }

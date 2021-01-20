@@ -53,6 +53,7 @@ export class NewsReviewComponent implements OnInit {
       if (news.content.length === 0){
         this.snackBar.error('There is no news for this cultural offer!');
       }
+      news.content = news.content.sort((a, b) => a.id - b.id);
       this.images = [];
       this.getImages(news);
       this.news = news;
@@ -72,7 +73,9 @@ export class NewsReviewComponent implements OnInit {
         this.imageService.get(url).subscribe(res => {
           this.images[index].push(res);
           }
-        );
+        , () => {
+          return;
+        });
       }
     }
   }
