@@ -1,18 +1,22 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { By } from '@angular/platform-browser';
+import { Observable, of, throwError } from 'rxjs';
+import { User } from 'src/app/core/models/response/user.model';
+import { UserService } from 'src/app/core/services/user.service';
+import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 
 import { AddAdminComponent } from './add-admin.component';
 
 describe('AddAdminComponent', () => {
   let component: AddAdminComponent;
   let fixture: ComponentFixture<AddAdminComponent>;
+  let snackBar: Snackbar;
+  let dialogRef: MatDialogRef<AddAdminComponent>;
+  let userService: UserService;
 
   beforeEach(async () => {
-<<<<<<< Updated upstream
-    await TestBed.configureTestingModule({
-      declarations: [ AddAdminComponent ]
-    })
-    .compileComponents();
-=======
     const snackBarMocked = {
       success: jasmine.createSpy('success'),
       error: jasmine.createSpy('error')
@@ -221,20 +225,13 @@ describe('AddAdminComponent', () => {
     const firstNameErrorMsg = fixture.debugElement.query(By.css('#add-admin-email-error')).nativeElement;
     expect(firstNameErrorMsg).toBeDefined();
     expect(firstNameErrorMsg.innerHTML).toContain('Email is required');
->>>>>>> Stashed changes
   });
 
-  beforeEach(() => {
+  it('should be invalid form when submitted and username is empty', () => {
+    TestBed.compileComponents();
     fixture = TestBed.createComponent(AddAdminComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-<<<<<<< Updated upstream
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-=======
     userService = TestBed.inject(UserService);
     snackBar = TestBed.inject(Snackbar);
     dialogRef = TestBed.inject(MatDialogRef);
@@ -367,5 +364,4 @@ describe('AddAdminComponent', () => {
     expect(snackBar.success).toHaveBeenCalledTimes(0);
   }));
 
->>>>>>> Stashed changes
 });

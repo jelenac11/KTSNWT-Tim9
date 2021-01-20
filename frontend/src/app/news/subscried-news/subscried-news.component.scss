@@ -1,0 +1,15 @@
+@use '../../../base';
+
+pagination-controls {
+  @extend %content-center;
+  margin: 20px;
+}
+
+.container-fluid {
+    padding: 20px;
+}
+
+.conteiner {
+    margin: 20px;
+}
+  

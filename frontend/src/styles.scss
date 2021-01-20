@@ -37,3 +37,13 @@ mat-card {
     background-color: base.$main-color;
   }
 }
+
+.carousel-inner {
+  margin-right: 0%;
+  align-content: center;
+}
+
+.carousel-control-prev-icon, .carousel-control-next-icon
+ {
+    background-color: black;
+}

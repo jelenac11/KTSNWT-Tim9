@@ -1,14 +1,23 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { CommentService } from 'src/app/core/services/comment.service';
+import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
+import { Observable, of, throwError } from 'rxjs';
 import { AddCommentComponent } from './add-comment.component';
+import { Comment } from 'src/app/core/models/response/comment.model';
+import { MatDialogRef } from '@angular/material/dialog';
+import { By } from '@angular/platform-browser';
 
 describe('AddCommentComponent', () => {
   let component: AddCommentComponent;
   let fixture: ComponentFixture<AddCommentComponent>;
+  let dialogRef: MatDialogRef<AddCommentComponent>;
+  let snackBar: Snackbar;
+  let router: Router;
+  let commentService: CommentService;
 
   beforeEach(async () => {
-<<<<<<< Updated upstream
-=======
     const comment: Comment = {
       id: 11,
       dateTime: 12345678,
@@ -27,9 +36,15 @@ describe('AddCommentComponent', () => {
     const dialogMocked = {
       close: jasmine.createSpy('close')
     };
->>>>>>> Stashed changes
     await TestBed.configureTestingModule({
-      declarations: [ AddCommentComponent ]
+      imports: [FormsModule, ReactiveFormsModule],
+      declarations: [ AddCommentComponent ],
+      providers: [
+        { provide: CommentService, useValue: commentServiceMocked },
+        { provide: Snackbar, useValue: snackBarMocked },
+        { provide: MatDialogRef, useValue: dialogMocked },
+        { provide: Router, useValue: { url: 'path/comments/1', navigate: jasmine.createSpy('navigate')}}
+      ]
     })
     .compileComponents();
   });
@@ -38,13 +53,16 @@ describe('AddCommentComponent', () => {
     fixture = TestBed.createComponent(AddCommentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+
+    commentService = TestBed.inject(CommentService);
+    router = TestBed.inject(Router);
+    snackBar = TestBed.inject(Snackbar);
+    dialogRef = TestBed.inject(MatDialogRef);
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-<<<<<<< Updated upstream
-=======
 
   it('should initialize', () => {
     component.ngOnInit();
@@ -118,5 +136,4 @@ describe('AddCommentComponent', () => {
     expect(component.uploadedImage).toBe('');
   }));
 
->>>>>>> Stashed changes
 });

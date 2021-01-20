@@ -1,15 +1,15 @@
 import { TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
 
 import { NoAuthGuard } from './no-auth.guard';
 
 describe('NoAuthGuard', () => {
   let guard: NoAuthGuard;
+  let router: Router;
+  let authenticationService: AuthenticationService;
 
   beforeEach(() => {
-<<<<<<< Updated upstream
-    TestBed.configureTestingModule({});
-    guard = TestBed.inject(NoAuthGuard);
-=======
     const authenticationServiceMocked = {
       isAuthenticated: jasmine.createSpy('isAuthenticated').and.returnValue(true)
     };
@@ -21,14 +21,13 @@ describe('NoAuthGuard', () => {
         {provide: Router, useValue: routerMocked }
       ]
     });
->>>>>>> Stashed changes
-  });
 
   it('should be created', () => {
+    guard = TestBed.inject(NoAuthGuard);
+    router = TestBed.inject(Router);
+    authenticationService = TestBed.inject(AuthenticationService);
     expect(guard).toBeTruthy();
   });
-<<<<<<< Updated upstream
-=======
 
   it('canActivate() should return false', () => {
     guard = TestBed.inject(NoAuthGuard);
@@ -45,6 +44,7 @@ describe('NoAuthGuard', () => {
     const authenticationServiceMocked2 = {
       isAuthenticated: jasmine.createSpy('isAuthenticated').and.returnValue(false)
     };
+
     TestBed.overrideProvider(AuthenticationService, {useValue: authenticationServiceMocked2});
     guard = TestBed.inject(NoAuthGuard);
     router = TestBed.inject(Router);
@@ -56,6 +56,4 @@ describe('NoAuthGuard', () => {
     expect(router.navigate).toHaveBeenCalledTimes(0);
   });
 
-
->>>>>>> Stashed changes
 });

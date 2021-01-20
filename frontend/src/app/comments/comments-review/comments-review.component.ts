@@ -16,7 +16,7 @@ export class CommentsReviewComponent implements OnInit {
 
   constructor(
     private commentService: CommentService,
-    private router: Router
+    private router: Router,
   ) { }
 
   ngOnInit(): void {

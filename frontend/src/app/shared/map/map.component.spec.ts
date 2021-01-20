@@ -6,14 +6,10 @@ describe('MapComponent', () => {
   let component: MapComponent;
   let fixture: ComponentFixture<MapComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ MapComponent ]
-    })
-    .compileComponents();
-  });
-
   beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [MapComponent]
+    })
     fixture = TestBed.createComponent(MapComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -22,8 +18,6 @@ describe('MapComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-<<<<<<< Updated upstream
-=======
 
   it('setLocation with same latitude and longitude', () => {
     let data = {
@@ -72,5 +66,5 @@ describe('MapComponent', () => {
     expect(component.latitude).toEqual(5);
     expect(component.longitude).toEqual(5);
   });
->>>>>>> Stashed changes
+
 });

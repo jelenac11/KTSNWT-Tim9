@@ -1,16 +1,23 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatMenuModule } from '@angular/material/menu';
+import { Router } from '@angular/router';
+import { of } from 'rxjs';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { JwtService } from 'src/app/core/services/jwt.service';
+import { UserService } from 'src/app/core/services/user.service';
 
 import { HeaderComponent } from './header.component';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
+  let authenticationService: AuthenticationService;
+  let router: Router;
+  let dialog: MatDialog;
+  let jwtService: JwtService;
+  let userService: UserService;
 
-<<<<<<< Updated upstream
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ HeaderComponent ]
-=======
   beforeEach(() => {
     let matDialogRefMock = {
       open: jasmine.createSpy('open'),
@@ -49,22 +56,21 @@ describe('HeaderComponent', () => {
         { provide: Router, useValue: routerMock },
       ],
       declarations: [HeaderComponent]
->>>>>>> Stashed changes
     })
-    .compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    dialog = TestBed.inject(MatDialog);
+    authenticationService = TestBed.inject(AuthenticationService);
+    jwtService = TestBed.inject(JwtService);
+    userService = TestBed.inject(UserService);
+    router = TestBed.inject(Router);
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-<<<<<<< Updated upstream
-=======
 
   it('should get current user and role', () => {
     component.ngOnInit();
@@ -78,7 +84,6 @@ describe('HeaderComponent', () => {
 
     fixture.whenStable()
       .then(() => {
-
         expect(component.role).toBe('ROLE_ADMIN');
       });
   });
@@ -99,5 +104,5 @@ describe('HeaderComponent', () => {
     component.showProfile();
     expect(dialog.open).toHaveBeenCalled();
   });
->>>>>>> Stashed changes
+
 });

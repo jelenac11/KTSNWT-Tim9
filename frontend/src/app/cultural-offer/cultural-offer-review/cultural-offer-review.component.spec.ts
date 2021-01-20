@@ -1,19 +1,28 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { DebugElement } from '@angular/core';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { MatDialog } from '@angular/material/dialog';
+import { By } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
+import { CulturalOfferService } from 'src/app/core/services/cultural-offer.service';
+import { JwtService } from 'src/app/core/services/jwt.service';
+import { MarkService } from 'src/app/core/services/mark.service';
+import { NewsService } from 'src/app/core/services/news.service';
+import { UserService } from 'src/app/core/services/user.service';
 
 import { CulturalOfferReviewComponent } from './cultural-offer-review.component';
 
 describe('CulturalOfferReviewComponent', () => {
   let component: CulturalOfferReviewComponent;
   let fixture: ComponentFixture<CulturalOfferReviewComponent>;
+  let route: ActivatedRoute;
+  let culturalOfferService: CulturalOfferService;
+  let registeredUserService: UserService;
+  let newsService: NewsService;
+  let markService: MarkService;
+  let dialog: MatDialog;
+  let jwtService: JwtService;
 
-<<<<<<< Updated upstream
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ CulturalOfferReviewComponent ]
-    })
-    .compileComponents();
-  });
-=======
   beforeEach(() => {
     let data = {
       id: 5,
@@ -64,19 +73,21 @@ describe('CulturalOfferReviewComponent', () => {
         { provide: ActivatedRoute, useValue: { snapshot: { paramMap: { get: (id: string) => { return '5' } } } } },
       ]
     });
->>>>>>> Stashed changes
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(CulturalOfferReviewComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    culturalOfferService = TestBed.inject(CulturalOfferService);
+    dialog = TestBed.inject(MatDialog);
+    registeredUserService = TestBed.inject(UserService);
+    jwtService = TestBed.inject(JwtService);
+    markService = TestBed.inject(MarkService);
+    newsService = TestBed.inject(NewsService);
+    route = TestBed.inject(ActivatedRoute);
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-<<<<<<< Updated upstream
-=======
 
   it('should fetch the cultural offer', fakeAsync(() => {
     component.ngOnInit();
@@ -152,5 +163,4 @@ describe('CulturalOfferReviewComponent', () => {
     expect(newsService.unsubscribe).toHaveBeenCalled();
     expect(component.subscribed).toEqual(false);
   }));
->>>>>>> Stashed changes
 });

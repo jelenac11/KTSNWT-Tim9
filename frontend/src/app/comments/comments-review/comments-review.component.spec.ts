@@ -1,14 +1,19 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { Router } from '@angular/router';
+import { CommentService } from 'src/app/core/services/comment.service';
+import { of } from 'rxjs';
 import { CommentsReviewComponent } from './comments-review.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
 describe('CommentsReviewComponent', () => {
   let component: CommentsReviewComponent;
   let fixture: ComponentFixture<CommentsReviewComponent>;
+  let commentService: CommentService;
+  let router: Router;
 
   beforeEach(async () => {
-<<<<<<< Updated upstream
-=======
     const data = {
       content: [
         {
@@ -33,9 +38,13 @@ describe('CommentsReviewComponent', () => {
     const commentServiceMocked = {
       getCommentsByCulturalOfferId: jasmine.createSpy('getCommentsByCulturalOfferId').and.returnValue(of(data))
     };
->>>>>>> Stashed changes
     await TestBed.configureTestingModule({
-      declarations: [ CommentsReviewComponent ]
+      imports: [NgxPaginationModule],
+      declarations: [ CommentsReviewComponent ],
+      providers: [
+        { provide: CommentService, useValue: commentServiceMocked },
+        { provide: Router, useValue: { url: 'path/comments/1', navigate: jasmine.createSpy('navigate')}}
+      ]
     })
     .compileComponents();
   });
@@ -44,13 +53,13 @@ describe('CommentsReviewComponent', () => {
     fixture = TestBed.createComponent(CommentsReviewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    commentService = TestBed.inject(CommentService);
+    router = TestBed.inject(Router);
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-<<<<<<< Updated upstream
-=======
 
   it('should fetch all comments for cultural offer on init', fakeAsync(() => {
     component.ngOnInit();
@@ -107,5 +116,4 @@ describe('CommentsReviewComponent', () => {
     expect(commentElements.length).toBe(2);
   }));
 
->>>>>>> Stashed changes
 });

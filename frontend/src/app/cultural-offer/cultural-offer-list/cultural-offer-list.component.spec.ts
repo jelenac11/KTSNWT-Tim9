@@ -1,12 +1,18 @@
+import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { MatDialog } from '@angular/material/dialog';
+import { By } from '@angular/platform-browser';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { of } from 'rxjs';
+import { CategoryService } from 'src/app/core/services/category.service';
+import { CulturalOfferService } from 'src/app/core/services/cultural-offer.service';
+import { JwtService } from 'src/app/core/services/jwt.service';
+import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 import { CulturalOfferListComponent } from './cultural-offer-list.component';
 
 describe('CulturalOfferListComponent', () => {
   let component: CulturalOfferListComponent;
   let fixture: ComponentFixture<CulturalOfferListComponent>;
-<<<<<<< Updated upstream
-=======
   let culturalOfferService: CulturalOfferService;
   let dialog: MatDialog;
   let snackBar: Snackbar;
@@ -82,27 +88,32 @@ describe('CulturalOfferListComponent', () => {
     let jwtServiceMock = {
       getRole: jasmine.createSpy('getRole').and.returnValue(of('ROLE_ADMIN'))
     };
->>>>>>> Stashed changes
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ CulturalOfferListComponent ]
-    })
-    .compileComponents();
-  });
 
-  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [NgxPaginationModule],
+      declarations: [CulturalOfferListComponent],
+      providers: [
+        { provide: CulturalOfferService, useValue: culturalOfferServiceMock },
+        { provide: CategoryService, useValue: categoryServiceMock },
+        { provide: JwtService, useValue: jwtServiceMock },
+        { provide: MatDialog, useValue: { MatDialog } },
+        { provide: Snackbar, useValue: {} },
+      ]
+    });
+
     fixture = TestBed.createComponent(CulturalOfferListComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    culturalOfferService = TestBed.inject(CulturalOfferService);
+    dialog = TestBed.inject(MatDialog);
+    snackBar = TestBed.inject(Snackbar);
+    jwtService = TestBed.inject(JwtService);
+    categoryService = TestBed.inject(CategoryService);
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-<<<<<<< Updated upstream
-});
-=======
 
   it('should fetch the cultural offers, categories and role on init', () => {
     component.ngOnInit();
@@ -234,4 +245,3 @@ describe('CulturalOfferListComponent', () => {
     expect(component.culturalOffers.content[1].averageMark).toEqual(4.0);
   })
 });
->>>>>>> Stashed changes

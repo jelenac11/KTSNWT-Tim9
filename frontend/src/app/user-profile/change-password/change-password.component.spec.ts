@@ -1,18 +1,23 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { By } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import { Observable, of, throwError } from 'rxjs';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 
 import { ChangePasswordComponent } from './change-password.component';
 
 describe('ChangePasswordComponent', () => {
   let component: ChangePasswordComponent;
   let fixture: ComponentFixture<ChangePasswordComponent>;
+  let snackBar: Snackbar;
+  let dialogRef: MatDialogRef<ChangePasswordComponent>;
+  let authenticationService: AuthenticationService;
+  let router: Router;
 
   beforeEach(async () => {
-<<<<<<< Updated upstream
-    await TestBed.configureTestingModule({
-      declarations: [ ChangePasswordComponent ]
-    })
-    .compileComponents();
-=======
     const snackBarMocked = {
       success: jasmine.createSpy('success'),
       error: jasmine.createSpy('error')
@@ -39,20 +44,13 @@ describe('ChangePasswordComponent', () => {
         { provide: MAT_DIALOG_DATA, useValue: {} }
       ]
     });
->>>>>>> Stashed changes
-  });
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ChangePasswordComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-<<<<<<< Updated upstream
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-=======
+    TestBed.compileComponents();
+    fixture = TestBed.createComponent(ChangePasswordComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
     authenticationService = TestBed.inject(AuthenticationService);
     snackBar = TestBed.inject(Snackbar);
     dialogRef = TestBed.inject(MatDialogRef);
@@ -324,5 +322,4 @@ describe('ChangePasswordComponent', () => {
     expect(authenticationService.logout).toHaveBeenCalledTimes(0);
   }));
 
->>>>>>> Stashed changes
 });

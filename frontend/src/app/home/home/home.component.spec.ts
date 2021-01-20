@@ -1,19 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { of } from 'rxjs';
+import { CategoryService } from 'src/app/core/services/category.service';
+import { CulturalOfferService } from 'src/app/core/services/cultural-offer.service';
 
 import { HomeComponent } from './home.component';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
+  let culturalOfferService: CulturalOfferService;
+  let categoryService: CategoryService;
 
-<<<<<<< Updated upstream
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ HomeComponent ]
-    })
-    .compileComponents();
-  });
-=======
   beforeEach(() => {
     let data = {
       content: [
@@ -86,19 +83,16 @@ describe('HomeComponent', () => {
           provide: CategoryService, useValue: categoryServiceMock
         }]
     });
->>>>>>> Stashed changes
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    culturalOfferService = TestBed.inject(CulturalOfferService);
+    categoryService = TestBed.inject(CategoryService);
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-<<<<<<< Updated upstream
-=======
 
   it('should fetch the cultural offers and categories', () => {
     component.ngOnInit();
@@ -465,5 +459,4 @@ describe('HomeComponent', () => {
     expect(component.culturalOffers.content[1].image).toEqual('nekiUrl 2');
     expect(component.culturalOffers.content[1].averageMark).toEqual(4.0);
   });
->>>>>>> Stashed changes
 });

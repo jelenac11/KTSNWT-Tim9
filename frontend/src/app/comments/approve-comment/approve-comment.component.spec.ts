@@ -1,18 +1,51 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { CommentService } from 'src/app/core/services/comment.service';
+import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
+import { of } from 'rxjs';
 import { ApproveCommentComponent } from './approve-comment.component';
+import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
+import { Comment } from 'src/app/core/models/response/comment.model';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 describe('ApproveCommentComponent', () => {
   let component: ApproveCommentComponent;
   let fixture: ComponentFixture<ApproveCommentComponent>;
+  let commentService: CommentService;
+  let snackBar: Snackbar;
 
   beforeEach(async () => {
+    const data = {
+      content: [
+        {
+          id: 1,
+          dateTime: 12345678,
+          authorUsername: 'jelenac',
+          culturalOfferName: 'Manastir 1',
+          text: 'Tekst komentara 1.',
+          imageUrl: ''
+        },
+        {
+          id: 2,
+          dateTime: 12345679,
+          authorUsername: 'jelenac',
+          culturalOfferName: 'Manastir 1',
+          text: 'Tekst komentara 2.',
+          imageUrl: ''
+        }
+      ],
+      totalElements: 2
+    };
+    const snackBarMocked = {
+      success: jasmine.createSpy('success'),
+      error: jasmine.createSpy('error')
+    };
+    const commentServiceMocked = {
+      getNotApprovedComments: jasmine.createSpy('getNotApprovedComments').and.returnValue(of(data)),
+      approve: jasmine.createSpy('approve').and.returnValue(of('Comment successfully approved.'))
+    };
+
     await TestBed.configureTestingModule({
-<<<<<<< Updated upstream
-      declarations: [ ApproveCommentComponent ]
-    })
-    .compileComponents();
-=======
       imports: [NgxPaginationModule],
       declarations: [ ApproveCommentComponent ],
       providers: [
@@ -20,20 +53,18 @@ describe('ApproveCommentComponent', () => {
         { provide: Snackbar, useValue: snackBarMocked }
       ]
     });
->>>>>>> Stashed changes
   });
 
-  beforeEach(() => {
+  it('should create', () => {
+    TestBed.compileComponents();
     fixture = TestBed.createComponent(ApproveCommentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
-
-<<<<<<< Updated upstream
-  it('should create', () => {
+    commentService = TestBed.inject(CommentService);
+    snackBar = TestBed.inject(Snackbar);
     expect(component).toBeTruthy();
   });
-=======
+
   it('should fetch all not approved comments on init', fakeAsync(() => {
     TestBed.compileComponents();
     fixture = TestBed.createComponent(ApproveCommentComponent);
@@ -156,5 +187,4 @@ describe('ApproveCommentComponent', () => {
     expect(commentService.getNotApprovedComments).toHaveBeenCalled();
   }));
 
->>>>>>> Stashed changes
 });

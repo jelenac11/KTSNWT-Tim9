@@ -1,18 +1,19 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { By } from '@angular/platform-browser';
+import { Observable, of, throwError } from 'rxjs';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 
 import { ForgotPasswordComponent } from './forgot-password.component';
 
 describe('ForgotPasswordComponent', () => {
   let component: ForgotPasswordComponent;
   let fixture: ComponentFixture<ForgotPasswordComponent>;
+  let snackBar: Snackbar;
+  let authenticationService: AuthenticationService;
 
   beforeEach(async () => {
-<<<<<<< Updated upstream
-    await TestBed.configureTestingModule({
-      declarations: [ ForgotPasswordComponent ]
-    })
-    .compileComponents();
-=======
     const snackBarMocked = {
       success: jasmine.createSpy('success'),
       error: jasmine.createSpy('error')
@@ -29,7 +30,6 @@ describe('ForgotPasswordComponent', () => {
         { provide: AuthenticationService, useValue: authenticationServiceMocked }
       ]
     });
-  });
 
   it('should create', () => {
     TestBed.compileComponents();
@@ -39,20 +39,20 @@ describe('ForgotPasswordComponent', () => {
     authenticationService = TestBed.inject(AuthenticationService);
     snackBar = TestBed.inject(Snackbar);
     expect(component).toBeTruthy();
->>>>>>> Stashed changes
   });
 
-  beforeEach(() => {
+  it('should be initialized', () => {
+    TestBed.compileComponents();
     fixture = TestBed.createComponent(ForgotPasswordComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    authenticationService = TestBed.inject(AuthenticationService);
+    snackBar = TestBed.inject(Snackbar);
+    component.ngOnInit();
+    expect(component.forgotForm).toBeDefined();
+    expect(component.forgotForm.invalid).toBeTruthy();
   });
 
-<<<<<<< Updated upstream
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-=======
   it('should be invalid form when submitted and email is empty', () => {
     TestBed.compileComponents();
     fixture = TestBed.createComponent(ForgotPasswordComponent);
@@ -131,6 +131,7 @@ describe('ForgotPasswordComponent', () => {
 
     component.forgotForm.controls.email.setValue('email@gmail.com');
     component.onSubmit();
+
     fixture.detectChanges();
 
     expect(component.forgotForm.invalid).toBeFalsy();
@@ -167,5 +168,4 @@ describe('ForgotPasswordComponent', () => {
     expect(snackBar.success).toHaveBeenCalledTimes(0);
   }));
 
->>>>>>> Stashed changes
 });

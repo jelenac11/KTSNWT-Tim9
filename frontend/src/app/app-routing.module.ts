@@ -25,6 +25,7 @@ const routes: Routes = [
     loadChildren: () => import('./users/users.module').then(m => m.UsersModule)
   },
   { path: 'categories', loadChildren: () => import('./category/category.module').then(m => m.CategoryModule) },
+  { path: 'news', loadChildren: () => import('./news/news.module').then(m => m.NewsModule) },
   {
     path: '**',
     component: PageNotFoundComponent

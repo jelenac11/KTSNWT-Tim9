@@ -1,20 +1,36 @@
-import { TestBed } from '@angular/core/testing';
-
+import { HttpClient } from '@angular/common/http';
+import { fakeAsync, getTestBed, TestBed, tick } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { CulturalOfferService } from './cultural-offer.service';
+import { CulturalOfferPage } from '../models/response/cultural-offer-page.model';
+import { environment } from 'src/environments/environment';
+import { CulturalOffer } from '../models/response/cultural-offer.model';
 
 describe('CulturalOfferService', () => {
+  let injector;
   let service: CulturalOfferService;
+  let httpMock: HttpTestingController;
+  let httpClient: HttpClient;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+       providers:    [CulturalOfferService ]
+    });
+
+    injector = getTestBed();
     service = TestBed.inject(CulturalOfferService);
+    httpClient = TestBed.inject(HttpClient);
+    httpMock = TestBed.inject(HttpTestingController);
+  });
+
+  afterEach(() => {
+    httpMock.verify();
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
-<<<<<<< Updated upstream
-=======
 
   it('getAll() should return some cultural offers', fakeAsync(() => {
     let culturalOffers: CulturalOfferPage;
@@ -572,5 +588,4 @@ describe('CulturalOfferService', () => {
 
     expect(result).toEqual(true);
   }));
->>>>>>> Stashed changes
 });

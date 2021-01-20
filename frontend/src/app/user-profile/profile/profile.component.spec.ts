@@ -1,18 +1,22 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { By } from '@angular/platform-browser';
+import { Observable, of, throwError } from 'rxjs';
+import { User } from 'src/app/core/models/response/user.model';
+import { UserService } from 'src/app/core/services/user.service';
+import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 
 import { ProfileComponent } from './profile.component';
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
   let fixture: ComponentFixture<ProfileComponent>;
+  let snackBar: Snackbar;
+  let dialogRef: MatDialogRef<ProfileComponent>;
+  let userService: UserService;
 
   beforeEach(async () => {
-<<<<<<< Updated upstream
-    await TestBed.configureTestingModule({
-      declarations: [ ProfileComponent ]
-    })
-    .compileComponents();
-=======
     const snackBarMocked = {
       success: jasmine.createSpy('success'),
       error: jasmine.createSpy('error')
@@ -103,15 +107,13 @@ describe('ProfileComponent', () => {
     dialogRef = TestBed.inject(MatDialogRef);
     component.startEdit();
     expect(component.form).toBeDefined();
->>>>>>> Stashed changes
   });
 
-  beforeEach(() => {
+  it('should be invalid form when submitted and inputs are empty', () => {
+    TestBed.compileComponents();
     fixture = TestBed.createComponent(ProfileComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-<<<<<<< Updated upstream
-=======
     userService = TestBed.inject(UserService);
     snackBar = TestBed.inject(Snackbar);
     dialogRef = TestBed.inject(MatDialogRef);
@@ -138,14 +140,82 @@ describe('ProfileComponent', () => {
     const usernameErrorMsg = fixture.debugElement.query(By.css('#change-profile-username')).nativeElement;
     expect(usernameErrorMsg).toBeDefined();
     expect(usernameErrorMsg.innerHTML).toContain('Username is required');
->>>>>>> Stashed changes
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should be invalid form when submitted and username is empty', () => {
+    TestBed.compileComponents();
+    fixture = TestBed.createComponent(ProfileComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+    userService = TestBed.inject(UserService);
+    snackBar = TestBed.inject(Snackbar);
+    dialogRef = TestBed.inject(MatDialogRef);
+    component.startEdit();
+
+    component.form.controls.firstName.setValue('Jelena');
+    component.form.controls.lastName.setValue('Cupac');
+    component.form.controls.username.setValue('');
+    fixture.detectChanges();
+    component.save();
+
+    expect(component.form.invalid).toBeTruthy();
+    expect(userService.changeProfile).toHaveBeenCalledTimes(0);
+    expect(snackBar.success).toHaveBeenCalledTimes(0);
+
+    const usernameErrorMsg = fixture.debugElement.query(By.css('#change-profile-username')).nativeElement;
+    expect(usernameErrorMsg).toBeDefined();
+    expect(usernameErrorMsg.innerHTML).toContain('Username is required');
   });
-<<<<<<< Updated upstream
-=======
+
+  it('should be invalid form when submitted and first name is empty', () => {
+    TestBed.compileComponents();
+    fixture = TestBed.createComponent(ProfileComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+    userService = TestBed.inject(UserService);
+    snackBar = TestBed.inject(Snackbar);
+    dialogRef = TestBed.inject(MatDialogRef);
+    component.startEdit();
+
+    component.form.controls.firstName.setValue('');
+    component.form.controls.lastName.setValue('Cupac');
+    component.form.controls.username.setValue('jelenac');
+    fixture.detectChanges();
+    component.save();
+
+    expect(component.form.invalid).toBeTruthy();
+    expect(userService.changeProfile).toHaveBeenCalledTimes(0);
+    expect(snackBar.success).toHaveBeenCalledTimes(0);
+
+    const firstNameErrorMsg = fixture.debugElement.query(By.css('#first-name-error')).nativeElement;
+    expect(firstNameErrorMsg).toBeDefined();
+    expect(firstNameErrorMsg.innerHTML).toContain('First name is required');
+  });
+
+  it('should be invalid form when submitted and last name is empty', () => {
+    TestBed.compileComponents();
+    fixture = TestBed.createComponent(ProfileComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+    userService = TestBed.inject(UserService);
+    snackBar = TestBed.inject(Snackbar);
+    dialogRef = TestBed.inject(MatDialogRef);
+    component.startEdit();
+
+    component.form.controls.firstName.setValue('Jelena');
+    component.form.controls.lastName.setValue('');
+    component.form.controls.username.setValue('jelenac');
+    fixture.detectChanges();
+    component.save();
+
+    expect(component.form.invalid).toBeTruthy();
+    expect(userService.changeProfile).toHaveBeenCalledTimes(0);
+    expect(snackBar.success).toHaveBeenCalledTimes(0);
+
+    const lastNameErrorMsg = fixture.debugElement.query(By.css('#change-profile-last-name')).nativeElement;
+    expect(lastNameErrorMsg).toBeDefined();
+    expect(lastNameErrorMsg.innerHTML).toContain('Last name is required');
+  });
 
   function newEvent(eventName: string, bubbles = false, cancelable = false): CustomEvent<any> {
     const evt = document.createEvent('CustomEvent');
@@ -239,5 +309,4 @@ describe('ProfileComponent', () => {
     expect(snackBar.success).toHaveBeenCalledTimes(0);
   }));
 
->>>>>>> Stashed changes
 });

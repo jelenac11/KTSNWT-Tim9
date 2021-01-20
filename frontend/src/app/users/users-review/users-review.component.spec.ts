@@ -1,14 +1,29 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { DebugElement, ViewContainerRef } from '@angular/core';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatTab } from '@angular/material/tabs';
+import { By } from '@angular/platform-browser';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { Observable, of } from 'rxjs';
+import { UserPage } from 'src/app/core/models/response/user-page.model';
+import { User } from 'src/app/core/models/response/user.model';
+import { JwtService } from 'src/app/core/services/jwt.service';
+import { UserService } from 'src/app/core/services/user.service';
+import { ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation-dialog/confirmation-dialog.component';
+import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 
 import { UsersReviewComponent } from './users-review.component';
 
 describe('UsersReviewComponent', () => {
   let component: UsersReviewComponent;
   let fixture: ComponentFixture<UsersReviewComponent>;
+  let userService: UserService;
+  let jwtService: JwtService;
+  let dialog: MatDialog;
+  let snackBar: Snackbar;
+  let dialogRef: MatDialogRef<{}>;
 
   beforeEach(async () => {
-<<<<<<< Updated upstream
-=======
     const userPage: UserPage = {
       content: [
         {
@@ -28,6 +43,7 @@ describe('UsersReviewComponent', () => {
       ],
       totalElements: 2,
     };
+
     const searchPage: UserPage = {
       content: [
         {
@@ -63,9 +79,17 @@ describe('UsersReviewComponent', () => {
       getUsers: jasmine.createSpy('getUsers').and.returnValue(of(userPage)),
       searchUsers: jasmine.createSpy('searchUsers').and.returnValue(of(searchPage))
     };
->>>>>>> Stashed changes
+
     await TestBed.configureTestingModule({
-      declarations: [ UsersReviewComponent ]
+      imports: [NgxPaginationModule],
+      declarations: [ UsersReviewComponent ],
+      providers: [
+        { provide: UserService, useValue: userServiceMocked },
+        { provide: Snackbar, useValue: snackBarMocked },
+        { provide: JwtService, useValue: jwtServiceMocked },
+        { provide: MatDialog, useValue: dialogMocked},
+        { provide: MatDialogRef, useValue: dialogRefMocked}
+      ],
     })
     .compileComponents();
   });
@@ -74,13 +98,17 @@ describe('UsersReviewComponent', () => {
     fixture = TestBed.createComponent(UsersReviewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+
+    jwtService = TestBed.inject(JwtService);
+    userService = TestBed.inject(UserService);
+    snackBar = TestBed.inject(Snackbar);
+    dialog = TestBed.inject(MatDialog);
+    dialogRef = TestBed.inject(MatDialogRef);
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-<<<<<<< Updated upstream
-=======
 
   it('should fetch all users and get token on init', fakeAsync(() => {
     component.ngOnInit();
@@ -132,7 +160,6 @@ describe('UsersReviewComponent', () => {
 
     expect(component.searchValue).toEqual('');
     expect(userService.getUsers).toHaveBeenCalledWith(10, 0, 'admins');
-
     tick();
 
     expect(component.users.totalElements).toEqual(2);
@@ -257,7 +284,6 @@ describe('UsersReviewComponent', () => {
 
     expect(component.searchValue).toEqual('1');
     expect(userService.searchUsers).toHaveBeenCalledWith(10, 0, '1', 'admins');
-
     tick();
 
     expect(component.users.totalElements).toEqual(1);
@@ -315,5 +341,5 @@ describe('UsersReviewComponent', () => {
 
     expect(dialog.open).toHaveBeenCalled();
   });
->>>>>>> Stashed changes
+
 });

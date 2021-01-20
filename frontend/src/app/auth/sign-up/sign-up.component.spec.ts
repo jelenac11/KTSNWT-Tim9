@@ -1,18 +1,19 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ComponentFixture, fakeAsync, TestBed, TestComponentRenderer, tick } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { By } from '@angular/platform-browser';
+import { UserService } from 'src/app/core/services/user.service';
+import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
+import { Observable, of, throwError } from 'rxjs';
 import { SignUpComponent } from './sign-up.component';
+import { User } from 'src/app/core/models/response/user.model';
 
 describe('SignUpComponent', () => {
   let component: SignUpComponent;
   let fixture: ComponentFixture<SignUpComponent>;
+  let snackBar: Snackbar;
+  let userService: UserService;
 
   beforeEach(async () => {
-<<<<<<< Updated upstream
-    await TestBed.configureTestingModule({
-      declarations: [ SignUpComponent ]
-    })
-    .compileComponents();
-=======
     const snackBarMocked = {
       success: jasmine.createSpy('success'),
       error: jasmine.createSpy('error')
@@ -187,20 +188,13 @@ describe('SignUpComponent', () => {
     const emailErrorMsg = fixture.debugElement.query(By.css('#signup-email-error-required')).nativeElement;
     expect(emailErrorMsg).toBeDefined();
     expect(emailErrorMsg.innerHTML).toContain('Email is required');
->>>>>>> Stashed changes
   });
 
-  beforeEach(() => {
+  it('should be invalid form when submitted and password is empty', () => {
+    TestBed.compileComponents();
     fixture = TestBed.createComponent(SignUpComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-<<<<<<< Updated upstream
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-=======
     userService = TestBed.inject(UserService);
     snackBar = TestBed.inject(Snackbar);
 
@@ -404,5 +398,4 @@ describe('SignUpComponent', () => {
     expect(snackBar.success).toHaveBeenCalledTimes(0);
   }));
 
->>>>>>> Stashed changes
 });

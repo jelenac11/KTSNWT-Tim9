@@ -63,7 +63,7 @@ export class CategoryDialogComponent implements OnInit {
     },
     error => {
       if (error.status !== 200) {
-        this.snackBar.error(error.error);
+        this.snackBar.error('Category already exist!');
       }
     });
   }
@@ -72,15 +72,16 @@ export class CategoryDialogComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    this.category.name = this.form.value.name;
-    this.category.description = this.form.value.description;
-    this.categoryService.put(this.category.id, this.category).subscribe(data => {
+    const category = {id: this.category.id, name: '', description: ''};
+    category.name = this.form.value.name;
+    category.description = this.form.value.description;
+    this.categoryService.put(this.category.id, category).subscribe(data => {
       this.snackBar.success('Category updated successfully');
       this.dialogRef.close(true);
     },
     error => {
       if (error.status !== 200) {
-        this.snackBar.error(error.error);
+        this.snackBar.error('Category already exist');
       }
     });
   }

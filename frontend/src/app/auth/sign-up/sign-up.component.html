@@ -13,25 +13,25 @@
                             <mat-label>First Name</mat-label>
                             <input formControlName="firstName" matInput placeholder="First Name" [errorStateMatcher]="matcher" id='signup-firstname'>  
                             <mat-icon matSuffix>person</mat-icon>
-                            <mat-error *ngIf="f.firstName.errors?.required">First Name is required</mat-error>
+                            <mat-error *ngIf="f.firstName.errors?.required" id='signup-firstname-error'>First Name is required</mat-error>
                         </mat-form-field>
                         <mat-form-field appearance="outline" class="ml-2 same-row">
                             <mat-label>Last Name</mat-label>
                             <input formControlName="lastName" matInput placeholder="Last Name" [errorStateMatcher]="matcher" id='signup-lastname'>
                             <mat-icon matSuffix>person</mat-icon>
-                            <mat-error *ngIf="f.lastName.errors?.required">Last Name is required</mat-error>
+                            <mat-error *ngIf="f.lastName.errors?.required" id='signup-lastname-error'>Last Name is required</mat-error>
                         </mat-form-field>
                         <p><mat-form-field appearance="outline" class="full-row">
                             <mat-label>Username</mat-label>
                             <input formControlName="username" matInput placeholder="Username" [errorStateMatcher]="matcher" id='signup-username'>
                             <mat-icon matSuffix>account_circle</mat-icon>
-                            <mat-error *ngIf="f.username.errors?.required">Username is required</mat-error>
+                            <mat-error *ngIf="f.username.errors?.required" id='signup-username-error'>Username is required</mat-error>
                         </mat-form-field></p>
                         <p><mat-form-field appearance="outline" class="full-row">
                             <mat-label>Email</mat-label>
                             <input formControlName="email" matInput placeholder="Email" [errorStateMatcher]="matcher" id='signup-email'>
                             <mat-icon matSuffix>email</mat-icon>
-                            <mat-error *ngIf="f.email.errors?.required">Email is required</mat-error>
+                            <mat-error *ngIf="f.email.errors?.required" id='signup-email-error-required'>Email is required</mat-error>
                             <mat-error *ngIf="f.email.errors?.email" id='signup-email-error'>Email is not valid</mat-error>
                         </mat-form-field></p>
                         <p><mat-form-field appearance="outline" class="full-row">
@@ -41,7 +41,7 @@
                                 <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
                             </button>
                             <mat-hint>Minimum length is 6 characters</mat-hint>
-                            <mat-error *ngIf="f.password.errors?.required">Password is required</mat-error>
+                            <mat-error *ngIf="f.password.errors?.required" id='signup-password-error-required'>Password is required</mat-error>
                             <mat-error *ngIf="f.password.errors?.minlength" id='signup-password-length-error'>Password must be at least 6 characters long</mat-error>
                         </mat-form-field></p>
                         <button class="mr-3 px-3 mt-2 btn sign-up">Sign up</button>

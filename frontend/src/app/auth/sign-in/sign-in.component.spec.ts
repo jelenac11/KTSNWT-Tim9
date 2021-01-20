@@ -1,14 +1,22 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { JwtService } from 'src/app/core/services/jwt.service';
+import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 import { SignInComponent } from './sign-in.component';
+import { of } from 'rxjs';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { By } from '@angular/platform-browser';
 
 describe('SignInComponent', () => {
   let component: SignInComponent;
   let fixture: ComponentFixture<SignInComponent>;
+  let snackBar: Snackbar;
+  let router: Router;
+  let jwtService: JwtService;
+  let authenticationService: AuthenticationService;
 
   beforeEach(async () => {
-<<<<<<< Updated upstream
-=======
     const authenticationServiceMocked = {
       login: jasmine.createSpy('login').and.returnValue(of({
         accessToken: 'asdfghjkl',
@@ -24,9 +32,15 @@ describe('SignInComponent', () => {
       error: jasmine.createSpy('error')
     };
 
->>>>>>> Stashed changes
     await TestBed.configureTestingModule({
-      declarations: [ SignInComponent ]
+      imports: [FormsModule, ReactiveFormsModule],
+      declarations: [ SignInComponent ],
+      providers: [
+        { provide: AuthenticationService, useValue: authenticationServiceMocked },
+        { provide: Router, useValue: routerMocked },
+        { provide: Snackbar, useValue: snackBarMocked },
+        { provide: JwtService, useValue: jwtServiceMocked }
+      ]
     })
     .compileComponents();
   });
@@ -35,21 +49,16 @@ describe('SignInComponent', () => {
     fixture = TestBed.createComponent(SignInComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-<<<<<<< Updated upstream
-=======
 
     authenticationService = TestBed.inject(AuthenticationService);
     router = TestBed.inject(Router);
     snackBar = TestBed.inject(Snackbar);
     jwtService = TestBed.inject(JwtService);
->>>>>>> Stashed changes
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-<<<<<<< Updated upstream
-=======
 
   it('should be initialized', () => {
     component.ngOnInit();
@@ -166,5 +175,4 @@ describe('SignInComponent', () => {
     expect(snackBar.error).toHaveBeenCalledTimes(0);
   }));
 
->>>>>>> Stashed changes
 });
