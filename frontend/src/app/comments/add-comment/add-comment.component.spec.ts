@@ -134,6 +134,32 @@ describe('AddCommentComponent', () => {
     component.chooseFile({ target: { files: [] }});
 
     expect(component.uploadedImage).toBe('');
+    expect(component.form.get('file').value).toBeDefined();
   }));
+
+  it('choose file without cultural offer id and files length greater than 0', () => {
+    component.chooseFile({
+      target: {
+        files: [new Blob([], {
+          type: 'image/jpeg'
+        })]
+      }
+    });
+
+    expect(component.form.get('file').value).toBeDefined();
+    expect(component.uploadedImage).toEqual('');
+  });
+
+  it('choose file with file type different from image/* should set uploadedImage to empty string', () => {
+    component.chooseFile({
+      target: {
+        files: [new Blob([], {
+          type: 'something/jpeg'
+        })]
+      }
+    });
+    expect(component.form.get('file').value).toBeNull();
+    expect(component.uploadedImage).toEqual('');
+  });
 
 });

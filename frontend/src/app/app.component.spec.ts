@@ -22,8 +22,14 @@ describe('AppComponent', () => {
   
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
+<<<<<<< Updated upstream
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
     expect(compiled.querySelector('.content span').textContent).toContain('frontend app is running!');
   });
+=======
+    const app = fixture.componentInstance;
+  });
+
+>>>>>>> Stashed changes
 });
