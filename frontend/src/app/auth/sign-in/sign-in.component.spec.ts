@@ -15,7 +15,6 @@ describe('SignInComponent', () => {
   let router: Router;
   let jwtService: JwtService;
   let authenticationService: AuthenticationService;
-  
 
   beforeEach(async () => {
     const authenticationServiceMocked = {
