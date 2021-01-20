@@ -14,17 +14,13 @@ describe('ConfirmRegistrationComponent', () => {
   beforeEach(async () => {
     const authenticationServiceMocked = {
       confirmRegistration: jasmine.createSpy('confirmRegistration').and.returnValue(of(new Observable<string>()))
-    }
-    await TestBed.configureTestingModule({
-      declarations: [ ConfirmRegistrationComponent ]
-    })
-    .compileComponents();
+    };
 
     await TestBed.configureTestingModule({
       declarations: [ ConfirmRegistrationComponent ],
       providers: [
         { provide: AuthenticationService, useValue: authenticationServiceMocked },
-        { provide: ActivatedRoute, useValue: { snapshot: { paramMap: { get: (token: string) => { return 'token' } } } } },
+        { provide: ActivatedRoute, useValue: { snapshot: { paramMap: { get: (token: string) =>  'token'  } } } }
       ]
     })
     .compileComponents();

@@ -17,10 +17,10 @@ describe('ForgotPasswordComponent', () => {
     const snackBarMocked = {
       success: jasmine.createSpy('success'),
       error: jasmine.createSpy('error')
-    }
+    };
     const authenticationServiceMocked = {
       forgotPassword: jasmine.createSpy('forgotPassword').and.returnValue(of(new Observable<string>()))
-    }
+    };
 
     TestBed.configureTestingModule({
       imports: [FormsModule, ReactiveFormsModule],
@@ -30,7 +30,6 @@ describe('ForgotPasswordComponent', () => {
         { provide: AuthenticationService, useValue: authenticationServiceMocked }
       ]
     });
-  });
 
   it('should create', () => {
     TestBed.compileComponents();
@@ -68,7 +67,7 @@ describe('ForgotPasswordComponent', () => {
     expect(component.forgotForm.invalid).toBeTruthy();
     expect(authenticationService.forgotPassword).toHaveBeenCalledTimes(0);
     expect(snackBar.success).toHaveBeenCalledTimes(0);
-    
+
     const emailErrorMsg = fixture.debugElement.query(By.css('#forgot-email-error')).nativeElement;
     expect(emailErrorMsg).toBeDefined();
     expect(emailErrorMsg.innerHTML).toContain('Email is required');
@@ -89,14 +88,14 @@ describe('ForgotPasswordComponent', () => {
     expect(component.forgotForm.invalid).toBeTruthy();
     expect(authenticationService.forgotPassword).toHaveBeenCalledTimes(0);
     expect(snackBar.success).toHaveBeenCalledTimes(0);
-    
+
     const emailErrorMsg = fixture.debugElement.query(By.css('#forgot-email-invalid')).nativeElement;
     expect(emailErrorMsg).toBeDefined();
     expect(emailErrorMsg.innerHTML).toContain('Email is not valid');
   });
 
-  function newEvent(eventName: string, bubbles = false, cancelable = false) {
-    let evt = document.createEvent('CustomEvent');
+  function newEvent(eventName: string, bubbles = false, cancelable = false): CustomEvent<any> {
+    const evt = document.createEvent('CustomEvent');
     evt.initCustomEvent(eventName, bubbles, cancelable, null);
     return evt;
   }
@@ -132,8 +131,9 @@ describe('ForgotPasswordComponent', () => {
 
     component.forgotForm.controls.email.setValue('email@gmail.com');
     component.onSubmit();
-    fixture.detectChanges()
-    
+
+    fixture.detectChanges();
+
     expect(component.forgotForm.invalid).toBeFalsy();
     expect(authenticationService.forgotPassword).toHaveBeenCalledTimes(1);
     tick();
@@ -144,12 +144,12 @@ describe('ForgotPasswordComponent', () => {
   it('should return email address is not associated with user account when submitted', fakeAsync(() => {
     const authenticationServiceMocked2 = {
       forgotPassword: jasmine.createSpy('forgotPassword').and.returnValue(throwError({
-        'status': 400,
-        'error': 'That email address is not associated with personal user account.',
-        'message': '',
-        'path': '/auth/forgot-password'
+        status: 400,
+        error: 'That email address is not associated with personal user account.',
+        message: '',
+        path: '/auth/forgot-password'
       }))
-    }
+    };
     TestBed.overrideProvider(AuthenticationService, {useValue: authenticationServiceMocked2});
     TestBed.compileComponents();
     fixture = TestBed.createComponent(ForgotPasswordComponent);
@@ -160,7 +160,7 @@ describe('ForgotPasswordComponent', () => {
 
     component.forgotForm.controls.email.setValue('non_existing@gmail.com');
     component.onSubmit();
-    
+
     expect(component.forgotForm.invalid).toBeFalsy();
     expect(authenticationService.forgotPassword).toHaveBeenCalledTimes(1);
     tick();

@@ -20,14 +20,14 @@ describe('ProfileComponent', () => {
     const snackBarMocked = {
       success: jasmine.createSpy('success'),
       error: jasmine.createSpy('error')
-    }
+    };
     const userServiceMocked = {
       changeProfile: jasmine.createSpy('changeProfile').and.returnValue(of(new Observable<User>())),
       getCurrentUser: jasmine.createSpy('getCurrentUser').and.returnValue(of({ email: 'email@gmail.com', username: 'jelenac', firstName: 'Jelena', lastName: 'Cupac' }))
-    }
+    };
     const dialogRefMock = {
       close: jasmine.createSpy('close')
-    }
+    };
 
     TestBed.configureTestingModule({
       imports: [FormsModule, ReactiveFormsModule],
@@ -128,7 +128,7 @@ describe('ProfileComponent', () => {
     expect(component.form.invalid).toBeTruthy();
     expect(userService.changeProfile).toHaveBeenCalledTimes(0);
     expect(snackBar.success).toHaveBeenCalledTimes(0);
-    
+
     const firstNameErrorMsg = fixture.debugElement.query(By.css('#first-name-error')).nativeElement;
     expect(firstNameErrorMsg).toBeDefined();
     expect(firstNameErrorMsg.innerHTML).toContain('First name is required');
@@ -217,8 +217,8 @@ describe('ProfileComponent', () => {
     expect(lastNameErrorMsg.innerHTML).toContain('Last name is required');
   });
 
-  function newEvent(eventName: string, bubbles = false, cancelable = false) {
-    let evt = document.createEvent('CustomEvent');
+  function newEvent(eventName: string, bubbles = false, cancelable = false): CustomEvent<any> {
+    const evt = document.createEvent('CustomEvent');
     evt.initCustomEvent(eventName, bubbles, cancelable, null);
     return evt;
   }
@@ -278,14 +278,14 @@ describe('ProfileComponent', () => {
   it('should return username already exists when submitted', fakeAsync(() => {
     const userServiceMocked2 = {
       changeProfile: jasmine.createSpy('changeProfile').and.returnValue(throwError({
-        'timestamp': 1611078300751,
-        'status': 409,
-        'error': 'Username already exists.',
-        'message': '',
-        'path': '/auth/change-profile'
+        timestamp: 1611078300751,
+        status: 409,
+        error: 'Username already exists.',
+        message: '',
+        path: '/auth/change-profile'
       })),
       getCurrentUser: jasmine.createSpy('getCurrentUser').and.returnValue(of({ email: 'email@gmail.com', username: 'jelenac', firstName: 'Jelena', lastName: 'Cupac' }))
-    }
+    };
     TestBed.overrideProvider(UserService, {useValue: userServiceMocked2});
     TestBed.compileComponents();
     fixture = TestBed.createComponent(ProfileComponent);
@@ -301,7 +301,7 @@ describe('ProfileComponent', () => {
     component.form.controls.username.setValue('aleksag');
     fixture.detectChanges();
     component.save();
-    
+
     expect(component.form.invalid).toBeFalsy();
     expect(userService.changeProfile).toHaveBeenCalledTimes(1);
     tick();

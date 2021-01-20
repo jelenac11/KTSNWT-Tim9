@@ -17,10 +17,10 @@ describe('SignUpComponent', () => {
     const snackBarMocked = {
       success: jasmine.createSpy('success'),
       error: jasmine.createSpy('error')
-    }
+    };
     const userServiceMocked = {
       signup: jasmine.createSpy('signup').and.returnValue(of(new Observable<User>()))
-    }
+    };
 
     TestBed.configureTestingModule({
       imports: [FormsModule, ReactiveFormsModule],
@@ -72,7 +72,7 @@ describe('SignUpComponent', () => {
     expect(component.registerForm.invalid).toBeTruthy();
     expect(userService.signup).toHaveBeenCalledTimes(0);
     expect(snackBar.success).toHaveBeenCalledTimes(0);
-    
+
     const firstNameErrorMsg = fixture.debugElement.query(By.css('#signup-firstname-error')).nativeElement;
     expect(firstNameErrorMsg).toBeDefined();
     expect(firstNameErrorMsg.innerHTML).toContain('First Name is required');
@@ -112,7 +112,7 @@ describe('SignUpComponent', () => {
     expect(component.registerForm.invalid).toBeTruthy();
     expect(userService.signup).toHaveBeenCalledTimes(0);
     expect(snackBar.success).toHaveBeenCalledTimes(0);
-    
+
     const firstNameErrorMsg = fixture.debugElement.query(By.css('#signup-firstname-error')).nativeElement;
     expect(firstNameErrorMsg).toBeDefined();
     expect(firstNameErrorMsg.innerHTML).toContain('First Name is required');
@@ -136,7 +136,7 @@ describe('SignUpComponent', () => {
     expect(component.registerForm.invalid).toBeTruthy();
     expect(userService.signup).toHaveBeenCalledTimes(0);
     expect(snackBar.success).toHaveBeenCalledTimes(0);
-    
+
     const lastNameErrorMsg = fixture.debugElement.query(By.css('#signup-lastname-error')).nativeElement;
     expect(lastNameErrorMsg).toBeDefined();
     expect(lastNameErrorMsg.innerHTML).toContain('Last Name is required');
@@ -160,7 +160,7 @@ describe('SignUpComponent', () => {
     expect(component.registerForm.invalid).toBeTruthy();
     expect(userService.signup).toHaveBeenCalledTimes(0);
     expect(snackBar.success).toHaveBeenCalledTimes(0);
-    
+
     const usernameErrorMsg = fixture.debugElement.query(By.css('#signup-username-error')).nativeElement;
     expect(usernameErrorMsg).toBeDefined();
     expect(usernameErrorMsg.innerHTML).toContain('Username is required');
@@ -184,7 +184,7 @@ describe('SignUpComponent', () => {
     expect(component.registerForm.invalid).toBeTruthy();
     expect(userService.signup).toHaveBeenCalledTimes(0);
     expect(snackBar.success).toHaveBeenCalledTimes(0);
-    
+
     const emailErrorMsg = fixture.debugElement.query(By.css('#signup-email-error-required')).nativeElement;
     expect(emailErrorMsg).toBeDefined();
     expect(emailErrorMsg.innerHTML).toContain('Email is required');
@@ -208,7 +208,7 @@ describe('SignUpComponent', () => {
     expect(component.registerForm.invalid).toBeTruthy();
     expect(userService.signup).toHaveBeenCalledTimes(0);
     expect(snackBar.success).toHaveBeenCalledTimes(0);
-    
+
     const passwordErrorMsg = fixture.debugElement.query(By.css('#signup-password-error-required')).nativeElement;
     expect(passwordErrorMsg).toBeDefined();
     expect(passwordErrorMsg.innerHTML).toContain('Password is required');
@@ -233,7 +233,7 @@ describe('SignUpComponent', () => {
     expect(component.registerForm.invalid).toBeTruthy();
     expect(userService.signup).toHaveBeenCalledTimes(0);
     expect(snackBar.success).toHaveBeenCalledTimes(0);
-    
+
     const emailErrorMsg = fixture.debugElement.query(By.css('#signup-email-error')).nativeElement;
     expect(emailErrorMsg).toBeDefined();
     expect(emailErrorMsg.innerHTML).toContain('Email is not valid');
@@ -258,14 +258,14 @@ describe('SignUpComponent', () => {
     expect(component.registerForm.invalid).toBeTruthy();
     expect(userService.signup).toHaveBeenCalledTimes(0);
     expect(snackBar.success).toHaveBeenCalledTimes(0);
-    
+
     const passwordErrorMsg = fixture.debugElement.query(By.css('#signup-password-length-error')).nativeElement;
     expect(passwordErrorMsg).toBeDefined();
     expect(passwordErrorMsg.innerHTML).toContain('Password must be at least 6 characters long');
   });
 
-  function newEvent(eventName: string, bubbles = false, cancelable = false) {
-    let evt = document.createEvent('CustomEvent');
+  function newEvent(eventName: string, bubbles = false, cancelable = false): CustomEvent<any> {
+    const evt = document.createEvent('CustomEvent');
     evt.initCustomEvent(eventName, bubbles, cancelable, null);
     return evt;
   }
@@ -325,8 +325,8 @@ describe('SignUpComponent', () => {
     component.registerForm.controls.email.setValue('email@gmail.com');
     component.registerForm.controls.password.setValue('sifra123');
     component.onSubmit();
-    fixture.detectChanges()
-    
+    fixture.detectChanges();
+
     expect(component.registerForm.invalid).toBeFalsy();
     expect(userService.signup).toHaveBeenCalledTimes(1);
     tick();
@@ -337,13 +337,13 @@ describe('SignUpComponent', () => {
   it('should return email already exists when submitted', fakeAsync(() => {
     const userServiceMocked2 = {
       signup: jasmine.createSpy('signup').and.returnValue(throwError({
-        'timestamp': 1611078300751,
-        'status': 409,
-        'error': 'Email already exists.',
-        'message': '',
-        'path': '/auth/sign-up'
+        timestamp: 1611078300751,
+        status: 409,
+        error: 'Email already exists.',
+        message: '',
+        path: '/auth/sign-up'
       }))
-    }
+    };
     TestBed.overrideProvider(UserService, {useValue: userServiceMocked2});
     TestBed.compileComponents();
     fixture = TestBed.createComponent(SignUpComponent);
@@ -358,7 +358,7 @@ describe('SignUpComponent', () => {
     component.registerForm.controls.email.setValue('existing@gmail.com');
     component.registerForm.controls.password.setValue('sifra123');
     component.onSubmit();
-    
+
     expect(component.registerForm.invalid).toBeFalsy();
     expect(userService.signup).toHaveBeenCalledTimes(1);
     tick();
@@ -369,13 +369,13 @@ describe('SignUpComponent', () => {
   it('should return username already exists when submitted', fakeAsync(() => {
     const userServiceMocked3 = {
       signup: jasmine.createSpy('signup').and.returnValue(throwError({
-        'timestamp': 1611078300751,
-        'status': 409,
-        'error': 'Username already exists.',
-        'message': '',
-        'path': '/auth/sign-up'
+        timestamp: 1611078300751,
+        status: 409,
+        error: 'Username already exists.',
+        message: '',
+        path: '/auth/sign-up'
       }))
-    }
+    };
     TestBed.overrideProvider(UserService, {useValue: userServiceMocked3});
     TestBed.compileComponents();
     fixture = TestBed.createComponent(SignUpComponent);
@@ -390,7 +390,7 @@ describe('SignUpComponent', () => {
     component.registerForm.controls.email.setValue('email@gmail.com');
     component.registerForm.controls.password.setValue('sifra123');
     component.onSubmit();
-    
+
     expect(component.registerForm.invalid).toBeFalsy();
     expect(userService.signup).toHaveBeenCalledTimes(1);
     tick();

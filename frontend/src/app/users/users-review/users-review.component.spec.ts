@@ -43,7 +43,8 @@ describe('UsersReviewComponent', () => {
       ],
       totalElements: 2,
     };
-    const searchPage : UserPage = {
+
+    const searchPage: UserPage = {
       content: [
         {
           id: 1,
@@ -77,7 +78,8 @@ describe('UsersReviewComponent', () => {
       delete: jasmine.createSpy('delete').and.returnValue(of(true)),
       getUsers: jasmine.createSpy('getUsers').and.returnValue(of(userPage)),
       searchUsers: jasmine.createSpy('searchUsers').and.returnValue(of(searchPage))
-    }
+    };
+
     await TestBed.configureTestingModule({
       imports: [NgxPaginationModule],
       declarations: [ UsersReviewComponent ],
@@ -110,9 +112,9 @@ describe('UsersReviewComponent', () => {
 
   it('should fetch all users and get token on init', fakeAsync(() => {
     component.ngOnInit();
-    
+
     expect(userService.getUsers).toHaveBeenCalledWith(10, 0, 'admins');
-    
+
     tick();
 
     expect(component.users.totalElements).toEqual(2);
@@ -133,8 +135,8 @@ describe('UsersReviewComponent', () => {
 
     expect(component.loggedIn).toEqual('email_adresa1@gmail.com');
 
-    fixture.detectChanges(); 
-    tick(); 
+    fixture.detectChanges();
+    tick();
     fixture.detectChanges();
 
     const userRows: DebugElement[] = fixture.debugElement.queryAll(By.css('table tr'));
@@ -158,7 +160,6 @@ describe('UsersReviewComponent', () => {
 
     expect(component.searchValue).toEqual('');
     expect(userService.getUsers).toHaveBeenCalledWith(10, 0, 'admins');
-    
     tick();
 
     expect(component.users.totalElements).toEqual(2);
@@ -175,8 +176,8 @@ describe('UsersReviewComponent', () => {
     expect(component.users.content[1].firstName).toEqual('Admin2');
     expect(component.users.content[1].lastName).toEqual('Admin2');
 
-    fixture.detectChanges(); 
-    tick(); 
+    fixture.detectChanges();
+    tick();
     fixture.detectChanges();
 
     const userRows: DebugElement[] = fixture.debugElement.queryAll(By.css('table tr'));
@@ -217,8 +218,8 @@ describe('UsersReviewComponent', () => {
     expect(component.users.content[1].firstName).toEqual('Admin2');
     expect(component.users.content[1].lastName).toEqual('Admin2');
 
-    fixture.detectChanges(); 
-    tick(); 
+    fixture.detectChanges();
+    tick();
     fixture.detectChanges();
 
     const userRows: DebugElement[] = fixture.debugElement.queryAll(By.css('table tr'));
@@ -258,8 +259,8 @@ describe('UsersReviewComponent', () => {
     expect(component.users.content[1].firstName).toEqual('Admin2');
     expect(component.users.content[1].lastName).toEqual('Admin2');
 
-    fixture.detectChanges(); 
-    tick(); 
+    fixture.detectChanges();
+    tick();
     fixture.detectChanges();
 
     const userRows: DebugElement[] = fixture.debugElement.queryAll(By.css('table tr'));
@@ -282,8 +283,7 @@ describe('UsersReviewComponent', () => {
     component.searchChanged('1');
 
     expect(component.searchValue).toEqual('1');
-    expect(userService.searchUsers).toHaveBeenCalledWith(10, 0, '1','admins');
-
+    expect(userService.searchUsers).toHaveBeenCalledWith(10, 0, '1', 'admins');
     tick();
 
     expect(component.users.totalElements).toEqual(1);
@@ -293,8 +293,8 @@ describe('UsersReviewComponent', () => {
     expect(component.users.content[0].firstName).toEqual('Admin1');
     expect(component.users.content[0].lastName).toEqual('Admin1');
 
-    fixture.detectChanges(); 
-    tick(); 
+    fixture.detectChanges();
+    tick();
     fixture.detectChanges();
 
     const userRows: DebugElement[] = fixture.debugElement.queryAll(By.css('table tr'));
@@ -320,7 +320,7 @@ describe('UsersReviewComponent', () => {
     expect(userService.delete).toHaveBeenCalledOnceWith(2);
 
     tick();
-    
+
     expect(userService.getUsers).toHaveBeenCalled();
     expect(snackBar.success).toHaveBeenCalledOnceWith('You have successfully deleted admin!');
   }));
@@ -331,7 +331,7 @@ describe('UsersReviewComponent', () => {
     expect(userService.delete).toHaveBeenCalledOnceWith(2);
 
     tick();
-    
+
     expect(userService.getUsers).toHaveBeenCalled();
     expect(snackBar.success).toHaveBeenCalledOnceWith('You have successfully deleted admin!');
   }));
@@ -341,4 +341,5 @@ describe('UsersReviewComponent', () => {
 
     expect(dialog.open).toHaveBeenCalled();
   });
+
 });

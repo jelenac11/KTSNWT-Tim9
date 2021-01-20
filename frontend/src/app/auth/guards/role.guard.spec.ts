@@ -33,7 +33,6 @@ describe('RoleGuard', () => {
     guard = TestBed.inject(RoleGuard);
     router = TestBed.inject(Router);
     jwtService = TestBed.inject(JwtService);
-    
     const val = guard.canActivate(({data: { expectedRoles: 'ROLE_ADMIN'}} as any) as ActivatedRouteSnapshot);
 
     expect(val).toBeTruthy();
@@ -44,12 +43,12 @@ describe('RoleGuard', () => {
   it('canActivate() should return false', () => {
     const jwtServiceMocked2 = {
       getToken: jasmine.createSpy('getToken').and.returnValue(null)
-    }
+    };
+
     TestBed.overrideProvider(JwtService, {useValue: jwtServiceMocked2});
     guard = TestBed.inject(RoleGuard);
     router = TestBed.inject(Router);
     jwtService = TestBed.inject(JwtService);
-    
     const val = guard.canActivate(({data: { expectedRoles: 'ROLE_ADMIN'}} as any) as ActivatedRouteSnapshot);
 
     expect(val).toBeFalsy();

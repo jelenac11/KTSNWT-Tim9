@@ -12,12 +12,15 @@ describe('NoAuthGuard', () => {
   beforeEach(() => {
     const authenticationServiceMocked = {
       isAuthenticated: jasmine.createSpy('isAuthenticated').and.returnValue(true)
-    }
+    };
     const routerMocked = jasmine.createSpyObj('router', ['navigate']);
     TestBed.configureTestingModule({
-      providers: [NoAuthGuard,  {provide: AuthenticationService, useValue: authenticationServiceMocked}, {provide: Router, useValue: routerMocked }]
+      providers: [
+        NoAuthGuard,
+        {provide: AuthenticationService, useValue: authenticationServiceMocked},
+        {provide: Router, useValue: routerMocked }
+      ]
     });
-  });
 
   it('should be created', () => {
     guard = TestBed.inject(NoAuthGuard);
@@ -40,7 +43,8 @@ describe('NoAuthGuard', () => {
   it('canActivate() should return true', () => {
     const authenticationServiceMocked2 = {
       isAuthenticated: jasmine.createSpy('isAuthenticated').and.returnValue(false)
-    }
+    };
+
     TestBed.overrideProvider(AuthenticationService, {useValue: authenticationServiceMocked2});
     guard = TestBed.inject(NoAuthGuard);
     router = TestBed.inject(Router);
@@ -51,6 +55,5 @@ describe('NoAuthGuard', () => {
     expect(authenticationService.isAuthenticated).toHaveBeenCalled();
     expect(router.navigate).toHaveBeenCalledTimes(0);
   });
-
 
 });

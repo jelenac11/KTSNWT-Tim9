@@ -22,7 +22,7 @@ describe('SignInComponent', () => {
         accessToken: 'asdfghjkl',
         expiresIn: 123456
       }))
-    }
+    };
     const routerMocked = jasmine.createSpyObj('router', ['navigate']);
     const jwtServiceMocked = {
       saveToken: jasmine.createSpy('saveToken'),
@@ -30,7 +30,7 @@ describe('SignInComponent', () => {
     const snackBarMocked = {
       success: jasmine.createSpy('success'),
       error: jasmine.createSpy('error')
-    }
+    };
 
     await TestBed.configureTestingModule({
       imports: [FormsModule, ReactiveFormsModule],
@@ -53,7 +53,7 @@ describe('SignInComponent', () => {
     authenticationService = TestBed.inject(AuthenticationService);
     router = TestBed.inject(Router);
     snackBar = TestBed.inject(Snackbar);
-    jwtService = TestBed.inject(JwtService)
+    jwtService = TestBed.inject(JwtService);
   });
 
   it('should create', () => {
@@ -76,7 +76,7 @@ describe('SignInComponent', () => {
     expect(jwtService.saveToken).toHaveBeenCalledTimes(0);
     expect(router.navigate).toHaveBeenCalledTimes(0);
     expect(snackBar.error).toHaveBeenCalledTimes(0);
-    
+
     const emailErrorMsg = fixture.debugElement.query(By.css('#login-email-error-required')).nativeElement;
     expect(emailErrorMsg).toBeDefined();
     expect(emailErrorMsg.innerHTML).toContain('Email is required');
@@ -135,8 +135,8 @@ describe('SignInComponent', () => {
     expect(passwordErrorMsg.innerHTML).toContain('Password is required');
   });
 
-  function newEvent(eventName: string, bubbles = false, cancelable = false) {
-    let evt = document.createEvent('CustomEvent');
+  function newEvent(eventName: string, bubbles = false, cancelable = false): CustomEvent<any> {
+    const evt = document.createEvent('CustomEvent');
     evt.initCustomEvent(eventName, bubbles, cancelable, null);
     return evt;
   }
@@ -174,5 +174,5 @@ describe('SignInComponent', () => {
     expect(router.navigate).toHaveBeenCalledWith(['/']);
     expect(snackBar.error).toHaveBeenCalledTimes(0);
   }));
-  
+
 });

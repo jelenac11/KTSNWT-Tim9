@@ -21,17 +21,17 @@ describe('ChangePasswordComponent', () => {
     const snackBarMocked = {
       success: jasmine.createSpy('success'),
       error: jasmine.createSpy('error')
-    }
+    };
     const authenticationServiceMocked = {
       changePassword: jasmine.createSpy('changePassword').and.returnValue(of(new Observable<string>())),
       logout: jasmine.createSpy('logout')
-    }
+    };
     const dialogRefMock = {
       close: jasmine.createSpy('close')
-    }
+    };
     const routerMock = {
       navigate: jasmine.createSpy('navigate')
-    }
+    };
 
     TestBed.configureTestingModule({
       imports: [FormsModule, ReactiveFormsModule],
@@ -67,7 +67,7 @@ describe('ChangePasswordComponent', () => {
     snackBar = TestBed.inject(Snackbar);
     dialogRef = TestBed.inject(MatDialogRef);
     router = TestBed.inject(Router);
-    component.ngOnInit
+    component.ngOnInit();
     expect(component.form).toBeDefined();
     expect(component.form.invalid).toBeTruthy();
   });
@@ -85,8 +85,8 @@ describe('ChangePasswordComponent', () => {
     expect(dialogRef.close).toHaveBeenCalledTimes(1);
   });
 
-  function newEvent(eventName: string, bubbles = false, cancelable = false) {
-    let evt = document.createEvent('CustomEvent');
+  function newEvent(eventName: string, bubbles = false, cancelable = false): CustomEvent<any> {
+    const evt = document.createEvent('CustomEvent');
     evt.initCustomEvent(eventName, bubbles, cancelable, null);
     return evt;
   }
@@ -143,7 +143,7 @@ describe('ChangePasswordComponent', () => {
     expect(component.form.invalid).toBeTruthy();
     expect(authenticationService.changePassword).toHaveBeenCalledTimes(0);
     expect(snackBar.success).toHaveBeenCalledTimes(0);
-    
+
     const oldPasswordErrorMsg = fixture.debugElement.query(By.css('#old-password-error')).nativeElement;
     expect(oldPasswordErrorMsg).toBeDefined();
     expect(oldPasswordErrorMsg.innerHTML).toContain('Old password is required');
@@ -172,7 +172,7 @@ describe('ChangePasswordComponent', () => {
     expect(component.form.invalid).toBeTruthy();
     expect(authenticationService.changePassword).toHaveBeenCalledTimes(0);
     expect(snackBar.success).toHaveBeenCalledTimes(0);
-    
+
     const oldPasswordErrorMsg = fixture.debugElement.query(By.css('#old-password-error')).nativeElement;
     expect(oldPasswordErrorMsg).toBeDefined();
     expect(oldPasswordErrorMsg.innerHTML).toContain('Old password is required');
@@ -197,7 +197,7 @@ describe('ChangePasswordComponent', () => {
     expect(component.form.invalid).toBeTruthy();
     expect(authenticationService.changePassword).toHaveBeenCalledTimes(0);
     expect(snackBar.success).toHaveBeenCalledTimes(0);
-    
+
     const newPasswordErrorMsg = fixture.debugElement.query(By.css('#new-password-error')).nativeElement;
     expect(newPasswordErrorMsg).toBeDefined();
     expect(newPasswordErrorMsg.innerHTML).toContain('New password is required');
@@ -226,7 +226,7 @@ describe('ChangePasswordComponent', () => {
     expect(component.form.invalid).toBeTruthy();
     expect(authenticationService.changePassword).toHaveBeenCalledTimes(0);
     expect(snackBar.success).toHaveBeenCalledTimes(0);
-    
+
     const newPasswordErrorMsg = fixture.debugElement.query(By.css('#six-characters')).nativeElement;
     expect(newPasswordErrorMsg).toBeDefined();
     expect(newPasswordErrorMsg.innerHTML).toContain('New password must be at least 6 characters long');
@@ -255,7 +255,7 @@ describe('ChangePasswordComponent', () => {
     expect(component.form.invalid).toBeTruthy();
     expect(authenticationService.changePassword).toHaveBeenCalledTimes(0);
     expect(snackBar.success).toHaveBeenCalledTimes(0);
-    
+
     const confirmPasswordErrorMsg = fixture.debugElement.query(By.css('#no-match')).nativeElement;
     expect(confirmPasswordErrorMsg).toBeDefined();
     expect(confirmPasswordErrorMsg.innerHTML).toContain('New password and confirmed password don\'t match');
@@ -288,14 +288,14 @@ describe('ChangePasswordComponent', () => {
   it('should return incorrect old password when submitted', fakeAsync(() => {
     const authencicationServiceMocked2 = {
       changePassword: jasmine.createSpy('changePassword').and.returnValue(throwError({
-        'timestamp': 1611078300751,
-        'status': 400,
-        'error': 'Incorrect old password',
-        'message': '',
-        'path': '/auth/change-password'
+        timestamp: 1611078300751,
+        status: 400,
+        error: 'Incorrect old password',
+        message: '',
+        path: '/auth/change-password'
       })),
       logout: jasmine.createSpy('logout')
-    }
+    };
     TestBed.overrideProvider(AuthenticationService, {useValue: authencicationServiceMocked2});
     TestBed.compileComponents();
     fixture = TestBed.createComponent(ChangePasswordComponent);
@@ -311,7 +311,7 @@ describe('ChangePasswordComponent', () => {
     component.form.controls.confirmPassword.setValue('novasifra');
     fixture.detectChanges();
     component.onSubmit();
-    
+
     expect(component.form.invalid).toBeFalsy();
     expect(authenticationService.changePassword).toHaveBeenCalledTimes(1);
     tick();

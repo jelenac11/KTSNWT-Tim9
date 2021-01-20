@@ -20,13 +20,13 @@ describe('AddAdminComponent', () => {
     const snackBarMocked = {
       success: jasmine.createSpy('success'),
       error: jasmine.createSpy('error')
-    }
+    };
     const userServiceMocked = {
       addAdmin: jasmine.createSpy('addAdmin').and.returnValue(of(new Observable<User>())),
-    }
+    };
     const dialogRefMock = {
       close: jasmine.createSpy('close')
-    }
+    };
 
     TestBed.configureTestingModule({
       imports: [FormsModule, ReactiveFormsModule],
@@ -76,8 +76,8 @@ describe('AddAdminComponent', () => {
     expect(dialogRef.close).toHaveBeenCalledTimes(1);
   });
 
-  function newEvent(eventName: string, bubbles = false, cancelable = false) {
-    let evt = document.createEvent('CustomEvent');
+  function newEvent(eventName: string, bubbles = false, cancelable = false): CustomEvent<any> {
+    const evt = document.createEvent('CustomEvent');
     evt.initCustomEvent(eventName, bubbles, cancelable, null);
     return evt;
   }
@@ -137,7 +137,7 @@ describe('AddAdminComponent', () => {
     expect(component.form.invalid).toBeTruthy();
     expect(userService.addAdmin).toHaveBeenCalledTimes(0);
     expect(snackBar.success).toHaveBeenCalledTimes(0);
-    
+
     const firstNameErrorMsg = fixture.debugElement.query(By.css('#add-admin-firstname-error')).nativeElement;
     expect(firstNameErrorMsg).toBeDefined();
     expect(firstNameErrorMsg.innerHTML).toContain('First Name is required');
@@ -173,7 +173,7 @@ describe('AddAdminComponent', () => {
     expect(component.form.invalid).toBeTruthy();
     expect(userService.addAdmin).toHaveBeenCalledTimes(0);
     expect(snackBar.success).toHaveBeenCalledTimes(0);
-    
+
     const firstNameErrorMsg = fixture.debugElement.query(By.css('#add-admin-firstname-error')).nativeElement;
     expect(firstNameErrorMsg).toBeDefined();
     expect(firstNameErrorMsg.innerHTML).toContain('First Name is required');
@@ -197,7 +197,7 @@ describe('AddAdminComponent', () => {
     expect(component.form.invalid).toBeTruthy();
     expect(userService.addAdmin).toHaveBeenCalledTimes(0);
     expect(snackBar.success).toHaveBeenCalledTimes(0);
-    
+
     const firstNameErrorMsg = fixture.debugElement.query(By.css('#add-admin-lastname-error')).nativeElement;
     expect(firstNameErrorMsg).toBeDefined();
     expect(firstNameErrorMsg.innerHTML).toContain('Last Name is required');
@@ -221,7 +221,7 @@ describe('AddAdminComponent', () => {
     expect(component.form.invalid).toBeTruthy();
     expect(userService.addAdmin).toHaveBeenCalledTimes(0);
     expect(snackBar.success).toHaveBeenCalledTimes(0);
-    
+
     const firstNameErrorMsg = fixture.debugElement.query(By.css('#add-admin-email-error')).nativeElement;
     expect(firstNameErrorMsg).toBeDefined();
     expect(firstNameErrorMsg.innerHTML).toContain('Email is required');
@@ -245,7 +245,7 @@ describe('AddAdminComponent', () => {
     expect(component.form.invalid).toBeTruthy();
     expect(userService.addAdmin).toHaveBeenCalledTimes(0);
     expect(snackBar.success).toHaveBeenCalledTimes(0);
-    
+
     const firstNameErrorMsg = fixture.debugElement.query(By.css('#add-admin-username-error')).nativeElement;
     expect(firstNameErrorMsg).toBeDefined();
     expect(firstNameErrorMsg.innerHTML).toContain('Username is required');
@@ -270,7 +270,7 @@ describe('AddAdminComponent', () => {
     expect(component.form.invalid).toBeTruthy();
     expect(userService.addAdmin).toHaveBeenCalledTimes(0);
     expect(snackBar.success).toHaveBeenCalledTimes(0);
-    
+
     const firstNameErrorMsg = fixture.debugElement.query(By.css('#add-admin-email-invalid')).nativeElement;
     expect(firstNameErrorMsg).toBeDefined();
     expect(firstNameErrorMsg.innerHTML).toContain('Email is not valid');
@@ -290,8 +290,8 @@ describe('AddAdminComponent', () => {
     component.form.controls.username.setValue('jelenac');
     component.form.controls.email.setValue('email@gmail.com');
     component.add();
-    fixture.detectChanges()
-    
+    fixture.detectChanges();
+
     expect(component.form.invalid).toBeFalsy();
     expect(userService.addAdmin).toHaveBeenCalledTimes(1);
     tick();
@@ -303,13 +303,13 @@ describe('AddAdminComponent', () => {
   it('should return email already exists when submitted', fakeAsync(() => {
     const userServiceMocked2 = {
       addAdmin: jasmine.createSpy('addAdmin').and.returnValue(throwError({
-        'timestamp': 1611078300751,
-        'status': 409,
-        'error': 'Email already exists.',
-        'message': '',
-        'path': '/admins'
+        timestamp: 1611078300751,
+        status: 409,
+        error: 'Email already exists.',
+        message: '',
+        path: '/admins'
       }))
-    }
+    };
     TestBed.overrideProvider(UserService, {useValue: userServiceMocked2});
     TestBed.compileComponents();
     fixture = TestBed.createComponent(AddAdminComponent);
@@ -335,13 +335,13 @@ describe('AddAdminComponent', () => {
   it('should return username already exists when submitted', fakeAsync(() => {
     const userServiceMocked2 = {
       addAdmin: jasmine.createSpy('addAdmin').and.returnValue(throwError({
-        'timestamp': 1611078300751,
-        'status': 409,
-        'error': 'Username already exists.',
-        'message': '',
-        'path': '/admins'
+        timestamp: 1611078300751,
+        status: 409,
+        error: 'Username already exists.',
+        message: '',
+        path: '/admins'
       }))
-    }
+    };
     TestBed.overrideProvider(UserService, {useValue: userServiceMocked2});
     TestBed.compileComponents();
     fixture = TestBed.createComponent(AddAdminComponent);
