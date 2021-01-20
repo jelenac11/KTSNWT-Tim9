@@ -19,32 +19,32 @@ describe('HeaderComponent', () => {
   let userService: UserService;
 
   beforeEach(() => {
-    let matDialogRefMock = {
+    const matDialogRefMock = {
       open: jasmine.createSpy('open'),
-    }
-    let authenticationServiceMock = {
+    };
+    const authenticationServiceMock = {
       logout: jasmine.createSpy('logout'),
-    }
+    };
 
-    let jwtServiceMock = {
+    const jwtServiceMock = {
       getRole: jasmine.createSpy('getRole').and.returnValue(of('ROLE_ADMIN')),
     };
 
-    let userServiceMock = {
+    const userServiceMock = {
       getCurrentUser: jasmine.createSpy('getCurrentUser').and.returnValue(of(
         {
           id: 1,
-          username: "User",
-          email: "mail@mail.com",
-          firstName: "User",
-          lastName: "User"
+          username: 'User',
+          email: 'mail@mail.com',
+          firstName: 'User',
+          lastName: 'User'
         }
       )),
-    }
+    };
 
-    let routerMock = {
+    const routerMock = {
       navigate: jasmine.createSpy('navigate'),
-    }
+    };
 
     TestBed.configureTestingModule({
       imports: [MatMenuModule],
@@ -56,7 +56,7 @@ describe('HeaderComponent', () => {
         { provide: Router, useValue: routerMock },
       ],
       declarations: [HeaderComponent]
-    })
+    });
 
     fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
@@ -77,16 +77,10 @@ describe('HeaderComponent', () => {
     expect(jwtService.getRole).toHaveBeenCalled();
     expect(userService.getCurrentUser).toHaveBeenCalled();
     expect(component.user.id).toEqual(1);
-    expect(component.user.firstName).toEqual("User");
-    expect(component.user.lastName).toEqual("User");
-    expect(component.user.username).toEqual("User");
-    expect(component.user.email).toEqual("mail@mail.com");
-
-    fixture.whenStable()
-      .then(() => {
-
-        expect(component.role).toBe("ROLE_ADMIN");
-      });
+    expect(component.user.firstName).toEqual('User');
+    expect(component.user.lastName).toEqual('User');
+    expect(component.user.username).toEqual('User');
+    expect(component.user.email).toEqual('mail@mail.com');
   });
 
   it('logout', () => {

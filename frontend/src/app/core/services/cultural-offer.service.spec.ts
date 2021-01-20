@@ -15,7 +15,7 @@ describe('CulturalOfferService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-       providers:    [CulturalOfferService ]
+      providers: [CulturalOfferService]
     });
 
     injector = getTestBed();
@@ -40,38 +40,38 @@ describe('CulturalOfferService', () => {
       content: [
         {
           id: 5,
-          name: "Srbija",
+          name: 'Srbija',
           category: {
             id: 1,
-            name: "Kategorija 1",
-            description: "Opis"
+            name: 'Kategorija 1',
+            description: 'Opis'
           },
           geolocation: {
-            placeId: "123",
-            location: "Srbija",
+            placeId: '123',
+            location: 'Srbija',
             lon: 5,
             lat: 5
           },
-          description: "Opis",
-          image: "nekiUrl",
+          description: 'Opis',
+          image: 'nekiUrl',
           averageMark: 4.85
         },
         {
           id: 6,
-          name: "Srbija 2",
+          name: 'Srbija 2',
           category: {
             id: 2,
-            name: "Kategorija 2",
-            description: "Opis 2"
+            name: 'Kategorija 2',
+            description: 'Opis 2'
           },
           geolocation: {
-            placeId: "1234",
-            location: "Srbija 2",
+            placeId: '1234',
+            location: 'Srbija 2',
             lon: 6,
             lat: 6
           },
-          description: "Opis 2",
-          image: "nekiUrl 2",
+          description: 'Opis 2',
+          image: 'nekiUrl 2',
           averageMark: 4.0
         }
       ],
@@ -92,29 +92,29 @@ describe('CulturalOfferService', () => {
     expect(culturalOffers.content.length).toEqual(2);
 
     expect(culturalOffers.content[0].id).toEqual(5);
-    expect(culturalOffers.content[0].name).toEqual("Srbija");
-    expect(culturalOffers.content[0].geolocation.placeId).toEqual("123");
+    expect(culturalOffers.content[0].name).toEqual('Srbija');
+    expect(culturalOffers.content[0].geolocation.placeId).toEqual('123');
     expect(culturalOffers.content[0].geolocation.lat).toEqual(5);
     expect(culturalOffers.content[0].geolocation.lon).toEqual(5);
-    expect(culturalOffers.content[0].geolocation.location).toEqual("Srbija");
+    expect(culturalOffers.content[0].geolocation.location).toEqual('Srbija');
     expect(culturalOffers.content[0].category.id).toEqual(1);
-    expect(culturalOffers.content[0].category.name).toEqual("Kategorija 1");
-    expect(culturalOffers.content[0].category.description).toEqual("Opis");
-    expect(culturalOffers.content[0].description).toEqual("Opis");
-    expect(culturalOffers.content[0].image).toEqual("nekiUrl");
+    expect(culturalOffers.content[0].category.name).toEqual('Kategorija 1');
+    expect(culturalOffers.content[0].category.description).toEqual('Opis');
+    expect(culturalOffers.content[0].description).toEqual('Opis');
+    expect(culturalOffers.content[0].image).toEqual('nekiUrl');
     expect(culturalOffers.content[0].averageMark).toEqual(4.85);
 
     expect(culturalOffers.content[1].id).toEqual(6);
-    expect(culturalOffers.content[1].name).toEqual("Srbija 2");
-    expect(culturalOffers.content[1].geolocation.placeId).toEqual("1234");
+    expect(culturalOffers.content[1].name).toEqual('Srbija 2');
+    expect(culturalOffers.content[1].geolocation.placeId).toEqual('1234');
     expect(culturalOffers.content[1].geolocation.lat).toEqual(6);
     expect(culturalOffers.content[1].geolocation.lon).toEqual(6);
-    expect(culturalOffers.content[1].geolocation.location).toEqual("Srbija 2");
+    expect(culturalOffers.content[1].geolocation.location).toEqual('Srbija 2');
     expect(culturalOffers.content[1].category.id).toEqual(2);
-    expect(culturalOffers.content[1].category.name).toEqual("Kategorija 2");
-    expect(culturalOffers.content[1].category.description).toEqual("Opis 2");
-    expect(culturalOffers.content[1].description).toEqual("Opis 2");
-    expect(culturalOffers.content[1].image).toEqual("nekiUrl 2");
+    expect(culturalOffers.content[1].category.name).toEqual('Kategorija 2');
+    expect(culturalOffers.content[1].category.description).toEqual('Opis 2');
+    expect(culturalOffers.content[1].description).toEqual('Opis 2');
+    expect(culturalOffers.content[1].image).toEqual('nekiUrl 2');
     expect(culturalOffers.content[1].averageMark).toEqual(4.0);
 
   }));
@@ -125,25 +125,25 @@ describe('CulturalOfferService', () => {
     const mockCulturalOffers: CulturalOffer =
     {
       id: 5,
-      name: "Srbija",
+      name: 'Srbija',
       category: {
         id: 1,
-        name: "Kategorija 1",
-        description: "Opis"
+        name: 'Kategorija 1',
+        description: 'Opis'
       },
       geolocation: {
-        placeId: "123",
-        location: "Srbija",
+        placeId: '123',
+        location: 'Srbija',
         lon: 5,
         lat: 5
       },
-      description: "Opis",
-      image: "nekiUrl",
+      description: 'Opis',
+      image: 'nekiUrl',
       averageMark: 4.85
     };
 
 
-    service.get("5").subscribe(data => {
+    service.get('5').subscribe(data => {
       culturalOffer = data;
     });
 
@@ -154,16 +154,16 @@ describe('CulturalOfferService', () => {
     tick();
 
     expect(culturalOffer.id).toEqual(5);
-    expect(culturalOffer.name).toEqual("Srbija");
-    expect(culturalOffer.geolocation.placeId).toEqual("123");
+    expect(culturalOffer.name).toEqual('Srbija');
+    expect(culturalOffer.geolocation.placeId).toEqual('123');
     expect(culturalOffer.geolocation.lat).toEqual(5);
     expect(culturalOffer.geolocation.lon).toEqual(5);
-    expect(culturalOffer.geolocation.location).toEqual("Srbija");
+    expect(culturalOffer.geolocation.location).toEqual('Srbija');
     expect(culturalOffer.category.id).toEqual(1);
-    expect(culturalOffer.category.name).toEqual("Kategorija 1");
-    expect(culturalOffer.category.description).toEqual("Opis");
-    expect(culturalOffer.description).toEqual("Opis");
-    expect(culturalOffer.image).toEqual("nekiUrl");
+    expect(culturalOffer.category.name).toEqual('Kategorija 1');
+    expect(culturalOffer.category.description).toEqual('Opis');
+    expect(culturalOffer.description).toEqual('Opis');
+    expect(culturalOffer.image).toEqual('nekiUrl');
     expect(culturalOffer.averageMark).toEqual(4.85);
   }));
 
@@ -176,45 +176,45 @@ describe('CulturalOfferService', () => {
       content: [
         {
           id: 5,
-          name: "Srbija",
+          name: 'Srbija',
           category: {
             id: 1,
-            name: "Kategorija 1",
-            description: "Opis"
+            name: 'Kategorija 1',
+            description: 'Opis'
           },
           geolocation: {
-            placeId: "123",
-            location: "Srbija",
+            placeId: '123',
+            location: 'Srbija',
             lon: 5,
             lat: 5
           },
-          description: "Opis",
-          image: "nekiUrl",
+          description: 'Opis',
+          image: 'nekiUrl',
           averageMark: 4.85
         },
         {
           id: 6,
-          name: "Srbija 2",
+          name: 'Srbija 2',
           category: {
             id: 1,
-            name: "Kategorija 1",
-            description: "Opis"
+            name: 'Kategorija 1',
+            description: 'Opis'
           },
           geolocation: {
-            placeId: "1234",
-            location: "Srbija 2",
+            placeId: '1234',
+            location: 'Srbija 2',
             lon: 6,
             lat: 6
           },
-          description: "Opis 2",
-          image: "nekiUrl 2",
+          description: 'Opis 2',
+          image: 'nekiUrl 2',
           averageMark: 4.0
         }
       ],
       totalElements: 10
     };
 
-    service.getCulturalOffersByCategory("1", 2, 3).subscribe(data => {
+    service.getCulturalOffersByCategory('1', 2, 3).subscribe(data => {
       culturalOffers = data;
     });
 
@@ -228,29 +228,29 @@ describe('CulturalOfferService', () => {
     expect(culturalOffers.content.length).toEqual(2);
 
     expect(culturalOffers.content[0].id).toEqual(5);
-    expect(culturalOffers.content[0].name).toEqual("Srbija");
-    expect(culturalOffers.content[0].geolocation.placeId).toEqual("123");
+    expect(culturalOffers.content[0].name).toEqual('Srbija');
+    expect(culturalOffers.content[0].geolocation.placeId).toEqual('123');
     expect(culturalOffers.content[0].geolocation.lat).toEqual(5);
     expect(culturalOffers.content[0].geolocation.lon).toEqual(5);
-    expect(culturalOffers.content[0].geolocation.location).toEqual("Srbija");
+    expect(culturalOffers.content[0].geolocation.location).toEqual('Srbija');
     expect(culturalOffers.content[0].category.id).toEqual(1);
-    expect(culturalOffers.content[0].category.name).toEqual("Kategorija 1");
-    expect(culturalOffers.content[0].category.description).toEqual("Opis");
-    expect(culturalOffers.content[0].description).toEqual("Opis");
-    expect(culturalOffers.content[0].image).toEqual("nekiUrl");
+    expect(culturalOffers.content[0].category.name).toEqual('Kategorija 1');
+    expect(culturalOffers.content[0].category.description).toEqual('Opis');
+    expect(culturalOffers.content[0].description).toEqual('Opis');
+    expect(culturalOffers.content[0].image).toEqual('nekiUrl');
     expect(culturalOffers.content[0].averageMark).toEqual(4.85);
 
     expect(culturalOffers.content[1].id).toEqual(6);
-    expect(culturalOffers.content[1].name).toEqual("Srbija 2");
-    expect(culturalOffers.content[1].geolocation.placeId).toEqual("1234");
+    expect(culturalOffers.content[1].name).toEqual('Srbija 2');
+    expect(culturalOffers.content[1].geolocation.placeId).toEqual('1234');
     expect(culturalOffers.content[1].geolocation.lat).toEqual(6);
     expect(culturalOffers.content[1].geolocation.lon).toEqual(6);
-    expect(culturalOffers.content[1].geolocation.location).toEqual("Srbija 2");
+    expect(culturalOffers.content[1].geolocation.location).toEqual('Srbija 2');
     expect(culturalOffers.content[1].category.id).toEqual(1);
-    expect(culturalOffers.content[1].category.name).toEqual("Kategorija 1");
-    expect(culturalOffers.content[1].category.description).toEqual("Opis");
-    expect(culturalOffers.content[1].description).toEqual("Opis 2");
-    expect(culturalOffers.content[1].image).toEqual("nekiUrl 2");
+    expect(culturalOffers.content[1].category.name).toEqual('Kategorija 1');
+    expect(culturalOffers.content[1].category.description).toEqual('Opis');
+    expect(culturalOffers.content[1].description).toEqual('Opis 2');
+    expect(culturalOffers.content[1].image).toEqual('nekiUrl 2');
     expect(culturalOffers.content[1].averageMark).toEqual(4.0);
 
   }));
@@ -263,45 +263,45 @@ describe('CulturalOfferService', () => {
       content: [
         {
           id: 5,
-          name: "Srbija",
+          name: 'Srbija',
           category: {
             id: 1,
-            name: "Kategorija 1",
-            description: "Opis"
+            name: 'Kategorija 1',
+            description: 'Opis'
           },
           geolocation: {
-            placeId: "123",
-            location: "Srbija",
+            placeId: '123',
+            location: 'Srbija',
             lon: 5,
             lat: 5
           },
-          description: "Opis",
-          image: "nekiUrl",
+          description: 'Opis',
+          image: 'nekiUrl',
           averageMark: 4.85
         },
         {
           id: 6,
-          name: "Srbija 2",
+          name: 'Srbija 2',
           category: {
             id: 1,
-            name: "Kategorija 1",
-            description: "Opis"
+            name: 'Kategorija 1',
+            description: 'Opis'
           },
           geolocation: {
-            placeId: "1234",
-            location: "Srbija 2",
+            placeId: '1234',
+            location: 'Srbija 2',
             lon: 6,
             lat: 6
           },
-          description: "Opis 2",
-          image: "nekiUrl 2",
+          description: 'Opis 2',
+          image: 'nekiUrl 2',
           averageMark: 4.0
         }
       ],
       totalElements: 10
     };
 
-    service.findByCategoryIdAndName("1", "srb", 2, 3).subscribe(data => {
+    service.findByCategoryIdAndName('1', 'srb', 2, 3).subscribe(data => {
       culturalOffers = data;
     });
 
@@ -315,29 +315,29 @@ describe('CulturalOfferService', () => {
     expect(culturalOffers.content.length).toEqual(2);
 
     expect(culturalOffers.content[0].id).toEqual(5);
-    expect(culturalOffers.content[0].name).toEqual("Srbija");
-    expect(culturalOffers.content[0].geolocation.placeId).toEqual("123");
+    expect(culturalOffers.content[0].name).toEqual('Srbija');
+    expect(culturalOffers.content[0].geolocation.placeId).toEqual('123');
     expect(culturalOffers.content[0].geolocation.lat).toEqual(5);
     expect(culturalOffers.content[0].geolocation.lon).toEqual(5);
-    expect(culturalOffers.content[0].geolocation.location).toEqual("Srbija");
+    expect(culturalOffers.content[0].geolocation.location).toEqual('Srbija');
     expect(culturalOffers.content[0].category.id).toEqual(1);
-    expect(culturalOffers.content[0].category.name).toEqual("Kategorija 1");
-    expect(culturalOffers.content[0].category.description).toEqual("Opis");
-    expect(culturalOffers.content[0].description).toEqual("Opis");
-    expect(culturalOffers.content[0].image).toEqual("nekiUrl");
+    expect(culturalOffers.content[0].category.name).toEqual('Kategorija 1');
+    expect(culturalOffers.content[0].category.description).toEqual('Opis');
+    expect(culturalOffers.content[0].description).toEqual('Opis');
+    expect(culturalOffers.content[0].image).toEqual('nekiUrl');
     expect(culturalOffers.content[0].averageMark).toEqual(4.85);
 
     expect(culturalOffers.content[1].id).toEqual(6);
-    expect(culturalOffers.content[1].name).toEqual("Srbija 2");
-    expect(culturalOffers.content[1].geolocation.placeId).toEqual("1234");
+    expect(culturalOffers.content[1].name).toEqual('Srbija 2');
+    expect(culturalOffers.content[1].geolocation.placeId).toEqual('1234');
     expect(culturalOffers.content[1].geolocation.lat).toEqual(6);
     expect(culturalOffers.content[1].geolocation.lon).toEqual(6);
-    expect(culturalOffers.content[1].geolocation.location).toEqual("Srbija 2");
+    expect(culturalOffers.content[1].geolocation.location).toEqual('Srbija 2');
     expect(culturalOffers.content[1].category.id).toEqual(1);
-    expect(culturalOffers.content[1].category.name).toEqual("Kategorija 1");
-    expect(culturalOffers.content[1].category.description).toEqual("Opis");
-    expect(culturalOffers.content[1].description).toEqual("Opis 2");
-    expect(culturalOffers.content[1].image).toEqual("nekiUrl 2");
+    expect(culturalOffers.content[1].category.name).toEqual('Kategorija 1');
+    expect(culturalOffers.content[1].category.description).toEqual('Opis');
+    expect(culturalOffers.content[1].description).toEqual('Opis 2');
+    expect(culturalOffers.content[1].image).toEqual('nekiUrl 2');
     expect(culturalOffers.content[1].averageMark).toEqual(4.0);
 
   }));
@@ -350,45 +350,45 @@ describe('CulturalOfferService', () => {
       content: [
         {
           id: 5,
-          name: "Srbija",
+          name: 'Srbija',
           category: {
             id: 1,
-            name: "Kategorija 1",
-            description: "Opis"
+            name: 'Kategorija 1',
+            description: 'Opis'
           },
           geolocation: {
-            placeId: "123",
-            location: "Srbija",
+            placeId: '123',
+            location: 'Srbija',
             lon: 5,
             lat: 5
           },
-          description: "Opis",
-          image: "nekiUrl",
+          description: 'Opis',
+          image: 'nekiUrl',
           averageMark: 4.85
         },
         {
           id: 6,
-          name: "Srbija 2",
+          name: 'Srbija 2',
           category: {
             id: 1,
-            name: "Kategorija 1",
-            description: "Opis"
+            name: 'Kategorija 1',
+            description: 'Opis'
           },
           geolocation: {
-            placeId: "1234",
-            location: "Srbija 2",
+            placeId: '1234',
+            location: 'Srbija 2',
             lon: 6,
             lat: 6
           },
-          description: "Opis 2",
-          image: "nekiUrl 2",
+          description: 'Opis 2',
+          image: 'nekiUrl 2',
           averageMark: 4.0
         }
       ],
       totalElements: 10
     };
 
-    service.findByName("srb", 2, 3).subscribe(data => {
+    service.findByName('srb', 2, 3).subscribe(data => {
       culturalOffers = data;
     });
 
@@ -402,48 +402,50 @@ describe('CulturalOfferService', () => {
     expect(culturalOffers.content.length).toEqual(2);
 
     expect(culturalOffers.content[0].id).toEqual(5);
-    expect(culturalOffers.content[0].name).toEqual("Srbija");
-    expect(culturalOffers.content[0].geolocation.placeId).toEqual("123");
+    expect(culturalOffers.content[0].name).toEqual('Srbija');
+    expect(culturalOffers.content[0].geolocation.placeId).toEqual('123');
     expect(culturalOffers.content[0].geolocation.lat).toEqual(5);
     expect(culturalOffers.content[0].geolocation.lon).toEqual(5);
-    expect(culturalOffers.content[0].geolocation.location).toEqual("Srbija");
+    expect(culturalOffers.content[0].geolocation.location).toEqual('Srbija');
     expect(culturalOffers.content[0].category.id).toEqual(1);
-    expect(culturalOffers.content[0].category.name).toEqual("Kategorija 1");
-    expect(culturalOffers.content[0].category.description).toEqual("Opis");
-    expect(culturalOffers.content[0].description).toEqual("Opis");
-    expect(culturalOffers.content[0].image).toEqual("nekiUrl");
+    expect(culturalOffers.content[0].category.name).toEqual('Kategorija 1');
+    expect(culturalOffers.content[0].category.description).toEqual('Opis');
+    expect(culturalOffers.content[0].description).toEqual('Opis');
+    expect(culturalOffers.content[0].image).toEqual('nekiUrl');
     expect(culturalOffers.content[0].averageMark).toEqual(4.85);
 
     expect(culturalOffers.content[1].id).toEqual(6);
-    expect(culturalOffers.content[1].name).toEqual("Srbija 2");
-    expect(culturalOffers.content[1].geolocation.placeId).toEqual("1234");
+    expect(culturalOffers.content[1].name).toEqual('Srbija 2');
+    expect(culturalOffers.content[1].geolocation.placeId).toEqual('1234');
     expect(culturalOffers.content[1].geolocation.lat).toEqual(6);
     expect(culturalOffers.content[1].geolocation.lon).toEqual(6);
-    expect(culturalOffers.content[1].geolocation.location).toEqual("Srbija 2");
+    expect(culturalOffers.content[1].geolocation.location).toEqual('Srbija 2');
     expect(culturalOffers.content[1].category.id).toEqual(1);
-    expect(culturalOffers.content[1].category.name).toEqual("Kategorija 1");
-    expect(culturalOffers.content[1].category.description).toEqual("Opis");
-    expect(culturalOffers.content[1].description).toEqual("Opis 2");
-    expect(culturalOffers.content[1].image).toEqual("nekiUrl 2");
+    expect(culturalOffers.content[1].category.name).toEqual('Kategorija 1');
+    expect(culturalOffers.content[1].category.description).toEqual('Opis');
+    expect(culturalOffers.content[1].description).toEqual('Opis 2');
+    expect(culturalOffers.content[1].image).toEqual('nekiUrl 2');
     expect(culturalOffers.content[1].averageMark).toEqual(4.0);
 
   }));
 
   it('post() should return new cultural offer', fakeAsync(() => {
-    let culturalOffers: CulturalOffer = {
-      name: "Srbija",
+    const culturalOffers: CulturalOffer = {
+      name: 'Srbija',
       category: {
         id: 1,
-        name: "Kategorija 1",
-        description: "Opis"
+        name: 'Kategorija 1',
+        description: 'Opis'
       },
       geolocation: {
-        placeId: "123",
-        location: "Srbija",
+        placeId: '123',
+        location: 'Srbija',
         lon: 5,
         lat: 5
       },
-      description: "Opis"
+      description: 'Opis',
+      image: 'nekiUrl',
+      averageMark: 0
     };
 
     let newCulturalOffers: CulturalOffer;
@@ -452,20 +454,20 @@ describe('CulturalOfferService', () => {
 
     {
       id: 5,
-      name: "Srbija",
+      name: 'Srbija',
       category: {
         id: 1,
-        name: "Kategorija 1",
-        description: "Opis"
+        name: 'Kategorija 1',
+        description: 'Opis'
       },
       geolocation: {
-        placeId: "123",
-        location: "Srbija",
+        placeId: '123',
+        location: 'Srbija',
         lon: 5,
         lat: 5
       },
-      description: "Opis",
-      image: "nekiUrl",
+      description: 'Opis',
+      image: 'nekiUrl',
       averageMark: 0
     };
 
@@ -487,35 +489,35 @@ describe('CulturalOfferService', () => {
     tick();
 
     expect(newCulturalOffers.id).toEqual(5);
-    expect(newCulturalOffers.name).toEqual("Srbija");
-    expect(newCulturalOffers.geolocation.placeId).toEqual("123");
+    expect(newCulturalOffers.name).toEqual('Srbija');
+    expect(newCulturalOffers.geolocation.placeId).toEqual('123');
     expect(newCulturalOffers.geolocation.lat).toEqual(5);
     expect(newCulturalOffers.geolocation.lon).toEqual(5);
-    expect(newCulturalOffers.geolocation.location).toEqual("Srbija");
+    expect(newCulturalOffers.geolocation.location).toEqual('Srbija');
     expect(newCulturalOffers.category.id).toEqual(1);
-    expect(newCulturalOffers.category.name).toEqual("Kategorija 1");
-    expect(newCulturalOffers.category.description).toEqual("Opis");
-    expect(newCulturalOffers.description).toEqual("Opis");
-    expect(newCulturalOffers.image).toEqual("nekiUrl");
+    expect(newCulturalOffers.category.name).toEqual('Kategorija 1');
+    expect(newCulturalOffers.category.description).toEqual('Opis');
+    expect(newCulturalOffers.description).toEqual('Opis');
+    expect(newCulturalOffers.image).toEqual('nekiUrl');
     expect(newCulturalOffers.averageMark).toEqual(0);
 
   }));
 
   it('put() should return new cultural offer', fakeAsync(() => {
-    let culturalOffers: CulturalOffer = {
-      name: "Srbija",
+    const culturalOffers: CulturalOffer = {
+      name: 'Srbija',
       category: {
         id: 1,
-        name: "Kategorija 1",
-        description: "Opis"
+        name: 'Kategorija 1',
+        description: 'Opis'
       },
       geolocation: {
-        placeId: "123",
-        location: "Srbija",
+        placeId: '123',
+        location: 'Srbija',
         lon: 5,
         lat: 5
       },
-      description: "Opis"
+      description: 'Opis'
     };
 
     let newCulturalOffers: CulturalOffer;
@@ -524,20 +526,20 @@ describe('CulturalOfferService', () => {
 
     {
       id: 5,
-      name: "Srbija",
+      name: 'Srbija',
       category: {
         id: 1,
-        name: "Kategorija 1",
-        description: "Opis"
+        name: 'Kategorija 1',
+        description: 'Opis'
       },
       geolocation: {
-        placeId: "123",
-        location: "Srbija",
+        placeId: '123',
+        location: 'Srbija',
         lon: 5,
         lat: 5
       },
-      description: "Opis",
-      image: "nekiUrl",
+      description: 'Opis',
+      image: 'nekiUrl',
       averageMark: 0
     };
 
@@ -548,7 +550,7 @@ describe('CulturalOfferService', () => {
 
     formData.append('culturalOfferDTO', blob);
 
-    service.put("5", formData).subscribe(data => {
+    service.put('5', formData).subscribe(data => {
       newCulturalOffers = data;
     });
 
@@ -559,16 +561,16 @@ describe('CulturalOfferService', () => {
     tick();
 
     expect(newCulturalOffers.id).toEqual(5);
-    expect(newCulturalOffers.name).toEqual("Srbija");
-    expect(newCulturalOffers.geolocation.placeId).toEqual("123");
+    expect(newCulturalOffers.name).toEqual('Srbija');
+    expect(newCulturalOffers.geolocation.placeId).toEqual('123');
     expect(newCulturalOffers.geolocation.lat).toEqual(5);
     expect(newCulturalOffers.geolocation.lon).toEqual(5);
-    expect(newCulturalOffers.geolocation.location).toEqual("Srbija");
+    expect(newCulturalOffers.geolocation.location).toEqual('Srbija');
     expect(newCulturalOffers.category.id).toEqual(1);
-    expect(newCulturalOffers.category.name).toEqual("Kategorija 1");
-    expect(newCulturalOffers.category.description).toEqual("Opis");
-    expect(newCulturalOffers.description).toEqual("Opis");
-    expect(newCulturalOffers.image).toEqual("nekiUrl");
+    expect(newCulturalOffers.category.name).toEqual('Kategorija 1');
+    expect(newCulturalOffers.category.description).toEqual('Opis');
+    expect(newCulturalOffers.description).toEqual('Opis');
+    expect(newCulturalOffers.image).toEqual('nekiUrl');
     expect(newCulturalOffers.averageMark).toEqual(0);
 
   }));
@@ -576,7 +578,7 @@ describe('CulturalOfferService', () => {
   it('delete() should return new cultural offer', fakeAsync(() => {
     let result: boolean;
 
-    service.delete("5").subscribe(data => {
+    service.delete('5').subscribe(data => {
       result = data;
     });
 
