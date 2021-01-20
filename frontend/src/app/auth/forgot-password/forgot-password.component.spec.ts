@@ -30,6 +30,7 @@ describe('ForgotPasswordComponent', () => {
         { provide: AuthenticationService, useValue: authenticationServiceMocked }
       ]
     });
+  });
 
   it('should create', () => {
     TestBed.compileComponents();
