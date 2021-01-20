@@ -19,6 +19,7 @@ describe('AppComponent', () => {
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
+<<<<<<< Updated upstream
 
   it(`should have as title 'frontend'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
@@ -32,4 +33,6 @@ describe('AppComponent', () => {
     const compiled = fixture.nativeElement;
     expect(compiled.querySelector('.content span').textContent).toContain('frontend app is running!');
   });
+=======
+>>>>>>> Stashed changes
 });
