@@ -1,0 +1,126 @@
+<div *ngIf="categories" class="content conteiner-fluid" role="main">
+    
+    <mat-tab-group mat-stretch-tabs (selectedTabChange)="changeTab($event)">
+        <mat-tab
+          label="All"
+        >
+        <div class="conteiner">
+
+            <div *ngIf='news' class="row justify-content-center">
+              <div class="col-md-3 col-center" 
+              *ngFor="
+              let item of news.content
+              | paginate
+              : {
+                            itemsPerPage: size,
+                            currentPage: page,
+                            totalItems: news.totalElements
+                          }
+                          ;let i = index">
+                          <mdb-card  class="containerCard"
+                          
+                          ><div class='conteiner'>
+                            
+                            <mdb-card-body class="d-flex flex-column">
+                              <mdb-card-title class="align-self-center">
+                          <button
+                          mat-flat-button
+                              color="primary"
+                              class="button-co"
+                              routerLink="/cultural-offers/{{item.culturalOfferID}}"
+                              >
+                              {{getTitle(item.culturalOfferID)}} 
+                            </button>
+                            
+                          </mdb-card-title>
+                              <mdb-carousel [isControls]="true">
+                                <mdb-carousel-item *ngFor="let img of item.images; let j = index">
+                                  <img height="200px" width="400px" class="d-block w-100" src="{{getImageSrc(i,j)}}" onerror='this.src ="assets/noimage.jpg" ' alt="First slide">
+      
+                                </mdb-carousel-item>
+                              </mdb-carousel>
+                              
+                              
+                          <mdb-card-text *ngIf="item.content">
+                            <p>Date: {{getDate(item.date) | date:'E, dd.MM.YYYY.' }}</p>
+                            {{ item.content | slice: 0:360
+                            }}{{ item.content.length > 360 ? "..." : "" }}
+                          </mdb-card-text>
+                          <mdb-card-text *ngIf="!item.content"> 
+                            
+                          </mdb-card-text>
+                        </mdb-card-body>
+                        
+                      </div>
+                    </mdb-card>
+              </div>
+            </div>
+          </div>
+          
+        </mat-tab>
+        <mat-tab
+          *ngFor="let category of categories; let i = index"
+          [label]="category.name"
+        >
+        <div class="conteiner">
+
+            <div *ngIf='news' class="row justify-content-center">
+              <div class="col-md-3 col-center" 
+              *ngFor="
+              let item of news.content
+              | paginate
+              : {
+                            itemsPerPage: size,
+                            currentPage: page,
+                            totalItems: news.totalElements
+                          }
+                          ;let i = index">
+                          <mdb-card  class="containerCard"
+                          
+                          ><div class='conteiner'>
+                            
+                            <mdb-card-body class="d-flex flex-column">
+                              <mdb-card-title class="align-self-center">
+                          <button
+                          mat-flat-button
+                              color="primary"
+                              class="button-co"
+                              routerLink="/cultural-offers/{{item.culturalOfferID}}"
+                              >
+                              {{getTitle(item.culturalOfferID)}} 
+                            </button>
+                            
+                          </mdb-card-title>
+                              <mdb-carousel [isControls]="true">
+                                <mdb-carousel-item *ngFor="let img of item.images; let j = index">
+                                  <img height="200px" width="400px" class="d-block w-100" src="{{getImageSrc(i,j)}}" onerror='this.src ="assets/noimage.jpg" ' alt="First slide">
+      
+                                </mdb-carousel-item>
+                              </mdb-carousel>
+                              
+                              
+                          <mdb-card-text *ngIf="item.content">
+                            <p>Date: {{getDate(item.date) | date:'E, dd.MM.YYYY.' }}</p>
+                            {{ item.content | slice: 0:360
+                            }}{{ item.content.length > 360 ? "..." : "" }}
+                          </mdb-card-text>
+                          <mdb-card-text *ngIf="!item.content"> 
+                            
+                          </mdb-card-text>
+                        </mdb-card-body>
+                        
+                      </div>
+                    </mdb-card>
+              </div>
+            </div>
+          </div>
+          
+        </mat-tab>
+      </mat-tab-group>
+      <pagination-controls
+      previousLabel="Previous"
+      nextLabel="Next"
+      (pageChange)="handlePageChange($event)"
+    ></pagination-controls>
+  </div>
+  

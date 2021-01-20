@@ -49,7 +49,7 @@ export class NewsReviewComponent implements OnInit {
   }
 
   getNews(): void{
-    /*this.newsService.getAllByCOID(this.coid, this.size, this.page - 1).subscribe(news => {
+    this.newsService.getAllByCOID(this.coid, this.size, this.page - 1).subscribe(news => {
       if (news.content.length === 0){
         this.snackBar.error('There is no news for this cultural offer!');
       }
@@ -60,7 +60,7 @@ export class NewsReviewComponent implements OnInit {
         this.coService.get(item.culturalOfferID).
         subscribe(co => this.culturalOffer.set(item.culturalOfferID, co));
       }
-    });*/
+    });
   }
 
 

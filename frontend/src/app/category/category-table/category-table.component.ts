@@ -68,7 +68,7 @@ export class CategoryTableComponent implements OnInit {
       this.getCategories();
       this.snackBar.success('You have successfully deleted category!');
     }, err => {
-      this.snackBar.error('Can\'t delete this, category has cultural offers!');
+      this.snackBar.error('Can\'t delete this, category has category!');
     });
   }
 
