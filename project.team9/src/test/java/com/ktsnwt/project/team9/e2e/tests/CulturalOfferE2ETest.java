@@ -349,15 +349,17 @@ public class CulturalOfferE2ETest {
 		homePage.ensureIsDisplayedSearch();
 
 		assertEquals("https://localhost:4200/", driver.getCurrentUrl());
-
+		
 		homePage.getSearch().sendKeys("festival 100");
-
+		
 		homePage.getFestivalsTab().click();
 
+		Thread.sleep(1000);
+		
 		homePage.ensureIsDisplayedMoreButton();
-
+		
 		homePage.getMore().click();
-
+		
 		reviewCulturalOfferPage.ensureIsDisplayedName();
 
 		assertEquals("https://localhost:4200/cultural-offers/3", driver.getCurrentUrl());
