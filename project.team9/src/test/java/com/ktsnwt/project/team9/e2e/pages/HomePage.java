@@ -100,11 +100,17 @@ public class HomePage {
 	@FindBy(id = "user-navigation")
 	private WebElement userPage;
 	
+	@FindBy(id = "category-navigation")
+	private WebElement categoryPage;
+	
 	@FindBy(xpath = "//div[@id='search_div_home_page']/app-search/div/mat-form-field/div/div/div[3]/input")
 	private WebElement search;
 
 	@FindBy(id = "comment-requests-navigation")
 	private WebElement commentRequestsPage;
+
+	@FindBy(xpath = "//*[contains(text(),'My News')]")
+	private WebElement myNewsPage;
 	
 	public HomePage(WebDriver driver) {
 		this.driver = driver;
@@ -112,6 +118,10 @@ public class HomePage {
 	
 	public void ensureIsDisplayedCulturalOfferNavigation() {
         (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("culturalOffers_navigation")));
+    }
+	
+	public void ensureIsDisplayedCategoriesNavigation() {
+        (new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("category-navigation")));
     }
 	
 	public void ensureIsDisplayedSignUpNavigation() {

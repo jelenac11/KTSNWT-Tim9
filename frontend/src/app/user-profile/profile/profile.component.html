@@ -16,19 +16,19 @@
             <mat-label>Username</mat-label>
             <input formControlName="username" matInput placeholder="Username" [errorStateMatcher]="matcher" id="username-profile-input">
             <mat-icon matSuffix>account_circle</mat-icon>
-            <mat-error *ngIf="f.username.errors?.required">Username is required</mat-error>
+            <mat-error *ngIf="f.username.errors?.required" id="change-profile-username">Username is required</mat-error>
         </mat-form-field></p>
         <p><mat-form-field appearance="outline">
             <mat-label>First name</mat-label>
             <input formControlName="firstName" matInput placeholder="First name" [errorStateMatcher]="matcher" id="first-name-profile-input">
             <mat-icon matSuffix>person</mat-icon>
-            <mat-error *ngIf="f.firstName.errors?.required" id="first-name-error">First Name is required</mat-error>
+            <mat-error *ngIf="f.firstName.errors?.required" id="first-name-error">First name is required</mat-error>
         </mat-form-field></p>
         <p><mat-form-field appearance="outline">
             <mat-label>Last name</mat-label>
             <input formControlName="lastName" matInput placeholder="Last name" [errorStateMatcher]="matcher" id="last-name-profile-input">
             <mat-icon matSuffix>person</mat-icon>
-            <mat-error *ngIf="f.lastName.errors?.required">Last Name is required</mat-error>
+            <mat-error *ngIf="f.lastName.errors?.required" id="change-profile-last-name">Last name is required</mat-error>
         </mat-form-field></p>
     </form>
 </mat-dialog-content>

@@ -49,10 +49,11 @@ export class NewsReviewComponent implements OnInit {
   }
 
   getNews(): void{
-    this.newsService.getAllByCOID(this.coid, this.size, this.page - 1).subscribe(news => {
+    /*this.newsService.getAllByCOID(this.coid, this.size, this.page - 1).subscribe(news => {
       if (news.content.length === 0){
         this.snackBar.error('There is no news for this cultural offer!');
       }
+      news.content = news.content.sort((a, b) => a.id - b.id);
       this.images = [];
       this.getImages(news);
       this.news = news;
@@ -60,7 +61,7 @@ export class NewsReviewComponent implements OnInit {
         this.coService.get(item.culturalOfferID.toString()).
         subscribe(co => this.culturalOffer.set(item.culturalOfferID, co));
       }
-    });
+    });*/
   }
 
 
@@ -72,7 +73,9 @@ export class NewsReviewComponent implements OnInit {
         this.imageService.get(url).subscribe(res => {
           this.images[index].push(res);
           }
-        );
+        , () => {
+          return;
+        });
       }
     }
   }

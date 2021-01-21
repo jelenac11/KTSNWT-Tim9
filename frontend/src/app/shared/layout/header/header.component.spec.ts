@@ -99,4 +99,5 @@ describe('HeaderComponent', () => {
     component.showProfile();
     expect(dialog.open).toHaveBeenCalled();
   });
+
 });

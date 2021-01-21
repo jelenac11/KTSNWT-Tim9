@@ -2,7 +2,7 @@
     <div class="mt-2">
         <div class="button-group" id="search-div-category-page">
             <app-search (searchChanged)="searchChanged($event)"></app-search>
-            <button mat-flat-button color="primary" class="button-add" (click)="addCategory()">
+            <button mat-flat-button class="button-add green" (click)="addCategory()">
                 <mat-icon class="mr-2">category</mat-icon> Add new category
             </button>
         </div>
@@ -28,7 +28,7 @@
                     >
                         <td>{{ item.name }}</td>
                         <td>{{ item.description }}</td>
-                        <td><button mat-flat-button color="success" class="button-class" (click)="updateCategory(item)" >Update</button></td>
+                        <td><button mat-flat-button color="primary" class="button-class" (click)="updateCategory(item)" >Update</button></td>
                         <td><button mat-flat-button color="warn" class="button-class" (click)="openDialog(item.id)" >Remove</button></td>
                     </tr>
                 </tbody>

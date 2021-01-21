@@ -66,4 +66,5 @@ describe('MapComponent', () => {
     expect(component.latitude).toEqual(5);
     expect(component.longitude).toEqual(5);
   });
+
 });
