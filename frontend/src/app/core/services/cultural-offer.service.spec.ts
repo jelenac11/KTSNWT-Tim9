@@ -15,7 +15,7 @@ describe('CulturalOfferService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-       providers:    [CulturalOfferService ]
+      providers: [CulturalOfferService]
     });
 
     injector = getTestBed();
@@ -430,7 +430,7 @@ describe('CulturalOfferService', () => {
   }));
 
   it('post() should return new cultural offer', fakeAsync(() => {
-    let culturalOffers: CulturalOffer = {
+    const culturalOffers: CulturalOffer = {
       name: 'Srbija',
       category: {
         id: 1,
@@ -443,7 +443,9 @@ describe('CulturalOfferService', () => {
         lon: 5,
         lat: 5
       },
-      description: 'Opis'
+      description: 'Opis',
+      image: 'nekiUrl',
+      averageMark: 0
     };
 
     let newCulturalOffers: CulturalOffer;
@@ -502,7 +504,7 @@ describe('CulturalOfferService', () => {
   }));
 
   it('put() should return new cultural offer', fakeAsync(() => {
-    let culturalOffers: CulturalOffer = {
+    const culturalOffers: CulturalOffer = {
       name: 'Srbija',
       category: {
         id: 1,

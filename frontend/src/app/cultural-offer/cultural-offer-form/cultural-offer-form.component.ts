@@ -8,6 +8,7 @@ import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 import { CulturalOffer } from 'src/app/core/models/response/cultural-offer.model';
 import { Router } from '@angular/router';
 import { google } from 'google-maps';
+import { MyErrorStateMatcher } from 'src/app/core/error-matchers/ErrorStateMatcher';
 
 declare var google: google;
 
@@ -36,9 +37,9 @@ export class CulturalOfferFormComponent implements OnInit {
 
   uploadedImage: string | ArrayBuffer = '';
 
-  geoCoder = new google.maps.Geocoder();
-
   markerCoordinates = { geolocation: { lat: undefined, lon: undefined } };
+
+  matcher: MyErrorStateMatcher = new MyErrorStateMatcher();
 
   constructor(
     private categoryService: CategoryService,
@@ -214,7 +215,8 @@ export class CulturalOfferFormComponent implements OnInit {
   }
 
   private setLocationValue(): void {
-    this.geoCoder.geocode(
+    const geoCoder = new google.maps.Geocoder();
+    geoCoder.geocode(
       {
         placeId: this.culturalOffer.geolocation.placeId,
       },

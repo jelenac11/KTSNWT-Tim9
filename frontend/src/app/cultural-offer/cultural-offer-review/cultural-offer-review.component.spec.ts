@@ -24,7 +24,7 @@ describe('CulturalOfferReviewComponent', () => {
   let jwtService: JwtService;
 
   beforeEach(() => {
-    let data = {
+    const data = {
       id: 5,
       name: 'Srbija',
       category: {
@@ -43,19 +43,29 @@ describe('CulturalOfferReviewComponent', () => {
       averageMark: 4.85
     };
 
-    let culturalOfferServiceMock = {
+    const culturalOfferServiceMock = {
       get: jasmine.createSpy('get').and.returnValue(of(data))
     };
 
-    let jwtServiceMock = {
+    const jwtServiceMock = {
       getRole: jasmine.createSpy('getRole').and.returnValue(of('ROLE_ADMIN'))
     };
 
-    let newsServiceMock = {
+    const registeredUserServiceMock = {
+      getCurrentUser: jasmine.createSpy('getCurrentUser').and.returnValue(of({
+        id: 5,
+        username: 'User',
+        email: 'user@mail.com',
+        firstName: 'User',
+        lastName: 'User'
+      }))
+    }
+
+    const newsServiceMock = {
       subscribe: jasmine.createSpy('subscribe').and.returnValue(of(true)),
       unsubscribe: jasmine.createSpy('unsubscribe').and.returnValue(of(false))
     };
-    let markServiceMock = {
+    const markServiceMock = {
       create: jasmine.createSpy('create').and.returnValue(of({ value: 5 })),
       get: jasmine.createSpy('get').and.returnValue(of({ value: 5 })),
       update: jasmine.createSpy('update').and.returnValue(of({ value: 5 }))
@@ -65,12 +75,12 @@ describe('CulturalOfferReviewComponent', () => {
       declarations: [CulturalOfferReviewComponent],
       providers: [
         { provide: CulturalOfferService, useValue: culturalOfferServiceMock },
-        { provide: UserService, useValue: UserService },
+        { provide: UserService, useValue: registeredUserServiceMock },
         { provide: JwtService, useValue: jwtServiceMock },
         { provide: NewsService, useValue: newsServiceMock },
         { provide: MarkService, useValue: markServiceMock },
         { provide: MatDialog, useValue: { MatDialog } },
-        { provide: ActivatedRoute, useValue: { snapshot: { paramMap: { get: (id: string) => { return '5' } } } } },
+        { provide: ActivatedRoute, useValue: { snapshot: { paramMap: { get: (id: string) => { return '5'; } } } } },
       ]
     });
 
@@ -97,7 +107,8 @@ describe('CulturalOfferReviewComponent', () => {
     expect(markService.get).toHaveBeenCalled();
     expect(component.isRated).toEqual(true);
     expect(component.mark).toEqual(5);
-    expect(component.culturalOfferId).toEqual('5')
+    expect(component.userID).toEqual(5);
+    expect(component.culturalOfferId).toEqual('5');
     expect(component.culturalOffer.id).toEqual(5);
     expect(component.culturalOffer.name).toEqual('Srbija');
     expect(component.culturalOffer.geolocation.location).toEqual('Srbija');
@@ -112,7 +123,7 @@ describe('CulturalOfferReviewComponent', () => {
 
     fixture.whenStable()
       .then(() => {
-        let name = fixture.debugElement.query(By.css('b')).nativeElement;
+        const name = fixture.debugElement.query(By.css('b')).nativeElement;
         expect(name.innerText).toEqual('Srbija');
       });
   }));

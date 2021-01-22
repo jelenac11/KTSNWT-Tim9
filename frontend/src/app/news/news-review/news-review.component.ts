@@ -58,7 +58,7 @@ export class NewsReviewComponent implements OnInit {
       this.getImages(news);
       this.news = news;
       for (const item of news.content){
-        this.coService.get(item.culturalOfferID).
+        this.coService.get(item.culturalOfferID.toString()).
         subscribe(co => this.culturalOffer.set(item.culturalOfferID, co));
       }
     });*/

@@ -6,13 +6,13 @@ import { ConfirmationDialogComponent } from './confirmation-dialog.component';
 describe('ConfirmationDialogComponent', () => {
   let component: ConfirmationDialogComponent;
   let fixture: ComponentFixture<ConfirmationDialogComponent>;
-  let dialogRef: MatDialogRef<ConfirmationDialogComponent>
+  let dialogRef: MatDialogRef<ConfirmationDialogComponent>;
 
-  let data = {};
+  const data = {};
 
-  let matDialogRefMock = {
+  const matDialogRefMock = {
     close: jasmine.createSpy('close'),
-  }
+  };
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [MatDialogModule],
@@ -20,7 +20,7 @@ describe('ConfirmationDialogComponent', () => {
         { provide: MatDialogRef, useValue: matDialogRefMock },
         { provide: MAT_DIALOG_DATA, useValue: data }]
 
-    })
+    });
     fixture = TestBed.createComponent(ConfirmationDialogComponent);
     component = fixture.componentInstance;
     dialogRef = TestBed.inject(MatDialogRef);

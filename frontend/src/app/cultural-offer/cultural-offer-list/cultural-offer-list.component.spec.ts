@@ -20,7 +20,7 @@ describe('CulturalOfferListComponent', () => {
   let categoryService: CategoryService;
 
   beforeEach(() => {
-    let data = {
+    const data = {
       content: [
         {
           id: 5,
@@ -62,13 +62,13 @@ describe('CulturalOfferListComponent', () => {
       totalElements: 10
     };
 
-    let culturalOfferServiceMock = {
+    const culturalOfferServiceMock = {
       findByName: jasmine.createSpy('findByName').and.returnValue(of(data)),
       getAll: jasmine.createSpy('getAll').and.returnValue(of(data)),
       getCulturalOffersByCategory: jasmine.createSpy('getCulturalOffersByCategory').and.returnValue(of(data))
     };
 
-    let categoryServiceMock = {
+    const categoryServiceMock = {
       getAll: jasmine.createSpy('getAll')
         .and.returnValue(of([{
           id: 1,
@@ -85,7 +85,8 @@ describe('CulturalOfferListComponent', () => {
         }])),
     };
 
-    let jwtServiceMock = {
+
+    const jwtServiceMock = {
       getRole: jasmine.createSpy('getRole').and.returnValue(of('ROLE_ADMIN'))
     };
 
@@ -124,11 +125,7 @@ describe('CulturalOfferListComponent', () => {
       .then(() => {
         expect(component.categories.length).toBe(3);
         fixture.detectChanges();
-        let elements: DebugElement[] =
-          fixture.debugElement.queryAll(By.css('.mat-option-text'));
-        expect(elements.length).toBe(3);
-        expect(component.role).toBe('ROLE_ADMIN');
-
+      
         expect(component.categories[0].id).toEqual(1);
         expect(component.categories[0].name).toEqual('Kategorija 1');
         expect(component.categories[0].description).toEqual('Opis');
@@ -174,7 +171,7 @@ describe('CulturalOfferListComponent', () => {
     expect(component.culturalOffers.content[1].description).toEqual('Opis 2');
     expect(component.culturalOffers.content[1].image).toEqual('nekiUrl 2');
     expect(component.culturalOffers.content[1].averageMark).toEqual(4.0);
-  })
+  });
 
   it('searchChanged', () => {
     component.searchChanged('srb');
@@ -209,7 +206,7 @@ describe('CulturalOfferListComponent', () => {
     expect(component.culturalOffers.content[1].description).toEqual('Opis 2');
     expect(component.culturalOffers.content[1].image).toEqual('nekiUrl 2');
     expect(component.culturalOffers.content[1].averageMark).toEqual(4.0);
-  })
+  });
 
   it('changeSelect', () => {
     component.changeSelect(1);
@@ -243,5 +240,5 @@ describe('CulturalOfferListComponent', () => {
     expect(component.culturalOffers.content[1].description).toEqual('Opis 2');
     expect(component.culturalOffers.content[1].image).toEqual('nekiUrl 2');
     expect(component.culturalOffers.content[1].averageMark).toEqual(4.0);
-  })
+  });
 });
