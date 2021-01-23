@@ -21,6 +21,7 @@ describe('NoAuthGuard', () => {
         {provide: Router, useValue: routerMocked }
       ]
     });
+  });
 
   it('should be created', () => {
     guard = TestBed.inject(NoAuthGuard);

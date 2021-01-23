@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Category } from 'src/app/core/models/response/category.model';
 import { NewsPage } from 'src/app/core/models/response/news-page.model';
-import { CategoryService } from 'src/app/core/services/category.service';
 import { CulturalOfferService } from 'src/app/core/services/cultural-offer.service';
 import { ImageService } from 'src/app/core/services/image.service';
 import { NewsService } from 'src/app/core/services/news.service';
 import { UserService } from 'src/app/core/services/user.service';
-import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 
 @Component({
   selector: 'app-subscried-news',
@@ -33,9 +31,7 @@ export class SubscriedNewsComponent implements OnInit {
     private newsService: NewsService,
     private coService: CulturalOfferService,
     private imageService: ImageService,
-    private userService: UserService,
-    private categoryService: CategoryService,
-    private snackBar: Snackbar,
+    private userService: UserService
     ) { }
 
   ngOnInit(): void {
@@ -58,7 +54,6 @@ export class SubscriedNewsComponent implements OnInit {
 
   getAllNews(): void{
     this.newsService.getSubscribedNews(this.size, this.page - 1, this.userID).subscribe(news => {
-      console.log(news);
       this.images = [];
       this.getImages(news);
       this.news = news;

@@ -107,7 +107,7 @@ export class NewsReviewComponent implements OnInit {
       this.getNews();
       this.snackBar.success('You have successfully deleted news!');
     }, err => {
-      this.snackBar.error('Can\'t delete this, News has news!');
+      this.snackBar.error('Can\'t delete this news!');
     });
   }
 
