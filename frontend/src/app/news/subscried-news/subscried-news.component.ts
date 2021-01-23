@@ -57,7 +57,7 @@ export class SubscriedNewsComponent implements OnInit {
   }
 
   getAllNews(): void{
-    /*this.newsService.getSubscribedNews(this.size, this.page - 1, this.userID).subscribe(news => {
+    this.newsService.getSubscribedNews(this.size, this.page - 1, this.userID).subscribe(news => {
       console.log(news);
       this.images = [];
       this.getImages(news);
@@ -70,7 +70,7 @@ export class SubscriedNewsComponent implements OnInit {
           this.checkCategory(co.category);
         });
       }
-    });*/
+    });
   }
 
   checkCategory(newCategory: Category): void{
@@ -85,7 +85,7 @@ export class SubscriedNewsComponent implements OnInit {
   }
 
   getNews(categoryId: number): void{
-    /*this.newsService.getAllByCategoryId(this.size, this.page - 1, this.userID, categoryId + '').subscribe(news => {
+    this.newsService.getAllByCategoryId(this.size, this.page - 1, this.userID, categoryId + '').subscribe(news => {
       console.log(news);
       this.images = [];
       this.getImages(news);
@@ -95,7 +95,7 @@ export class SubscriedNewsComponent implements OnInit {
         this.coService.get(item.culturalOfferID.toString()).
         subscribe(co => this.culturalOffer.set(item.culturalOfferID, co));
       }
-    });*/
+    });
   }
 
   handlePageChange(event: any): void {
