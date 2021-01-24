@@ -40,7 +40,7 @@ public class ImageServiceIntegrationTest {
 	public void testGetAll_ShouldReturnAllImage() {
 		List<Image> image = (List<Image>) imageService.getAll();
 
-		assertEquals(40, image.size());
+		assertEquals(43, image.size());
 	}
 
 

@@ -7,6 +7,8 @@ import { of } from 'rxjs';
 import { CategoryService } from 'src/app/core/services/category.service';
 import { CulturalOfferService } from 'src/app/core/services/cultural-offer.service';
 import { JwtService } from 'src/app/core/services/jwt.service';
+import { NewsService } from 'src/app/core/services/news.service';
+import { UserService } from 'src/app/core/services/user.service';
 import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 import { CulturalOfferListComponent } from './cultural-offer-list.component';
 
@@ -18,6 +20,8 @@ describe('CulturalOfferListComponent', () => {
   let snackBar: Snackbar;
   let jwtService: JwtService;
   let categoryService: CategoryService;
+  let newsService: NewsService;
+  let userService: UserService;
 
   beforeEach(() => {
     const data = {
@@ -86,8 +90,18 @@ describe('CulturalOfferListComponent', () => {
     };
 
 
+    const newsServiceMock = {
+      subscribe: jasmine.createSpy('subscribe').and.returnValue(of(true)),
+      unsubscribe: jasmine.createSpy('unsubscribe').and.returnValue(of(true))
+    };
+
+    const userServiceMock = {
+      isSubscribed: jasmine.createSpy('isSubscribed').and.returnValue(of(true))
+    };
+
     const jwtServiceMock = {
-      getRole: jasmine.createSpy('getRole').and.returnValue(of('ROLE_ADMIN'))
+      getRole: jasmine.createSpy('getRole').and.returnValue(of('ROLE_ADMIN')),
+      getEmail: jasmine.createSpy('getEmail').and.returnValue(of('email_aresa20@gmail.com'))
     };
 
 
@@ -100,6 +114,8 @@ describe('CulturalOfferListComponent', () => {
         { provide: JwtService, useValue: jwtServiceMock },
         { provide: MatDialog, useValue: { MatDialog } },
         { provide: Snackbar, useValue: {} },
+        { provide: UserService, useValue: userServiceMock},
+        { provide: NewsService, useValue: newsServiceMock}
       ]
     });
 
@@ -110,6 +126,8 @@ describe('CulturalOfferListComponent', () => {
     snackBar = TestBed.inject(Snackbar);
     jwtService = TestBed.inject(JwtService);
     categoryService = TestBed.inject(CategoryService);
+    userService = TestBed.inject(UserService);
+    newsService = TestBed.inject(NewsService);
   });
 
   it('should create', () => {
@@ -240,5 +258,17 @@ describe('CulturalOfferListComponent', () => {
     expect(component.culturalOffers.content[1].description).toEqual('Opis 2');
     expect(component.culturalOffers.content[1].image).toEqual('nekiUrl 2');
     expect(component.culturalOffers.content[1].averageMark).toEqual(4.0);
+  });
+
+  it('subscribe', () => {
+    component.subscribe(1);
+    expect(newsService.subscribe).toHaveBeenCalled();
+    expect(component.subscribed.get(1)).toEqual(true);
+  });
+
+  it('unsubscribe', () => {
+    component.unsubscribe(1);
+    expect(newsService.unsubscribe).toHaveBeenCalled();
+    expect(component.subscribed.get(1)).toEqual(false);
   });
 });

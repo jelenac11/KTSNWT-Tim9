@@ -13,7 +13,7 @@ public class NewsConstants {
 	public static final int NON_EXISTING_PAGE_NO = 50;
 	public static final int PAGE_SIZE = 5;
 	
-	public static final int TOTAL_NO = 13;
+	public static final int TOTAL_NO = 16;
 	
 	
 	public static final Long EXISTING_CULTURAL_OFFER_ID = 1L;

@@ -122,6 +122,4 @@ describe('SubscriedNewsComponent', () => {
       expect(component.categories[0].name).toEqual('Kategorija 1');
     });
   });
-
-
 });

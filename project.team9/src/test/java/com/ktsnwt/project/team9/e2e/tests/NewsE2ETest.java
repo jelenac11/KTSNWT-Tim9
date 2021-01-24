@@ -165,7 +165,9 @@ public class NewsE2ETest {
 		homePage.getFestivalsTab().click();
 		
 		homePage.ensureIsDisplayedMoreButton();
-
+		
+		pause(2000);
+		
 		homePage.getMore().click();
 
 		reviewCOPage.ensureIsDisplayedName();
@@ -461,7 +463,9 @@ public class NewsE2ETest {
 		homePage.getFestivalsTab().click();
 		
 		homePage.ensureIsDisplayedMoreButton();
-
+		
+		pause(2000);
+		
 		homePage.getMore().click();
 
 		reviewCOPage.ensureIsDisplayedName();

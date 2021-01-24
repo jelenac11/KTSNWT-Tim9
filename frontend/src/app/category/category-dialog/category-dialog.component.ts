@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CategoryService } from 'src/app/core/services/category.service';
 import { MyErrorStateMatcher } from 'src/app/core/error-matchers/ErrorStateMatcher';
 import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
+import { Category } from 'src/app/core/models/response/category.model';
 
 @Component({
   selector: 'app-category-dialog',
@@ -13,7 +14,7 @@ import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 export class CategoryDialogComponent implements OnInit {
   form: FormGroup;
   matcher: MyErrorStateMatcher = new MyErrorStateMatcher();
-  category = null;
+  category: Category = null;
 
   constructor(
     private fb: FormBuilder,
@@ -55,7 +56,7 @@ export class CategoryDialogComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    const category = {id: null, name: '', description: ''};
+    const category: Category = {id: null, name: '', description: ''};
     category.name = this.form.value.name;
     category.description = this.form.value.description;
     this.categoryService.post(category).subscribe(data => {
@@ -73,7 +74,7 @@ export class CategoryDialogComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    const category = {id: this.category.id, name: '', description: ''};
+    const category: Category = {id: this.category.id, name: '', description: ''};
     category.name = this.form.value.name;
     category.description = this.form.value.description;
     this.categoryService.put(this.category.id, category).subscribe(data => {

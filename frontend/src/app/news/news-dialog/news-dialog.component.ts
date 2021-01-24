@@ -17,10 +17,10 @@ export class NewsDialogComponent implements OnInit {
   form: FormGroup;
   matcher: MyErrorStateMatcher = new MyErrorStateMatcher();
   news: News = null;
-  images = [];
-  preview = [];
+  images: (string|File)[] = [];
+  preview: string[] = [];
   removedImages = [];
-  coid;
+  coid: number;
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<NewsDialogComponent>,
@@ -35,7 +35,7 @@ export class NewsDialogComponent implements OnInit {
       this.news = this.data;
       this.images = this.news.images;
       for (const image of this.images){
-        this.imageService.get(image).subscribe(res => {
+        this.imageService.get(image as string).subscribe(res => {
           this.preview.push(res);
         });
       }
@@ -68,13 +68,13 @@ export class NewsDialogComponent implements OnInit {
       return;
     }
     this.news.content = this.form.value.content;
-    const urls = [];
+    const urls: string[] = [];
     if (!this.images.length){
       this.addNews(urls);
     }
     for (const image of this.images){
       if (image === this.images[this.images.length - 1]){
-        this.imageService.upload(image).subscribe(url => {
+        this.imageService.upload(image as File).subscribe(url => {
           urls.push(url);
           this.addNews(urls);
         },
@@ -87,7 +87,7 @@ export class NewsDialogComponent implements OnInit {
         });
       }
       else{
-        this.imageService.upload(image).subscribe(url => {
+        this.imageService.upload(image as File).subscribe(url => {
           urls.push(url);
         },
         () => {
@@ -100,7 +100,7 @@ export class NewsDialogComponent implements OnInit {
     }
   }
 
-  addNews(urls): void{
+  addNews(urls: string[]): void{
     this.news.images = urls;
     this.news.date = new Date().getTime();
     this.news.culturalOfferID = this.coid;
@@ -115,7 +115,7 @@ export class NewsDialogComponent implements OnInit {
     });
   }
 
-  updateNews(urls): void{
+  updateNews(urls: string[]): void{
     this.news.images = urls;
     this.news.date = new Date().getTime();
     this.newsService.put(this.news.id, this.news).subscribe(data => {
@@ -137,7 +137,7 @@ export class NewsDialogComponent implements OnInit {
             const reader = new FileReader();
 
             reader.onload = (eventNew) => {
-                this.preview.push(eventNew.target.result);
+                this.preview.push(eventNew.target.result as string);
             };
             reader.readAsDataURL(file);
             this.images.push(file);
@@ -167,7 +167,7 @@ export class NewsDialogComponent implements OnInit {
     for (const image of this.images.filter(img => typeof img !== 'string')){
       if (image === this.images[this.images.length - 1]){
         urls.push(...(this.images.filter(img => typeof img === 'string')));
-        this.imageService.upload(image).subscribe(url => {
+        this.imageService.upload(image as File).subscribe(url => {
           urls.push(url);
           this.updateNews(urls);
           return;
@@ -180,7 +180,7 @@ export class NewsDialogComponent implements OnInit {
         });
       }
       else{
-        this.imageService.upload(image).subscribe(url => {
+        this.imageService.upload(image as File).subscribe(url => {
           urls.push(url);
         },
         () => {

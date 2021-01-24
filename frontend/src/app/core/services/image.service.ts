@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -18,11 +18,21 @@ export class ImageService {
     return this.http.post(`${environment.api_url}images/upload`, formData, {responseType: 'text'});
   }
 
-  delete(file: any): Observable<any> {
-    return this.http.delete(`${environment.api_url}images/delete`, file);
+  delete(file: string): Observable<string> {
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'text',
+      }),
+      body: file
+    };
+    return this.http.delete<string>(`${environment.api_url}images/delete`, options);
   }
 
   get(file: string): Observable<string> {
-    return this.http.post(`${environment.api_url}images`, file, {responseType: 'text'});
+    return this.http.post(`${environment.api_url}images`, file, {
+      headers: new HttpHeaders({
+        'Content-Type': 'text',
+      }),
+      responseType: 'text'});
   }
 }

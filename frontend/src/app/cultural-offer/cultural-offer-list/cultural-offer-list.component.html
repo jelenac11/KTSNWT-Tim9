@@ -104,14 +104,29 @@
                 More
               </button>
               <button
-                *ngIf="role === 'ROLE_REGISTERED_USER'"
-                mdbBtn
-                color="primary"
-                size="sm"
-                mdbWavesEffect
-              >
-                Subscribe
-              </button>
+                  *ngIf="!(subscribed.get(culturalOffer.id))  && role === 'ROLE_REGISTERED_USER'"
+                  class="green white-text"
+                  size="sm"
+                  type="button"
+                  size="sm"
+                  mdbBtn
+                  mdbWavesEffect
+                  (click)="subscribe(culturalOffer.id)"
+                >
+                  Subscribe
+                </button>
+                <button
+                  *ngIf="subscribed.get(culturalOffer.id) && role === 'ROLE_REGISTERED_USER'"
+                  type="button"
+                  size="sm"
+                  mdbBtn
+                  class="red white-text"
+                  size="sm"
+                  mdbWavesEffect
+                  (click)="unsubscribe(culturalOffer.id)"
+                >
+                  Unsubscribe
+                </button>
             </div>
           </mdb-card-body>
         </mdb-card>
