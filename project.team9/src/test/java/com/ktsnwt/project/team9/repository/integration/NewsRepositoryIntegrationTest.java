@@ -29,7 +29,7 @@ public class NewsRepositoryIntegrationTest {
 		
 		Page<News> newsPage = newsRepository.findSubscribedNews(NewsConstants.EXISTING_REGISTERED_USER_ID, pageable);
 
-		assertEquals(4, newsPage.getTotalElements() );
+		assertEquals(5, newsPage.getTotalElements() );
 	}
 	
 	@Test

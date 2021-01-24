@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 import { Category } from 'src/app/core/models/response/category.model';
+import { CulturalOffer } from 'src/app/core/models/response/cultural-offer.model';
 import { NewsPage } from 'src/app/core/models/response/news-page.model';
 import { CulturalOfferService } from 'src/app/core/services/cultural-offer.service';
 import { ImageService } from 'src/app/core/services/image.service';
@@ -18,13 +20,13 @@ export class SubscriedNewsComponent implements OnInit {
 
   news: NewsPage;
 
-  culturalOffer = new Map();
+  culturalOffer = new Map<number, CulturalOffer>();
 
-  userID;
+  userID: number;
 
-  categories = [];
+  categories: Category[] = [];
 
-  currentCategory;
+  currentCategory: number;
 
   images = [];
   constructor(
@@ -41,7 +43,7 @@ export class SubscriedNewsComponent implements OnInit {
     });
   }
 
-  changeTab($event: any): void {
+  changeTab($event: MatTabChangeEvent): void {
     this.page = 1;
     this.currentCategory = $event.index;
     if (this.currentCategory === 0){
@@ -53,12 +55,12 @@ export class SubscriedNewsComponent implements OnInit {
   }
 
   getAllNews(): void{
-    this.newsService.getSubscribedNews(this.size, this.page - 1, this.userID).subscribe(news => {
+    this.newsService.getSubscribedNews(this.size, this.page - 1, this.userID + '').subscribe(news => {
       this.images = [];
       this.getImages(news);
       this.news = news;
       for (const item of news.content){
-        this.culturalOffer = new Map();
+        this.culturalOffer = new Map<number, CulturalOffer>();
         this.coService.get(item.culturalOfferID.toString()).
         subscribe(co => {
           this.culturalOffer.set(item.culturalOfferID, co);
@@ -80,20 +82,19 @@ export class SubscriedNewsComponent implements OnInit {
   }
 
   getNews(categoryId: number): void{
-    this.newsService.getAllByCategoryId(this.size, this.page - 1, this.userID, categoryId + '').subscribe(news => {
-      console.log(news);
+    this.newsService.getAllByCategoryId(this.size, this.page - 1, this.userID + '', categoryId + '').subscribe(news => {
       this.images = [];
       this.getImages(news);
       this.news = news;
       for (const item of news.content){
-        this.culturalOffer = new Map();
+        this.culturalOffer = new Map<number, CulturalOffer>();
         this.coService.get(item.culturalOfferID.toString()).
         subscribe(co => this.culturalOffer.set(item.culturalOfferID, co));
       }
     });
   }
 
-  handlePageChange(event: any): void {
+  handlePageChange(event: number): void {
     this.page = event;
     if (this.currentCategory){
       this.getNews(this.currentCategory);
@@ -111,7 +112,7 @@ export class SubscriedNewsComponent implements OnInit {
     return this.images[i][j];
   }
 
-  getTitle(ID: any): string{
+  getTitle(ID: number): string{
     if (this.culturalOffer.has(ID)){
       return this.culturalOffer.get(ID).name;
     }
@@ -125,7 +126,8 @@ export class SubscriedNewsComponent implements OnInit {
       for (const url of item.images) {
         this.imageService.get(url).subscribe(res => {
           this.images[index].push(res);
-          }
+          },
+          () => {}
         );
       }
     }

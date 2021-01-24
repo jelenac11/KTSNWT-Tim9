@@ -37,9 +37,9 @@ export class CulturalOfferListComponent implements OnInit {
 
   searchValue = '';
 
-  userID;
+  userID: number;
 
-  subscribed = new Map();
+  subscribed = new Map<number, boolean>();
 
 
   constructor(
@@ -185,7 +185,7 @@ export class CulturalOfferListComponent implements OnInit {
   }
 
   subscribe(COID): void{
-    this.newsService.subscribe(this.userID, COID)
+    this.newsService.subscribe(this.userID + '', COID)
     .subscribe(succ => {
       if (succ){
         this.subscribed.set(COID, true);
@@ -194,7 +194,7 @@ export class CulturalOfferListComponent implements OnInit {
   }
 
   unsubscribe(COID): void{
-    this.newsService.unsubscribe(this.userID, COID)
+    this.newsService.unsubscribe(this.userID + '', COID)
     .subscribe(succ => {
       if (succ){
         this.subscribed.set(COID, false);

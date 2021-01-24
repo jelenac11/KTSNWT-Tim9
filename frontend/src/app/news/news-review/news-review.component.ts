@@ -10,6 +10,7 @@ import { ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation
 import { ActivatedRoute } from '@angular/router';
 import { NewsDialogComponent } from '../news-dialog/news-dialog.component';
 import { ImageService } from 'src/app/core/services/image.service';
+import { CulturalOffer } from 'src/app/core/models/response/cultural-offer.model';
 
 @Component({
   selector: 'app-news-review',
@@ -26,11 +27,11 @@ export class NewsReviewComponent implements OnInit {
 
   news: NewsPage;
 
-  coid = null;
+  coid: string = null;
 
-  culturalOffer = new Map();
+  culturalOffer = new Map<number, CulturalOffer>();
 
-  images = [];
+  images: string[][] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -49,7 +50,7 @@ export class NewsReviewComponent implements OnInit {
   }
 
   getNews(): void{
-    this.newsService.getAllByCOID(this.coid, this.size, this.page - 1).subscribe(news => {
+    this.newsService.getAllByCOID(+this.coid, this.size, this.page - 1).subscribe(news => {
       if (news.content.length === 0){
         this.snackBar.error('There is no news for this cultural offer!');
       }
@@ -84,13 +85,13 @@ export class NewsReviewComponent implements OnInit {
     return this.images[i][j];
   }
 
-  getTitle(ID: any): string{
+  getTitle(ID: number): string{
     if (this.culturalOffer.has(ID)){
       return this.culturalOffer.get(ID).name;
     }
     return '';
   }
-  handlePageChange(event: any): void {
+  handlePageChange(event: number): void {
     this.page = event;
     this.getNews();
   }
