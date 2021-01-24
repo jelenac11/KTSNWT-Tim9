@@ -47,7 +47,6 @@ describe('ChangePasswordComponent', () => {
   });
 
   it('should create', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(ChangePasswordComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -59,7 +58,6 @@ describe('ChangePasswordComponent', () => {
   });
 
   it('should be initialized', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(ChangePasswordComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -73,7 +71,6 @@ describe('ChangePasswordComponent', () => {
   });
 
   it('should be closed on close button', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(ChangePasswordComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -92,7 +89,6 @@ describe('ChangePasswordComponent', () => {
   }
 
   it('should bind form fields to form', fakeAsync(() => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(ChangePasswordComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -125,7 +121,6 @@ describe('ChangePasswordComponent', () => {
   }));
 
   it('should be invalid form when submitted and inputs are empty', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(ChangePasswordComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -154,7 +149,6 @@ describe('ChangePasswordComponent', () => {
   });
 
   it('should be invalid form when submitted and old password is empty', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(ChangePasswordComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -179,7 +173,6 @@ describe('ChangePasswordComponent', () => {
   });
 
   it('should be invalid form when submitted and new password is empty', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(ChangePasswordComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -208,7 +201,6 @@ describe('ChangePasswordComponent', () => {
   });
 
   it('should be invalid form when submitted and new password is short', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(ChangePasswordComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -237,7 +229,6 @@ describe('ChangePasswordComponent', () => {
   });
 
   it('should be invalid form when submitted and new and confirmed password dont match', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(ChangePasswordComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -262,7 +253,6 @@ describe('ChangePasswordComponent', () => {
   });
 
   it('should change password succesfully when submitted', fakeAsync(() => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(ChangePasswordComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -297,7 +287,6 @@ describe('ChangePasswordComponent', () => {
       logout: jasmine.createSpy('logout')
     };
     TestBed.overrideProvider(AuthenticationService, {useValue: authencicationServiceMocked2});
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(ChangePasswordComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

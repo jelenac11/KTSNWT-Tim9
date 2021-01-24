@@ -1,7 +1,6 @@
-import { DebugElement, ViewContainerRef } from '@angular/core';
+import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { MatTab } from '@angular/material/tabs';
 import { By } from '@angular/platform-browser';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { Observable, of } from 'rxjs';
@@ -9,7 +8,6 @@ import { UserPage } from 'src/app/core/models/response/user-page.model';
 import { User } from 'src/app/core/models/response/user.model';
 import { JwtService } from 'src/app/core/services/jwt.service';
 import { UserService } from 'src/app/core/services/user.service';
-import { ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 
 import { UsersReviewComponent } from './users-review.component';
@@ -90,8 +88,7 @@ describe('UsersReviewComponent', () => {
         { provide: MatDialog, useValue: dialogMocked},
         { provide: MatDialogRef, useValue: dialogRefMocked}
       ],
-    })
-    .compileComponents();
+    });
   });
 
   beforeEach(() => {
@@ -336,10 +333,5 @@ describe('UsersReviewComponent', () => {
     expect(snackBar.success).toHaveBeenCalledOnceWith('You have successfully deleted admin!');
   }));
 
-  it('should add admin', () => {
-    component.addAdmin();
-
-    expect(dialog.open).toHaveBeenCalled();
-  });
 
 });

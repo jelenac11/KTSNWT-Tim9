@@ -68,15 +68,16 @@ export class CulturalOfferReviewComponent implements OnInit {
   }
 
   private getCurrentMark(): void {
-    this.markService.get(this.culturalOffer.id).subscribe(data => {
-      this.mark = data.value;
-      this.isRated = true;
-    },
+    if (this.jwtService.getRole() === 'ROLE_REGISTERED_USER') {
+      this.markService.get(this.culturalOffer.id).subscribe(data => {
+        this.mark = data.value;
+        this.isRated = true;
+      },
       error => {
-        console.log(error);
         this.mark = 0;
         this.isRated = false;
       });
+    }
   }
 
   onRate($event: number): void {
