@@ -25,18 +25,18 @@ export class ApproveCommentComponent implements OnInit {
   }
 
   getNotApprovedComments(): void {
-    this.commentService.getNotApprovedComments(this.size, this.page - 1).subscribe(data => {
+    this.commentService.getNotApprovedComments(this.size, this.page - 1).subscribe((data: CommentPage) => {
       this.comments = data;
     });
   }
 
-  handlePageChange($event: any): void {
+  handlePageChange($event: number): void {
     this.page = $event;
     this.getNotApprovedComments();
   }
 
   approve(comment: Comment, approve: boolean): void {
-    this.commentService.approve(comment, approve).subscribe(data => {
+    this.commentService.approve(comment, approve).subscribe((data: string) => {
       this.snackBar.success(data);
       this.getNotApprovedComments();
     });

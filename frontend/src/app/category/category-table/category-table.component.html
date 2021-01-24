@@ -1,0 +1,44 @@
+<div class="container-fluid">
+    <div class="mt-2">
+        <div class="button-group" id="search-div-category-page">
+            <app-search (searchChanged)="searchChanged($event)"></app-search>
+            <button mat-flat-button class="button-add green" (click)="addCategory()">
+                <mat-icon class="mr-2">category</mat-icon> Add new category
+            </button>
+        </div>
+        <div>
+            <table class="table table-hover">
+                <thead>
+                    <th scope="col" width="15%">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col" width="10%"></th>
+                    <th scope="col" width="10%"></th>
+                </thead>
+                <tbody *ngIf="categories">
+                    <tr *ngFor="
+                        let item of categories.content
+                            | paginate
+                            : {
+                                itemsPerPage: size,
+                                currentPage: page,
+                                totalItems: categories.totalElements
+                                };
+                        let i = index"
+                    >
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.description }}</td>
+                        <td><button mat-flat-button color="primary" class="button-class" (click)="updateCategory(item)" >Update</button></td>
+                        <td><button mat-flat-button color="warn" class="button-class" (click)="openDialog(item.id)" >Remove</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="mt-3 div-centered">
+            <pagination-controls
+            previousLabel="Previous"
+            nextLabel="Next"
+            (pageChange)="handlePageChange($event)"
+            ></pagination-controls>
+        </div>
+    </div>
+</div>

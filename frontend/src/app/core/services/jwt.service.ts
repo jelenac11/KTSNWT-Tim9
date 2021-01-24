@@ -25,10 +25,20 @@ export class JwtService {
     const jwt: JwtHelperService = new JwtHelperService();
     const token: UserTokenState = JSON.parse(localStorage.getItem('jwtToken'));
     if (token) {
-      const info = jwt.decodeToken(token.accessToken);
-      return info.role;
+      return jwt.decodeToken(token.accessToken).role;
     }
     return '';
   }
 
+<<<<<<< Updated upstream
+=======
+  getEmail(): string {
+    const jwt: JwtHelperService = new JwtHelperService();
+    const token: UserTokenState = JSON.parse(localStorage.getItem('jwtToken'));
+    if (token) {
+      return jwt.decodeToken(token.accessToken).sub;
+    }
+    return '';
+  }
+>>>>>>> Stashed changes
 }

@@ -45,11 +45,19 @@ export class ChangePasswordComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
+<<<<<<< Updated upstream:frontend/src/app/shared/change-password/change-password.component.ts
     let passwordChange: PasswordChangeRequest = {oldPassword: '', newPassword: ''};
     passwordChange.oldPassword = this.form.value['oldPassword'];
     passwordChange.newPassword = this.form.value['newPassword'];
     this.authenticationService.changePassword(passwordChange).subscribe(data => {
       this.snackBar.success("You changed password successfully.");
+=======
+    const passwordChange: PasswordChangeRequest = {oldPassword: '', newPassword: ''};
+    passwordChange.oldPassword = this.form.value.oldPassword;
+    passwordChange.newPassword = this.form.value.newPassword;
+    this.authenticationService.changePassword(passwordChange).subscribe((data: string) => {
+      this.snackBar.success('You changed password successfully.');
+>>>>>>> Stashed changes:frontend/src/app/user-profile/change-password/change-password.component.ts
       this.submited = false;
       this.authenticationService.logout();
       this.router.navigate(['/sign-in']);

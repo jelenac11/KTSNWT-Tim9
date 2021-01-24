@@ -4,6 +4,7 @@ import { UserRequest } from 'src/app/core/models/request/user-request.model';
 import { UserService } from 'src/app/core/services/user.service';
 import { MyErrorStateMatcher } from 'src/app/shared/ErrorStateMatcher';
 import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
+import { User } from 'src/app/core/models/response/user.model';
 
 @Component({
   selector: 'app-sign-up',
@@ -39,6 +40,7 @@ export class SignUpComponent implements OnInit {
     if (this.registerForm.invalid) {
       return;
     }
+<<<<<<< Updated upstream
     let newUser: UserRequest = { email: '', username: '', password: '', lastName: '', firstName: ''};
     newUser.email = this.registerForm.value['email'];
     newUser.password = this.registerForm.value['password'];
@@ -47,6 +49,16 @@ export class SignUpComponent implements OnInit {
     newUser.username = this.registerForm.value['username'];
     this.userService.signup(newUser).subscribe(data => {
       this.snackBar.success("Activation link sent. Check your email.");
+=======
+    const newUser: UserRequest = { email: '', username: '', password: '', lastName: '', firstName: ''};
+    newUser.email = this.registerForm.value.email;
+    newUser.password = this.registerForm.value.password;
+    newUser.firstName = this.registerForm.value.firstName;
+    newUser.lastName = this.registerForm.value.lastName;
+    newUser.username = this.registerForm.value.username;
+    this.userService.signup(newUser).subscribe((data: User) => {
+      this.snackBar.success('Activation link sent. Check your email.');
+>>>>>>> Stashed changes
       this.submitted = false;
       this.registerForm.reset();
       for (let control in this.registerForm.controls) {

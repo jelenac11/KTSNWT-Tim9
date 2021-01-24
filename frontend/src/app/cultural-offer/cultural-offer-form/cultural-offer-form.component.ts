@@ -150,11 +150,11 @@ export class CulturalOfferFormComponent implements OnInit {
         this.goBack(res.id);
       }
       else {
-        this.errorMessage('Location need to be unique. Choose another location.');
+        this.errorMessage('Location needs to be unique. Choose another location.');
       }
     }, err => {
       console.log(err);
-      this.errorMessage('Location need to be unique. Choose another location.');
+      this.errorMessage('Location needs to be unique. Choose another location.');
     });
   }
 

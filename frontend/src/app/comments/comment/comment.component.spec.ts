@@ -9,13 +9,17 @@ describe('CommentComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ CommentComponent ]
-    })
-    .compileComponents();
+    });
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CommentComponent);
+<<<<<<< Updated upstream
     component = fixture.componentInstance;
+=======
+    component = fixture.debugElement.componentInstance;
+    component.comment = {};
+>>>>>>> Stashed changes
     fixture.detectChanges();
   });
 

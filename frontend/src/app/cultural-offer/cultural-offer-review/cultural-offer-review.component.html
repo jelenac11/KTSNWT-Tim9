@@ -23,8 +23,9 @@
                 </h2>
               </div>
             </div>
-            <div *ngIf="role === 'ROLE_REGISTERED_USER'" class="col-3">
+            <div class="col-3">
               <div>
+<<<<<<< Updated upstream
                 <bar-rating
                   [(rate)]="mark"
                   [theme]="'stars'"
@@ -34,6 +35,40 @@
               </div>
               <div>
                 <button mdbBtn color="primary" size="sm" mdbWavesEffect>Subscribe</button>
+=======
+                <span>
+                  Average: <b>{{ culturalOffer.averageMark }}/5</b>
+                  <bar-rating
+                    *ngIf="role === 'ROLE_REGISTERED_USER'" 
+                    [(rate)]="mark"
+                    [theme]="'stars'"
+                    [max]="5"
+                    (rateChange)="onRate($event)"
+                  ></bar-rating>
+                </span>
+              </div>
+              <div *ngIf="role === 'ROLE_REGISTERED_USER'">
+                <button
+                  *ngIf="!subscribed"
+                  mat-stroked-button
+                  class="green"
+                  size="sm"
+                  mdbWavesEffect
+                  (click)="subscribe()"
+                >
+                  Subscribe
+                </button>
+                <button
+                  *ngIf="subscribed"
+                  mat-stroked-button
+                  class="red"
+                  size="sm"
+                  mdbWavesEffect
+                  (click)="unsubscribe()"
+                >
+                  Unsubscribe
+                </button>
+>>>>>>> Stashed changes
               </div>
             </div>
           </div>

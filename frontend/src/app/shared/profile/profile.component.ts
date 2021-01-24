@@ -29,7 +29,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.getCurrentUser()
-    .subscribe(currentUser => {
+    .subscribe((currentUser: User) => {
       this.user = currentUser;
     });
   }
@@ -53,13 +53,22 @@ export class ProfileComponent implements OnInit {
     }
     let newUser: UserRequest = { email: '', username: '', password: 'password', lastName: '', firstName: ''};
     newUser.email = this.user.email;
+<<<<<<< Updated upstream:frontend/src/app/shared/profile/profile.component.ts
     newUser.firstName = this.form.value['firstName'];
     newUser.lastName = this.form.value['lastName'];
     newUser.username = this.form.value['username'];
     this.userService.changeProfile(newUser).subscribe(data => {
       this.snackBar.success("You changed account information successfully.");
+=======
+    newUser.firstName = this.form.value.firstName;
+    newUser.lastName = this.form.value.lastName;
+    newUser.username = this.form.value.username;
+    this.userService.changeProfile(newUser).subscribe((data: User) => {
+      this.snackBar.success('You changed account information successfully.');
+>>>>>>> Stashed changes:frontend/src/app/user-profile/profile/profile.component.ts
       this.user = data;
       this.edit = false;
+      this.close();
     },
     error => {
       if (error.status !== 200) {

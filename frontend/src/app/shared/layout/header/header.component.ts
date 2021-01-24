@@ -45,7 +45,14 @@ export class HeaderComponent implements OnInit {
     dialogConfig.disableClose = true;
     dialogConfig.minHeight = '440px';
     dialogConfig.minWidth = '400px';
-    this.dialog.open(ProfileComponent, dialogConfig);
+    const dialogProfile = this.dialog.open(ProfileComponent, dialogConfig);
+    dialogProfile.afterClosed().subscribe((confirmed: boolean) => {
+      if (this.role) {
+        this.userService.getCurrentUser().subscribe((currentUser: User) => {
+          this.user = currentUser;
+        });
+      }
+    });
   }
 
   changePassword(): void {

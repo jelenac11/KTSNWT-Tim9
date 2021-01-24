@@ -25,12 +25,12 @@ export class CommentsReviewComponent implements OnInit {
   }
 
   getCommentsByCulturalOfferId(): void {
-    this.commentService.getCommentsByCulturalOfferId(this.size, this.page - 1, this.culturalOfferId).subscribe(data => {
+    this.commentService.getCommentsByCulturalOfferId(this.size, this.page - 1, this.culturalOfferId).subscribe((data: CommentPage) => {
       this.comments = data;
     });
   }
 
-  handlePageChange($event: any): void {
+  handlePageChange($event: number): void {
     this.page = $event;
     this.getCommentsByCulturalOfferId();
   }

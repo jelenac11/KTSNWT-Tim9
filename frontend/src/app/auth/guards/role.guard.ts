@@ -22,9 +22,13 @@ export class RoleGuard implements CanActivate {
       this.router.navigate(['/sign-in']);
       return false;
     }
-    const info = jwt.decodeToken(token.accessToken);
+    const role: string = jwt.decodeToken(token.accessToken).role;
     const roles: string[] = expectedRoles.split('|', 2);
+<<<<<<< Updated upstream
     if (roles.indexOf(info['role']) === -1) {
+=======
+    if (roles.indexOf(role) === -1) {
+>>>>>>> Stashed changes
       this.router.navigate(['/']);
       return false;
     }

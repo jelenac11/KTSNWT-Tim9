@@ -42,24 +42,36 @@ export class UsersReviewComponent implements OnInit {
   getUsers(): void {
     if (!this.searchValue) {
       if (this.currentTab === 0) {
+<<<<<<< Updated upstream
         this.userService.getUsers(this.size, this.page - 1, 'admins').subscribe(data => {
           let without = data.content.filter(admin => admin.email !== this.loggedIn);
           this.users = { content: without, totalElements: data.totalElements }
+=======
+        this.userService.getUsers(this.size, this.page - 1, 'admins').subscribe((data: UserPage) => {
+          const without = data.content.filter(admin => admin.email !== this.loggedIn);
+          this.users = { content: without, totalElements: data.totalElements };
+>>>>>>> Stashed changes
         });
       } else {
-        this.userService.getUsers(this.size, this.page - 1, 'registered-users').subscribe(data => {
+        this.userService.getUsers(this.size, this.page - 1, 'registered-users').subscribe((data: UserPage) => {
           this.users = data;
         });
       }
     } else {
       if (this.currentTab === 0) {
         console.log(this.searchValue);
+<<<<<<< Updated upstream
         this.userService.searchUsers(this.size, this.page - 1, this.searchValue, 'admins').subscribe(data => {
           let without = data.content.filter(admin => admin.email !== this.loggedIn);
           this.users = {content:without, totalElements: data.totalElements}
+=======
+        this.userService.searchUsers(this.size, this.page - 1, this.searchValue, 'admins').subscribe((data: UserPage) => {
+          const without = data.content.filter(admin => admin.email !== this.loggedIn);
+          this.users = {content: without, totalElements: data.totalElements};
+>>>>>>> Stashed changes
         });
       } else {
-        this.userService.searchUsers(this.size, this.page - 1, this.searchValue, 'registered-users').subscribe(data => {
+        this.userService.searchUsers(this.size, this.page - 1, this.searchValue, 'registered-users').subscribe((data: UserPage) => {
           this.users = data;
         });
       }
@@ -73,7 +85,12 @@ export class UsersReviewComponent implements OnInit {
     } else {
       this.isAdmin = true;
     }
+<<<<<<< Updated upstream
     this.getUsers();    
+=======
+    this.page = 1;
+    this.getUsers();
+>>>>>>> Stashed changes
   }
 
   handlePageChange($event: number): void {

@@ -8,9 +8,21 @@ describe('SignInComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+<<<<<<< Updated upstream
       declarations: [ SignInComponent ]
     })
     .compileComponents();
+=======
+      imports: [FormsModule, ReactiveFormsModule],
+      declarations: [ SignInComponent ],
+      providers: [
+        { provide: AuthenticationService, useValue: authenticationServiceMocked },
+        { provide: Router, useValue: routerMocked },
+        { provide: Snackbar, useValue: snackBarMocked },
+        { provide: JwtService, useValue: jwtServiceMocked }
+      ]
+    });
+>>>>>>> Stashed changes
   });
 
   beforeEach(() => {

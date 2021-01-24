@@ -6,6 +6,7 @@ import { AuthenticationService } from 'src/app/core/services/authentication.serv
 import { JwtService } from 'src/app/core/services/jwt.service';
 import { MyErrorStateMatcher } from 'src/app/shared/ErrorStateMatcher';
 import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
+import { UserTokenState } from 'src/app/core/models/response/user-token-state.model';
 
 @Component({
   selector: 'app-sign-in',
@@ -40,10 +41,17 @@ export class SignInComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     }
+<<<<<<< Updated upstream
     let credentials: UserLogin = { email: '', password: '' }
     credentials.email = this.loginForm.value['email'];
     credentials.password = this.loginForm.value['password'];
     this.authenticationService.login(credentials).subscribe(data => {
+=======
+    const credentials: UserLogin = { email: '', password: '' };
+    credentials.email = this.loginForm.value.email;
+    credentials.password = this.loginForm.value.password;
+    this.authenticationService.login(credentials).subscribe((data: UserTokenState) => {
+>>>>>>> Stashed changes
       this.jwtService.saveToken(data);
       this.router.navigate(['/']);
     },
