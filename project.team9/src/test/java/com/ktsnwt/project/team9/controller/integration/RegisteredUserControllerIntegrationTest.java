@@ -26,6 +26,8 @@ import com.ktsnwt.project.team9.dto.response.UserTokenStateDTO;
 import com.ktsnwt.project.team9.helper.implementations.CustomPageImplementation;
 import com.ktsnwt.project.team9.services.implementations.RegisteredUserService;
 
+import javassist.NotFoundException;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource("classpath:test.properties")
@@ -172,4 +174,33 @@ public class RegisteredUserControllerIntegrationTest {
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 		assertEquals(size, responseEntity.getBody().getNumberOfElements());
 	}
+	
+	@Test
+	public void testIsSubscribed_WithExistingEmailAndCOIDAndSubscribed_ShouldReturnTrue() throws NotFoundException {
+		boolean isSub = regService.isSubscribed(RegisteredUserConstants.SUBSCRIBE_EMAIL, 1L);
+		ResponseEntity<String> responseEntity = restTemplate.exchange("/api/registered-users/is-subscibed/" + 
+				RegisteredUserConstants.SUBSCRIBE_EMAIL + '/' + 1, HttpMethod.POST, null ,String.class);
+		
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+		assertEquals(isSub, Boolean.parseBoolean(responseEntity.getBody()));
+	}
+	
+	@Test
+	public void testIsSubscribed_WithNotExistingEmail_ShouldReturnBadRequest() {
+		ResponseEntity<String> responseEntity = restTemplate.exchange("/api/registered-users/is-subscibed/" + 
+				"RNG_EMAIL" + '/' + 1, HttpMethod.POST, null ,String.class);
+		
+		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+	}
+	
+	@Test
+	public void testIsSubscribed_WithExistingEmailAndCOIDAndNotSubscribed_ShouldReturnFalse() throws NotFoundException {
+		boolean isSub = regService.isSubscribed(RegisteredUserConstants.EXISTING_EMAIL, 1000L);
+		ResponseEntity<String> responseEntity = restTemplate.exchange("/api/registered-users/is-subscibed/" + 
+				RegisteredUserConstants.SUBSCRIBE_EMAIL + '/' + 1000, HttpMethod.POST, null ,String.class);
+		
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+		assertEquals(isSub, Boolean.parseBoolean(responseEntity.getBody()));
+	}
+	
 }

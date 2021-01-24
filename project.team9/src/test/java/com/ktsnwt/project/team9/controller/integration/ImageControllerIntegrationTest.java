@@ -69,5 +69,22 @@ public class ImageControllerIntegrationTest {
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
 	
+	@Test
+	public void testGetImage_WithExistingPath_ShouldReturnImage() {
+		String path = "src/main/resources/uploadedImages/imageRNG.jpg";
+		ResponseEntity<String> response = restTemplate.exchange("/api/images", HttpMethod.POST, new HttpEntity<Object>(path), String.class);
+
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertNotEquals(response.getBody(), "");
+	}
+	
+	@Test
+	public void testGetImage_WithNonExistingPath_ShouldReturnImage() {
+		String path = "src/main/resources/uploadedImages/nepostojeci.jpg";
+		ResponseEntity<String> response = restTemplate.exchange("/api/images", HttpMethod.POST, new HttpEntity<Object>(path), String.class);
+
+		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+	}
+	
 	
 }

@@ -112,6 +112,8 @@ public class CategoryE2ETest {
 		pause(2000);
 		List<WebElement> rows = driver.findElements(By.tagName("tr"));
 		
+		pause(2000);
+		
 		assertEquals(0, rows.size());
 		driver.close();
 	}
@@ -365,6 +367,7 @@ public class CategoryE2ETest {
 		categoryPage.ensureIsDisplayedName();
 		
 		categoryPage.getCategoryName().sendKeys("New category");
+		
 		categoryPage.getCategoryDescription().sendKeys("New description");
 		categoryPage.getCloseBtn().click();
 		
@@ -392,13 +395,14 @@ public class CategoryE2ETest {
 		
 		categoryPage.getCategoryName().clear();
 		categoryPage.getCategoryName().sendKeys("Festivali");
+		categoryPage.getCategoryName().clear();
 		categoryPage.getCategoryDescription().sendKeys("Neka desc");
 		pause(1000);
 		categoryPage.getAddOrUpdateBtn().click();
 		
 		categoryPage.ensureIsDisplayedMessage();
 		
-		assertEquals("Category already exist",
+		assertEquals("Category already exists",
 				categoryPage.getMessage().getText());
 		assertEquals(size, ((List<Category>) categoryService.getAll()).size());
 		driver.close();

@@ -21,6 +21,8 @@ import com.ktsnwt.project.team9.repositories.IRegisteredUser;
 import com.ktsnwt.project.team9.repositories.IUserRepository;
 import com.ktsnwt.project.team9.services.interfaces.IRegisteredUserService;
 
+import javassist.NotFoundException;
+
 @Service
 public class RegisteredUserService implements IRegisteredUserService {
 
@@ -105,7 +107,10 @@ public class RegisteredUserService implements IRegisteredUserService {
 		return registeredUserRepository.findBySubscribed(culturalOffer);
 	}
 
-	public Boolean isSubscribed(String email, Long cOID) {
+	public Boolean isSubscribed(String email, Long cOID) throws NotFoundException {
+		RegisteredUser ru = registeredUserRepository.findByEmail(email);
+		if(ru == null)
+			throw new NotFoundException(email);
 		return registeredUserRepository.findByEmailAndSubscribedId(email, cOID) != null;
 	}
 	

@@ -25,22 +25,12 @@ export class CategoryTableComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getCategories();
-  }
-
-  getCategories(): void {
-    this.categoryService.getAllPages(this.size, this.page - 1)
-    .subscribe(
-      data => {
-        data.content = data.content.sort((a, b) => a.id - b.id);
-        this.categories = data;
-      }
-    );
+    this.searchCategory();
   }
 
   handlePageChange(event: number): void {
     this.page = event;
-    this.getCategories();
+    this.searchCategory();
   }
 
   openDialog(id: number): void {
@@ -66,7 +56,7 @@ export class CategoryTableComponent implements OnInit {
       if (this.categories.content.length === 1){
         this.page--;
       }
-      this.getCategories();
+      this.searchCategory();
       this.snackBar.success('You have successfully deleted category!');
     }, err => {
       this.snackBar.error('Can\'t delete this, category has cultural offer!');
@@ -96,7 +86,7 @@ export class CategoryTableComponent implements OnInit {
     const dialogRef = this.dialog.open(CategoryDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
-        this.getCategories();
+        this.searchCategory();
       }
     });
   }
@@ -110,7 +100,7 @@ export class CategoryTableComponent implements OnInit {
     const dialogRef = this.dialog.open(CategoryDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
-        this.getCategories();
+        this.searchCategory();
       }
     });
   }

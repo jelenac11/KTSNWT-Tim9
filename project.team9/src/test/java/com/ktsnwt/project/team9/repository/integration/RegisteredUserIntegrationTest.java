@@ -1,6 +1,7 @@
 package com.ktsnwt.project.team9.repository.integration;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -74,6 +75,28 @@ public class RegisteredUserIntegrationTest {
 		Page<RegisteredUser> userPage = registeredUserRepository.findByUsernameOrEmailOrFirstNameOrLastNameContainingIgnoreCase(RegisteredUserConstants.NON_EXISTING_PART, pageable);
 		
 		assertEquals(0, userPage.getTotalElements());
+	}
+	
+	@Test
+	public void testFindByEmailAndSubscribedId_WithValidEmailAndCOIDAndSubscribed_ShouldReturnRegisteredUser() {
+		RegisteredUser ru = registeredUserRepository.findByEmailAndSubscribedId(RegisteredUserConstants.SUBSCRIBE_EMAIL, 1L);
+		
+		assertEquals(ru.getEmail(), RegisteredUserConstants.SUBSCRIBE_EMAIL);
+		assertEquals(ru.getUsername(), RegisteredUserConstants.SUBSCRIBE_USERNAME);
+	}
+	
+	@Test
+	public void testFindByEmailAndSubscribedId_WithValidEmailAndCOIDAndNotSubscribed_ShouldReturnNull() {
+		RegisteredUser ru = registeredUserRepository.findByEmailAndSubscribedId(RegisteredUserConstants.SUBSCRIBE_EMAIL, 5L);
+		
+		assertNull(ru);
+	}
+	
+	@Test
+	public void testFindByEmailAndSubscribedId_WithNotExistingEmail_ShouldReturnNull() {
+		RegisteredUser ru = registeredUserRepository.findByEmailAndSubscribedId("RNG_EMAIL", 5L);
+		
+		assertNull(ru);
 	}
 
 }

@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatTab } from '@angular/material/tabs';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { of } from 'rxjs';
@@ -98,28 +98,26 @@ describe('SubscriedNewsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('initilize component', () => {
+  it('initilize component',  () => {
     component.ngOnInit();
-    fixture.whenStable().then(() => {
-      expect(newsService.getSubscribedNews).toHaveBeenCalled();
-      expect(coService.get).toHaveBeenCalledTimes(2);
-      expect(imageService.get).toHaveBeenCalledTimes(3);
-      expect(component.culturalOffer.get(1).name).toEqual('KULTURNA PONUDA');
-      expect(component.categories.length).toEqual(1);
-      expect(component.categories[0].name).toEqual('Kategorija 1');
-    });
+    fixture.detectChanges();
+    expect(newsService.getSubscribedNews).toHaveBeenCalled();
+    expect(coService.get).toHaveBeenCalledTimes(4);
+    expect(imageService.get).toHaveBeenCalledTimes(6);
+    expect(component.culturalOffer.get(1).name).toEqual('KULTURNA PONUDA');
+    expect(component.categories.length).toEqual(1);
+    expect(component.categories[0].name).toEqual('Kategorija 1');
   });
 
-  it('changeTab to other category', () => {
+  it('changeTab to other category',  () => {
     component.ngOnInit();
     component.changeTab({ index: 1, tab: new MatTab(null, null)});
-    fixture.whenStable().then(() => {
-      expect(newsService.getAllByCategoryId).toHaveBeenCalled();
-      expect(coService.get).toHaveBeenCalledTimes(4);
-      expect(imageService.get).toHaveBeenCalledTimes(6);
-      expect(component.culturalOffer.get(1).name).toEqual('KULTURNA PONUDA');
-      expect(component.categories.length).toEqual(1);
-      expect(component.categories[0].name).toEqual('Kategorija 1');
-    });
+    fixture.detectChanges();
+    expect(newsService.getAllByCategoryId).toHaveBeenCalled();
+    expect(coService.get).toHaveBeenCalled();
+    expect(imageService.get).toHaveBeenCalled();
+    expect(component.culturalOffer.get(1).name).toEqual('KULTURNA PONUDA');
+    expect(component.categories.length).toEqual(1);
+    expect(component.categories[0].name).toEqual('Kategorija 1');
   });
 });

@@ -8,7 +8,7 @@ public class CategoryConstants {
 	public static final int PAGE_NO = 0;
 	public static final int NON_EXISTING_PAGE_NO = 50;
 	public static final int PAGE_SIZE = 5;
-	
+	public static final String EXISTING_VALUE = "Manastiri";
 
 	public static final int TOTAL_NO = 12;
 

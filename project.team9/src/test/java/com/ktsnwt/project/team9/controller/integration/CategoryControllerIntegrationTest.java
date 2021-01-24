@@ -265,6 +265,55 @@ public class CategoryControllerIntegrationTest {
 	}
 	
 	
+	@Test
+	public void testGetAllCategoryByName_WithPageableAndExistingValue_ShouldReturnFirst5Category() {
+		Pageable pageable = PageRequest.of(PAGE_NO, PAGE_SIZE);
+		int size = categoryService.findByName(EXISTING_VALUE, pageable).getNumberOfElements();
+		ParameterizedTypeReference<CustomPageImplementation<CategoryDTO>> type = new ParameterizedTypeReference<CustomPageImplementation<CategoryDTO>>() {
+		};
+
+		ResponseEntity<CustomPageImplementation<CategoryDTO>> responseEntity = restTemplate
+				.exchange("/api/categories/by-page/" + EXISTING_VALUE + "?page=" + PAGE_NO + "&size=" + PAGE_SIZE, HttpMethod.GET, null, type);
+
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+		assertNotNull(responseEntity.getBody());
+		assertEquals(PAGE_NO ,responseEntity.getBody().getNumber());
+		assertEquals(size, responseEntity.getBody().getNumberOfElements());
+	}
+
+	@Test
+	public void testGetAllCategoryByName_WithNonExistingPageable_ShouldReturnEmptyCollection() {
+		Pageable pageable = PageRequest.of(NON_EXISTING_PAGE_NO, PAGE_SIZE);
+		int size = categoryService.findByName(EXISTING_VALUE, pageable).getNumberOfElements();
+		
+		ParameterizedTypeReference<CustomPageImplementation<CategoryDTO>> type = new ParameterizedTypeReference<CustomPageImplementation<CategoryDTO>>() {
+		};
+
+		ResponseEntity<CustomPageImplementation<CategoryDTO>> responseEntity = restTemplate
+				.exchange("/api/categories/by-page/" + EXISTING_VALUE + "?page=" + NON_EXISTING_PAGE_NO + "&size=" + PAGE_SIZE, HttpMethod.GET, null, type);
+
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+		assertNotNull(responseEntity.getBody());
+		assertEquals(size, responseEntity.getBody().getNumberOfElements());
+	}
+	
+	@Test
+	public void testGetAllCategoryByName_WithNonExistingValue_ShouldReturnEmptyCollection() {
+		Pageable pageable = PageRequest.of(PAGE_NO, PAGE_SIZE);
+		int size = categoryService.findByName("RNG", pageable).getNumberOfElements();
+		
+		ParameterizedTypeReference<CustomPageImplementation<CategoryDTO>> type = new ParameterizedTypeReference<CustomPageImplementation<CategoryDTO>>() {
+		};
+
+		ResponseEntity<CustomPageImplementation<CategoryDTO>> responseEntity = restTemplate
+				.exchange("/api/categories/by-page/" + "RNG" + "?page=" + PAGE_NO + "&size=" + PAGE_SIZE, HttpMethod.GET, null, type);
+
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+		assertNotNull(responseEntity.getBody());
+		assertEquals(size, responseEntity.getBody().getNumberOfElements());
+	}
+	
+	
 }
 
 
