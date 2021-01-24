@@ -7,6 +7,8 @@ import { CulturalOffer } from 'src/app/core/models/response/cultural-offer.model
 import { CategoryService } from 'src/app/core/services/category.service';
 import { CulturalOfferService } from 'src/app/core/services/cultural-offer.service';
 import { JwtService } from 'src/app/core/services/jwt.service';
+import { NewsService } from 'src/app/core/services/news.service';
+import { UserService } from 'src/app/core/services/user.service';
 import { ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 
@@ -35,6 +37,10 @@ export class CulturalOfferListComponent implements OnInit {
 
   searchValue = '';
 
+  userID: number;
+
+  subscribed = new Map<number, boolean>();
+
 
   constructor(
     private culturalOfferService: CulturalOfferService,
@@ -42,11 +48,18 @@ export class CulturalOfferListComponent implements OnInit {
     private snackBar: Snackbar,
     private jwtService: JwtService,
     private categoryService: CategoryService,
+    private newsService: NewsService,
+    private userService: UserService
   ) { }
 
   ngOnInit(): void {
     this.selectField = new FormControl();
     this.role = this.jwtService.getRole();
+    if (this.role === 'ROLE_REGISTERED_USER'){
+      this.userService.getCurrentUser().subscribe(user => {
+        this.userID = user.id;
+      });
+    }
     this.getAllCategories();
   }
 
@@ -111,6 +124,7 @@ export class CulturalOfferListComponent implements OnInit {
         this.rows[i].push(this.culturalOffers.content[5 * i + j]);
       }
     }
+    this.getSubscribed();
   }
 
   openDialog(id: number): void {
@@ -159,5 +173,32 @@ export class CulturalOfferListComponent implements OnInit {
     this.currentCategory = value;
     this.resetRequiredParameters();
     this.getCulturalOffersByCategoryAndName();
+  }
+
+  getSubscribed(): void{
+    const email = this.jwtService.getEmail();
+    for (const co of this.culturalOffers.content){
+      this.userService.isSubscribed(email, co.id).subscribe(res => {
+        this.subscribed.set(co.id, res);
+      });
+    }
+  }
+
+  subscribe(COID): void{
+    this.newsService.subscribe(this.userID + '', COID)
+    .subscribe(succ => {
+      if (succ){
+        this.subscribed.set(COID, true);
+      }
+    });
+  }
+
+  unsubscribe(COID): void{
+    this.newsService.unsubscribe(this.userID + '', COID)
+    .subscribe(succ => {
+      if (succ){
+        this.subscribed.set(COID, false);
+      }
+    });
   }
 }
