@@ -48,7 +48,7 @@ export class ChangePasswordComponent implements OnInit {
     const passwordChange: PasswordChangeRequest = {oldPassword: '', newPassword: ''};
     passwordChange.oldPassword = this.form.value.oldPassword;
     passwordChange.newPassword = this.form.value.newPassword;
-    this.authenticationService.changePassword(passwordChange).subscribe(data => {
+    this.authenticationService.changePassword(passwordChange).subscribe((data: string) => {
       this.snackBar.success('You changed password successfully.');
       this.submited = false;
       this.authenticationService.logout();

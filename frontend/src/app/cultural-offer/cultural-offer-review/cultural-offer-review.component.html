@@ -26,11 +26,12 @@
                 </h2>
               </div>
             </div>
-            <div *ngIf="role === 'ROLE_REGISTERED_USER'" class="col-3">
+            <div class="col-3">
               <div>
                 <span>
                   Average: <b>{{ culturalOffer.averageMark }}/5</b>
                   <bar-rating
+                    *ngIf="role === 'ROLE_REGISTERED_USER'" 
                     [(rate)]="mark"
                     [theme]="'stars'"
                     [max]="5"
@@ -38,7 +39,7 @@
                   ></bar-rating>
                 </span>
               </div>
-              <div>
+              <div *ngIf="role === 'ROLE_REGISTERED_USER'">
                 <button
                   *ngIf="!subscribed"
                   mat-stroked-button

@@ -25,8 +25,7 @@ export class JwtService {
     const jwt: JwtHelperService = new JwtHelperService();
     const token: UserTokenState = JSON.parse(localStorage.getItem('jwtToken'));
     if (token) {
-      const info = jwt.decodeToken(token.accessToken);
-      return info.role;
+      return jwt.decodeToken(token.accessToken).role;
     }
     return '';
   }
@@ -35,8 +34,7 @@ export class JwtService {
     const jwt: JwtHelperService = new JwtHelperService();
     const token: UserTokenState = JSON.parse(localStorage.getItem('jwtToken'));
     if (token) {
-      const info = jwt.decodeToken(token.accessToken);
-      return info.sub;
+      return jwt.decodeToken(token.accessToken).sub;
     }
     return '';
   }

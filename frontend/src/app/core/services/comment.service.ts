@@ -9,7 +9,6 @@ import { Comment } from '../models/response/comment.model';
   providedIn: 'root'
 })
 export class CommentService {
-  private headers = new HttpHeaders({'Content-Type': 'application/json'});
 
   constructor(
     private http: HttpClient
@@ -23,7 +22,7 @@ export class CommentService {
   }
 
   post(body: FormData): Observable<Comment> {
-    return this.http.post(`${environment.api_url}comments`, body,  {responseType: 'json'});
+    return this.http.post(`${environment.api_url}comments`, body, {responseType: 'json'});
   }
 
   approve(comment: Comment, approve: boolean): Observable<string> {

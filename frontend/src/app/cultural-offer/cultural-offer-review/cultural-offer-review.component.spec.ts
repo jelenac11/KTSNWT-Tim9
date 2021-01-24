@@ -83,7 +83,9 @@ describe('CulturalOfferReviewComponent', () => {
         { provide: ActivatedRoute, useValue: { snapshot: { paramMap: { get: (id: string) => { return '5'; } } } } },
       ]
     });
+  });
 
+  it('should create', () => {
     fixture = TestBed.createComponent(CulturalOfferReviewComponent);
     component = fixture.componentInstance;
     culturalOfferService = TestBed.inject(CulturalOfferService);
@@ -93,20 +95,24 @@ describe('CulturalOfferReviewComponent', () => {
     markService = TestBed.inject(MarkService);
     newsService = TestBed.inject(NewsService);
     route = TestBed.inject(ActivatedRoute);
-  });
-
-  it('should create', () => {
     expect(component).toBeTruthy();
   });
 
   it('should fetch the cultural offer', fakeAsync(() => {
+    fixture = TestBed.createComponent(CulturalOfferReviewComponent);
+    component = fixture.componentInstance;
+    culturalOfferService = TestBed.inject(CulturalOfferService);
+    dialog = TestBed.inject(MatDialog);
+    registeredUserService = TestBed.inject(UserService);
+    jwtService = TestBed.inject(JwtService);
+    markService = TestBed.inject(MarkService);
+    newsService = TestBed.inject(NewsService);
+    route = TestBed.inject(ActivatedRoute);
+
     component.ngOnInit();
     expect(jwtService.getRole).toHaveBeenCalled();
     expect(culturalOfferService.get).toHaveBeenCalledWith('5');
 
-    expect(markService.get).toHaveBeenCalled();
-    expect(component.isRated).toEqual(true);
-    expect(component.mark).toEqual(5);
     expect(component.userID).toEqual(5);
     expect(component.culturalOfferId).toEqual('5');
     expect(component.culturalOffer.id).toEqual(5);
@@ -129,6 +135,20 @@ describe('CulturalOfferReviewComponent', () => {
   }));
 
   it('onRate with exist rating', fakeAsync(() => {
+    const jwtServiceMocked2 = {
+      getRole: jasmine.createSpy('getRole').and.returnValue('ROLE_REGISTERED_USER')
+    };
+    TestBed.overrideProvider(JwtService, {useValue: jwtServiceMocked2});
+    fixture = TestBed.createComponent(CulturalOfferReviewComponent);
+    component = fixture.componentInstance;
+    culturalOfferService = TestBed.inject(CulturalOfferService);
+    dialog = TestBed.inject(MatDialog);
+    registeredUserService = TestBed.inject(UserService);
+    jwtService = TestBed.inject(JwtService);
+    markService = TestBed.inject(MarkService);
+    newsService = TestBed.inject(NewsService);
+    route = TestBed.inject(ActivatedRoute);
+
     component.isRated = true;
     component.onRate(5);
     expect(markService.update).toHaveBeenCalled();
@@ -146,6 +166,20 @@ describe('CulturalOfferReviewComponent', () => {
   }));
 
   it('onRate with nonexist rating', fakeAsync(() => {
+    const jwtServiceMocked2 = {
+      getRole: jasmine.createSpy('getRole').and.returnValue('ROLE_REGISTERED_USER')
+    };
+    TestBed.overrideProvider(JwtService, {useValue: jwtServiceMocked2});
+    fixture = TestBed.createComponent(CulturalOfferReviewComponent);
+    component = fixture.componentInstance;
+    culturalOfferService = TestBed.inject(CulturalOfferService);
+    dialog = TestBed.inject(MatDialog);
+    registeredUserService = TestBed.inject(UserService);
+    jwtService = TestBed.inject(JwtService);
+    markService = TestBed.inject(MarkService);
+    newsService = TestBed.inject(NewsService);
+    route = TestBed.inject(ActivatedRoute);
+
     component.isRated = false;
     component.onRate(5);
     expect(markService.create).toHaveBeenCalled();
@@ -164,12 +198,32 @@ describe('CulturalOfferReviewComponent', () => {
   }));
 
   it('subscribe', fakeAsync(() => {
+    fixture = TestBed.createComponent(CulturalOfferReviewComponent);
+    component = fixture.componentInstance;
+    culturalOfferService = TestBed.inject(CulturalOfferService);
+    dialog = TestBed.inject(MatDialog);
+    registeredUserService = TestBed.inject(UserService);
+    jwtService = TestBed.inject(JwtService);
+    markService = TestBed.inject(MarkService);
+    newsService = TestBed.inject(NewsService);
+    route = TestBed.inject(ActivatedRoute);
+
     component.subscribe();
     expect(newsService.subscribe).toHaveBeenCalled();
     expect(component.subscribed).toEqual(true);
   }));
 
   it('unsubscribe', fakeAsync(() => {
+    fixture = TestBed.createComponent(CulturalOfferReviewComponent);
+    component = fixture.componentInstance;
+    culturalOfferService = TestBed.inject(CulturalOfferService);
+    dialog = TestBed.inject(MatDialog);
+    registeredUserService = TestBed.inject(UserService);
+    jwtService = TestBed.inject(JwtService);
+    markService = TestBed.inject(MarkService);
+    newsService = TestBed.inject(NewsService);
+    route = TestBed.inject(ActivatedRoute);
+    
     component.unsubscribe();
     expect(newsService.unsubscribe).toHaveBeenCalled();
     expect(component.subscribed).toEqual(false);

@@ -42,24 +42,24 @@ export class UsersReviewComponent implements OnInit {
   getUsers(): void {
     if (!this.searchValue) {
       if (this.currentTab === 0) {
-        this.userService.getUsers(this.size, this.page - 1, 'admins').subscribe(data => {
+        this.userService.getUsers(this.size, this.page - 1, 'admins').subscribe((data: UserPage) => {
           const without = data.content.filter(admin => admin.email !== this.loggedIn);
           this.users = { content: without, totalElements: data.totalElements };
         });
       } else {
-        this.userService.getUsers(this.size, this.page - 1, 'registered-users').subscribe(data => {
+        this.userService.getUsers(this.size, this.page - 1, 'registered-users').subscribe((data: UserPage) => {
           this.users = data;
         });
       }
     } else {
       if (this.currentTab === 0) {
         console.log(this.searchValue);
-        this.userService.searchUsers(this.size, this.page - 1, this.searchValue, 'admins').subscribe(data => {
+        this.userService.searchUsers(this.size, this.page - 1, this.searchValue, 'admins').subscribe((data: UserPage) => {
           const without = data.content.filter(admin => admin.email !== this.loggedIn);
           this.users = {content: without, totalElements: data.totalElements};
         });
       } else {
-        this.userService.searchUsers(this.size, this.page - 1, this.searchValue, 'registered-users').subscribe(data => {
+        this.userService.searchUsers(this.size, this.page - 1, this.searchValue, 'registered-users').subscribe((data: UserPage) => {
           this.users = data;
         });
       }
@@ -73,6 +73,7 @@ export class UsersReviewComponent implements OnInit {
     } else {
       this.isAdmin = true;
     }
+    this.page = 1;
     this.getUsers();
   }
 
