@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatTab } from '@angular/material/tabs';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { of } from 'rxjs';
 import { CulturalOffer } from 'src/app/core/models/response/cultural-offer.model';
@@ -111,7 +112,7 @@ describe('SubscriedNewsComponent', () => {
 
   it('changeTab to other category', () => {
     component.ngOnInit();
-    component.changeTab({ index: 1 });
+    component.changeTab({ index: 1, tab: new MatTab(null,null)});
     fixture.whenStable().then(() => {
       expect(newsService.getAllByCategoryId).toHaveBeenCalled();
       expect(coService.get).toHaveBeenCalledTimes(4);
@@ -121,6 +122,4 @@ describe('SubscriedNewsComponent', () => {
       expect(component.categories[0].name).toEqual('Kategorija 1');
     });
   });
-
-
 });

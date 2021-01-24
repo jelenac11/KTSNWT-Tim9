@@ -125,4 +125,9 @@ public class ReviewCulturalOfferPage {
 		(new WebDriverWait(driver, 30))
 		.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(text(),'Unsubscribe')]")));
 	}
+	
+	public void ensureIsDisplayedEmptyComment() {
+		(new WebDriverWait(driver, 30))
+		.until(ExpectedConditions.visibilityOfElementLocated(By.id("all-empty-comment")));
+	}
 }
