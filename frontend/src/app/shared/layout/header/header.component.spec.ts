@@ -17,10 +17,11 @@ describe('HeaderComponent', () => {
   let dialog: MatDialog;
   let jwtService: JwtService;
   let userService: UserService;
+  let dialogRef: MatDialogRef<{}>;
 
   beforeEach(() => {
     const matDialogRefMock = {
-      open: jasmine.createSpy('open'),
+      open: jasmine.createSpy('open').and.returnValue(dialogRef),
     };
     const authenticationServiceMock = {
       logout: jasmine.createSpy('logout'),
@@ -29,7 +30,9 @@ describe('HeaderComponent', () => {
     const jwtServiceMock = {
       getRole: jasmine.createSpy('getRole').and.returnValue(of('ROLE_ADMIN')),
     };
-
+    const dialogRefMocked = {
+      afterClosed: jasmine.createSpy('afterClosed').and.returnValue(of(true))
+    };
     const userServiceMock = {
       getCurrentUser: jasmine.createSpy('getCurrentUser').and.returnValue(of(
         {
@@ -54,6 +57,7 @@ describe('HeaderComponent', () => {
         { provide: JwtService, useValue: jwtServiceMock },
         { provide: UserService, useValue: userServiceMock },
         { provide: Router, useValue: routerMock },
+        { provide: MatDialogRef, useValue: dialogRefMocked}
       ],
       declarations: [HeaderComponent]
     });
@@ -66,6 +70,7 @@ describe('HeaderComponent', () => {
     jwtService = TestBed.inject(JwtService);
     userService = TestBed.inject(UserService);
     router = TestBed.inject(Router);
+    dialogRef = TestBed.inject(MatDialogRef);
   });
 
   it('should create', () => {
@@ -88,16 +93,6 @@ describe('HeaderComponent', () => {
     expect(authenticationService.logout).toHaveBeenCalled();
     expect(component.role).toEqual('');
     expect(router.navigate).toHaveBeenCalledWith(['/']);
-  });
-
-  it('showProfile', () => {
-    component.showProfile();
-    expect(dialog.open).toHaveBeenCalled();
-  });
-
-  it('changePassword', () => {
-    component.showProfile();
-    expect(dialog.open).toHaveBeenCalled();
   });
 
 });

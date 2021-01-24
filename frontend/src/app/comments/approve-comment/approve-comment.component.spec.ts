@@ -56,7 +56,6 @@ describe('ApproveCommentComponent', () => {
   });
 
   it('should create', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(ApproveCommentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -66,7 +65,6 @@ describe('ApproveCommentComponent', () => {
   });
 
   it('should fetch all not approved comments on init', fakeAsync(() => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(ApproveCommentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -99,7 +97,6 @@ describe('ApproveCommentComponent', () => {
   }));
 
   it('handlePageChange', fakeAsync(() => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(ApproveCommentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -133,7 +130,6 @@ describe('ApproveCommentComponent', () => {
   }));
 
   it('should return comment successfully approved when comment has been approved', fakeAsync(() => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(ApproveCommentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -163,7 +159,6 @@ describe('ApproveCommentComponent', () => {
       approve: jasmine.createSpy('approve').and.returnValue(of('Comment successfully declined.'))
     };
     TestBed.overrideProvider(CommentService, {useValue: commentServiceMocked2});
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(ApproveCommentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

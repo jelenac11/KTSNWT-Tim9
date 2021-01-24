@@ -9,7 +9,7 @@ import { Comment } from 'src/app/core/models/response/comment.model';
 export class CommentComponent implements OnInit {
 
   @Input()
-  comment: Comment = {};
+  comment: Comment;
 
   constructor() { }
 

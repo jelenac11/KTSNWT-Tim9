@@ -41,7 +41,6 @@ describe('AddAdminComponent', () => {
   });
 
   it('should create', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(AddAdminComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -52,7 +51,6 @@ describe('AddAdminComponent', () => {
   });
 
   it('should be initialized', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(AddAdminComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -65,7 +63,6 @@ describe('AddAdminComponent', () => {
   });
 
   it('should be closed on close button', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(AddAdminComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -83,7 +80,6 @@ describe('AddAdminComponent', () => {
   }
 
   it('should bind form fields to form', fakeAsync(() => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(AddAdminComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -120,7 +116,6 @@ describe('AddAdminComponent', () => {
   }));
 
   it('should be invalid form when submitted and inputs are empty', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(AddAdminComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -156,7 +151,6 @@ describe('AddAdminComponent', () => {
   });
 
   it('should be invalid form when submitted and first name is empty', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(AddAdminComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -180,7 +174,6 @@ describe('AddAdminComponent', () => {
   });
 
   it('should be invalid form when submitted and last name is empty', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(AddAdminComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -204,7 +197,6 @@ describe('AddAdminComponent', () => {
   });
 
   it('should be invalid form when submitted and email is empty', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(AddAdminComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -228,7 +220,6 @@ describe('AddAdminComponent', () => {
   });
 
   it('should be invalid form when submitted and username is empty', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(AddAdminComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -252,7 +243,6 @@ describe('AddAdminComponent', () => {
   });
 
   it('should be invalid form when submitted and email is not valid', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(AddAdminComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -277,7 +267,6 @@ describe('AddAdminComponent', () => {
   });
 
   it('should add administator successfully when submitted', fakeAsync(() => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(AddAdminComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -311,7 +300,6 @@ describe('AddAdminComponent', () => {
       }))
     };
     TestBed.overrideProvider(UserService, {useValue: userServiceMocked2});
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(AddAdminComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -343,7 +331,6 @@ describe('AddAdminComponent', () => {
       }))
     };
     TestBed.overrideProvider(UserService, {useValue: userServiceMocked2});
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(AddAdminComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

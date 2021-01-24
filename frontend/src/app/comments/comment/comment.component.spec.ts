@@ -10,13 +10,13 @@ describe('CommentComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ CommentComponent ]
-    })
-    .compileComponents();
+    });
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CommentComponent);
     component = fixture.debugElement.componentInstance;
+    component.comment = {};
     fixture.detectChanges();
   });
 

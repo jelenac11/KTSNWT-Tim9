@@ -29,7 +29,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.getCurrentUser()
-    .subscribe(currentUser => {
+    .subscribe((currentUser: User) => {
       this.user = currentUser;
     });
   }
@@ -56,10 +56,11 @@ export class ProfileComponent implements OnInit {
     newUser.firstName = this.form.value.firstName;
     newUser.lastName = this.form.value.lastName;
     newUser.username = this.form.value.username;
-    this.userService.changeProfile(newUser).subscribe(data => {
+    this.userService.changeProfile(newUser).subscribe((data: User) => {
       this.snackBar.success('You changed account information successfully.');
       this.user = data;
       this.edit = false;
+      this.close();
     },
     error => {
       if (error.status !== 200) {

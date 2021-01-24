@@ -42,7 +42,6 @@ describe('ProfileComponent', () => {
   });
 
   it('should create', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(ProfileComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -53,7 +52,6 @@ describe('ProfileComponent', () => {
   });
 
   it('should be initialized', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(ProfileComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -86,7 +84,6 @@ describe('ProfileComponent', () => {
   });
 
   it('should be closed on close button', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(ProfileComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -98,7 +95,6 @@ describe('ProfileComponent', () => {
   });
 
   it('should initialize form on edit button', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(ProfileComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -110,7 +106,6 @@ describe('ProfileComponent', () => {
   });
 
   it('should be invalid form when submitted and inputs are empty', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(ProfileComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -143,7 +138,6 @@ describe('ProfileComponent', () => {
   });
 
   it('should be invalid form when submitted and username is empty', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(ProfileComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -168,7 +162,6 @@ describe('ProfileComponent', () => {
   });
 
   it('should be invalid form when submitted and first name is empty', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(ProfileComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -193,7 +186,6 @@ describe('ProfileComponent', () => {
   });
 
   it('should be invalid form when submitted and last name is empty', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(ProfileComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -224,7 +216,6 @@ describe('ProfileComponent', () => {
   }
 
   it('should bind form fields to form', fakeAsync(() => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(ProfileComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -253,7 +244,6 @@ describe('ProfileComponent', () => {
   }));
 
   it('should change account information succesfully when submitted', fakeAsync(() => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(ProfileComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -287,7 +277,6 @@ describe('ProfileComponent', () => {
       getCurrentUser: jasmine.createSpy('getCurrentUser').and.returnValue(of({ email: 'email@gmail.com', username: 'jelenac', firstName: 'Jelena', lastName: 'Cupac' }))
     };
     TestBed.overrideProvider(UserService, {useValue: userServiceMocked2});
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(ProfileComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

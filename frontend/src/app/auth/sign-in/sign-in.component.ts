@@ -6,6 +6,7 @@ import { AuthenticationService } from 'src/app/core/services/authentication.serv
 import { JwtService } from 'src/app/core/services/jwt.service';
 import { MyErrorStateMatcher } from 'src/app/core/error-matchers/ErrorStateMatcher';
 import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
+import { UserTokenState } from 'src/app/core/models/response/user-token-state.model';
 
 @Component({
   selector: 'app-sign-in',
@@ -43,7 +44,7 @@ export class SignInComponent implements OnInit {
     const credentials: UserLogin = { email: '', password: '' };
     credentials.email = this.loginForm.value.email;
     credentials.password = this.loginForm.value.password;
-    this.authenticationService.login(credentials).subscribe(data => {
+    this.authenticationService.login(credentials).subscribe((data: UserTokenState) => {
       this.jwtService.saveToken(data);
       this.router.navigate(['/']);
     },

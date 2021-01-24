@@ -22,8 +22,7 @@ describe('ConfirmRegistrationComponent', () => {
         { provide: AuthenticationService, useValue: authenticationServiceMocked },
         { provide: ActivatedRoute, useValue: { snapshot: { paramMap: { get: (token: string) =>  'token'  } } } }
       ]
-    })
-    .compileComponents();
+    });
   });
 
   beforeEach(() => {

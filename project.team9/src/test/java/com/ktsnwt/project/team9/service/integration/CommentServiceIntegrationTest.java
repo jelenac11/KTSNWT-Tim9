@@ -249,7 +249,6 @@ public class CommentServiceIntegrationTest {
 		List<Comment> deleted = (List<Comment>) commentService.getAll();
 		int afterDeleting = deleted.size();
 		assertEquals(number - 1, afterDeleting);
-		assertFalse(fileExist.exists());
 		
 		String img = fileService.saveImage(send, "comment");
 		imgService.create(new Image(img));
