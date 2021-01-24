@@ -131,7 +131,7 @@ public class AuthenticationController {
 		verificationTokenService.saveToken(vtoken);
 		String confirmationUrl = "/confirm-registration/" + token;
 		mailService.sendMail(newUser.getEmail(), "Account activation", "Hi " + newUser.getFirstName() + ",\n\nThanks for getting started with CulturalContentTeam9! Click below to confirm your registration:\n" + 
-				"\nhttp://localhost:4200" + confirmationUrl + "\n\nThanks,\nTeam 9\n");
+				"\nhttps://localhost:4200/auth" + confirmationUrl + "\n\nThanks,\nTeam 9\n");
 		return new ResponseEntity<>(registeredUserMapper.toResDTO(newUser), HttpStatus.CREATED);
 	}
 

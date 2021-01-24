@@ -9,7 +9,7 @@ describe('MapComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [MapComponent]
-    })
+    });
     fixture = TestBed.createComponent(MapComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -20,7 +20,7 @@ describe('MapComponent', () => {
   });
 
   it('setLocation with same latitude and longitude', () => {
-    let data = {
+    const data = {
       id: 5,
       name: 'Srbija',
       category: {
@@ -44,7 +44,7 @@ describe('MapComponent', () => {
   });
 
   it('setLocation with differente latitude and longitude', () => {
-    let data = {
+    const data = {
       id: 5,
       name: 'Srbija',
       category: {

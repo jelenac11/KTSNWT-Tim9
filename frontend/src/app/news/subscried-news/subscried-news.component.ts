@@ -64,7 +64,7 @@ export class SubscriedNewsComponent implements OnInit {
       this.news = news;
       for (const item of news.content){
         this.culturalOffer = new Map();
-        this.coService.get(item.culturalOfferID).
+        this.coService.get(item.culturalOfferID.toString()).
         subscribe(co => {
           this.culturalOffer.set(item.culturalOfferID, co);
           this.checkCategory(co.category);
@@ -92,7 +92,7 @@ export class SubscriedNewsComponent implements OnInit {
       this.news = news;
       for (const item of news.content){
         this.culturalOffer = new Map();
-        this.coService.get(item.culturalOfferID).
+        this.coService.get(item.culturalOfferID.toString()).
         subscribe(co => this.culturalOffer.set(item.culturalOfferID, co));
       }
     });*/

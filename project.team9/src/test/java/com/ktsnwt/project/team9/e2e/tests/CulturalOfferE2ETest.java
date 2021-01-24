@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -18,6 +19,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.PageFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -59,7 +61,9 @@ public class CulturalOfferE2ETest {
 	@Before
 	public void setUp() {
 		System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
-		driver = new ChromeDriver();
+		ChromeOptions handlingSSL = new ChromeOptions();
+		handlingSSL.setAcceptInsecureCerts(true);
+		driver = new ChromeDriver(handlingSSL);
 
 		driver.navigate().to(BASE_URL);
 
@@ -115,10 +119,12 @@ public class CulturalOfferE2ETest {
 		createUpdateCulturalOfferPage.getLocation().sendKeys(Keys.ARROW_DOWN);
 		createUpdateCulturalOfferPage.getLocation().sendKeys(Keys.ENTER);
 		createUpdateCulturalOfferPage.getCategory().click();
-		createUpdateCulturalOfferPage.getCategory().findElement(By.id("select_category_1")).click();
+		createUpdateCulturalOfferPage.getCategory().findElement(By.xpath("//mat-option[@id='select_category_1']/span"))
+				.click();
 		createUpdateCulturalOfferPage.getDescription().sendKeys("opis");
-		createUpdateCulturalOfferPage.getImage().sendKeys(
-				"C:\\Users\\Lauda\\Desktop\\KiTS\\projekat\\project.team9\\src\\test\\resources\\uploadedImages\\comment_slika6.jpg");
+		String absolutePath = FileSystems.getDefault().getPath("src/test/resources/uploadedImages/comment_slika6.jpg")
+				.normalize().toAbsolutePath().toString();
+		createUpdateCulturalOfferPage.getImage().sendKeys(absolutePath);
 		createUpdateCulturalOfferPage.getCreateButton().click();
 
 		reviewCulturalOfferPage.ensureIsDisplayedName();
@@ -159,10 +165,12 @@ public class CulturalOfferE2ETest {
 		createUpdateCulturalOfferPage.getLocation().sendKeys(Keys.ARROW_DOWN);
 		createUpdateCulturalOfferPage.getLocation().sendKeys(Keys.ENTER);
 		createUpdateCulturalOfferPage.getCategory().click();
-		createUpdateCulturalOfferPage.getCategory().findElement(By.id("select_category_1")).click();
+		createUpdateCulturalOfferPage.getCategory().findElement(By.xpath("//mat-option[@id='select_category_1']/span"))
+				.click();
 		createUpdateCulturalOfferPage.getDescription().sendKeys("opis");
-		createUpdateCulturalOfferPage.getImage().sendKeys(
-				"C:\\Users\\Lauda\\Desktop\\KiTS\\projekat\\project.team9\\src\\test\\resources\\uploadedImages\\comment_slika6.jpg");
+		String absolutePath = FileSystems.getDefault().getPath("src/test/resources/uploadedImages/comment_slika6.jpg")
+				.normalize().toAbsolutePath().toString();
+		createUpdateCulturalOfferPage.getImage().sendKeys(absolutePath);
 		createUpdateCulturalOfferPage.getCreateButton().click();
 
 		assertEquals(size, ((List<CulturalOffer>) culturalOfferService.getAll()).size());
@@ -342,17 +350,19 @@ public class CulturalOfferE2ETest {
 			throws InterruptedException, IOException {
 		homePage.ensureIsDisplayedFestivalsTab();
 		homePage.ensureIsDisplayedSearch();
-		
+
 		assertEquals("https://localhost:4200/", driver.getCurrentUrl());
 		
 		homePage.getSearch().sendKeys("festival 100");
 		
 		homePage.getFestivalsTab().click();
+
+		Thread.sleep(1000);
 		
 		homePage.ensureIsDisplayedMoreButton();
-
+		
 		homePage.getMore().click();
-
+		
 		reviewCulturalOfferPage.ensureIsDisplayedName();
 
 		assertEquals("https://localhost:4200/cultural-offers/3", driver.getCurrentUrl());
@@ -371,13 +381,14 @@ public class CulturalOfferE2ETest {
 		homePage.getCulturalOffersPage().click();
 
 		culturalOffersPage.ensureIsDisplayedSelectField();
-		culturalOffersPage.ensureIsDisplayedMoreButton();
 
 		assertEquals("https://localhost:4200/cultural-offers", driver.getCurrentUrl());
-		
+
 		culturalOffersPage.getSelect().click();
 		culturalOffersPage.getSelect().findElement(By.xpath("//mat-option[2]/span")).click();
-		
+
+		culturalOffersPage.ensureIsDisplayedMoreButton();
+
 		culturalOffersPage.getMore().click();
 
 		reviewCulturalOfferPage.ensureIsDisplayedName();

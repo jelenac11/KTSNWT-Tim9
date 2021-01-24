@@ -21,81 +21,70 @@
             <p class="h4 mb-4" *ngIf="!id">Create new cultural offer</p>
             <p class="h4 mb-4" *ngIf="id">Update cultural offer</p>
             <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-              <div class="form-group">
-                <label>Name</label>
-                <input
-                  id="culturalOffer_name_input"
-                  type="text"
-                  formControlName="name"
-                  class="form-control"
-                  [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
-                />
-                <div
-                  *ngIf="submitted && f.name.errors"
-                  class="invalid-feedback"
-                >
-                  <div *ngIf="f.name.errors.required">Name is required</div>
-                </div>
-              </div>
-              <div class="form-group">
-                <label>Location</label>
-                <input
-                  id="culturalOffer_location_input"
-                  [value]="loc"
-                  type="text"
-                  formControlName="location"
-                  class="form-control"
-                  matInput
-                  matGoogleMapsAutocomplete
-                  [ngClass]="{ 'is-invalid': submitted && f.location.errors }"
-                  placeholder="Type city or adress ..."
-                  (onAutocompleteSelected)="onAutocompleteSelected($event)"
-                />
-                <div
-                  *ngIf="submitted && f.name.errors"
-                  class="invalid-feedback"
-                >
-                  <div *ngIf="f.name.errors.required">Location is required</div>
-                  <div *ngIf="f.name.errors.locationNameValid">
-                    Invalid location
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <label>Category</label>
-                <select
-                  id="select_category"
-                  class="form-control"
-                  formControlName="category"
-                  [ngClass]="{ 'is-invalid': submitted && f.category.errors }"
-                >
-                  <option
-                    [id]="'select_category_' + category.id"
-                    *ngFor="let category of categories"
-                    [value]="category.id"
+              <p>
+                <mat-form-field appearance="outline">
+                  <mat-label>Name</mat-label>
+                  <input
+                    id="culturalOffer_name_input"
+                    type="text"
+                    formControlName="name"
+                    [errorStateMatcher]="matcher"
+                    matInput
+                  />
+                  <mat-error *ngIf="f.name.errors?.required"
+                    >Name is required</mat-error
                   >
-                    {{ category.name }}
-                  </option>
-                </select>
-                <div
-                  *ngIf="submitted && f.category.errors"
-                  class="invalid-feedback"
-                >
-                  <div *ngIf="f.category.errors.required">
-                    Category is required
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <label>Description</label>
-                <textarea
-                  id="culturalOffer_description_input"
-                  formControlName="description"
-                  class="form-control"
-                  placeholder="Write some description..."
-                  rows="5"
-                ></textarea>
-              </div>
+                </mat-form-field>
+              </p>
+              <p>
+                <mat-form-field appearance="outline">
+                  <mat-label>Location</mat-label>
+                  <input
+                    id="culturalOffer_location_input"
+                    [value]="loc"
+                    type="text"
+                    formControlName="location"
+                    matInput
+                    matGoogleMapsAutocomplete
+                    placeholder="Type city or adress ..."
+                    [errorStateMatcher]="matcher"
+                    (onAutocompleteSelected)="onAutocompleteSelected($event)"
+                  />
+                  <mat-error *ngIf="f.location.errors?.required"
+                    >Location is required</mat-error
+                  >
+                </mat-form-field>
+              </p>
+              <p>
+                <mat-form-field appearance="outline">
+                  <mat-label>Category</mat-label>
+                  <mat-select id="select_category" formControlName="category">
+                    <mat-option
+                      [id]="'select_category_' + category.id"
+                      *ngFor="let category of categories"
+                      [value]="category.id"
+                      >{{ category.name }}</mat-option
+                    >
+                  </mat-select>
+                  <mat-error *ngIf="f.category.errors?.required"
+                    >Category is required</mat-error
+                  >
+                </mat-form-field>
+              </p>
+
+              <p>
+                <mat-form-field appearance="outline">
+                  <mat-label>Description</mat-label>
+                  <textarea
+                    id="culturalOffer_description_input"
+                    formControlName="description"
+                    placeholder="Write some description..."
+                    rows="5"
+                    matInput
+                  >
+                  </textarea>
+                </mat-form-field>
+              </p>
               <div class="form-group">
                 <img
                   [src]="uploadedImage || '../assets/noimage.jpg'"

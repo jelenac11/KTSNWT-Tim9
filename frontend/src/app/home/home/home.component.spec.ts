@@ -12,7 +12,7 @@ describe('HomeComponent', () => {
   let categoryService: CategoryService;
 
   beforeEach(() => {
-    let data = {
+    const data = {
       content: [
         {
           id: 5,
@@ -53,12 +53,12 @@ describe('HomeComponent', () => {
       ],
       totalElements: 10
     };
-    let culturalOfferServiceMock = {
+    const culturalOfferServiceMock = {
       getCulturalOffersByCategory: jasmine.createSpy('getCulturalOffersByCategory').and.returnValue(of(data)),
       findByCategoryIdAndName: jasmine.createSpy('findByCategoryIdAndName').and.returnValue(of(data))
     };
 
-    let categoryServiceMock = {
+    const categoryServiceMock = {
       getAll: jasmine.createSpy('getAll').and.returnValue(of([{
         id: 1,
         name: 'Kategorija 1',
@@ -141,7 +141,7 @@ describe('HomeComponent', () => {
   });
 
   it('clickRow', () => {
-    let culturalOffer = {
+    const culturalOffer = {
       id: 6,
       name: 'Srbija 2',
       category: {
@@ -166,7 +166,7 @@ describe('HomeComponent', () => {
   });
 
   it('clickRow with same latitude and longitude', () => {
-    let culturalOffer = {
+    const culturalOffer = {
       id: 6,
       name: 'Srbija 2',
       category: {

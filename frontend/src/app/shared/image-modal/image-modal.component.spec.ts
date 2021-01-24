@@ -8,17 +8,17 @@ describe('ImageModalComponent', () => {
   let fixture: ComponentFixture<ImageModalComponent>;
   let lightbox: Lightbox;
 
-  let lightboxMock = {
+  const lightboxMock = {
     open: jasmine.createSpy('open'),
     close: jasmine.createSpy('close')
-  }
+  };
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ImageModalComponent],
       providers: [
         { provide: Lightbox, useValue: lightboxMock }
       ]
-    })
+    });
 
     fixture = TestBed.createComponent(ImageModalComponent);
     component = fixture.componentInstance;
