@@ -41,8 +41,7 @@ describe('SignInComponent', () => {
         { provide: Snackbar, useValue: snackBarMocked },
         { provide: JwtService, useValue: jwtServiceMocked }
       ]
-    })
-    .compileComponents();
+    });
   });
 
   beforeEach(() => {

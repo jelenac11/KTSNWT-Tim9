@@ -7,7 +7,7 @@
             <mat-error *ngIf="f.text.errors?.allEmpty" id="all-empty-comment">Comment must contain either text or image</mat-error>
         </mat-form-field></p>
         <img [src]="uploadedImage" alt="" id="image" *ngIf="uploadedImage !== ''"/>
-        <label class="label-image" for="add-image" style="float: right; vertical-align: center;"><b>Add image</b></label>
+        <label class="label-image" for="comment-image-file-input" style="float: right; vertical-align: center;"><b>Add image</b></label>
         <input type="file" accept="image/jpeg, image/jpg" (change)="chooseFile($event)" id="comment-image-file-input"/>
         <p class="file-name"><mat-form-field>
             <input formControlName="fileName" matInput [errorStateMatcher]="matcher" id="filename-add-comment"/>

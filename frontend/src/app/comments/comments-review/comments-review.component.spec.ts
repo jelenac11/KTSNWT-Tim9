@@ -45,8 +45,7 @@ describe('CommentsReviewComponent', () => {
         { provide: CommentService, useValue: commentServiceMocked },
         { provide: Router, useValue: { url: 'path/comments/1', navigate: jasmine.createSpy('navigate')}}
       ]
-    })
-    .compileComponents();
+    });
   });
 
   beforeEach(() => {

@@ -45,8 +45,7 @@ describe('AddCommentComponent', () => {
         { provide: MatDialogRef, useValue: dialogMocked },
         { provide: Router, useValue: { url: 'path/comments/1', navigate: jasmine.createSpy('navigate')}}
       ]
-    })
-    .compileComponents();
+    });
   });
 
   beforeEach(() => {
@@ -137,7 +136,7 @@ describe('AddCommentComponent', () => {
     expect(component.form.get('file').value).toBeDefined();
   }));
 
-  it('choose file without cultural offer id and files length greater than 0', () => {
+  it('choose file with files length greater than 0', () => {
     component.chooseFile({
       target: {
         files: [new Blob([], {

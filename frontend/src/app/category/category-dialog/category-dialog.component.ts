@@ -14,6 +14,7 @@ export class CategoryDialogComponent implements OnInit {
   form: FormGroup;
   matcher: MyErrorStateMatcher = new MyErrorStateMatcher();
   category = null;
+
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<CategoryDialogComponent>,
@@ -23,7 +24,7 @@ export class CategoryDialogComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.data){
+    if (this.data) {
       this.category = this.data;
       this.form = this.fb.group({
         name: [this.category.name, Validators.required],
@@ -81,11 +82,10 @@ export class CategoryDialogComponent implements OnInit {
     },
     error => {
       if (error.status !== 200) {
-        this.snackBar.error('Category already exist');
+        this.snackBar.error('Category already exists');
       }
     });
   }
-
 
   close(): void {
     this.dialogRef.close(false);
