@@ -59,7 +59,7 @@ describe('CulturalOfferReviewComponent', () => {
         firstName: 'User',
         lastName: 'User'
       }))
-    }
+    };
 
     const newsServiceMock = {
       subscribe: jasmine.createSpy('subscribe').and.returnValue(of(true)),
@@ -80,7 +80,7 @@ describe('CulturalOfferReviewComponent', () => {
         { provide: NewsService, useValue: newsServiceMock },
         { provide: MarkService, useValue: markServiceMock },
         { provide: MatDialog, useValue: { MatDialog } },
-        { provide: ActivatedRoute, useValue: { snapshot: { paramMap: { get: (id: string) => { return '5'; } } } } },
+        { provide: ActivatedRoute, useValue: { snapshot: { paramMap: { get: (id: string) => '5' } } } },
       ]
     });
   });
@@ -138,7 +138,7 @@ describe('CulturalOfferReviewComponent', () => {
     const jwtServiceMocked2 = {
       getRole: jasmine.createSpy('getRole').and.returnValue('ROLE_REGISTERED_USER')
     };
-    TestBed.overrideProvider(JwtService, {useValue: jwtServiceMocked2});
+    TestBed.overrideProvider(JwtService, { useValue: jwtServiceMocked2 });
     fixture = TestBed.createComponent(CulturalOfferReviewComponent);
     component = fixture.componentInstance;
     culturalOfferService = TestBed.inject(CulturalOfferService);
@@ -169,7 +169,7 @@ describe('CulturalOfferReviewComponent', () => {
     const jwtServiceMocked2 = {
       getRole: jasmine.createSpy('getRole').and.returnValue('ROLE_REGISTERED_USER')
     };
-    TestBed.overrideProvider(JwtService, {useValue: jwtServiceMocked2});
+    TestBed.overrideProvider(JwtService, { useValue: jwtServiceMocked2 });
     fixture = TestBed.createComponent(CulturalOfferReviewComponent);
     component = fixture.componentInstance;
     culturalOfferService = TestBed.inject(CulturalOfferService);
@@ -223,7 +223,7 @@ describe('CulturalOfferReviewComponent', () => {
     markService = TestBed.inject(MarkService);
     newsService = TestBed.inject(NewsService);
     route = TestBed.inject(ActivatedRoute);
-    
+
     component.unsubscribe();
     expect(newsService.unsubscribe).toHaveBeenCalled();
     expect(component.subscribed).toEqual(false);
