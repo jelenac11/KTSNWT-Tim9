@@ -62,12 +62,12 @@ describe('CulturalOfferFormComponent', () => {
 
     const routerMock = {
       navigateByUrl: jasmine.createSpy('navigateByUrl')
-    }
+    };
 
     const snackBarMock = {
       success: jasmine.createSpy('success'),
       error: jasmine.createSpy('error')
-    }
+    };
 
     TestBed.configureTestingModule({
       imports: [
@@ -79,7 +79,7 @@ describe('CulturalOfferFormComponent', () => {
         { provide: CulturalOfferService, useValue: culturalOfferServiceMock },
         { provide: CategoryService, useValue: categoryServiceMock },
         { provide: Snackbar, useValue: snackBarMock },
-        { provide: ActivatedRoute, useValue: { snapshot: { paramMap: { get: (id: string) => { null; } } } } },
+        { provide: ActivatedRoute, useValue: { snapshot: { paramMap: { get: (id: string) => { '1'; } } } } },
         { provide: Router, useValue: routerMock },
       ]
     });
@@ -121,8 +121,8 @@ describe('CulturalOfferFormComponent', () => {
     component.onAutocompleteSelected({
       geometry: {
         location: {
-          lat: () => { return 45; },
-          lng: () => { return 30; }
+          lat: () => 45,
+          lng: () => 30
         }
       }
     });
@@ -204,8 +204,8 @@ describe('CulturalOfferFormComponent', () => {
         formatted_address: 'something',
         geometry: {
           location: {
-            lat: () => { return 45; },
-            lng: () => { return 30; }
+            lat: () => 45,
+            lng: () => 30
           }
         }
       }
@@ -229,8 +229,8 @@ describe('CulturalOfferFormComponent', () => {
         formatted_address: 'something',
         geometry: {
           location: {
-            lat: () => { return 45; },
-            lng: () => { return 30; }
+            lat: () => 45,
+            lng: () => 30
           }
         }
       }

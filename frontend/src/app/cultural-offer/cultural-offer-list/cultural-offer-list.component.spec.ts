@@ -125,7 +125,7 @@ describe('CulturalOfferListComponent', () => {
       .then(() => {
         expect(component.categories.length).toBe(3);
         fixture.detectChanges();
-      
+
         expect(component.categories[0].id).toEqual(1);
         expect(component.categories[0].name).toEqual('Kategorija 1');
         expect(component.categories[0].description).toEqual('Opis');
