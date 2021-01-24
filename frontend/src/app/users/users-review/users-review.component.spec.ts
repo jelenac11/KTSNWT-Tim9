@@ -8,6 +8,7 @@ import { UserPage } from 'src/app/core/models/response/user-page.model';
 import { User } from 'src/app/core/models/response/user.model';
 import { JwtService } from 'src/app/core/services/jwt.service';
 import { UserService } from 'src/app/core/services/user.service';
+import { ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 
 import { UsersReviewComponent } from './users-review.component';
@@ -19,7 +20,7 @@ describe('UsersReviewComponent', () => {
   let jwtService: JwtService;
   let dialog: MatDialog;
   let snackBar: Snackbar;
-  let dialogRef: MatDialogRef<{}>;
+  let dialogRef: MatDialogRef<ConfirmationDialogComponent>;
 
   beforeEach(async () => {
     const userPage: UserPage = {

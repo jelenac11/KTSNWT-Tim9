@@ -112,7 +112,7 @@ describe('SubscriedNewsComponent', () => {
 
   it('changeTab to other category', () => {
     component.ngOnInit();
-    component.changeTab({ index: 1, tab: new MatTab(null,null)});
+    component.changeTab({ index: 1, tab: new MatTab(null, null)});
     fixture.whenStable().then(() => {
       expect(newsService.getAllByCategoryId).toHaveBeenCalled();
       expect(coService.get).toHaveBeenCalledTimes(4);
