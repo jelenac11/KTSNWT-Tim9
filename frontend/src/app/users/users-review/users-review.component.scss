@@ -1,16 +1,17 @@
+@use '../../../base';
+
 .div-centered {
-    display: flex;
-    justify-content: center;
+    @extend %flex-center;
 }
 
 .button-class {
+    @extend %simple-raised-button;
     padding: 0px 8px 0px 8px; 
-    outline: none;
 }
 
 .button-add {
+    @extend %simple-raised-button;
     float: right;
-    outline: none;
 }
 
 .button-group {

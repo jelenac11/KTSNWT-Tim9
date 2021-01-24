@@ -1,3 +1,22 @@
+@use '../../../base';
+
 .mat-but {
-    outline: none;
+    @extend %simple-raised-button;
+}
+
+.green {
+    background-color: green;
+    color: #fff;
+    
+}
+
+.red {
+    background-color: red;
+    color: #fff;
+    
+}
+
+#news-review-btn {
+    background-color: green;
+    color: white;
 }

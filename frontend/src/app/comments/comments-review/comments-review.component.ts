@@ -10,13 +10,13 @@ import { CommentService } from 'src/app/core/services/comment.service';
 })
 export class CommentsReviewComponent implements OnInit {
   comments: CommentPage = { content: [], totalElements: 0 };
-  page: number = 1;
-  size: number = 10;
+  page = 1;
+  size = 10;
   culturalOfferId: number;
 
   constructor(
-    private commentService: CommentService, 
-    private router: Router
+    private commentService: CommentService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -34,5 +34,5 @@ export class CommentsReviewComponent implements OnInit {
     this.page = $event;
     this.getCommentsByCulturalOfferId();
   }
-  
+
 }

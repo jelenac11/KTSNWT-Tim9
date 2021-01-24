@@ -13,13 +13,14 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CulturalOfferFormComponent } from './cultural-offer-form/cultural-offer-form.component';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
-import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
 import { MatSelectModule } from '@angular/material/select';
+import { CulturalOfferRoutingModule } from './cultural-offer-routing.module';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [CulturalOfferReviewComponent, CulturalOfferListComponent, CulturalOfferFormComponent],
@@ -44,13 +45,13 @@ import { MatSelectModule } from '@angular/material/select';
     MatButtonModule,
     MatSnackBarModule,
     GooglePlaceModule,
-    BrowserModule,
     RouterModule,
     ButtonsModule,
     IconsModule,
-    SharedModule,
     MatFormFieldModule,
-    MatSelectModule
+    MatSelectModule,
+    CulturalOfferRoutingModule,
+    MatInputModule
   ],
   exports: [CulturalOfferReviewComponent, CulturalOfferListComponent, CulturalOfferFormComponent]
 })

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
-import { MyErrorStateMatcher } from 'src/app/shared/ErrorStateMatcher';
+import { MyErrorStateMatcher } from 'src/app/core/error-matchers/ErrorStateMatcher';
 import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 
 @Component({
@@ -11,8 +11,8 @@ import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 })
 export class ForgotPasswordComponent implements OnInit {
   forgotForm: FormGroup;
-  submitted: boolean = false;
-  matcher : MyErrorStateMatcher = new MyErrorStateMatcher();
+  submitted = false;
+  matcher: MyErrorStateMatcher = new MyErrorStateMatcher();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -26,25 +26,27 @@ export class ForgotPasswordComponent implements OnInit {
     });
   }
 
-  get f() { return this.forgotForm.controls; }
+  get f(): { [key: string]: AbstractControl; } { return this.forgotForm.controls; }
 
   onSubmit(): void {
     this.submitted = true;
     if (this.forgotForm.invalid) {
       return;
     }
-    let email: string = this.forgotForm.value['email'];
+    const email: string = this.forgotForm.value.email;
     this.authenticationService.forgotPassword(email).subscribe((data: string) => {
-      this.snackBar.success("New password sent. Check your email.");
+      this.snackBar.success('New password sent. Check your email.');
       this.forgotForm.reset();
       this.submitted = false;
-      for (let control in this.forgotForm.controls) {
-        this.forgotForm.controls[control].setErrors(null);
+      for (const control in this.forgotForm.controls) {
+        if (this.forgotForm.controls.hasOwnProperty(control)) {
+          this.forgotForm.controls[control].setErrors(null);
+        }
       }
     },
     error => {
       if (error.status !== 200) {
-        this.snackBar.error("That email address is not associated with personal user account.");
+        this.snackBar.error('That email address is not associated with personal user account.');
       }
     });
   }

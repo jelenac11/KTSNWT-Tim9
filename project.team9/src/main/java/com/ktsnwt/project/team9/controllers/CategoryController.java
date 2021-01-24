@@ -1,6 +1,6 @@
 package com.ktsnwt.project.team9.controllers;
 
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -31,7 +31,7 @@ import com.ktsnwt.project.team9.services.implementations.CategoryService;
 @RestController
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 @RequestMapping(value = "/api/categories", produces = MediaType.APPLICATION_JSON_VALUE)
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
+@CrossOrigin(origins = "https://localhost:4200", maxAge = 3600)
 public class CategoryController {
 
 	@Autowired
@@ -43,15 +43,24 @@ public class CategoryController {
 	@PreAuthorize("permitAll()")
 	@GetMapping
 	public ResponseEntity<Iterable<CategoryDTO>> getAllCategorys() {
-		Set<CategoryDTO> categorysDTO = categoryMapper.toDTOList(categoryService.getAll());
+		List<CategoryDTO> categorysDTO = categoryMapper.toDTOList(categoryService.getAll());
 		return new ResponseEntity<Iterable<CategoryDTO>>(categorysDTO, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("permitAll()")
+	@GetMapping(value="/by-page/{value}")
+	public ResponseEntity<Page<CategoryDTO>> getAllCategoryByName(@PathVariable("value") String value, Pageable pageable){
+		Page<Category> page = categoryService.findByName(value, pageable);
+        List<CategoryDTO> categoryDTO = categoryMapper.toDTOList(page.toList());
+        Page<CategoryDTO> pageCategoryDTO = new PageImpl<CategoryDTO>(categoryDTO.stream().collect(Collectors.toList()),page.getPageable(),page.getTotalElements());
+        return new ResponseEntity<Page<CategoryDTO>>(pageCategoryDTO, HttpStatus.OK);
 	}
 	
 	@PreAuthorize("permitAll()")
 	@GetMapping(value= "/by-page")
 	public ResponseEntity<Page<CategoryDTO>> getAllCategory(Pageable pageable){
 		Page<Category> page = categoryService.findAll(pageable);
-        Set<CategoryDTO> categoryDTO = categoryMapper.toDTOList(page.toList());
+        List<CategoryDTO> categoryDTO = categoryMapper.toDTOList(page.toList());
         Page<CategoryDTO> pageCategoryDTO = new PageImpl<CategoryDTO>(categoryDTO.stream().collect(Collectors.toList()),page.getPageable(),page.getTotalElements());
         return new ResponseEntity<Page<CategoryDTO>>(pageCategoryDTO, HttpStatus.OK);
 	}

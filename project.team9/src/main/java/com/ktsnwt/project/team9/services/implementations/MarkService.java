@@ -1,5 +1,6 @@
 package com.ktsnwt.project.team9.services.implementations;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.ktsnwt.project.team9.model.CulturalOffer;
 import com.ktsnwt.project.team9.model.Mark;
 import com.ktsnwt.project.team9.model.RegisteredUser;
+import com.ktsnwt.project.team9.repositories.ICulturalOfferRepository;
 import com.ktsnwt.project.team9.repositories.IMarkRepository;
 import com.ktsnwt.project.team9.services.interfaces.IMarkService;
 
@@ -19,6 +21,9 @@ public class MarkService implements IMarkService {
 	
 	@Autowired
 	private CulturalOfferService culturalOfferService;
+	
+	@Autowired
+	private ICulturalOfferRepository culturalOfferRepository;
 	
 	@Autowired
 	private RegisteredUserService rUserService;
@@ -43,6 +48,14 @@ public class MarkService implements IMarkService {
 		if (culturalOffer == null) {
 			throw new NoSuchElementException("Cultural offer doesn't exist.");
 		}
+		List<Mark> marks = markRepository.findByCulturalOfferId(culturalOffer.getId());
+		double sum = 0;
+		for (Mark mark : marks) {
+			sum += mark.getValue();
+		}
+		sum += entity.getValue();
+		culturalOffer.setAverageMark(sum/(marks.size() + 1));
+		culturalOfferRepository.save(culturalOffer);
 		return markRepository.save(entity);
 	}
 
@@ -61,6 +74,17 @@ public class MarkService implements IMarkService {
 			throw new NoSuchElementException("Cultural offer doesn't exist.");
 		}
 		mark.setValue(entity.getValue());
+		List<Mark> marks = markRepository.findByCulturalOfferId(culturalOffer.getId());
+		double sum = 0;
+		for (Mark m : marks) {
+			if (m.getGrader().getId() == mark.getGrader().getId()) {
+				sum += entity.getValue();
+			} else {
+				sum += m.getValue();
+			}
+		}
+		culturalOffer.setAverageMark(sum/marks.size());
+		culturalOfferRepository.save(culturalOffer);
 		return markRepository.save(mark);
 	}
 

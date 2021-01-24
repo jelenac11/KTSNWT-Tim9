@@ -20,7 +20,8 @@
         >
       </li>
       <li class="nav-item">
-        <a class="nav-link waves-light font-weight-bolder ml-2 mt-2 h6" mdbWavesEffect>News</a>
+        <a *ngIf="role === 'ROLE_REGISTERED_USER'" class="nav-link waves-light font-weight-bolder ml-2 mt-2 h6" 
+        routerLink="/news/my-news" mdbWavesEffect>My News</a>
       </li>
       <li class="nav-item">
         <a
@@ -32,28 +33,23 @@
           >Cultural offers</a
         >
       </li>
-      <li class="nav-item dropdown" dropdown>
+      <li class="nav-item" dropdown>
         <a
+          id="category-navigation"
+          *ngIf="role === 'ROLE_ADMIN'"
           dropdownToggle
           mdbWavesEffect
           type="button"
-          class="nav-link dropdown-toggle waves-light font-weight-bolder ml-2 mt-2 h6"
+          class="nav-link waves-light font-weight-bolder ml-2 mt-2 h6"
+          routerLink="/categories"
+          routerLinkActive="active"
           mdbWavesEffect
         >
-          Categories<span class="caret"></span
-        ></a>
-        <div
-          *dropdownMenu
-          class="dropdown-menu dropdown dropdown-primary"
-          role="menu"
-        >
-          <a class="dropdown-item waves-light" mdbWavesEffect>Galleries</a>
-          <a class="dropdown-item waves-light" mdbWavesEffect>Festivals</a>
-          <a class="dropdown-item waves-light" mdbWavesEffect>Concerts</a>
-        </div>
+          Categories</a>
       </li>
       <li class="nav-item">
         <a
+          id="user-navigation"
           *ngIf="role === 'ROLE_ADMIN'"
           class="nav-link waves-light font-weight-bolder ml-2 mt-2 h6"
           routerLink="/users"
@@ -64,6 +60,7 @@
       </li>
       <li class="nav-item">
         <a
+          id="comment-requests-navigation"
           *ngIf="role === 'ROLE_ADMIN'"
           class="nav-link waves-light font-weight-bolder ml-2 mt-2 h6"
           routerLink="/approving-comments"
@@ -76,24 +73,27 @@
     <ul class="navbar-nav ml-auto nav-flex-icons">
       <li class="nav-item">
         <a
+          id="signin-navigation"
           *ngIf="!role"
           class="nav-link waves-light font-weight-bolder ml-2 mt-2 h6"
-          routerLink="/sign-in"
+          routerLink="/auth/sign-in"
           mdbWavesEffect
           >Sign in</a
         >
       </li>
       <li class="nav-item">
         <a
+          id="signup-navigation"
           *ngIf="!role"
           class="nav-link waves-light font-weight-bolder ml-2 mt-2 h6"
-          routerLink="/sign-up"
+          routerLink="/auth/sign-up"
           mdbWavesEffect
           >Sign up</a
         >
       </li>
       <li class="nav-item">
         <a
+          id="profile-button"
           *ngIf="role"
           class="nav-link waves-light font-weight-bolder ml-2 mt-2 h6"
           (click)="showProfile()"
@@ -102,12 +102,12 @@
         >
       </li>
       <li class="nav-item">
-        <button *ngIf="role" mat-icon-button [matMenuTriggerFor]="menu">
+        <button *ngIf="role" mat-icon-button [matMenuTriggerFor]="menu" id="profile-circle-button">
           <mat-icon>account_circle</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
           <button (click)="showProfile()" mat-menu-item><mat-icon>person_outline</mat-icon> Your account</button>
-          <button (click)="changePassword()" mat-menu-item><mat-icon>security</mat-icon> Change password</button>
+          <button (click)="changePassword()" mat-menu-item id="change-password-button"><mat-icon>security</mat-icon> Change password</button>
           <button (click)="logout()" mat-menu-item><mat-icon>exit_to_app</mat-icon> Log out</button>
         </mat-menu>
       </li>

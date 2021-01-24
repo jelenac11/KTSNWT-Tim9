@@ -1,3 +1,5 @@
+@use '../../../base';
+
 .comment-image {
     max-height: 150px;
     width: auto;
@@ -10,7 +12,7 @@
 
 .date-class {
     float: right;
-    color: #616060;
+    color: base.$date-color;
     font-size: 14px;
 }
 

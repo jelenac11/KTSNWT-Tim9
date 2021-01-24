@@ -14,14 +14,14 @@ import { ImageModalComponent } from './image-modal/image-modal.component';
 import { LightboxModule } from 'ngx-lightbox';
 import { ConfirmationDialogComponent } from './dialogs/confirmation-dialog/confirmation-dialog.component';
 import { Snackbar } from './snackbars/snackbar/snackbar';
-import { ProfileComponent } from './profile/profile.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { ChangePasswordComponent } from './change-password/change-password.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { UserProfileModule } from '../user-profile/user-profile.module';
 
 @NgModule({
   declarations: [
@@ -31,8 +31,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     MapComponent,
     ImageModalComponent,
     ConfirmationDialogComponent,
-    ProfileComponent,
-    ChangePasswordComponent
+    PageNotFoundComponent
   ],
   imports: [
     CommonModule,
@@ -53,7 +52,8 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     ButtonsModule,
     NgxPaginationModule,
     LightboxModule,
-    MatDialogModule
+    MatDialogModule,
+    UserProfileModule
   ],
   exports: [
     HeaderComponent,
@@ -62,8 +62,6 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     MapComponent,
     ImageModalComponent,
     ConfirmationDialogComponent,
-    ProfileComponent,
-    ChangePasswordComponent
   ],
   providers: [Snackbar]
 })

@@ -1,0 +1,24 @@
+<h1 *ngIf="!category" mat-dialog-title class="mb-4 font-weight-bold">New category</h1>
+<h1 *ngIf="category" mat-dialog-title class="mb-4 font-weight-bold">Update category</h1>
+<mat-dialog-content class="mt-3">
+    <form [formGroup]="form" id="forma" (ngSubmit)="submit()">
+        <p><mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input formControlName="name" matInput placeholder="Name" [errorStateMatcher]="matcher" id='category-name'>
+            <mat-icon matSuffix>archive</mat-icon>
+            <mat-error *ngIf="f.name.errors?.required">Name is required</mat-error>
+        </mat-form-field></p>
+        <p><mat-form-field appearance="outline">
+            <mat-label>Description</mat-label>
+            <textarea rows="4" formControlName="description" matInput placeholder="Description" [errorStateMatcher]="matcher" id='category-desc'>
+            </textarea>
+            <mat-error *ngIf="f.description.errors?.required">Description is required</mat-error>
+        </mat-form-field></p>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button id='category-btn' *ngIf="!category" class="mat-raised-button mat-primary" type="submit" form="forma" >Add</button>
+    <button id='category-btn' *ngIf="category" class="mat-raised-button mat-primary" type="submit" form="forma" >Update</button>
+    <button class="ml-2 mat-raised-button" (click)="close()" id='close-category-btn'>Close</button>
+</mat-dialog-actions>
+  

@@ -1,5 +1,7 @@
+@use '../../../base';
+
 pagination-controls {
-  text-align: center;
+  @extend %content-center;
   margin: 20px;
 }
 .containerCard{

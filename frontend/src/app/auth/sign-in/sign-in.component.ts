@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserLogin } from 'src/app/core/models/request/user-login-request.models';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { JwtService } from 'src/app/core/services/jwt.service';
-import { MyErrorStateMatcher } from 'src/app/shared/ErrorStateMatcher';
+import { MyErrorStateMatcher } from 'src/app/core/error-matchers/ErrorStateMatcher';
 import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 
 @Component({
@@ -14,8 +14,8 @@ import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 })
 export class SignInComponent implements OnInit {
   loginForm: FormGroup;
-  submitted: boolean = false;
-  hidePassword : boolean = true;
+  submitted = false;
+  hidePassword = true;
   matcher: MyErrorStateMatcher = new MyErrorStateMatcher();
 
   constructor(
@@ -33,16 +33,16 @@ export class SignInComponent implements OnInit {
     });
   }
 
-  get f() { return this.loginForm.controls; }
+  get f(): { [key: string]: AbstractControl; } { return this.loginForm.controls; }
 
   onSubmit(): void {
     this.submitted = true;
     if (this.loginForm.invalid) {
       return;
     }
-    let credentials: UserLogin = { email: '', password: '' }
-    credentials.email = this.loginForm.value['email'];
-    credentials.password = this.loginForm.value['password'];
+    const credentials: UserLogin = { email: '', password: '' };
+    credentials.email = this.loginForm.value.email;
+    credentials.password = this.loginForm.value.password;
     this.authenticationService.login(credentials).subscribe(data => {
       this.jwtService.saveToken(data);
       this.router.navigate(['/']);

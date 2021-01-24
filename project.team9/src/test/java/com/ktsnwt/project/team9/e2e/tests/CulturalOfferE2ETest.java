@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -77,7 +78,7 @@ public class CulturalOfferE2ETest {
 	}
 
 	private void loginSetUp() {
-		driver.navigate().to(BASE_URL + "/sign-in");
+		driver.navigate().to(BASE_URL + "/auth/sign-in");
 
 		loginPage.ensureIsDisplayedEmail();
 
@@ -118,14 +119,17 @@ public class CulturalOfferE2ETest {
 		createUpdateCulturalOfferPage.getLocation().sendKeys(Keys.ARROW_DOWN);
 		createUpdateCulturalOfferPage.getLocation().sendKeys(Keys.ENTER);
 		createUpdateCulturalOfferPage.getCategory().click();
-		createUpdateCulturalOfferPage.getCategory().findElement(By.id("select_category_1")).click();
+		createUpdateCulturalOfferPage.getCategory().findElement(By.xpath("//mat-option[@id='select_category_1']/span"))
+				.click();
 		createUpdateCulturalOfferPage.getDescription().sendKeys("opis");
-		createUpdateCulturalOfferPage.getImage().sendKeys("C:\\Users\\Lauda\\Desktop\\KiTS\\projekat\\project.team9\\src\\test\\resources\\uploadedImages\\comment_slika6.jpg");
+		String absolutePath = FileSystems.getDefault().getPath("src/test/resources/uploadedImages/comment_slika6.jpg")
+				.normalize().toAbsolutePath().toString();
+		createUpdateCulturalOfferPage.getImage().sendKeys(absolutePath);
 		createUpdateCulturalOfferPage.getCreateButton().click();
 
 		reviewCulturalOfferPage.ensureIsDisplayedName();
 
-		assertEquals("neko ime", reviewCulturalOfferPage.getName().getText());
+		assertEquals(reviewCulturalOfferPage.getName().getText(), "neko ime");
 		assertEquals("https://localhost:4200/cultural-offers/21", driver.getCurrentUrl());
 		assertEquals(size + 1, ((List<CulturalOffer>) culturalOfferService.getAll()).size());
 
@@ -161,10 +165,12 @@ public class CulturalOfferE2ETest {
 		createUpdateCulturalOfferPage.getLocation().sendKeys(Keys.ARROW_DOWN);
 		createUpdateCulturalOfferPage.getLocation().sendKeys(Keys.ENTER);
 		createUpdateCulturalOfferPage.getCategory().click();
-		createUpdateCulturalOfferPage.getCategory().findElement(By.id("select_category_1")).click();
+		createUpdateCulturalOfferPage.getCategory().findElement(By.xpath("//mat-option[@id='select_category_1']/span"))
+				.click();
 		createUpdateCulturalOfferPage.getDescription().sendKeys("opis");
-		createUpdateCulturalOfferPage.getImage().sendKeys(
-				"C:\\Users\\Lauda\\Desktop\\KiTS\\projekat\\project.team9\\src\\test\\resources\\uploadedImages\\comment_slika6.jpg");
+		String absolutePath = FileSystems.getDefault().getPath("src/test/resources/uploadedImages/comment_slika6.jpg")
+				.normalize().toAbsolutePath().toString();
+		createUpdateCulturalOfferPage.getImage().sendKeys(absolutePath);
 		createUpdateCulturalOfferPage.getCreateButton().click();
 
 		assertEquals(size, ((List<CulturalOffer>) culturalOfferService.getAll()).size());
@@ -172,8 +178,8 @@ public class CulturalOfferE2ETest {
 
 		createUpdateCulturalOfferPage.ensureIsDisplayedMessage();
 
-		assertEquals("Location need to be unique. Choose another location.",
-				createUpdateCulturalOfferPage.getMessage().getText());
+		assertEquals(createUpdateCulturalOfferPage.getMessage().getText(),
+				"Location need to be unique. Choose another location.");
 
 		driver.close();
 	}
@@ -213,7 +219,7 @@ public class CulturalOfferE2ETest {
 
 		reviewCulturalOfferPage.ensureIsDisplayedName();
 
-		assertEquals("Manastir 1", reviewCulturalOfferPage.getName().getText());
+		assertEquals(reviewCulturalOfferPage.getName().getText(), "Manastir 1");
 		assertEquals("https://localhost:4200/cultural-offers/1", driver.getCurrentUrl());
 		assertEquals("Crkvina, Bosnia and Herzegovina",
 				culturalOfferService.getById(1L).getGeolocation().getLocation());
@@ -346,15 +352,17 @@ public class CulturalOfferE2ETest {
 		homePage.ensureIsDisplayedSearch();
 
 		assertEquals("https://localhost:4200/", driver.getCurrentUrl());
-
+		
 		homePage.getSearch().sendKeys("festival 100");
-
+		
 		homePage.getFestivalsTab().click();
 
+		Thread.sleep(1000);
+		
 		homePage.ensureIsDisplayedMoreButton();
-
+		
 		homePage.getMore().click();
-
+		
 		reviewCulturalOfferPage.ensureIsDisplayedName();
 
 		assertEquals("https://localhost:4200/cultural-offers/3", driver.getCurrentUrl());
@@ -373,12 +381,13 @@ public class CulturalOfferE2ETest {
 		homePage.getCulturalOffersPage().click();
 
 		culturalOffersPage.ensureIsDisplayedSelectField();
-		culturalOffersPage.ensureIsDisplayedMoreButton();
 
 		assertEquals("https://localhost:4200/cultural-offers", driver.getCurrentUrl());
 
 		culturalOffersPage.getSelect().click();
 		culturalOffersPage.getSelect().findElement(By.xpath("//mat-option[2]/span")).click();
+
+		culturalOffersPage.ensureIsDisplayedMoreButton();
 
 		culturalOffersPage.getMore().click();
 

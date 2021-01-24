@@ -1,12 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { PasswordChangeRequest } from 'src/app/core/models/request/password-change-request.model';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
-import { MyErrorStateMatcher } from '../ErrorStateMatcher';
-import { Snackbar } from '../snackbars/snackbar/snackbar';
-import { CustomValidators } from '../validators/custom-validators';
+import { MyErrorStateMatcher } from '../../core/error-matchers/ErrorStateMatcher';
+import { Snackbar } from '../../shared/snackbars/snackbar/snackbar';
+import { CustomValidators } from '../../core/validators/custom-validators';
 
 @Component({
   selector: 'app-change-password',
@@ -15,11 +15,11 @@ import { CustomValidators } from '../validators/custom-validators';
 })
 export class ChangePasswordComponent implements OnInit {
   form: FormGroup;
-  submited: boolean = false;
+  submited = false;
   matcher: MyErrorStateMatcher = new MyErrorStateMatcher();
-  hideOld: boolean = true;
-  hideNew: boolean = true;
-  hideConfirm: boolean = true;
+  hideOld = true;
+  hideNew = true;
+  hideConfirm = true;
 
   constructor(
     private fb: FormBuilder,
@@ -38,21 +38,21 @@ export class ChangePasswordComponent implements OnInit {
     }, { validators: [CustomValidators.confirmedValidator] });
   }
 
-  get f() { return this.form.controls; }
+  get f(): { [key: string]: AbstractControl; } { return this.form.controls; }
 
   onSubmit(): void {
     this.submited = true;
     if (this.form.invalid) {
       return;
     }
-    let passwordChange: PasswordChangeRequest = {oldPassword: '', newPassword: ''};
-    passwordChange.oldPassword = this.form.value['oldPassword'];
-    passwordChange.newPassword = this.form.value['newPassword'];
+    const passwordChange: PasswordChangeRequest = {oldPassword: '', newPassword: ''};
+    passwordChange.oldPassword = this.form.value.oldPassword;
+    passwordChange.newPassword = this.form.value.newPassword;
     this.authenticationService.changePassword(passwordChange).subscribe(data => {
-      this.snackBar.success("You changed password successfully.");
+      this.snackBar.success('You changed password successfully.');
       this.submited = false;
       this.authenticationService.logout();
-      this.router.navigate(['/sign-in']);
+      this.router.navigate(['/auth/sign-in']);
       this.dialogRef.close();
     },
     error => {

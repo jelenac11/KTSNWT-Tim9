@@ -4,35 +4,35 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
-import { CulturalOfferModule } from './cultural-offer/cultural-offer.module';
 import { CategoryModule } from './category/category.module';
 import { NewsModule } from './news/news.module';
-import { AuthModule } from './auth/auth.module';
 import { HomeModule } from './home/home.module';
 import { AgmCoreModule } from '@agm/core';
 import { environment } from 'src/environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
-import { UsersModule } from './users/users.module';
-import { CommentsModule } from './comments/comments.module';
+import { CulturalOfferRoutingModule } from './cultural-offer/cultural-offer-routing.module';
+import { UsersRoutingModule } from './users/users-routing.module';
+import { CommentsRoutingModule } from './comments/comments-routing.module';
+import { AuthRoutingModule } from './auth/auth-routing.module';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { HttpClientModule } from '@angular/common/http';
+import { UserProfileModule } from './user-profile/user-profile.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
-    AuthModule,
     BrowserModule,
     AppRoutingModule,
     SharedModule,
     CoreModule,
-    CulturalOfferModule,
     CategoryModule,
     NewsModule,
+    UserProfileModule,
     HomeModule,
-    UsersModule,
-    CommentsModule,
     AgmCoreModule.forRoot({
       apiKey: environment.google_api_key,
       libraries: ['places'],
@@ -41,7 +41,13 @@ import { CommentsModule } from './comments/comments.module';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
-    MatGoogleMapsAutocompleteModule
+    MatGoogleMapsAutocompleteModule,
+    CulturalOfferRoutingModule,
+    UsersRoutingModule,
+    CommentsRoutingModule,
+    AuthRoutingModule,
+    HttpClientModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -13,10 +13,10 @@ export class AppComponent {
     private router: Router
   ) {
     this.router.events.subscribe((url: any) => {
-      if (this.router.url === '/sign-up' ||
-        this.router.url === '/sign-in' ||
-        this.router.url.startsWith('/confirm-registration/') ||
-        this.router.url === '/forgot-password') {
+      if (this.router.url === '/auth/sign-up' ||
+        this.router.url === '/auth/sign-in' ||
+        this.router.url.startsWith('/auth/confirm-registration/') ||
+        this.router.url === '/auth/forgot-password') {
         this.showNavbar = false;
       } else {
         this.showNavbar = true;

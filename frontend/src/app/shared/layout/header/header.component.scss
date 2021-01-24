@@ -1,2 +1,10 @@
-button.mat-menu-item{ outline:none; } 
-button.mat-icon-button{ outline:none; color:#FFFFFF; } 
+@use '../../../../base';
+
+.mat-menu-item{ 
+    @extend %simple-raised-button;
+} 
+
+.mat-icon-button{ 
+    @extend %simple-raised-button;
+    color:white; 
+} 

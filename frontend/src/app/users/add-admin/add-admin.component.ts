@@ -1,10 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AdminRequest } from 'src/app/core/models/request/admin-request.model';
-import { User } from 'src/app/core/models/response/user.model';
 import { UserService } from 'src/app/core/services/user.service';
-import { MyErrorStateMatcher } from 'src/app/shared/ErrorStateMatcher';
+import { MyErrorStateMatcher } from 'src/app/core/error-matchers/ErrorStateMatcher';
 import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 
 @Component({
@@ -15,7 +14,7 @@ import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 export class AddAdminComponent implements OnInit {
   form: FormGroup;
   matcher: MyErrorStateMatcher = new MyErrorStateMatcher();
-  
+
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<AddAdminComponent>,
@@ -33,19 +32,19 @@ export class AddAdminComponent implements OnInit {
     });
   }
 
-  get f() { return this.form.controls; }
+  get f(): { [key: string]: AbstractControl; } { return this.form.controls; }
 
   add(): void {
     if (this.form.invalid) {
       return;
     }
-    let admin: AdminRequest = { email: '', username: '', lastName: '', firstName: ''};
-    admin.email = this.form.value['email'];
-    admin.firstName = this.form.value['firstName'];
-    admin.lastName = this.form.value['lastName'];
-    admin.username = this.form.value['username'];
+    const admin: AdminRequest = { email: '', username: '', lastName: '', firstName: ''};
+    admin.email = this.form.value.email;
+    admin.firstName = this.form.value.firstName;
+    admin.lastName = this.form.value.lastName;
+    admin.username = this.form.value.username;
     this.userService.addAdmin(admin).subscribe(data => {
-      this.snackBar.success("Administrator added successfully.");
+      this.snackBar.success('Administrator added successfully.');
       this.dialogRef.close(true);
     },
     error => {

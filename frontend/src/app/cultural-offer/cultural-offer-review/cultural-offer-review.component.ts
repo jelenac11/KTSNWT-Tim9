@@ -4,10 +4,11 @@ import { ActivatedRoute } from '@angular/router';
 import { AddCommentComponent } from 'src/app/comments/add-comment/add-comment.component';
 import { MarkRequest } from 'src/app/core/models/request/mark-request.model';
 import { CulturalOffer } from 'src/app/core/models/response/cultural-offer.model';
-import { Mark } from 'src/app/core/models/response/mark.model';
 import { CulturalOfferService } from 'src/app/core/services/cultural-offer.service';
 import { JwtService } from 'src/app/core/services/jwt.service';
 import { MarkService } from 'src/app/core/services/mark.service';
+import { NewsService } from 'src/app/core/services/news.service';
+import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
   selector: 'app-cultural-offer-review',
@@ -28,26 +29,42 @@ export class CulturalOfferReviewComponent implements OnInit {
 
   zoom = 8;
 
+  subscribed = false;
+
+  userID;
+
   constructor(
     private route: ActivatedRoute,
     private culturalOfferService: CulturalOfferService,
+    private registeredUserService: UserService,
+    private newsService: NewsService,
     private markService: MarkService,
     private dialog: MatDialog,
-    private jwtService: JwtService
+    private jwtService: JwtService,
+    private userService: UserService
   ) { }
 
   ngOnInit(): void {
     this.culturalOfferId = this.route.snapshot.paramMap.get('id');
+    this.role = this.jwtService.getRole();
+    this.userService.getCurrentUser().subscribe(user => {
+      this.userID = user.id;
+    });
     this.getCulturalOfferById();
   }
 
   private getCulturalOfferById(): void {
-    this.role = this.jwtService.getRole();
     this.culturalOfferService.get(this.culturalOfferId)
       .subscribe(culturalOffer => {
         this.culturalOffer = culturalOffer;
         this.getCurrentMark();
       });
+    if (this.role === 'ROLE_REGISTERED_USER') {
+      this.registeredUserService.isSubscribed(this.jwtService.getEmail(), this.culturalOfferId)
+        .subscribe(sub => {
+          this.subscribed = sub;
+        });
+    }
   }
 
   private getCurrentMark(): void {
@@ -68,6 +85,11 @@ export class CulturalOfferReviewComponent implements OnInit {
       this.markService.create(newMark).subscribe(data => {
         this.mark = data.value;
         this.isRated = true;
+        this.culturalOfferService.get(this.culturalOfferId)
+          .subscribe(culturalOffer => {
+            this.culturalOffer = culturalOffer;
+            this.getCurrentMark();
+          });
       },
         error => {
           console.log(error);
@@ -75,6 +97,11 @@ export class CulturalOfferReviewComponent implements OnInit {
     } else {
       this.markService.update(newMark).subscribe(data => {
         this.mark = data.value;
+        this.culturalOfferService.get(this.culturalOfferId)
+          .subscribe(culturalOffer => {
+            this.culturalOffer = culturalOffer;
+            this.getCurrentMark();
+          });
       },
         error => {
           console.log(error);
@@ -88,6 +115,24 @@ export class CulturalOfferReviewComponent implements OnInit {
     dialogConfig.minHeight = '400px';
     dialogConfig.minWidth = '400px';
     const dialogRef = this.dialog.open(AddCommentComponent, dialogConfig);
+  }
+
+  subscribe(): void{
+    this.newsService.subscribe(this.userID, this.culturalOfferId)
+    .subscribe(succ => {
+      if (succ){
+        this.subscribed = true;
+      }
+    });
+  }
+
+  unsubscribe(): void{
+    this.newsService.unsubscribe(this.userID, this.culturalOfferId)
+    .subscribe(succ => {
+      if (succ){
+        this.subscribed = false;
+      }
+    });
   }
 
 }

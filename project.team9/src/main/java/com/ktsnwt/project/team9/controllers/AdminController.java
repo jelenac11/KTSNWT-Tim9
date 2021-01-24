@@ -31,7 +31,7 @@ import com.ktsnwt.project.team9.services.implementations.AdminService;
 
 @RestController
 @RequestMapping(value = "/api/admins", produces = MediaType.APPLICATION_JSON_VALUE)
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowedHeaders = "*")
+@CrossOrigin(origins = "https://localhost:4200", maxAge = 3600, allowedHeaders = "*")
 public class AdminController {
 
 	@Autowired

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Category } from 'src/app/core/models/response/category.model';
 import { CategoryService } from 'src/app/core/services/category.service';
@@ -7,6 +7,10 @@ import { CulturalOfferService } from 'src/app/core/services/cultural-offer.servi
 import { Snackbar } from 'src/app/shared/snackbars/snackbar/snackbar';
 import { CulturalOffer } from 'src/app/core/models/response/cultural-offer.model';
 import { Router } from '@angular/router';
+import { google } from 'google-maps';
+import { MyErrorStateMatcher } from 'src/app/core/error-matchers/ErrorStateMatcher';
+
+declare var google: google;
 
 @Component({
   selector: 'app-cultural-offer-form',
@@ -33,9 +37,9 @@ export class CulturalOfferFormComponent implements OnInit {
 
   uploadedImage: string | ArrayBuffer = '';
 
-  geoCoder = new google.maps.Geocoder();
-
   markerCoordinates = { geolocation: { lat: undefined, lon: undefined } };
+
+  matcher: MyErrorStateMatcher = new MyErrorStateMatcher();
 
   constructor(
     private categoryService: CategoryService,
@@ -61,7 +65,7 @@ export class CulturalOfferFormComponent implements OnInit {
     }
   }
 
-  setValues(): void {
+  private setValues(): void {
     this.registerForm.patchValue({
       name: this.culturalOffer.name,
       description: this.culturalOffer.description,
@@ -84,11 +88,11 @@ export class CulturalOfferFormComponent implements OnInit {
     );
   }
 
-  getAllCategories(): void {
+  private getAllCategories(): void {
     this.categoryService.getAll().subscribe(categories => this.categories = categories);
   }
 
-  getCulturalOfferById(): void {
+  private getCulturalOfferById(): void {
     this.culturalOfferService.get(this.id)
       .subscribe(culturalOffer => {
         this.culturalOffer = culturalOffer;
@@ -96,7 +100,7 @@ export class CulturalOfferFormComponent implements OnInit {
       });
   }
 
-  get f() { return this.registerForm.controls; }
+  get f(): { [key: string]: AbstractControl; } { return this.registerForm.controls; }
 
   onSubmit(): void {
     this.submitted = true;
@@ -128,7 +132,7 @@ export class CulturalOfferFormComponent implements OnInit {
     }
   }
 
-  update(formData: FormData): void {
+  private update(formData: FormData): void {
     this.culturalOfferService.put(this.id, formData).subscribe(res => {
       if (res) {
         this.succesMessage('You have successfully updated cultural offer!');
@@ -143,7 +147,7 @@ export class CulturalOfferFormComponent implements OnInit {
     });
   }
 
-  create(formData: FormData): void {
+  private create(formData: FormData): void {
     this.culturalOfferService.post(formData).subscribe(res => {
       if (res) {
         this.succesMessage('You have successfully created cultural offer!');
@@ -159,24 +163,19 @@ export class CulturalOfferFormComponent implements OnInit {
   }
 
 
-  goBack(id: number) {
-    if (this.id) {
-      this.router.navigateByUrl(`/cultural-offers/${id}`);
-    }
-    else {
-      this.router.navigateByUrl(`/cultural-offers/${id}`);
-    }
+  private goBack(id: number): void {
+    this.router.navigateByUrl(`/cultural-offers/${id}`);
   }
 
-  succesMessage(message: string): void {
+  private succesMessage(message: string): void {
     this.snackBar.success(message);
   }
 
-  errorMessage(message: string): void {
+  private errorMessage(message: string): void {
     this.snackBar.error(message);
   }
 
-  chooseFile(event: any): void {
+  chooseFile(event): void {
     if (event.target.files.length <= 0) {
       this.setValueForImagInvalidInput();
       return;
@@ -200,7 +199,7 @@ export class CulturalOfferFormComponent implements OnInit {
     };
   }
 
-  setValueForImagInvalidInput(): void {
+  private setValueForImagInvalidInput(): void {
     if (this.id) {
       this.registerForm.patchValue({
         file: this.oldImage
@@ -215,8 +214,9 @@ export class CulturalOfferFormComponent implements OnInit {
     }
   }
 
-  setLocationValue(): void {
-    this.geoCoder.geocode(
+  private setLocationValue(): void {
+    const geoCoder = new google.maps.Geocoder();
+    geoCoder.geocode(
       {
         placeId: this.culturalOffer.geolocation.placeId,
       },

@@ -1,0 +1,40 @@
+<h1 mat-dialog-title class="mb-4 font-weight-bold">Your account</h1>
+<mat-dialog-content class="mt-3">
+    <div class="ml-2 mt-2" *ngIf="!edit">
+        <mat-icon>email</mat-icon><h4 id="email-profile"><b> Email</b>: {{user.email}}</h4>
+        <mat-icon>account_circle</mat-icon><h4 id="username-profile"><b> Username</b>: {{user.username}}</h4>
+        <mat-icon>person</mat-icon><h4 id="first-name-profile"><b> First name</b>: {{user.firstName}}</h4>
+        <mat-icon>person</mat-icon><h4 id="last-name-profile"><b> Last name</b>: {{user.lastName}}</h4>
+    </div>
+    <form [formGroup]="form" *ngIf="edit" id="form-profile" (ngSubmit)="save()">
+        <p><mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input formControlName="email" matInput placeholder="Email" id="email-profile-input">
+            <mat-icon matSuffix>email</mat-icon>
+        </mat-form-field></p>
+        <p><mat-form-field appearance="outline">
+            <mat-label>Username</mat-label>
+            <input formControlName="username" matInput placeholder="Username" [errorStateMatcher]="matcher" id="username-profile-input">
+            <mat-icon matSuffix>account_circle</mat-icon>
+            <mat-error *ngIf="f.username.errors?.required" id="change-profile-username">Username is required</mat-error>
+        </mat-form-field></p>
+        <p><mat-form-field appearance="outline">
+            <mat-label>First name</mat-label>
+            <input formControlName="firstName" matInput placeholder="First name" [errorStateMatcher]="matcher" id="first-name-profile-input">
+            <mat-icon matSuffix>person</mat-icon>
+            <mat-error *ngIf="f.firstName.errors?.required" id="first-name-error">First name is required</mat-error>
+        </mat-form-field></p>
+        <p><mat-form-field appearance="outline">
+            <mat-label>Last name</mat-label>
+            <input formControlName="lastName" matInput placeholder="Last name" [errorStateMatcher]="matcher" id="last-name-profile-input">
+            <mat-icon matSuffix>person</mat-icon>
+            <mat-error *ngIf="f.lastName.errors?.required" id="change-profile-last-name">Last name is required</mat-error>
+        </mat-form-field></p>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button class="mat-raised-button mat-primary" (click)="startEdit()" *ngIf="!edit" id="edit-button">Edit</button>
+    <button class="mat-raised-button mat-primary" type="submit" form="form-profile" *ngIf="edit" id="save-profile-button">Save</button>
+    <button class="ml-2 mat-raised-button" (click)="close()">Close</button>
+</mat-dialog-actions>
+  

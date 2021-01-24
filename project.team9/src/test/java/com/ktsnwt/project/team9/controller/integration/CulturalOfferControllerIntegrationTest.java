@@ -160,6 +160,36 @@ public class CulturalOfferControllerIntegrationTest {
 	}
 
 	@Test
+	public void testFindCulturalOfferByCategoryIdAndName_WithExistingCategoryIdAndNotContainsName_ShouldReturnEmptyCollection() {
+		Pageable pageable = PageRequest.of(0, 10);
+		int size = culturalOfferService.findByCategoryIdAndNameContains(9L, "gfdgdf", pageable).getNumberOfElements();
+		ParameterizedTypeReference<CustomPageImplementation<CulturalOfferResDTO>> type = new ParameterizedTypeReference<CustomPageImplementation<CulturalOfferResDTO>>() {
+		};
+
+		ResponseEntity<CustomPageImplementation<CulturalOfferResDTO>> responseEntity = restTemplate.exchange(
+				"/api/cultural-offers/category/9/find-by-name/gfdgdf?page=0&size=10", HttpMethod.GET, null, type);
+
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+		assertNotNull(responseEntity.getBody());
+		assertEquals(size, responseEntity.getBody().getNumberOfElements());
+	}
+
+	@Test
+	public void testFindCulturalOfferByCategoryIdAndName_WithNonExistingCategoryIdAndContainsName_ShouldReturnEmptyCollection() {
+		Pageable pageable = PageRequest.of(0, 10);
+		int size = culturalOfferService.findByCategoryIdAndNameContains(55L, "vol", pageable).getNumberOfElements();
+		ParameterizedTypeReference<CustomPageImplementation<CulturalOfferResDTO>> type = new ParameterizedTypeReference<CustomPageImplementation<CulturalOfferResDTO>>() {
+		};
+
+		ResponseEntity<CustomPageImplementation<CulturalOfferResDTO>> responseEntity = restTemplate.exchange(
+				"/api/cultural-offers/category/55/find-by-name/vol?page=0&size=10", HttpMethod.GET, null, type);
+
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+		assertNotNull(responseEntity.getBody());
+		assertEquals(size, responseEntity.getBody().getNumberOfElements());
+	}
+
+	@Test
 	public void testFindCulturalOfferByName_WithContainsName_ShouldReturnTwoCulturalOffers() {
 		Pageable pageable = PageRequest.of(0, 10);
 		int size = culturalOfferService.findByNameContains(CulturalOfferConstants.SUBSTRING_NAME, pageable)
