@@ -32,7 +32,6 @@ describe('ForgotPasswordComponent', () => {
     });
 
   it('should create', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(ForgotPasswordComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -42,7 +41,6 @@ describe('ForgotPasswordComponent', () => {
   });
 
   it('should be initialized', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(ForgotPasswordComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -54,7 +52,6 @@ describe('ForgotPasswordComponent', () => {
   });
 
   it('should be invalid form when submitted and email is empty', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(ForgotPasswordComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -74,7 +71,6 @@ describe('ForgotPasswordComponent', () => {
   });
 
   it('should be invalid form when submitted and email is not valid', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(ForgotPasswordComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -101,7 +97,6 @@ describe('ForgotPasswordComponent', () => {
   }
 
   it('should bind form fields to forgot form', fakeAsync(() => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(ForgotPasswordComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -122,7 +117,6 @@ describe('ForgotPasswordComponent', () => {
   }));
 
   it('should send new password when submitted', fakeAsync(() => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(ForgotPasswordComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -151,7 +145,6 @@ describe('ForgotPasswordComponent', () => {
       }))
     };
     TestBed.overrideProvider(AuthenticationService, {useValue: authenticationServiceMocked2});
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(ForgotPasswordComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

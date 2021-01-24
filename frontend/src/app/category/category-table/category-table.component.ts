@@ -78,7 +78,7 @@ export class CategoryTableComponent implements OnInit {
     this.searchCategory();
   }
 
-  searchCategory(): void{
+  searchCategory(): void {
     this.categoryService.getAllPagesByName(this.size, this.page - 1, this.searchValue)
     .subscribe(
       data => {

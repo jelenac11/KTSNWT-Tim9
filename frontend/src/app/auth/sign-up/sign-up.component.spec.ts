@@ -33,7 +33,6 @@ describe('SignUpComponent', () => {
   });
 
   it('should create', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(SignUpComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -43,7 +42,6 @@ describe('SignUpComponent', () => {
   });
 
   it('should be initialized', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(SignUpComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -55,7 +53,6 @@ describe('SignUpComponent', () => {
   });
 
   it('should be invalid form when submitted and inputs are empty', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(SignUpComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -95,7 +92,6 @@ describe('SignUpComponent', () => {
   });
 
   it('should be invalid form when submitted and first name is empty', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(SignUpComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -119,7 +115,6 @@ describe('SignUpComponent', () => {
   });
 
   it('should be invalid form when submitted and last name is empty', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(SignUpComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -143,7 +138,6 @@ describe('SignUpComponent', () => {
   });
 
   it('should be invalid form when submitted and username is empty', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(SignUpComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -167,7 +161,6 @@ describe('SignUpComponent', () => {
   });
 
   it('should be invalid form when submitted and email is empty', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(SignUpComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -191,7 +184,6 @@ describe('SignUpComponent', () => {
   });
 
   it('should be invalid form when submitted and password is empty', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(SignUpComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -215,7 +207,6 @@ describe('SignUpComponent', () => {
   });
 
   it('should be invalid form when submitted and email is not valid', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(SignUpComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -240,7 +231,6 @@ describe('SignUpComponent', () => {
   });
 
   it('should be invalid form when submitted and password is less than 6 characters long', () => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(SignUpComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -271,7 +261,6 @@ describe('SignUpComponent', () => {
   }
 
   it('should bind form fields to register form', fakeAsync(() => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(SignUpComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -312,7 +301,6 @@ describe('SignUpComponent', () => {
   }));
 
   it('should send actication link when submitted', fakeAsync(() => {
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(SignUpComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -345,7 +333,6 @@ describe('SignUpComponent', () => {
       }))
     };
     TestBed.overrideProvider(UserService, {useValue: userServiceMocked2});
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(SignUpComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -377,7 +364,6 @@ describe('SignUpComponent', () => {
       }))
     };
     TestBed.overrideProvider(UserService, {useValue: userServiceMocked3});
-    TestBed.compileComponents();
     fixture = TestBed.createComponent(SignUpComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
