@@ -35,22 +35,22 @@ import com.ktsnwt.project.team9.services.implementations.CommentService;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestPropertySource("classpath:test.properties")
 public class CommentE2ETest {
-	
+
 	@Autowired
 	CommentService commentService;
-	
+
 	public static final String BASE_URL = "https://localhost:4200";
 
 	private WebDriver driver;
-	
+
 	private HomePage homePage;
 
 	private LoginPage signInPage;
-	
+
 	private ReviewCulturalOfferPage reviewCulturalOfferPage;
-	
+
 	private CommentRequestsPage commentRequestsPage;
-	
+
 	@Before
 	public void setUp() {
 		System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
@@ -67,7 +67,7 @@ public class CommentE2ETest {
 		reviewCulturalOfferPage = PageFactory.initElements(driver, ReviewCulturalOfferPage.class);
 		commentRequestsPage = PageFactory.initElements(driver, CommentRequestsPage.class);
 	}
-	
+
 	private void loginSetUp() {
 		driver.navigate().to(BASE_URL + "/auth/sign-in");
 
@@ -78,7 +78,7 @@ public class CommentE2ETest {
 
 		signInPage.getSignIn().click();
 	}
-	
+
 	private void loginSetUpAsRegisteredUser() {
 		driver.navigate().to(BASE_URL + "/auth/sign-in");
 
@@ -89,195 +89,202 @@ public class CommentE2ETest {
 
 		signInPage.getSignIn().click();
 	}
-	
+
 	@Test
 	public void commentReview_WithAdminSignedIn_ShouldSuccess() {
 		loginSetUp();
-		
+
 		Pageable pageable = PageRequest.of(0, 5);
 		Page<Comment> page = commentService.findAllByCOID(pageable, 1L);
-		
+
 		homePage.ensureIsDisplayedCulturalOfferNavigation();
 		assertEquals("https://localhost:4200/", driver.getCurrentUrl());
-		
+
 		homePage.ensureIsDisplayedMore1Button();
 		homePage.getMore1().click();
-		
+
 		reviewCulturalOfferPage.ensureIsDisplayedReviewBtn();
 		assertEquals("https://localhost:4200/cultural-offers/1", driver.getCurrentUrl());
-		
+
 		reviewCulturalOfferPage.getReviewBtn().click();
 		reviewCulturalOfferPage.ensureIsDisplayedComment();
-		
+
 		assertEquals("https://localhost:4200/cultural-offers/1/comments", driver.getCurrentUrl());
 		List<WebElement> comments = driver.findElements(By.tagName("app-comment"));
 		assertEquals(page.getNumberOfElements(), comments.size());
-		
+
 		driver.close();
 	}
-	
+
 	@Test
 	public void commentReview_WithRegUserSignedIn_ShouldSuccess() {
 		loginSetUpAsRegisteredUser();
-		
+
 		Pageable pageable = PageRequest.of(0, 5);
 		Page<Comment> page = commentService.findAllByCOID(pageable, 1L);
-		
+
 		homePage.ensureIsDisplayedCulturalOfferNavigation();
 		assertEquals("https://localhost:4200/", driver.getCurrentUrl());
-		
+
 		homePage.ensureIsDisplayedMore1Button();
 		homePage.getMore1().click();
-		
+
 		reviewCulturalOfferPage.ensureIsDisplayedReviewBtn();
 		assertEquals("https://localhost:4200/cultural-offers/1", driver.getCurrentUrl());
-		
+
 		reviewCulturalOfferPage.getReviewBtn().click();
 		reviewCulturalOfferPage.ensureIsDisplayedComment();
-		
+
 		assertEquals("https://localhost:4200/cultural-offers/1/comments", driver.getCurrentUrl());
 		List<WebElement> comments = driver.findElements(By.tagName("app-comment"));
 		assertEquals(page.getNumberOfElements(), comments.size());
-		
+
 		driver.close();
 	}
-	
+
 	@Test
 	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
 	public void addComment_WithText_ShouldSuccess() {
 		loginSetUpAsRegisteredUser();
-		
+
 		int size = ((List<Comment>) commentService.getAll()).size();
-		
+
 		homePage.ensureIsDisplayedCulturalOfferNavigation();
 		assertEquals("https://localhost:4200/", driver.getCurrentUrl());
-		
+
 		homePage.ensureIsDisplayedMore1Button();
 		homePage.getMore1().click();
-		
+
 		reviewCulturalOfferPage.ensureIsDisplayedAddCommentBtn();
 		assertEquals("https://localhost:4200/cultural-offers/1", driver.getCurrentUrl());
-		
+
 		reviewCulturalOfferPage.getAddCommentBtn().click();
 		reviewCulturalOfferPage.ensureIsDisplayedCommentText();
 		reviewCulturalOfferPage.ensureIsDisplayedNewCommentBtn();
-		
+
 		reviewCulturalOfferPage.getCommentText().sendKeys("novi komentar");
 		reviewCulturalOfferPage.getNewCommentBtn().click();
-		
+
 		reviewCulturalOfferPage.ensureIsDisplayedMessage();
-		
-		assertEquals("Your comment is sent to administrator for approval", reviewCulturalOfferPage.getMessage().getText());
+
+		assertEquals("Your comment is sent to administrator for approval",
+				reviewCulturalOfferPage.getMessage().getText());
 		assertEquals(size + 1, ((List<Comment>) commentService.getAll()).size());
-		
+
 		driver.close();
 	}
-	
+
 	@Test
 	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
 	public void addComment_WithImage_ShouldSuccess() {
 		loginSetUpAsRegisteredUser();
-		
+
 		int size = ((List<Comment>) commentService.getAll()).size();
-		
+
 		homePage.ensureIsDisplayedCulturalOfferNavigation();
 		assertEquals("https://localhost:4200/", driver.getCurrentUrl());
-		
+
 		homePage.ensureIsDisplayedMore1Button();
 		homePage.getMore1().click();
-		
+
 		reviewCulturalOfferPage.ensureIsDisplayedAddCommentBtn();
 		assertEquals("https://localhost:4200/cultural-offers/1", driver.getCurrentUrl());
-		
+
 		reviewCulturalOfferPage.getAddCommentBtn().click();
 		reviewCulturalOfferPage.ensureIsDisplayedNewCommentBtn();
-		String absolutePath = FileSystems.getDefault().getPath("src/test/resources/uploadedImages/comment_slika6.jpg").normalize().toAbsolutePath().toString();
+		String absolutePath = FileSystems.getDefault().getPath("src/test/resources/uploadedImages/comment_slika6.jpg")
+				.normalize().toAbsolutePath().toString();
 		reviewCulturalOfferPage.getCommentImg().sendKeys(absolutePath);
 		reviewCulturalOfferPage.getNewCommentBtn().click();
-		
+
 		reviewCulturalOfferPage.ensureIsDisplayedMessage();
-		
-		assertEquals("Your comment is sent to administrator for approval", reviewCulturalOfferPage.getMessage().getText());
+
+		assertEquals("Your comment is sent to administrator for approval",
+				reviewCulturalOfferPage.getMessage().getText());
 		assertEquals(size + 1, ((List<Comment>) commentService.getAll()).size());
-		
+
 		driver.close();
 	}
-	
+
 	@Test
 	public void addComment_WithNoTextAndNoImg_ShouldFail() {
 		loginSetUpAsRegisteredUser();
-		
+
 		int size = ((List<Comment>) commentService.getAll()).size();
-		
+
 		homePage.ensureIsDisplayedCulturalOfferNavigation();
 		assertEquals("https://localhost:4200/", driver.getCurrentUrl());
-		
+
 		homePage.ensureIsDisplayedMore1Button();
 		homePage.getMore1().click();
-		
+
 		reviewCulturalOfferPage.ensureIsDisplayedAddCommentBtn();
 		assertEquals("https://localhost:4200/cultural-offers/1", driver.getCurrentUrl());
-		
+
 		reviewCulturalOfferPage.getAddCommentBtn().click();
 		reviewCulturalOfferPage.ensureIsDisplayedNewCommentBtn();
-		
+
 		reviewCulturalOfferPage.getNewCommentBtn().click();
+
+		reviewCulturalOfferPage.ensureIsDisplayedEmptyComment();
 		
 		assertEquals(true, reviewCulturalOfferPage.getEmptyComment().isDisplayed());
 		assertEquals(size, ((List<Comment>) commentService.getAll()).size());
-		
+
 		driver.close();
 	}
-	
+
 	@Test
 	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
 	public void approveComment_ShouldSuccess() {
 		loginSetUp();
-		
+
 		int size = ((List<Comment>) commentService.getAll()).size();
 		Pageable pageable = PageRequest.of(0, 5);
-		int notApproved = ((Page<Comment>) commentService.findAllByNotApprovedByAdminId(pageable, 4L)).getNumberOfElements();
-		
+		int notApproved = ((Page<Comment>) commentService.findAllByNotApprovedByAdminId(pageable, 4L))
+				.getNumberOfElements();
+
 		homePage.ensureIsDisplayedCommentRequestsNavigation();
 		assertEquals("https://localhost:4200/", driver.getCurrentUrl());
-		
+
 		homePage.getCommentRequestsPage().click();
-		
+
 		commentRequestsPage.ensureIsDisplayedApproveBtn();
-		
+
 		assertEquals("https://localhost:4200/approving-comments", driver.getCurrentUrl());
-		
+
 		commentRequestsPage.getApproveBtn().click();
-		
+
 		commentRequestsPage.ensureIsDisplayedMessage();
 		assertEquals("Comment successfully approved", commentRequestsPage.getMessage().getText());
 		assertEquals(size, ((List<Comment>) commentService.getAll()).size());
-		assertEquals(notApproved - 1, ((Page<Comment>) commentService.findAllByNotApprovedByAdminId(pageable, 4L)).getNumberOfElements());
+		assertEquals(notApproved - 1,
+				((Page<Comment>) commentService.findAllByNotApprovedByAdminId(pageable, 4L)).getNumberOfElements());
 		driver.close();
 	}
-	
+
 	@Test
 	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
 	public void declineComment_ShouldSuccess() {
 		loginSetUp();
-		
+
 		int size = ((List<Comment>) commentService.getAll()).size();
-		
+
 		homePage.ensureIsDisplayedCommentRequestsNavigation();
 		assertEquals("https://localhost:4200/", driver.getCurrentUrl());
-		
+
 		homePage.getCommentRequestsPage().click();
-		
+
 		commentRequestsPage.ensureIsDisplayedDeclineBtn();
-		
+
 		assertEquals("https://localhost:4200/approving-comments", driver.getCurrentUrl());
-		
+
 		commentRequestsPage.getDeclineBtn().click();
-		
+
 		commentRequestsPage.ensureIsDisplayedMessage();
 		assertEquals("Comment successfully declined", commentRequestsPage.getMessage().getText());
 		assertEquals(size - 1, ((List<Comment>) commentService.getAll()).size());
-		
+
 		driver.close();
 	}
 }

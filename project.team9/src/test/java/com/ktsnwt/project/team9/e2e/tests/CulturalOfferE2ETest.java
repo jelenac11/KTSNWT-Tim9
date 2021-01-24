@@ -179,7 +179,7 @@ public class CulturalOfferE2ETest {
 		createUpdateCulturalOfferPage.ensureIsDisplayedMessage();
 
 		assertEquals(createUpdateCulturalOfferPage.getMessage().getText(),
-				"Location need to be unique. Choose another location.");
+				"Location needs to be unique. Choose another location.");
 
 		driver.close();
 	}

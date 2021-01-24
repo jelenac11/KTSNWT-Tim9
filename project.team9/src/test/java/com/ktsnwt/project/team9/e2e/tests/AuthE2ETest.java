@@ -365,13 +365,6 @@ public class AuthE2ETest {
 		homePage.ensureIsDisplayedMessage();
 		assertEquals("You changed account information successfully.", homePage.getMessage().getText());
 		
-		homePage.ensureIsDisplayedEditButton();
-		homePage.ensureIsDisplayedEmailProfile();
-		
-		assertEquals("Email: email_adresa1@gmail.com", homePage.getEmailProfile().getText());
-		assertEquals("Username: ne_postojeci_username", homePage.getUsernameProfile().getText());
-		assertEquals("First name: admin1ime", homePage.getFirstNameProfile().getText());
-		assertEquals("Last name: admin1prezime", homePage.getLastNameProfile().getText());
 		driver.close();
 	}
 	
