@@ -20,7 +20,7 @@ describe('CategoryTableComponent', () => {
       success: jasmine.createSpy('success'),
       error: jasmine.createSpy('error')
     };
-    const mockedCategories: CategoryPage =  {
+    const mockedCategories: CategoryPage = {
       totalElements: 10,
       content: [
         {
@@ -47,12 +47,12 @@ describe('CategoryTableComponent', () => {
     };
 
     TestBed.configureTestingModule({
-      imports: [NgxPaginationModule, ],
-      declarations: [ CategoryTableComponent ],
+      imports: [NgxPaginationModule],
+      declarations: [CategoryTableComponent],
       providers: [
         { provide: Snackbar, useValue: snackBarMocked },
-        { provide: MatDialog, useValue: {MatDialog} },
-        { provide: CategoryService, useValue: categoryServiceMocked}
+        { provide: MatDialog, useValue: { MatDialog } },
+        { provide: CategoryService, useValue: categoryServiceMocked }
       ]
     });
 
@@ -69,7 +69,7 @@ describe('CategoryTableComponent', () => {
 
   it('load content', () => {
     component.ngOnInit();
-    
+
     fixture.detectChanges();
 
     expect(categoryService.getAllPagesByName).toHaveBeenCalled();
