@@ -77,6 +77,7 @@ describe('NewsDialogComponent', () => {
 
     it('init', () => {
       component.ngOnInit();
+      fixture.detectChanges();
       expect(component.form).toBeDefined();
       expect(component.form.invalid).toBeTruthy();
     });
@@ -87,15 +88,14 @@ describe('NewsDialogComponent', () => {
         new File([], 'name1'),
         new File([], 'name2')
       ] }});
-      fixture.whenStable().then(() => {
-        fixture.detectChanges();
-        expect(component.images.length).toBe(2);
-      });
+      fixture.detectChanges();
+      expect(component.images.length).toBe(2);
     });
 
     it('should be closed on close button', () => {
       component.ngOnInit();
       component.close();
+      fixture.detectChanges();
       expect(dialogRef.close).toHaveBeenCalledTimes(1);
     });
 
@@ -106,6 +106,7 @@ describe('NewsDialogComponent', () => {
       });
       component.images = [ new File([], 'RNG')];
       component.submit();
+      fixture.detectChanges();
 
       expect(newsService.post).toHaveBeenCalled();
       expect(imageService.upload).toHaveBeenCalledTimes(1);
@@ -116,6 +117,7 @@ describe('NewsDialogComponent', () => {
     it('submit without news and invalid form should fail', () => {
       component.ngOnInit();
       component.submit();
+      fixture.detectChanges();
 
       expect(newsService.post).toHaveBeenCalledTimes(0);
       expect(imageService.upload).toHaveBeenCalledTimes(0);
@@ -190,7 +192,9 @@ describe('NewsDialogComponent', () => {
 
     it('init', () => {
       component.ngOnInit();
+      fixture.detectChanges();
       expect(component.form).toBeDefined();
+      expect(component.form.valid).toBeTruthy();
       expect(imageService.get).toHaveBeenCalled();
     });
 
@@ -200,17 +204,15 @@ describe('NewsDialogComponent', () => {
         new File([], 'name1'),
         new File([], 'name2')
       ] }});
-
-      fixture.whenStable().then(() => {
-        expect(component.images.length).toEqual(2);
-      });
+      fixture.detectChanges();
+      expect(component.images.length).toEqual(2);
     });
 
     it('submit with news and valid form should update news', () => {
       component.ngOnInit();
       component.images = [new File([], 'name')];
       component.submit();
-
+      fixture.detectChanges();
       expect(newsService.put).toHaveBeenCalled();
       expect(imageService.upload).toHaveBeenCalledTimes(1);
       expect(snackBar.success).toHaveBeenCalledWith('News updated successfully');
@@ -223,7 +225,7 @@ describe('NewsDialogComponent', () => {
         content: 'New content'
       });
       component.submit();
-
+      fixture.detectChanges();
       expect(newsService.put).toHaveBeenCalled();
       expect(imageService.upload).toHaveBeenCalledTimes(0);
       expect(snackBar.success).toHaveBeenCalledWith('News updated successfully');
@@ -237,7 +239,7 @@ describe('NewsDialogComponent', () => {
         content: ''
       });
       component.submit();
-
+      fixture.detectChanges();
       expect(newsService.put).toHaveBeenCalledTimes(0);
       expect(imageService.upload).toHaveBeenCalledTimes(0);
     });

@@ -9,7 +9,7 @@ import { NewsService } from './news.service';
 
 describe('NewsService', () => {
   let service: NewsService;
-  let injector;
+  let injector: TestBed;
   let httpMock: HttpTestingController;
   let httpClient: HttpClient;
   beforeEach(() => {
@@ -128,7 +128,6 @@ describe('NewsService', () => {
       content: 'Neki RNG content',
       culturalOfferID: 2,
       date: 1611407881315,
-      id: 3,
       images: [
         'neki_url_10'
       ]
@@ -213,13 +212,13 @@ describe('NewsService', () => {
     let response;
 
     service.delete(3).subscribe(res => {
-      response = res;
+      response = (res === 'true');
     });
 
 
     const req = httpMock.expectOne(`${environment.api_url}news/3`);
     expect(req.request.method).toBe('DELETE');
-    req.flush(true);
+    req.flush('true');
 
     tick();
 

@@ -19,6 +19,7 @@ import com.ktsnwt.project.team9.controller.integration.RegisteredUserControllerI
 import com.ktsnwt.project.team9.controller.integration.UserControllerIntegrationTest;
 import com.ktsnwt.project.team9.repository.integration.AdminRepositoryIntegrationTest;
 import com.ktsnwt.project.team9.repository.integration.AuthorityRepositoryIntegrationTest;
+import com.ktsnwt.project.team9.repository.integration.CategoryRepositoryIntegrationTest;
 import com.ktsnwt.project.team9.repository.integration.CommentRepositoryIntegrationTest;
 import com.ktsnwt.project.team9.repository.integration.CulturalOfferRepositoryIntegrationTest;
 import com.ktsnwt.project.team9.repository.integration.GeolocationRepositoryIntegrationTest;
@@ -62,7 +63,7 @@ import com.ktsnwt.project.team9.service.unit.UserServiceUnitTest;
 		
 		NewsRepositoryIntegrationTest.class, NewsControllerIntegrationTest.class, 
 		NewsServiceIntegrationTest.class, NewsServiceUnitTest.class,
-		CategoryControllerIntegrationTest.class, CategoryServiceIntegrationTest.class, 
+		CategoryControllerIntegrationTest.class, CategoryServiceIntegrationTest.class,  CategoryRepositoryIntegrationTest.class,
 		ImageControllerIntegrationTest.class, ImageServiceIntegrationTest.class,
 		
 		AdminControllerIntegrationTest.class, CommentControllerIntegrationTest.class, RegisteredUserControllerIntegrationTest.class, 

@@ -21,7 +21,7 @@ export class ImageService {
   delete(file: string): Observable<string> {
     const options = {
       headers: new HttpHeaders({
-        'Content-Type': 'text',
+        'Content-Type': 'text/plain',
       }),
       body: file
     };
@@ -31,7 +31,7 @@ export class ImageService {
   get(file: string): Observable<string> {
     return this.http.post(`${environment.api_url}images`, file, {
       headers: new HttpHeaders({
-        'Content-Type': 'text',
+        'Content-Type': 'text/plain',
       }),
       responseType: 'text'});
   }

@@ -81,9 +81,12 @@ public class RegisteredUserController {
 	@PreAuthorize("permitAll()")
 	@PostMapping(value = "/is-subscibed/{email}/{COID}")
 	public ResponseEntity<String> isSubscribedToCulturalOffer(@PathVariable String email, @PathVariable Long COID) {
+		try {
+			Boolean isSubscribed = registeredUserService.isSubscribed(email, COID);
+			return new ResponseEntity<String>(isSubscribed.toString(), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+		}
 		
-		Boolean isSubscribed = registeredUserService.isSubscribed(email, COID);
-		
-		return new ResponseEntity<String>(isSubscribed.toString(), HttpStatus.OK);
 	}
 }

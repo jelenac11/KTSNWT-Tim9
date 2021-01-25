@@ -51,5 +51,7 @@ public class RegisteredUserConstants {
 	public static final Long CULTURAL_OFFER_ID = 1L;
 	public static final Long NON_EXISTING_CULTURAL_OFFER_ID = 10000L;
 	public static final int SUBSCRIBE_NO = 2;
+	public static final String SUBSCRIBE_EMAIL = "email_adresa21@gmail.com";
+	public static final String SUBSCRIBE_USERNAME = "user 21";
 	
 }

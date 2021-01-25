@@ -20,6 +20,9 @@ public class NewsConstants {
 	public static final Long NON_EXISTING_CULTURAL_OFFER_ID = 300L;
 	public static final Long CULTURAL_OFFER_ID_NOT_SUBSCRIBED = 5L;
 	
+	public static final Long EXISTING_CATEGORY_ID = 1L;
+	public static final Long NON_EXISTING_CATEGORY_ID = 300L;
+	
 	public static final Long NEWS_ID = 1L;
 	public static final Long NON_EXIST_NEWS_ID = 200L;
 	

@@ -164,8 +164,78 @@ public class NewsServiceIntegrationTest {
 	public void testDelete_WithNonExistingId_ShouldThrowException() throws Exception {
 		newsService.delete(NON_EXIST_NEWS_ID);
 	}
-
 	
+	@Test
+	public void testFindAllByCulturalOffer_WithFirstPageable_ShouldReturnFirst5News() {
+		Pageable pageable = PageRequest.of(PAGE_NO, PAGE_SIZE);
+
+		Page<News> news = newsService.findAllByCulturalOffer(EXISTING_CULTURAL_OFFER_ID, pageable);
+
+		assertEquals(3, news.getNumberOfElements());
+	}
+
+	@Test
+	public void testFindAllByCulturalOffer_WithNonExistingPageable_ShouldReturnEmptyCollection() {
+		Pageable pageable = PageRequest.of(1000, PAGE_SIZE);
+
+		Page<News> news = newsService.findAllByCulturalOffer(EXISTING_CULTURAL_OFFER_ID, pageable);
+
+		assertEquals(0, news.getNumberOfElements());
+	}
+	
+	@Test
+	public void testFindAllByCulturalOffer_WithNonExistingCOID_ShouldReturnEmptyCollection() {
+		Pageable pageable = PageRequest.of(PAGE_NO, PAGE_SIZE);
+
+		Page<News> news = newsService.findAllByCulturalOffer(NON_EXISTING_CULTURAL_OFFER_ID, pageable);
+
+		assertEquals(0, news.getNumberOfElements());
+	}
+
+	@Test
+	public void testGetSubscribedNews_WithExistingPageable_ShouldReturnFirst5News() {
+		Pageable pageable = PageRequest.of(PAGE_NO, PAGE_SIZE);
+		
+		Page<News> news = newsService.getSubscribedNews(EXISTING_REGISTERED_USER_ID, pageable);
+		
+		assertEquals(5, news.getNumberOfElements());
+	}
+	
+	@Test
+	public void testGetSubscribedNews_WithNonExistingPageable_ShouldReturnEmptyCollection() {
+		Pageable pageable = PageRequest.of(1000, PAGE_SIZE);
+
+		Page<News> news = newsService.getSubscribedNews(EXISTING_REGISTERED_USER_ID, pageable);
+
+		assertEquals(0, news.getNumberOfElements());
+	}
+	
+	@Test
+	public void testGetSubscribedNews_WithNonExistingUserId_ShouldReturnEmptyCollection() {
+		Pageable pageable = PageRequest.of(PAGE_NO, PAGE_SIZE);
+
+		Page<News> news = newsService.getSubscribedNews(NON_EXISTING_REGISTERED_USER_ID, pageable);
+
+		assertEquals(0, news.getNumberOfElements());
+	}
+	
+	@Test
+	public void testGetSubscribedNews_WithExistingCategoryId_ShouldReturnFirst5News() {
+		Pageable pageable = PageRequest.of(PAGE_NO, PAGE_SIZE);
+
+		Page<News> news = newsService.getSubscribedNews(EXISTING_REGISTERED_USER_ID, EXISTING_CATEGORY_ID, pageable);
+
+		assertEquals(4, news.getNumberOfElements());
+	}
+	
+	@Test
+	public void testGetSubscribedNews_WithNonExistingCategoryId_ShouldReturnEmptyCollection() {
+		Pageable pageable = PageRequest.of(PAGE_NO, PAGE_SIZE);
+
+		Page<News> news = newsService.getSubscribedNews(EXISTING_REGISTERED_USER_ID, NON_EXISTING_CATEGORY_ID, pageable);
+
+		assertEquals(0, news.getNumberOfElements());
+	}
 
 	
 

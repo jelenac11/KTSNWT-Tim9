@@ -40,5 +40,43 @@ public class NewsRepositoryIntegrationTest {
 		assertEquals(0, newsPage.getTotalElements() );
 	}
 	
+	@Test
+	public void testFindSubscribedNews_WithExistingCategoryID_ShouldReturnNewsPage() {
+		Pageable pageable = PageRequest.of(NewsConstants.PAGE_NO, NewsConstants.PAGE_SIZE);
+		
+		Page<News> newsPage = newsRepository.findSubscribedNews(NewsConstants.EXISTING_REGISTERED_USER_ID
+				, NewsConstants.EXISTING_CATEGORY_ID, pageable);
+
+		assertEquals(4, newsPage.getTotalElements() );
+	}
+	
+	@Test
+	public void testFindSubscribedNews_WithNotExistingCatetegoryID_ShouldReturnNewsPageWithEmptyContent() {
+		Pageable pageable = PageRequest.of(NewsConstants.PAGE_NO, NewsConstants.PAGE_SIZE);
+		
+		Page<News> newsPage = newsRepository.findSubscribedNews(NewsConstants.EXISTING_REGISTERED_USER_ID,
+				NewsConstants.NON_EXISTING_CATEGORY_ID ,pageable);
+		assertEquals(0, newsPage.getTotalElements() );
+	}
+	
+	@Test
+	public void testFindByCulturalOfferId_WithExistingCOID_ShouldReturnNewsPage() {
+		Pageable pageable = PageRequest.of(NewsConstants.PAGE_NO, NewsConstants.PAGE_SIZE);
+		
+		Page<News> newsPage = newsRepository.findByCulturalOfferId(NewsConstants.EXISTING_CULTURAL_OFFER_ID, pageable);
+
+		assertEquals(3, newsPage.getTotalElements() );
+	}
+	
+	@Test
+	public void testFindByCulturalOfferId_WithNotExistingCOID_ShouldReturnNewsPageWithEmptyContent() {
+		Pageable pageable = PageRequest.of(NewsConstants.PAGE_NO, NewsConstants.PAGE_SIZE);
+		
+		Page<News> newsPage = newsRepository.findByCulturalOfferId(NewsConstants.NON_EXISTING_CULTURAL_OFFER_ID, pageable);
+		assertEquals(0, newsPage.getTotalElements());
+	}
+	
+	
+	
 
 }

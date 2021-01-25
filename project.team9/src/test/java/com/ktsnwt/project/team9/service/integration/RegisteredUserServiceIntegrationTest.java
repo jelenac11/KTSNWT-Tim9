@@ -17,6 +17,8 @@ import com.ktsnwt.project.team9.model.RegisteredUser;
 import com.ktsnwt.project.team9.services.implementations.CulturalOfferService;
 import com.ktsnwt.project.team9.services.implementations.RegisteredUserService;
 
+import javassist.NotFoundException;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -193,6 +195,23 @@ public class RegisteredUserServiceIntegrationTest {
 		
 		assertNotNull(users);
 		assertEquals(RegisteredUserConstants.SUBSCRIBE_NO, users.size());
+	}
+	
+	@Test
+	public void testIsSubscribed_WithValidEmailAndCOIDAndSubscribed_ShouldReturnTrue() throws NotFoundException {
+		boolean res = regUserService.isSubscribed(RegisteredUserConstants.SUBSCRIBE_EMAIL, 1L);
+		assertTrue(res);
+	}
+	
+	@Test
+	public void testIsSubscribed_WithValidEmailAndCOIDAndNotSubscribed_ShouldReturnFalse() throws NotFoundException {
+		boolean res = regUserService.isSubscribed(RegisteredUserConstants.SUBSCRIBE_EMAIL, 5L);
+		assertFalse(res);
+	}
+	
+	@Test(expected = NotFoundException.class)
+	public void testIsSubscribed_WithInvalidEmail_ShouldThrowNotFoundException() throws NotFoundException {
+		regUserService.isSubscribed("RNG_EMAIL", 1L);
 	}
 
 }

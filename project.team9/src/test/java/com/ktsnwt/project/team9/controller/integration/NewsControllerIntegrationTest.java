@@ -456,6 +456,103 @@ public class NewsControllerIntegrationTest {
 		assertEquals(0, responseEntity.getBody().getNumberOfElements());
 	}
 	
+	@Test
+	public void testGetAllNewsByCulturalOffer_WithExistingCOIDPageable_ShouldReturnFirst5News() {
+		Pageable pageable = PageRequest.of(PAGE_NO, PAGE_SIZE);
+		int size = newsService.findAllByCulturalOffer(EXISTING_CULTURAL_OFFER_ID, pageable).getNumberOfElements();
+		ParameterizedTypeReference<CustomPageImplementation<NewsDTO>> type = new ParameterizedTypeReference<CustomPageImplementation<NewsDTO>>() {
+		};
+
+		ResponseEntity<CustomPageImplementation<NewsDTO>> responseEntity = restTemplate
+				.exchange("/api/news/"+ EXISTING_CULTURAL_OFFER_ID +"/by-page?page=" + PAGE_NO + "&size=" + PAGE_SIZE, HttpMethod.GET, null, type);
+
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+		assertNotNull(responseEntity.getBody());
+		assertEquals(PAGE_NO ,responseEntity.getBody().getNumber());
+		//Postavljen je size iz service-a jer ne znamo velicinu stranice koje ce se vratiti
+		assertEquals(size, responseEntity.getBody().getNumberOfElements());
+	}
+
+	@Test
+	public void testGetAllNewsByCulturalOffer_WithNonExistingPageable_ShouldReturnEmptyCollection() {
+		Pageable pageable = PageRequest.of(NON_EXISTING_PAGE_NO, PAGE_SIZE);
+		int size = newsService.findAllByCulturalOffer(EXISTING_CULTURAL_OFFER_ID, pageable).getNumberOfElements();
+		
+		ParameterizedTypeReference<CustomPageImplementation<NewsDTO>> type = new ParameterizedTypeReference<CustomPageImplementation<NewsDTO>>() {
+		};
+
+		ResponseEntity<CustomPageImplementation<NewsDTO>> responseEntity = restTemplate
+				.exchange("/api/news/"+ EXISTING_CULTURAL_OFFER_ID +"/by-page?page=" + NON_EXISTING_PAGE_NO + "&size=" + PAGE_SIZE, HttpMethod.GET, null, type);
+
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+		assertNotNull(responseEntity.getBody());
+		assertEquals(size, responseEntity.getBody().getNumberOfElements());
+	}
+	
+	@Test
+	public void testGetAllNewsByCulturalOffer_WithNonExistingCOID_ShouldReturnEmptyCollection() {
+		Pageable pageable = PageRequest.of(NON_EXISTING_PAGE_NO, PAGE_SIZE);
+		int size = newsService.findAllByCulturalOffer(NON_EXISTING_CULTURAL_OFFER_ID, pageable).getNumberOfElements();
+		
+		ParameterizedTypeReference<CustomPageImplementation<NewsDTO>> type = new ParameterizedTypeReference<CustomPageImplementation<NewsDTO>>() {
+		};
+
+		ResponseEntity<CustomPageImplementation<NewsDTO>> responseEntity = restTemplate
+				.exchange("/api/news/"+ NON_EXISTING_CULTURAL_OFFER_ID +"/by-page?page=" + NON_EXISTING_PAGE_NO + "&size=" + PAGE_SIZE, HttpMethod.GET, null, type);
+
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+		assertNotNull(responseEntity.getBody());
+		assertEquals(size, responseEntity.getBody().getNumberOfElements());
+	}
+	
+	@Test
+	public void testGetSubscribedNews_WithExistingCategorId_ShouldReturnFirst5News(){
+		
+		login("email_adresa20@gmail.com", "sifra123");
+        HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", accessToken);
+		
+		
+		Pageable pageable = PageRequest.of(PAGE_NO, PAGE_SIZE);
+		
+		int size = newsService.getSubscribedNews(EXISTING_REGISTERED_USER_ID, EXISTING_CATEGORY_ID, pageable).getNumberOfElements();
+		ParameterizedTypeReference<CustomPageImplementation<NewsDTO>> type = new ParameterizedTypeReference<CustomPageImplementation<NewsDTO>>() {
+		};
+
+		ResponseEntity<CustomPageImplementation<NewsDTO>> responseEntity = restTemplate
+				.exchange("/api/news/subscribed-news/" + EXISTING_REGISTERED_USER_ID + "/"+ EXISTING_CATEGORY_ID + "/?page=" + PAGE_NO + "&size=" + PAGE_SIZE, HttpMethod.GET,
+						new HttpEntity<>(null,headers), type);
+
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+		assertNotNull(responseEntity.getBody());
+		assertEquals(PAGE_NO ,responseEntity.getBody().getNumber());
+		//Postavljen je size iz service-a jer ne znamo velicinu stranice koje ce se vratiti
+		assertEquals(size, responseEntity.getBody().getNumberOfElements());
+	}
+	
+	@Test
+	public void testGetSubscribedNews_WithNonExistingCategoryId_ShouldReturnEmptyCollection(){
+
+		
+		login("email_adresa20@gmail.com", "sifra123");
+        HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", accessToken);
+		
+		
+		ParameterizedTypeReference<CustomPageImplementation<NewsDTO>> type = new ParameterizedTypeReference<CustomPageImplementation<NewsDTO>>() {
+		};
+
+		ResponseEntity<CustomPageImplementation<NewsDTO>> responseEntity = restTemplate
+				.exchange("/api/news/subscribed-news/" + EXISTING_REGISTERED_USER_ID +
+						"/"+ NON_EXISTING_CATEGORY_ID +"/?page=" + PAGE_NO + "&size=" + PAGE_SIZE, HttpMethod.GET, 
+						new HttpEntity<>(null,headers), type);
+
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+		assertNotNull(responseEntity.getBody());
+		assertEquals(PAGE_NO ,responseEntity.getBody().getNumber());
+		assertEquals(0, responseEntity.getBody().getNumberOfElements());
+	}
+	
 }
 
 

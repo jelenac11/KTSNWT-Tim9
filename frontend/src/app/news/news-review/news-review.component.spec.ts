@@ -108,49 +108,46 @@ describe('NewsReviewComponent', () => {
 
   it('load content', () => {
     component.ngOnInit();
-    fixture.whenStable().then(() => {
-      expect(newsService.getAllByCOID).toHaveBeenCalled();
-      expect(coService.get).toHaveBeenCalledTimes(2);
-      expect(jwtService.getRole).toHaveBeenCalledTimes(1);
-      expect(imageService.get).toHaveBeenCalledTimes(3);
-      expect(component.role).toEqual('ROLE_ADMIN');
-    });
+    fixture.detectChanges();
+    expect(newsService.getAllByCOID).toHaveBeenCalled();
+    expect(coService.get).toHaveBeenCalledTimes(4);
+    expect(jwtService.getRole).toHaveBeenCalledTimes(2);
+    expect(imageService.get).toHaveBeenCalledTimes(6);
+    expect(component.role).toEqual('ROLE_ADMIN');
   });
 
   it('pageChanged', () => {
     component.handlePageChange(2);
-    fixture.whenStable().then(() => {
-      expect(newsService.getAllByCOID).toHaveBeenCalled();
-      expect(coService.get).toHaveBeenCalledTimes(2);
-      expect(imageService.get).toHaveBeenCalledTimes(3);
+    fixture.detectChanges();
 
-      expect(component.news.content.length).toBe(2);
-      expect(component.news.totalElements).toBe(10);
+    expect(newsService.getAllByCOID).toHaveBeenCalled();
+    expect(coService.get).toHaveBeenCalledTimes(4);
+    expect(imageService.get).toHaveBeenCalledTimes(6);
 
-      expect(component.news.content[0].id).toEqual(5);
-      expect(component.news.content[0].content).toEqual('Neki content 1');
-      expect(component.news.content[0].culturalOfferID).toEqual(1);
-      expect(component.news.content[0].date).toEqual(1611407287491);
-      expect(component.news.content[0].images.length).toEqual(2);
-      expect(component.news.content[0].images[0]).toEqual('neki_url_1');
-      expect(component.news.content[0].images[1]).toEqual('neki_url_2');
+    expect(component.news.content.length).toBe(2);
+    expect(component.news.totalElements).toBe(10);
 
-      expect(component.news.content[1].id).toEqual(6);
-      expect(component.news.content[1].content).toEqual('Neki content 2');
-      expect(component.news.content[1].culturalOfferID).toEqual(1);
-      expect(component.news.content[1].date).toEqual(1611407287491);
-      expect(component.news.content[1].images.length).toEqual(1);
-      expect(component.news.content[1].images[0]).toEqual('neki_url_3');
-    });
+    expect(component.news.content[0].id).toEqual(5);
+    expect(component.news.content[0].content).toEqual('Neki content 1');
+    expect(component.news.content[0].culturalOfferID).toEqual(1);
+    expect(component.news.content[0].date).toEqual(1611407287491);
+    expect(component.news.content[0].images.length).toEqual(2);
+    expect(component.news.content[0].images[0]).toEqual('neki_url_1');
+    expect(component.news.content[0].images[1]).toEqual('neki_url_2');
+
+    expect(component.news.content[1].id).toEqual(6);
+    expect(component.news.content[1].content).toEqual('Neki content 2');
+    expect(component.news.content[1].culturalOfferID).toEqual(1);
+    expect(component.news.content[1].date).toEqual(1611407287491);
+    expect(component.news.content[1].images.length).toEqual(1);
+    expect(component.news.content[1].images[0]).toEqual('neki_url_3');
   });
 
   it('delete', () => {
     component.ngOnInit();
     component.delete(2);
-
-    fixture.whenStable().then(() => {
-      expect(newsService.delete).toHaveBeenCalled();
-      expect(snackBar.success).toHaveBeenCalledWith('You have successfully deleted news!');
-    });
+    fixture.detectChanges();
+    expect(newsService.delete).toHaveBeenCalled();
+    expect(snackBar.success).toHaveBeenCalledWith('You have successfully deleted news!');
   });
 });

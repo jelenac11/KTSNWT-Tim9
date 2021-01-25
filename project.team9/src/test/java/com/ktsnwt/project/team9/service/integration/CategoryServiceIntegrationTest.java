@@ -157,7 +157,31 @@ public class CategoryServiceIntegrationTest {
 	}
 
 	
+	@Test
+	public void testFindByName_WithFirstPageable_ShouldReturnFirst5Category() {
+		Pageable pageable = PageRequest.of(PAGE_NO, PAGE_SIZE);
 
+		Page<Category> category = categoryService.findByName(EXISTING_VALUE, pageable);
+
+		assertEquals(1, category.getNumberOfElements());
+	}
+
+	@Test
+	public void testFindBy_WithNonExistingPageable_ShouldReturnEmptyCollection() {
+		Pageable pageable = PageRequest.of(1000, PAGE_SIZE);
+
+		Page<Category> category = categoryService.findByName(EXISTING_VALUE, pageable);
+
+		assertEquals(0, category.getNumberOfElements());
+	}
 	
+	@Test
+	public void testFindBy_WithNonExistingValue_ShouldReturnEmptyCollection() {
+		Pageable pageable = PageRequest.of(1000, PAGE_SIZE);
+
+		Page<Category> category = categoryService.findByName("RNG", pageable);
+
+		assertEquals(0, category.getNumberOfElements());
+	}
 
 }
