@@ -75,32 +75,9 @@ export class NewsDialogComponent implements OnInit {
     if (!this.images.length){
       this.addNews(urls);
     }
-    for (const image of this.images){
-      if (image === this.images[this.images.length - 1]){
-        this.imageService.upload(image as File).subscribe(url => {
-          urls.push(url);
-          this.addNews(urls);
-        },
-        (err) => {
-          console.log(err);
-          for (const url of urls){
-            this.imageService.delete(url);
-          }
-          return;
-        });
-      }
-      else{
-        this.imageService.upload(image as File).subscribe(url => {
-          urls.push(url);
-        },
-        () => {
-          for (const url of urls){
-            this.imageService.delete(url);
-          }
-          return;
-        });
-      }
-    }
+    this.imageService.uploads(this.images as File[]).subscribe(urlsImage => {
+        this.addNews(urlsImage);
+    });
   }
 
   addNews(urls: string[]): void{
@@ -167,34 +144,12 @@ export class NewsDialogComponent implements OnInit {
     if (this.images.filter(img => typeof img !== 'string').length === 0 ){
       urls.push(...this.images);
       this.updateNews(urls);
+      return;
     }
-    for (const image of this.images.filter(img => typeof img !== 'string')){
-      if (image === this.images[this.images.length - 1]){
-        urls.push(...(this.images.filter(img => typeof img === 'string')));
-        this.imageService.upload(image as File).subscribe(url => {
-          urls.push(url);
-          this.updateNews(urls);
-          return;
-        },
-        () => {
-          for (const url of urls){
-            this.imageService.delete(url);
-          }
-          return;
-        });
-      }
-      else{
-        this.imageService.upload(image as File).subscribe(url => {
-          urls.push(url);
-        },
-        () => {
-          for (const url of urls){
-            this.imageService.delete(url);
-          }
-          return;
-        });
-      }
-    }
+    this.imageService.uploads(this.images.filter(img => typeof img !== 'string') as File[]).subscribe(imgUrls => {
+      urls.push(...imgUrls);
+      this.updateNews(urls);
+    });
   }
 
   remove(index: number): void{

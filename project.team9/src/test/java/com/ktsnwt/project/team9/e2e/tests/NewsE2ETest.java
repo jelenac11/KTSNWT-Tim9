@@ -540,7 +540,7 @@ public class NewsE2ETest {
 	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
 	public void subscribeToNews_ShouldSuccess() {
 		signInSetUp(USER_CREDS);
-		Pageable pageable = PageRequest.of(0, 4);
+		Pageable pageable = PageRequest.of(0, 20);
 		int size = (newsService.getSubscribedNews(8L, pageable)).getContent().size();
 		
 		homePage.ensureIsDisplayedFestivalsTab();
@@ -580,7 +580,7 @@ public class NewsE2ETest {
 	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
 	public void unsubscribeToNews_ShouldSuccess() {
 		signInSetUp(USER_CREDS);
-		Pageable pageable = PageRequest.of(0, 4);
+		Pageable pageable = PageRequest.of(0, 20);
 		
 		homePage.ensureIsDisplayedFestivalsTab();
 		

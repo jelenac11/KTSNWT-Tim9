@@ -44,6 +44,10 @@
                                   <img height="200px" width="400px" class="d-block w-100" src="{{getImageSrc(i,j)}}" onerror='this.src ="assets/noimage.jpg" ' alt="First slide">
       
                                 </mdb-carousel-item>
+                                <mdb-carousel-item *ngIf='item.images.length === 0'>
+                                  <img height="200px" width="400px" class="d-block w-100" src="assets/noimage.jpg">
+      
+                                </mdb-carousel-item>
                               </mdb-carousel>
                               
                               
@@ -108,19 +112,27 @@
                               {{getTitle(item.culturalOfferID)}} 
                             </button>
                             
+                            <div class="card-body mx-auto">
+                              <i>{{item.title}}</i>
+                            </div>
                           </mdb-card-title>
                               <mdb-carousel [isControls]="true">
                                 <mdb-carousel-item *ngFor="let img of item.images; let j = index">
                                   <img height="200px" width="400px" class="d-block w-100" src="{{getImageSrc(i,j)}}" onerror='this.src ="assets/noimage.jpg" ' alt="First slide">
       
                                 </mdb-carousel-item>
+                                
+                                <mdb-carousel-item *ngIf='item.images.length === 0'>
+                                  <img height="200px" width="400px" class="d-block w-100" src="assets/noimage.jpg">
+      
+                                </mdb-carousel-item>
                               </mdb-carousel>
                               
                               
                           <mdb-card-text *ngIf="item.content">
-                            <p>Date: {{getDate(item.date) | date:'E, dd.MM.YYYY.' }}</p>
-                            {{ item.content | slice: 0:360
-                            }}{{ item.content.length > 360 ? "..." : "" }}
+                            <p>Created: {{getDate(item.date) | date:'E, dd.MM.YYYY.' }}</p>
+                            {{ item.content | slice: 0:240
+                            }}{{ item.content.length > 240 ? "..." : "" }}
                           </mdb-card-text>
                           <mdb-card-text *ngIf="!item.content"> 
                             

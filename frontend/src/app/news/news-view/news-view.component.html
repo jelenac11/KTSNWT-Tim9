@@ -26,6 +26,11 @@
                             
                         </mdb-carousel-item>
                     </mdb-carousel>
+                    <mdb-carousel *ngIf="images.length === 0" [isControls]="true" [animation]="'slide'">
+                      <mdb-carousel-item>
+                        <img class="d-block w-100" src="assets/noimage.jpg">
+                      </mdb-carousel-item>
+                  </mdb-carousel>
                 </div>
             </div>
             <div class="row">
