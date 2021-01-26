@@ -1,7 +1,16 @@
 @use '../../../base';
 
-textarea {
-    resize: none;
+
+mat-form-field {
+    width: 100%;
+}
+
+mat-dialog-content {
+    width: 1000px;
+}
+
+.news-title{
+    width: 50%;
 }
 
 .mat-dialog-actions {

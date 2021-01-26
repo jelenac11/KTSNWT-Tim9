@@ -102,6 +102,7 @@ public class NewsServiceIntegrationTest {
 		News newsAfter = newsService.create(newsBefore);
 		
 		assertEquals(newsBefore.getContent(), newsAfter.getContent());
+		assertEquals(newsBefore.getTitle(), newsAfter.getTitle());
 		assertEquals(newsBefore.getCulturalOffer().getId(), newsAfter.getCulturalOffer().getId());
 		assertEquals(IMAGES.size(), newsAfter.getImages().size());
 		assertEquals(newsBefore.getDate(), newsAfter.getDate());
@@ -128,6 +129,7 @@ public class NewsServiceIntegrationTest {
 		assertEquals(newsBefore.getCulturalOffer().getId(), newsAfter.getCulturalOffer().getId());
 		assertEquals(IMAGES.size(), newsAfter.getImages().size());
 		assertEquals(newsBefore.getDate(), newsAfter.getDate());
+		assertEquals(newsBefore.getTitle(), newsAfter.getTitle());
 		assertEquals(lengthImages + IMAGES.size(), imageService.getAll().size());
 
 	}

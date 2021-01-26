@@ -2,6 +2,7 @@ package com.ktsnwt.project.team9.controllers;
 
 import java.io.IOException;
 import java.util.List;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.springframework.data.domain.Page;
@@ -143,6 +144,15 @@ public class CulturalOfferController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	
+	@PreAuthorize("hasRole('ROLE_REGISTERED_USER')")
+	@GetMapping(value = "/subscribed/{userID}")
+	public ResponseEntity<Page<CulturalOfferResDTO>> getSubscribedCulturalOffer(@PathVariable Long userID, Pageable pageable) {
+		
+		Page<CulturalOffer> page = culturalOfferService.getSubscribedCulturalOffer(userID, pageable);
+		return new ResponseEntity<Page<CulturalOfferResDTO>>(createCustomPage(customTransform(page)), HttpStatus.OK);
+	}
 
 	private Page<CulturalOfferResDTO> transformFromListToPage(Page<CulturalOffer> page) {
 		List<CulturalOfferResDTO> culturalOffersResDTO = culturalOfferMapper.toDTOResList(page.toList());
@@ -153,6 +163,11 @@ public class CulturalOfferController {
 				e.printStackTrace();
 			}
 		});
+		return new PageImpl<>(culturalOffersResDTO, page.getPageable(), page.getTotalElements());
+	}
+	
+	private Page<CulturalOfferResDTO> customTransform(Page<CulturalOffer> page) {
+		List<CulturalOfferResDTO> culturalOffersResDTO = culturalOfferMapper.toDTOResList(page.toList());
 		return new PageImpl<>(culturalOffersResDTO, page.getPageable(), page.getTotalElements());
 	}
 

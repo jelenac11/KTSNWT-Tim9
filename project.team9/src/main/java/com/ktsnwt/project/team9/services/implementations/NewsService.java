@@ -86,6 +86,7 @@ public class NewsService implements INewsService {
 		existingNews.setActive(entity.isActive());
 		existingNews.setDate(entity.getDate());
 		existingNews.setImages(entity.getImages());
+		existingNews.setTitle(entity.getTitle());
 		
 		
 		

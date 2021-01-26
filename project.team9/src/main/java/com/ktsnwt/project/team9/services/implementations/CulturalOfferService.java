@@ -144,4 +144,8 @@ public class CulturalOfferService implements ICulturalOfferService {
 	public Page<CulturalOffer> findByNameContains(String name, Pageable pageable) {
 		return culturalOfferRepository.findByNameContainingIgnoreCase(name, pageable);
 	}
+
+	public Page<CulturalOffer> getSubscribedCulturalOffer(Long userID, Pageable pageable) {
+		return culturalOfferRepository.findBySubscribedUsersId(userID, pageable);
+	}
 }

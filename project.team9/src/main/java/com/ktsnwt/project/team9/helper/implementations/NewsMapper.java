@@ -17,14 +17,14 @@ public class NewsMapper extends ListMapper<News, NewsDTO> {
 		return new News(dto.getContent(), dto.getDate(), 
 				dto.getImages().stream().map(url -> new Image(url)).collect(Collectors.toSet()),
 				new CulturalOffer(dto.getCulturalOfferID()) ,
-				dto.isActive());
+				dto.isActive(), dto.getTitle());
 	}
 
 	@Override
 	public NewsDTO toDto(News entity) {
 		
 		return new NewsDTO(entity.getId(),
-				entity.getContent(), entity.getDate(), entity.isActive(), 
+				entity.getContent(), entity.getDate(), entity.getTitle(), entity.isActive(), 
 				entity.getImages().stream().map( image -> image.getUrl()).collect(Collectors.toSet()),
 				entity.getCulturalOffer().getId());
 	}

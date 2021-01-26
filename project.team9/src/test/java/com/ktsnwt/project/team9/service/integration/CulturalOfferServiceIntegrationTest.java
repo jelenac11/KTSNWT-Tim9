@@ -307,5 +307,19 @@ public class CulturalOfferServiceIntegrationTest {
 
 		culturalOfferService.update(1L, culturalOffer, file);
 	}
+	
+	@Test
+	public void testGetSubscribedCulturalOffer_WithExistingUserId_ShouldReturnCollectionOfOffers() {
+		Pageable pageable = PageRequest.of(0, 10);
+		Page<CulturalOffer> page = culturalOfferService.getSubscribedCulturalOffer(8L, pageable);
+		assertEquals(3, page.getNumberOfElements());
+	}
+	
+	@Test
+	public void testGetSubscribedCulturalOffer_WithNonExistingUserId_ShouldReturnEmptyCollection() {
+		Pageable pageable = PageRequest.of(0, 10);
+		Page<CulturalOffer> page = culturalOfferService.getSubscribedCulturalOffer(811L, pageable);
+		assertEquals(0, page.getNumberOfElements());
+	}
 
 }

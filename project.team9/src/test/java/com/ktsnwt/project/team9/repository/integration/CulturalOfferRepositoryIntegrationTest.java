@@ -93,5 +93,23 @@ public class CulturalOfferRepositoryIntegrationTest {
 
 		assertEquals(0, culturalOfferPage.getTotalElements());
 	}
+	
+	@Test
+	public void testFindBySubscribedUserId_WithExistingUserId_ShouldReturnCollectionWithOffers() {
+
+		Pageable pageable = PageRequest.of(CulturalOfferConstants.PAGE, CulturalOfferConstants.PAGE_SIZE);
+		Page<CulturalOffer> coPage = culturalOfferRepository.findBySubscribedUsersId(8L, pageable);
+		
+		assertEquals(3, coPage.getNumberOfElements());
+	}
+	
+	@Test
+	public void testFindBySubscribedUserId_WithNonExistingUserId_ShouldReturnCollectionWithOffers() {
+
+		Pageable pageable = PageRequest.of(CulturalOfferConstants.PAGE, CulturalOfferConstants.PAGE_SIZE);
+		Page<CulturalOffer> coPage = culturalOfferRepository.findBySubscribedUsersId(899L, pageable);
+		
+		assertEquals(0, coPage.getNumberOfElements());
+	}
 
 }

@@ -55,4 +55,11 @@ export class CulturalOfferService {
     return this.http.delete<boolean>(`${environment.api_url}cultural-offers/${slug}`);
   }
 
+  getSubscribed(userId: string, size: number, page: number): Observable<CulturalOfferPage> {
+    let params = new HttpParams();
+    params = params.append('size', size.toString());
+    params = params.append('page', page.toString());
+    return this.http.get(`${environment.api_url}cultural-offers/subscribed/${userId}`, { params, responseType: 'json'});
+  }
+
 }

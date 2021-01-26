@@ -41,13 +41,15 @@ export class NewsDialogComponent implements OnInit {
       }
       this.form = this.fb.group({
         content: [this.news.content, Validators.required],
+        title: [this.news.title, Validators.required]
       });
     }
     else{
       this.coid = +this.data;
-      this.news = {id: null, content: '', images: [], date: new Date().getTime(), culturalOfferID: +this.data};
+      this.news = {id: null, content: '', images: [], date: new Date().getTime(), culturalOfferID: +this.data, title: ''};
       this.form = this.fb.group({
         content: ['', Validators.required],
+        title: ['', Validators.required]
       });
     }
   }
@@ -68,6 +70,7 @@ export class NewsDialogComponent implements OnInit {
       return;
     }
     this.news.content = this.form.value.content;
+    this.news.title = this.form.value.title;
     const urls: string[] = [];
     if (!this.images.length){
       this.addNews(urls);
@@ -154,6 +157,7 @@ export class NewsDialogComponent implements OnInit {
       return;
     }
     this.news.content = this.form.value.content;
+    this.news.title = this.form.value.title;
     const urls = [];
     for (const item of this.removedImages){
       if (typeof item.image === 'string'){

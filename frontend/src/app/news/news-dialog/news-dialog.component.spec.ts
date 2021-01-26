@@ -25,6 +25,7 @@ describe('NewsDialogComponent', () => {
       };
 
       const news: News = {
+        title: 'Neki title',
         content: 'Neki content',
         culturalOfferID: 2,
         date: 1611410224867,
@@ -102,7 +103,8 @@ describe('NewsDialogComponent', () => {
     it('submit without news and valid form should create news', () => {
       component.ngOnInit();
       component.form.patchValue({
-        content: 'Neki content'
+        content: 'Neki content',
+        title: 'Neki title'
       });
       component.images = [ new File([], 'RNG')];
       component.submit();
@@ -140,6 +142,7 @@ describe('NewsDialogComponent', () => {
       };
 
       const news: News = {
+        title: 'Neki title',
         content: 'Neki content',
         culturalOfferID: 2,
         date: 1611410224867,
@@ -222,6 +225,7 @@ describe('NewsDialogComponent', () => {
     it('submit with news and valid form without changing image should update news', () => {
       component.ngOnInit();
       component.form.patchValue({
+        title: 'Neki title',
         content: 'New content'
       });
       component.submit();

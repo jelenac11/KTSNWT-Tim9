@@ -16,4 +16,6 @@ public interface ICulturalOfferRepository extends JpaRepository<CulturalOffer, L
 	Page<CulturalOffer> findByCategoryIdAndNameContainingIgnoreCase(Long id, String name, Pageable pageable);
 
 	Page<CulturalOffer> findByNameContainingIgnoreCase(String name, Pageable pageable);
+
+	Page<CulturalOffer> findBySubscribedUsersId(Long userID, Pageable pageable);
 }

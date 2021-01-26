@@ -26,6 +26,9 @@ public class News {
 	private Long id;
 
 	@Column(columnDefinition = "text", unique = false, nullable = false)
+	private String title;
+	
+	@Column(columnDefinition = "text", unique = false, nullable = false)
 	private String content;
 
 	@Column(unique = false, nullable = false)
@@ -51,13 +54,14 @@ public class News {
 		this.id = id;
 	}
 
-	public News(String content, long date, Set<Image> images, CulturalOffer culturalOffer, boolean active) {
+	public News(String content, long date, Set<Image> images, CulturalOffer culturalOffer, boolean active, String title) {
 		super();
 		this.content = content;
 		this.date = date;
 		this.images = images;
 		this.culturalOffer = culturalOffer;
 		this.active = active;
+		this.title = title;
 	}
 
 	@Override
@@ -69,6 +73,8 @@ public class News {
 		if (getClass() != obj.getClass())
 			return false;
 		News other = (News) obj;
+		if (title != other.title)
+			return false;
 		if (active != other.active)
 			return false;
 		if (content == null) {

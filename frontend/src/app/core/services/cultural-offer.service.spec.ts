@@ -590,4 +590,89 @@ describe('CulturalOfferService', () => {
 
     expect(result).toEqual(true);
   }));
+
+  it('getSubscribed should return cultural offers that user is subsribed', fakeAsync(() => {
+    const mockCulturalOffers: CulturalOfferPage =
+    {
+      content: [
+        {
+          id: 5,
+          name: 'Srbija',
+          category: {
+            id: 1,
+            name: 'Kategorija 1',
+            description: 'Opis'
+          },
+          geolocation: {
+            placeId: '123',
+            location: 'Srbija',
+            lon: 5,
+            lat: 5
+          },
+          description: 'Opis',
+          image: 'nekiUrl',
+          averageMark: 4.85
+        },
+        {
+          id: 6,
+          name: 'Srbija 2',
+          category: {
+            id: 1,
+            name: 'Kategorija 1',
+            description: 'Opis'
+          },
+          geolocation: {
+            placeId: '1234',
+            location: 'Srbija 2',
+            lon: 6,
+            lat: 6
+          },
+          description: 'Opis 2',
+          image: 'nekiUrl 2',
+          averageMark: 4.0
+        }
+      ],
+      totalElements: 10
+    };
+    let culturalOffers: CulturalOfferPage;
+    service.getSubscribed('1', 2, 3).subscribe(data => {
+      culturalOffers = data;
+    });
+
+    const req = httpMock.expectOne(`${environment.api_url}cultural-offers/subscribed/1?size=2&page=3`);
+    expect(req.request.method).toBe('GET');
+    req.flush(mockCulturalOffers);
+
+    tick();
+
+    expect(culturalOffers.totalElements).toEqual(10);
+    expect(culturalOffers.content.length).toEqual(2);
+
+    expect(culturalOffers.content[0].id).toEqual(5);
+    expect(culturalOffers.content[0].name).toEqual('Srbija');
+    expect(culturalOffers.content[0].geolocation.placeId).toEqual('123');
+    expect(culturalOffers.content[0].geolocation.lat).toEqual(5);
+    expect(culturalOffers.content[0].geolocation.lon).toEqual(5);
+    expect(culturalOffers.content[0].geolocation.location).toEqual('Srbija');
+    expect(culturalOffers.content[0].category.id).toEqual(1);
+    expect(culturalOffers.content[0].category.name).toEqual('Kategorija 1');
+    expect(culturalOffers.content[0].category.description).toEqual('Opis');
+    expect(culturalOffers.content[0].description).toEqual('Opis');
+    expect(culturalOffers.content[0].image).toEqual('nekiUrl');
+    expect(culturalOffers.content[0].averageMark).toEqual(4.85);
+
+    expect(culturalOffers.content[1].id).toEqual(6);
+    expect(culturalOffers.content[1].name).toEqual('Srbija 2');
+    expect(culturalOffers.content[1].geolocation.placeId).toEqual('1234');
+    expect(culturalOffers.content[1].geolocation.lat).toEqual(6);
+    expect(culturalOffers.content[1].geolocation.lon).toEqual(6);
+    expect(culturalOffers.content[1].geolocation.location).toEqual('Srbija 2');
+    expect(culturalOffers.content[1].category.id).toEqual(1);
+    expect(culturalOffers.content[1].category.name).toEqual('Kategorija 1');
+    expect(culturalOffers.content[1].category.description).toEqual('Opis');
+    expect(culturalOffers.content[1].description).toEqual('Opis 2');
+    expect(culturalOffers.content[1].image).toEqual('nekiUrl 2');
+    expect(culturalOffers.content[1].averageMark).toEqual(4.0);
+
+  }));
 });
