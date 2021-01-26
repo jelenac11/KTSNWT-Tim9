@@ -131,5 +131,7 @@ export class SubscriedNewsComponent implements OnInit {
         );
       }
     }
+
+    console.log(this.images);
   }
 }

@@ -29,11 +29,14 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.ktsnwt.project.team9.e2e.pages.NewsReviewPage;
+import com.ktsnwt.project.team9.e2e.pages.NewsViewPage;
 import com.ktsnwt.project.team9.e2e.pages.ReviewCulturalOfferPage;
+import com.ktsnwt.project.team9.e2e.pages.DashboardPage;
 import com.ktsnwt.project.team9.e2e.pages.HomePage;
 import com.ktsnwt.project.team9.e2e.pages.LoginPage;
 import com.ktsnwt.project.team9.e2e.pages.MyNewsPage;
 import com.ktsnwt.project.team9.model.News;
+import com.ktsnwt.project.team9.services.implementations.CulturalOfferService;
 import com.ktsnwt.project.team9.services.implementations.NewsService;
 
 @RunWith(SpringRunner.class)
@@ -43,13 +46,16 @@ public class NewsE2ETest {
 	@Autowired
 	NewsService newsService;
 	
+	@Autowired
+	CulturalOfferService coService;
+	
 	private WebDriver driver;
 	
 	public static final String BASE_URL = "https://localhost:4200";
 	
 	public static final String[] ADMIN_CREDS = {"email_adresa1@gmail.com","sifra123"};
 	
-	public static final String[] USER_CREDS = {"email_adresa20@gmail.com","sifra123"};
+	public static final String[] USER_CREDS = {"email_adresa21@gmail.com","sifra123"};
 	
 	public static final String pathToImages = "src\\test\\resources\\uploadedImages\\slika1.jpg";
 	public static final String pathToImages2 = "src\\test\\resources\\uploadedImages\\slika2.jpg";
@@ -66,6 +72,10 @@ public class NewsE2ETest {
 	private ReviewCulturalOfferPage reviewCOPage;
 	
 	private MyNewsPage myNewsPage;
+	
+	private NewsViewPage newsViewPage;
+	
+	private DashboardPage dashboardPage;
 	
 	@Before
 	public void setUp() {
@@ -85,6 +95,8 @@ public class NewsE2ETest {
 		reviewCOPage = PageFactory.initElements(driver, ReviewCulturalOfferPage.class);
 		newsPage = PageFactory.initElements(driver, NewsReviewPage.class);
 		myNewsPage = PageFactory.initElements(driver, MyNewsPage.class);
+		newsViewPage = PageFactory.initElements(driver, NewsViewPage.class);
+		dashboardPage = PageFactory.initElements(driver, DashboardPage.class);
 		
 		try {
 			myPath = (Paths.get((new File(".")).getCanonicalPath(),pathToImages)).toString();
@@ -134,7 +146,7 @@ public class NewsE2ETest {
 		
 		newsPage.ensureIsDisplayedCulturalOfferButton();
 		
-		assertEquals("https://localhost:4200/news/view/3", driver.getCurrentUrl());
+		assertEquals("https://localhost:4200/news/cultural-offer/3", driver.getCurrentUrl());
 		
 		newsPage.getRemoveButton().click();
 		
@@ -179,7 +191,7 @@ public class NewsE2ETest {
 		
 		newsPage.ensureIsDisplayedCulturalOfferButton();
 		
-		assertEquals("https://localhost:4200/news/view/3", driver.getCurrentUrl());
+		assertEquals("https://localhost:4200/news/cultural-offer/3", driver.getCurrentUrl());
 		
 		newsPage.getRemoveButton().click();
 		
@@ -216,7 +228,7 @@ public class NewsE2ETest {
 		
 		newsPage.ensureIsDisplayedCulturalOfferButton();
 		
-		assertEquals("https://localhost:4200/news/view/3", driver.getCurrentUrl());
+		assertEquals("https://localhost:4200/news/cultural-offer/3", driver.getCurrentUrl());
 		
 		newsPage.getCulturalOfferButton().click();
 		
@@ -254,11 +266,12 @@ public class NewsE2ETest {
 		
 		newsPage.ensureIsDisplayedCulturalOfferButton();
 		
-		assertEquals("https://localhost:4200/news/view/3", driver.getCurrentUrl());
+		assertEquals("https://localhost:4200/news/cultural-offer/3", driver.getCurrentUrl());
 		
 		newsPage.getAddButton().click();
 		newsPage.ensureIsDisplayedNewsContent();
 		
+		newsPage.getNewsTitle().sendKeys("New title");
 		newsPage.getNewsContent().sendKeys("New content");
 		newsPage.getNewsImages().sendKeys(myPath);
 		pause(1000);
@@ -304,11 +317,12 @@ public class NewsE2ETest {
 		
 		newsPage.ensureIsDisplayedCulturalOfferButton();
 		
-		assertEquals("https://localhost:4200/news/view/3", driver.getCurrentUrl());
+		assertEquals("https://localhost:4200/news/cultural-offer/3", driver.getCurrentUrl());
 		
 		newsPage.getAddButton().click();
 		newsPage.ensureIsDisplayedNewsContent();
-		
+
+		newsPage.getNewsTitle().sendKeys("New title");
 		newsPage.getNewsContent().sendKeys("New content");
 		newsPage.getNewsImages().sendKeys(myPath);
 		pause(1000);
@@ -348,11 +362,13 @@ public class NewsE2ETest {
 		
 		newsPage.ensureIsDisplayedCulturalOfferButton();
 		
-		assertEquals("https://localhost:4200/news/view/3", driver.getCurrentUrl());
+		assertEquals("https://localhost:4200/news/cultural-offer/3", driver.getCurrentUrl());
 		
 		newsPage.getUpdateButton().click();
 		newsPage.ensureIsDisplayedNewsContent();
 		
+		newsPage.getNewsTitle().clear();
+		newsPage.getNewsTitle().sendKeys("New title");
 		newsPage.getNewsContent().clear();
 		newsPage.getNewsContent().sendKeys("New content");
 		newsPage.getNewsImages().sendKeys(myPath);
@@ -400,7 +416,7 @@ public class NewsE2ETest {
 		
 		newsPage.ensureIsDisplayedCulturalOfferButton();
 		
-		assertEquals("https://localhost:4200/news/view/3", driver.getCurrentUrl());
+		assertEquals("https://localhost:4200/news/cultural-offer/3", driver.getCurrentUrl());
 		
 		newsPage.getUpdateButton().click();
 		newsPage.ensureIsDisplayedNewsContent();
@@ -444,7 +460,7 @@ public class NewsE2ETest {
 		
 		newsPage.ensureIsDisplayedCulturalOfferButton();
 		
-		assertEquals("https://localhost:4200/news/view/3", driver.getCurrentUrl());
+		assertEquals("https://localhost:4200/news/cultural-offer/3", driver.getCurrentUrl());
 		
 		newsPage.getUpdateButton().click();
 		newsPage.ensureIsDisplayedNewsContent();
@@ -489,7 +505,7 @@ public class NewsE2ETest {
 		
 		newsPage.ensureIsDisplayedCulturalOfferButton();
 		
-		assertEquals("https://localhost:4200/news/view/3", driver.getCurrentUrl());
+		assertEquals("https://localhost:4200/news/cultural-offer/3", driver.getCurrentUrl());
 		
 		newsPage.getUpdateButton().click();
 		newsPage.ensureIsDisplayedNewsContent();
@@ -524,8 +540,8 @@ public class NewsE2ETest {
 	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
 	public void subscribeToNews_ShouldSuccess() {
 		signInSetUp(USER_CREDS);
-		Pageable pageable = PageRequest.of(0, 4);
-		int size = (newsService.getSubscribedNews(7L, pageable)).getContent().size();
+		Pageable pageable = PageRequest.of(0, 20);
+		int size = (newsService.getSubscribedNews(8L, pageable)).getContent().size();
 		
 		homePage.ensureIsDisplayedFestivalsTab();
 		
@@ -554,7 +570,7 @@ public class NewsE2ETest {
 		reviewCOPage.ensureIsDisplayedUnsubscribeButton();
 		
 		pause(2000);
-		int newSize = (newsService.getSubscribedNews(7L, pageable)).getContent().size();
+		int newSize = (newsService.getSubscribedNews(8L, pageable)).getContent().size();
 		
 		assertTrue(size < newSize);
 		driver.close();
@@ -564,7 +580,7 @@ public class NewsE2ETest {
 	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
 	public void unsubscribeToNews_ShouldSuccess() {
 		signInSetUp(USER_CREDS);
-		Pageable pageable = PageRequest.of(0, 4);
+		Pageable pageable = PageRequest.of(0, 20);
 		
 		homePage.ensureIsDisplayedFestivalsTab();
 		
@@ -592,14 +608,14 @@ public class NewsE2ETest {
 		
 		reviewCOPage.ensureIsDisplayedUnsubscribeButton();
 		pause(2000);
-		int size = (newsService.getSubscribedNews(7L, pageable)).getContent().size();
+		int size = (newsService.getSubscribedNews(8L, pageable)).getContent().size();
 		
 		reviewCOPage.getUnsubscribeButton().click();
 		
 		reviewCOPage.ensureIsDisplayedSubscribeButton();
 		
 		pause(2000);
-		int newSize = (newsService.getSubscribedNews(7L, pageable)).getContent().size();
+		int newSize = (newsService.getSubscribedNews(8L, pageable)).getContent().size();
 		
 		assertTrue(size > newSize);
 		driver.close();
@@ -688,10 +704,93 @@ public class NewsE2ETest {
 		myNewsPage.getCulturalOfferButton().click();
 		pause(2000);
 
-		assertEquals("https://localhost:4200/cultural-offers/3", driver.getCurrentUrl());
+		assertEquals("https://localhost:4200/cultural-offers/1", driver.getCurrentUrl());
 		
 		
 		driver.close();
+	}
+	
+	@Test
+	public void navigateToNewsDetail_WithBackNavigationToCulturalOffer_ShouldSuccess() {
+		homePage.ensureIsDisplayedFestivalsTab();
+		homePage.ensureIsDisplayedSearch();
+		
+		assertEquals("https://localhost:4200/", driver.getCurrentUrl());
+		
+		homePage.getSearch().sendKeys("festival 100");
+		
+		homePage.getFestivalsTab().click();
+		
+		homePage.ensureIsDisplayedMoreButton();
+
+		pause(2000);
+		homePage.getMore().click();
+
+		reviewCOPage.ensureIsDisplayedName();
+
+		assertEquals("https://localhost:4200/cultural-offers/3", driver.getCurrentUrl());
+		
+		reviewCOPage.getNewsButton().click();
+		
+		newsPage.ensureIsDisplayedCulturalOfferButton();
+		
+		assertEquals("https://localhost:4200/news/cultural-offer/3", driver.getCurrentUrl());
+		
+		newsPage.ensureIsDisplayedMoreBtn();
+		
+		newsPage.getMoreButton().click();
+		
+		newsViewPage.ensureIsDisplayedCulturalOfferButton();
+		
+		newsViewPage.getCulturalOfferButton().click();;
+		
+		assertEquals("https://localhost:4200/cultural-offers/3", driver.getCurrentUrl());
+	}
+	
+	@Test
+	@DirtiesContext(methodMode = MethodMode.AFTER_METHOD)
+	public void unsubscribeFromDashboardPage_ShouldSuccess() {
+		signInSetUp(USER_CREDS);
+		Pageable pageable = PageRequest.of(0, 10);
+		int size = coService.getSubscribedCulturalOffer(8L, pageable).getNumberOfElements();
+		homePage.ensureIsDisplayedFestivalsTab();
+		
+		assertEquals("https://localhost:4200/", driver.getCurrentUrl());
+		
+		homePage.getDashboardPage().click();
+
+		dashboardPage.ensureIsDisplayedUnsubscribeButton();
+
+		assertEquals("https://localhost:4200/news/my-offers", driver.getCurrentUrl());
+		
+		dashboardPage.getUnsubscribeButton().click();
+		
+		pause(2000);
+
+		int newSize = coService.getSubscribedCulturalOffer(8L, pageable).getNumberOfElements();
+		
+		assertTrue(size > newSize);
+	}
+	
+	@Test
+	public void navigateToOffer_ShouldSuccess() {
+		signInSetUp(USER_CREDS);
+		homePage.ensureIsDisplayedFestivalsTab();
+		
+		assertEquals("https://localhost:4200/", driver.getCurrentUrl());
+		
+		homePage.getDashboardPage().click();
+
+		dashboardPage.ensureIsDisplayedUnsubscribeButton();
+
+		assertEquals("https://localhost:4200/news/my-offers", driver.getCurrentUrl());
+		
+		dashboardPage.getCulturalOfferButton().click();
+		
+		pause(2000);
+		reviewCOPage.ensureIsDisplayedNewsButton();
+		
+		assertEquals("https://localhost:4200/cultural-offers/1", driver.getCurrentUrl());
 	}
 	
 	@After

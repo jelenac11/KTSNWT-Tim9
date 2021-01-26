@@ -1,6 +1,7 @@
 package com.ktsnwt.project.team9.controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.UUID;
 
 
@@ -32,6 +33,17 @@ public class ImageController {
 		String uniqueID = UUID.randomUUID().toString();
 		String path = fileService.saveImage(file, uniqueID + "_" +file.getOriginalFilename());
 		return new ResponseEntity<String>(path, HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/uploads", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ArrayList<String>> upload(@RequestParam("file") MultipartFile[] file) throws IllegalStateException, IOException {
+		ArrayList<String> images = new ArrayList<String>();
+		for (MultipartFile multipartFile : file) {
+			String uniqueID = UUID.randomUUID().toString();			
+			String path = fileService.saveImage(multipartFile, uniqueID + "_" +multipartFile.getOriginalFilename());
+			images.add(path);
+		}
+		return new ResponseEntity<ArrayList<String>>(images, HttpStatus.OK);
 	}
 	
 	@DeleteMapping(value = "/delete", produces = MediaType.TEXT_PLAIN_VALUE)

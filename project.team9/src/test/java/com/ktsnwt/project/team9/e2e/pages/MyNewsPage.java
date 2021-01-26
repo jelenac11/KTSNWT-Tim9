@@ -19,6 +19,9 @@ public class MyNewsPage {
 	
 	@FindBy(id = "co-btn")
 	private WebElement culturalOfferButton;
+
+	@FindBy(id = "more-btn")
+	private WebElement moreButton;
 	
 	@FindBy(id = "mat-tab-label-1-1")
 	private WebElement festivalTab;
@@ -28,6 +31,10 @@ public class MyNewsPage {
 		this.driver = driver;
 	}
 	
+	
+	public void ensureIsDisplayedMoreBtn() {
+		(new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("more-btn")));
+	}
 	public void ensureIsDisplayedCulturalOfferButton() {
 		(new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("co-btn")));
 	}

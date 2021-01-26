@@ -17,10 +17,12 @@ import { NewsReviewComponent } from './news-review/news-review.component';
 import { NewsDialogComponent } from './news-dialog/news-dialog.component';
 import { SubscriedNewsComponent } from './subscried-news/subscried-news.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { NewsViewComponent } from './news-view/news-view.component';
+import { SubscribedOffersComponent } from './subscribed-offers/subscribed-offers.component';
 
 
 @NgModule({
-  declarations: [NewsReviewComponent, NewsDialogComponent, SubscriedNewsComponent],
+  declarations: [NewsReviewComponent, NewsDialogComponent, SubscriedNewsComponent, NewsViewComponent, SubscribedOffersComponent],
   imports: [
     CommonModule,
     MatIconModule,
@@ -41,6 +43,6 @@ import { MatTabsModule } from '@angular/material/tabs';
     CarouselModule,
     MatTabsModule
   ],
-  exports: [NewsReviewComponent, NewsDialogComponent, SubscriedNewsComponent]
+  exports: [NewsReviewComponent, NewsDialogComponent, SubscriedNewsComponent, NewsViewComponent, SubscribedOffersComponent]
 })
 export class NewsModule { }

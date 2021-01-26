@@ -18,6 +18,14 @@ export class ImageService {
     return this.http.post(`${environment.api_url}images/upload`, formData, {responseType: 'text'});
   }
 
+  uploads(files: File[]): Observable<string[]> {
+    const formData = new FormData();
+    for(const file of files){
+      formData.append('file', file);
+    }
+    return this.http.post<string[]>(`${environment.api_url}images/uploads`, formData, {responseType: 'json'});
+  }
+
   delete(file: string): Observable<string> {
     const options = {
       headers: new HttpHeaders({

@@ -427,5 +427,39 @@ public class CulturalOfferControllerIntegrationTest {
 		assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
 
 	}
+	
+	@Test
+	public void testGetSubscribedCulturalOffer_WithExistingUserId_ShouldReturnCollectionWithOffers() {
+		login("email_adresa20@gmail.com", "sifra123");
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", accessToken);
+		Pageable pageable = PageRequest.of(0, 10);
+		int size = culturalOfferService.getSubscribedCulturalOffer(8L, pageable).getNumberOfElements();
+		ParameterizedTypeReference<CustomPageImplementation<CulturalOfferResDTO>> type = new ParameterizedTypeReference<CustomPageImplementation<CulturalOfferResDTO>>() {
+		};
+
+		ResponseEntity<CustomPageImplementation<CulturalOfferResDTO>> responseEntity = restTemplate
+				.exchange("/api/cultural-offers/subscribed/8?page=0&size=10", HttpMethod.GET, new HttpEntity<Object>(headers), type);
+
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+		assertNotNull(responseEntity.getBody());
+		assertEquals(size, responseEntity.getBody().getNumberOfElements());
+	}
+	
+	@Test
+	public void testGetSubscribedCulturalOffer_WithNonExistingUserId_ShouldReturnEmptyCollection() {
+		login("email_adresa20@gmail.com", "sifra123");
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", accessToken);
+		ParameterizedTypeReference<CustomPageImplementation<CulturalOfferResDTO>> type = new ParameterizedTypeReference<CustomPageImplementation<CulturalOfferResDTO>>() {
+		};
+
+		ResponseEntity<CustomPageImplementation<CulturalOfferResDTO>> responseEntity = restTemplate
+				.exchange("/api/cultural-offers/subscribed/800?page=0&size=10", HttpMethod.GET, new HttpEntity<Object>(headers), type);
+
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+		assertNotNull(responseEntity.getBody());
+		assertEquals(0, responseEntity.getBody().getNumberOfElements());
+	}
 
 }

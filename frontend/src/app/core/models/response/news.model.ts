@@ -4,4 +4,5 @@ export interface News {
     date?: number;
     culturalOfferID?: number;
     images?: string[];
+    title?: string;
 }

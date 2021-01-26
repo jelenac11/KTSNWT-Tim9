@@ -1,0 +1,50 @@
+<div *ngIf='news' class="container-fluid">
+    <div class="row">
+      <div class="col-7 mt-3 mb-3 mx-auto col-center">
+        <mdb-card>
+          <mdb-card-body>
+            <div class="row">
+                <div class="col-7 mt-3 mx-auto" >
+                  <div class="row justify-content-md-center mx-auto mb-3 ">
+                    
+                  <button *ngIf="culturalOffer"
+                    id="co-btn"
+                    mat-flat-button
+                    color="primary"
+                    class="button-co"
+                    routerLink="/cultural-offers/{{news.culturalOfferID}}"
+                    >
+                    {{culturalOffer.name}} 
+                  </button>
+                </div >
+                <div class='row justify-content-md-center mx-auto mb-3 title'>
+                  <i>{{ news.title }}</i>
+                </div>
+                    <mdb-carousel *ngIf="images.length !== 0" [isControls]="true" [animation]="'slide'">
+                        <mdb-carousel-item *ngFor="let img of images;">
+                            <img class="d-block w-100" src="{{img}}" onerror='this.src ="assets/noimage.jpg" ' alt="First slide">
+                            
+                        </mdb-carousel-item>
+                    </mdb-carousel>
+                    <mdb-carousel *ngIf="images.length === 0" [isControls]="true" [animation]="'slide'">
+                      <mdb-carousel-item>
+                        <img class="d-block w-100" src="assets/noimage.jpg">
+                      </mdb-carousel-item>
+                  </mdb-carousel>
+                </div>
+            </div>
+            <div class="row">
+              <div class="col-5 mt-3  col-center" >
+                
+              </div>
+            </div>
+            <p>Created: {{getDate(news.date) | date:'E, dd.MM.YYYY.' }}</p>
+            <div class="row mt-3 mx-1 row-center" style="text-align: justify">
+              {{ news.content }}
+            </div>
+          </mdb-card-body>
+        </mdb-card>
+      </div>
+    </div>
+  </div>
+  

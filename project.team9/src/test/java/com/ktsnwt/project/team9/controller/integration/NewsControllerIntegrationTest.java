@@ -162,6 +162,7 @@ public class NewsControllerIntegrationTest {
 		List<News> newNews = (List<News>) newsService.getAll();
 		assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
 		assertNotNull(news);
+		assertEquals(NEWS_FOR_CREATE.getTitle(), newNews.get(newNews.size()-1).getTitle());
 		assertEquals(NEWS_FOR_CREATE.getContent(), newNews.get(newNews.size()-1).getContent());
 		assertEquals(beforeSize + 1, newNews.size());
 	}
@@ -188,7 +189,7 @@ public class NewsControllerIntegrationTest {
 		headers.add("Authorization", accessToken);
 		
 		ResponseEntity<NewsDTO> responseEntity = restTemplate.postForEntity("/api/news",
-				new HttpEntity<>(new NewsDTO(null,"ASDF",-1223L,false, null, 1L), headers),
+				new HttpEntity<>(new NewsDTO(null,"ASDF",-1223L, "Title 1",false, null, 1L), headers),
 				NewsDTO.class);
 
 		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
@@ -202,7 +203,7 @@ public class NewsControllerIntegrationTest {
 		headers.add("Authorization", accessToken);
 		
 		ResponseEntity<NewsDTO> responseEntity = restTemplate.postForEntity("/api/news",
-				new HttpEntity<>(new NewsDTO(null,"ASDF",1223L,false, null, NON_EXISTING_CULTURAL_OFFER_ID), headers),
+				new HttpEntity<>(new NewsDTO(null,"ASDF",1223L, "Title 1",false, null, NON_EXISTING_CULTURAL_OFFER_ID), headers),
 				NewsDTO.class);
 
 		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
@@ -230,10 +231,13 @@ public class NewsControllerIntegrationTest {
 		assertNotNull(news);
 		//Proveri da li je promenio kontekst
 		assertEquals(NEWS_ID, news.getID());
+
+		assertEquals(NEWS_FOR_UPDATE.getTitle(), news.getTitle());
 		assertEquals(NEWS_FOR_UPDATE.getContent(), news.getContent());
 		//Proveri da li je promenio kontekst u bazi
 		assertEquals(NEWS_ID, baseNews.getId());
 		assertEquals(NEWS_FOR_UPDATE.getContent(), baseNews.getContent());
+		assertEquals(NEWS_FOR_UPDATE.getTitle(), baseNews.getTitle());
 		
 		
 	}

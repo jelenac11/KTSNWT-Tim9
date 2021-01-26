@@ -112,6 +112,9 @@ public class HomePage {
 	@FindBy(xpath = "//*[contains(text(),'My News')]")
 	private WebElement myNewsPage;
 	
+	@FindBy(xpath = "//*[contains(text(),'Dashboard')]")
+	private WebElement dashboardPage;
+	
 	public HomePage(WebDriver driver) {
 		this.driver = driver;
 	}

@@ -25,6 +25,13 @@ public class NewsReviewPage {
 	@FindBy(xpath = "//*[contains(text(),'Update')]")
 	private WebElement updateButton;
 	
+	@FindBy(id = "more-btn")
+	private WebElement moreButton;
+	
+	@FindBy(id = "news-title")
+	private WebElement newsTitle;
+	
+	
 	@FindBy(id = "co-btn")
 	private WebElement culturalOfferButton;
 	
@@ -53,7 +60,9 @@ public class NewsReviewPage {
 		this.driver = driver;
 	}
 	
-	
+	public void ensureIsDisplayedMoreBtn() {
+		(new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("more-btn")));
+	}
 	public void ensureIsDisplayedNewsContent() {
 		(new WebDriverWait(driver, 30)).until(ExpectedConditions.visibilityOfElementLocated(By.id("news-content")));
 	}

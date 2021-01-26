@@ -56,7 +56,7 @@ export class NewsService {
     let params = new HttpParams();
     params = params.append('size', size.toString());
     params = params.append('page', page.toString());
-    return this.http.get(`${environment.api_url}news/subscribed-news/${userId}`, {responseType: 'json' });
+    return this.http.get(`${environment.api_url}news/subscribed-news/${userId}`, { params, responseType: 'json' });
   }
 
   getAllByCategoryId(size: number, page: number, userId: string, categoryId: string): Observable<NewsPage>{
@@ -64,6 +64,6 @@ export class NewsService {
     params = params.append('size', size.toString());
     params = params.append('page', page.toString());
     return this.http.get(`${environment.api_url}news/subscribed-news/${userId}/${categoryId}`,
-      {headers: this.headers, responseType: 'json' });
+      { params, headers: this.headers, responseType: 'json' });
   }
 }

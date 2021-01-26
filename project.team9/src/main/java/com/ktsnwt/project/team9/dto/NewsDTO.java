@@ -26,6 +26,9 @@ public class NewsDTO {
 	@NotNull(message = "News date cannot be empty.")
 	private long date;
 
+	@NotBlank(message = "News title cannot be empty.")
+	private String title;
+	
 	private boolean active;
 
 	private Set<String> images;
