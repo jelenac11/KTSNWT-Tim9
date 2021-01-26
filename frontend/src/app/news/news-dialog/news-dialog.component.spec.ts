@@ -44,7 +44,7 @@ describe('NewsDialogComponent', () => {
       const url = 'neki_url_2';
       const imageServiceMock = {
         get: jasmine.createSpy('get').and.returnValue(of('')),
-        upload: jasmine.createSpy('upload').and.returnValue(of(url)),
+        uploads: jasmine.createSpy('uploads').and.returnValue(of(url)),
         delete: jasmine.createSpy('delete').and.returnValue(of('OK'))
       };
 
@@ -111,7 +111,7 @@ describe('NewsDialogComponent', () => {
       fixture.detectChanges();
 
       expect(newsService.post).toHaveBeenCalled();
-      expect(imageService.upload).toHaveBeenCalledTimes(1);
+      expect(imageService.uploads).toHaveBeenCalledTimes(1);
       expect(snackBar.success).toHaveBeenCalledWith('News added successfully');
 
     });
@@ -122,7 +122,7 @@ describe('NewsDialogComponent', () => {
       fixture.detectChanges();
 
       expect(newsService.post).toHaveBeenCalledTimes(0);
-      expect(imageService.upload).toHaveBeenCalledTimes(0);
+      expect(imageService.uploads).toHaveBeenCalledTimes(0);
 
     });
   });
@@ -161,7 +161,7 @@ describe('NewsDialogComponent', () => {
       const url = 'neki_url_2';
       const imageServiceMock = {
         get: jasmine.createSpy('get').and.returnValue(of('')),
-        upload: jasmine.createSpy('upload').and.returnValue(of(url)),
+        uploads: jasmine.createSpy('uploads').and.returnValue(of(url)),
         delete: jasmine.createSpy('delete').and.returnValue(of('OK'))
       };
 
@@ -217,7 +217,7 @@ describe('NewsDialogComponent', () => {
       component.submit();
       fixture.detectChanges();
       expect(newsService.put).toHaveBeenCalled();
-      expect(imageService.upload).toHaveBeenCalledTimes(1);
+      expect(imageService.uploads).toHaveBeenCalledTimes(1);
       expect(snackBar.success).toHaveBeenCalledWith('News updated successfully');
 
     });
@@ -231,7 +231,7 @@ describe('NewsDialogComponent', () => {
       component.submit();
       fixture.detectChanges();
       expect(newsService.put).toHaveBeenCalled();
-      expect(imageService.upload).toHaveBeenCalledTimes(0);
+      expect(imageService.uploads).toHaveBeenCalledTimes(0);
       expect(snackBar.success).toHaveBeenCalledWith('News updated successfully');
 
     });
@@ -245,7 +245,7 @@ describe('NewsDialogComponent', () => {
       component.submit();
       fixture.detectChanges();
       expect(newsService.put).toHaveBeenCalledTimes(0);
-      expect(imageService.upload).toHaveBeenCalledTimes(0);
+      expect(imageService.uploads).toHaveBeenCalledTimes(0);
     });
   });
 });

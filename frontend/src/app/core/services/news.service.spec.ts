@@ -356,7 +356,7 @@ describe('NewsService', () => {
     });
 
 
-    const req = httpMock.expectOne(`${environment.api_url}news/subscribed-news/${USERID}`);
+    const req = httpMock.expectOne(`${environment.api_url}news/subscribed-news/${USERID}?size=2&page=3`);
     expect(req.request.method).toBe('GET');
     req.flush(mockNews);
 
@@ -417,7 +417,7 @@ describe('NewsService', () => {
     });
 
 
-    const req = httpMock.expectOne(`${environment.api_url}news/subscribed-news/${USERID}/${CAT_ID}`);
+    const req = httpMock.expectOne(`${environment.api_url}news/subscribed-news/${USERID}/${CAT_ID}?size=2&page=3`);
     expect(req.request.method).toBe('GET');
     req.flush(mockNews);
 
