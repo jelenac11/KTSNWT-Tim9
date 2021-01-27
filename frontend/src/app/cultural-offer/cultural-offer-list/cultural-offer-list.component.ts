@@ -55,7 +55,7 @@ export class CulturalOfferListComponent implements OnInit {
   ngOnInit(): void {
     this.selectField = new FormControl();
     this.role = this.jwtService.getRole();
-    if (this.role === 'ROLE_REGISTERED_USER'){
+    if (this.role === 'ROLE_REGISTERED_USER') {
       this.userService.getCurrentUser().subscribe(user => {
         this.userID = user.id;
       });
@@ -175,30 +175,32 @@ export class CulturalOfferListComponent implements OnInit {
     this.getCulturalOffersByCategoryAndName();
   }
 
-  getSubscribed(): void{
-    const email = this.jwtService.getEmail();
-    for (const co of this.culturalOffers.content){
-      this.userService.isSubscribed(email, co.id).subscribe(res => {
-        this.subscribed.set(co.id, res);
-      });
+  getSubscribed(): void {
+    if (this.role === 'ROLE_REGISTERED_USER') {
+      const email = this.jwtService.getEmail();
+      for (const co of this.culturalOffers.content) {
+        this.userService.isSubscribed(email, co.id).subscribe(res => {
+          this.subscribed.set(co.id, res);
+        });
+      }
     }
   }
 
-  subscribe(COID): void{
+  subscribe(COID): void {
     this.newsService.subscribe(this.userID + '', COID)
-    .subscribe(succ => {
-      if (succ){
-        this.subscribed.set(COID, true);
-      }
-    });
+      .subscribe(succ => {
+        if (succ) {
+          this.subscribed.set(COID, true);
+        }
+      });
   }
 
-  unsubscribe(COID): void{
+  unsubscribe(COID): void {
     this.newsService.unsubscribe(this.userID + '', COID)
-    .subscribe(succ => {
-      if (succ){
-        this.subscribed.set(COID, false);
-      }
-    });
+      .subscribe(succ => {
+        if (succ) {
+          this.subscribed.set(COID, false);
+        }
+      });
   }
 }
