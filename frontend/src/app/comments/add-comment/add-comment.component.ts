@@ -38,7 +38,8 @@ export class AddCommentComponent implements OnInit {
 
   get f(): { [key: string]: AbstractControl; } { return this.form.controls; }
 
-  chooseFile(event: any): void {
+  chooseFile(event): void {
+    console.log(typeof event);
     if (event.target.files.length <= 0) {
       this.setValueForImageInvalidInput();
       return;

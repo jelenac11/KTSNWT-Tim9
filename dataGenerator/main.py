@@ -191,4 +191,4 @@ def generateAuthority():
     for i in range(20,1000):
         print("insert into user_authority(user_id, authority_id) values({},1);".format(i))
 if __name__ == '__main__':
-    generateAuthority()
+    generateUpdate()
