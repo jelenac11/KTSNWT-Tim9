@@ -113,7 +113,6 @@ describe('CulturalOfferReviewComponent', () => {
     expect(jwtService.getRole).toHaveBeenCalled();
     expect(culturalOfferService.get).toHaveBeenCalledWith('5');
 
-    expect(component.userID).toEqual(5);
     expect(component.culturalOfferId).toEqual('5');
     expect(component.culturalOffer.id).toEqual(5);
     expect(component.culturalOffer.name).toEqual('Srbija');

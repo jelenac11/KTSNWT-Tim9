@@ -47,9 +47,11 @@ export class CulturalOfferReviewComponent implements OnInit {
   ngOnInit(): void {
     this.culturalOfferId = this.route.snapshot.paramMap.get('id');
     this.role = this.jwtService.getRole();
-    this.userService.getCurrentUser().subscribe(user => {
-      this.userID = user.id;
-    });
+    if (this.role === 'ROLE_REGISTERED_USER') {
+      this.userService.getCurrentUser().subscribe(user => {
+        this.userID = user.id;
+      });
+    }
     this.getCulturalOfferById();
   }
 
@@ -73,10 +75,10 @@ export class CulturalOfferReviewComponent implements OnInit {
         this.mark = data.value;
         this.isRated = true;
       },
-      error => {
-        this.mark = 0;
-        this.isRated = false;
-      });
+        error => {
+          this.mark = 0;
+          this.isRated = false;
+        });
     }
   }
 
@@ -118,22 +120,22 @@ export class CulturalOfferReviewComponent implements OnInit {
     const dialogRef = this.dialog.open(AddCommentComponent, dialogConfig);
   }
 
-  subscribe(): void{
+  subscribe(): void {
     this.newsService.subscribe(this.userID, this.culturalOfferId)
-    .subscribe(succ => {
-      if (succ){
-        this.subscribed = true;
-      }
-    });
+      .subscribe(succ => {
+        if (succ) {
+          this.subscribed = true;
+        }
+      });
   }
 
-  unsubscribe(): void{
+  unsubscribe(): void {
     this.newsService.unsubscribe(this.userID, this.culturalOfferId)
-    .subscribe(succ => {
-      if (succ){
-        this.subscribed = false;
-      }
-    });
+      .subscribe(succ => {
+        if (succ) {
+          this.subscribed = false;
+        }
+      });
   }
 
 }
