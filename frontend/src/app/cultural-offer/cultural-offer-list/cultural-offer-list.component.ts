@@ -101,7 +101,7 @@ export class CulturalOfferListComponent implements OnInit {
     }
   }
 
-  handlePageChange(event: any): void {
+  handlePageChange(event: number): void {
     this.page = event;
     this.getCulturalOffersByCategoryAndName();
   }

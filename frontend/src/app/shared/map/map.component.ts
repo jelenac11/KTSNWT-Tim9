@@ -26,7 +26,7 @@ export class MapComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  setLocation(culturalOffer: any): void {
+  setLocation(culturalOffer: CulturalOffer): void {
     if (this.latitude === culturalOffer.geolocation.lat && this.longitude === culturalOffer.geolocation.lon) {
       this.latitude = culturalOffer.geolocation.lat + 0.00001;
       this.longitude = culturalOffer.geolocation.lon + 0.00001;

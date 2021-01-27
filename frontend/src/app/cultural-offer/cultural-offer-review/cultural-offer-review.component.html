@@ -29,7 +29,7 @@
             <div class="col-3">
               <div>
                 <span>
-                  Average: <b>{{ culturalOffer.averageMark }}/5</b>
+                  Average: <b>{{ culturalOffer.averageMark?.toFixed(1) }}/5</b>
                   <bar-rating
                     *ngIf="role === 'ROLE_REGISTERED_USER'" 
                     [(rate)]="mark"
